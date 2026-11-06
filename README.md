@@ -32,6 +32,7 @@ WASD 移动；Shift 跑步；空格跳跃；Q/E 单按回退/快进 1 秒，长�
 
 ## 文档
 
+- [Git 与 Mac / Windows 双机协作](docs/tools/GIT_COLLABORATION.md)
 - [工具共同规范](docs/tools/BLUEPRINT_TOOLCHAIN.md)
 - [关卡与世界](docs/level_editor/README.md)
 - [机关](docs/mechanism_editor/README.md)
