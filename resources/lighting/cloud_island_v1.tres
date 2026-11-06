@@ -1,0 +1,35 @@
+[gd_resource type="Environment" format=3 uid="uid://d1wwrbxp5mihn"]
+
+[ext_resource type="Shader" uid="uid://cgpg1fse0go6y" path="res://assets/shaders/lighting/cloud_island_v1_sky.gdshader" id="1_8dm1d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_010uv"]
+shader = ExtResource("1_8dm1d")
+shader_parameter/upper_color = Color(0.61, 0.68, 0.69, 1)
+shader_parameter/lower_color = Color(0.91, 0.86, 0.73, 1)
+
+[sub_resource type="Sky" id="Sky_h2di0"]
+sky_material = SubResource("ShaderMaterial_010uv")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_h2di0")
+ambient_light_source = 2
+ambient_light_color = Color(0.84313726, 0.88235295, 0.90588236, 1)
+ambient_light_energy = 0.65
+reflected_light_source = 2
+tonemap_mode = 4
+ssao_enabled = true
+ssao_radius = 0.65
+ssao_intensity = 1.7
+ssao_power = 1.1
+fog_enabled = true
+fog_light_color = Color(0.84705883, 0.8509804, 0.8117647, 1)
+fog_light_energy = 0.9
+fog_density = 0.0009
+fog_sky_affect = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_anisotropy = 0.1
+volumetric_fog_length = 145.0
+volumetric_fog_detail_spread = 1.0
+volumetric_fog_ambient_inject = 0.65

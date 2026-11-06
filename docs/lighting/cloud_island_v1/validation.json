@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-02",
+  "preset": "res://scenes/lighting/cloud_island_v1.tscn",
+  "checks": [
+    {
+      "name": "import",
+      "errors": [],
+      "passed": null,
+      "failed": 0
+    },
+    {
+      "name": "check",
+      "errors": [],
+      "passed": 16,
+      "failed": 0
+    },
+    {
+      "name": "visual",
+      "errors": [],
+      "passed": 21,
+      "failed": 0
+    },
+    {
+      "name": "hud",
+      "errors": [],
+      "passed": 88,
+      "failed": 0
+    }
+  ],
+  "restored_shaders_match_source": true,
+  "visual_review": "Warm-grey sky and lower cloud volume, soft warm sunlight, clear playable deck, dark outer HUD text on the light background; zero-alert state uses the normal palette."
+}

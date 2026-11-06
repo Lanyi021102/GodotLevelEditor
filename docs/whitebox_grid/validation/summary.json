@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-02",
+  "engine": "Godot 4.7.1",
+  "renderer": "Metal / Forward+ (Apple M4)",
+  "spacing_metres": [
+    1.0,
+    0.5,
+    0.1
+  ],
+  "checks": {
+    "metric_headless": 22,
+    "metric_forward_plus": 32,
+    "face_push_pull": 20,
+    "level_v2": 98,
+    "native_editor": 35,
+    "mechanisms": 48,
+    "3c": 33
+  },
+  "failures": 0,
+  "curved_surfaces": "World triplanar projection; spacing describes axis projection, not arc length.",
+  "shader_sha256": "ce766eb1168d519e14fbc24f13f6d2ce087acdad6871fcadd5babf2887a27d72",
+  "lighting": "Existing scene lighting references preserved. Shape gallery uses retained cloud_island_v1; playground uses its currently authored lighting."
+}

@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-31",
+  "plugin_version": "0.4.0",
+  "engine": "4.7.1.stable.official.a13da4feb",
+  "scope": "level/world editor presentation only",
+  "suites": {
+    "node_presentation": {
+      "passed": 111,
+      "failed": 0,
+      "log": "v4_presentation.log"
+    },
+    "level_editor_canvas_and_runtime": {
+      "passed": 82,
+      "failed": 0,
+      "log": "v4_canvas.log"
+    },
+    "native_editor": {
+      "passed": 35,
+      "failed": 0,
+      "log": "v4_editor_and_live.log"
+    },
+    "actual_engine_debugger_channel": {
+      "passed": 1,
+      "failed": 0,
+      "log": "v4_editor_and_live.log"
+    }
+  },
+  "total_passed": 229,
+  "total_failed": 0,
+  "screenshots_checked": [
+    "node_colors_editing.png",
+    "node_colors_running.png",
+    "node_colors_states.png",
+    "node_colors_topology.png"
+  ],
+  "role_colors": {
+    "condition": "#94700e",
+    "trigger": "#a34439",
+    "state": "#24756e",
+    "action": "#345f96",
+    "data": "#71508f",
+    "flow": "#9b592b"
+  },
+  "shared_presentation": "res://addons/branch_mechanisms/graph/node_presentation.gd",
+  "runtime_logic_changed": false,
+  "graph_schema_version": 1,
+  "node_and_port_ids_preserved": true,
+  "enabled_connection_indices_preserved": true,
+  "formal_save_written": false,
+  "previous_validation": "validation_v3.json",
+  "pending_coordination": [
+    "shared_presentation_module_stable_api",
+    "enemy_editor_test_debugger_initial_scan_type_inference_error"
+  ]
+}

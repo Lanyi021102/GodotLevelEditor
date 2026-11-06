@@ -1,0 +1,27 @@
+{
+	"Crouch_Idle": {
+		"contact_samples": 0,
+		"median_contact_speed": 0.0,
+		"minimum_toe_y": 0.0462803691625595
+	},
+	"Idle": {
+		"contact_samples": 0,
+		"median_contact_speed": 0.0,
+		"minimum_toe_y": 0.0177492629736662
+	},
+	"Running_A": {
+		"contact_samples": 66,
+		"median_contact_speed": 5.42633152008057,
+		"minimum_toe_y": 0.0381864309310913
+	},
+	"Walking_A": {
+		"contact_samples": 211,
+		"median_contact_speed": 0.900632500648499,
+		"minimum_toe_y": 0.0265167020261288
+	},
+	"Walking_C": {
+		"contact_samples": 225,
+		"median_contact_speed": 0.658265054225922,
+		"minimum_toe_y": 0.0475364550948143
+	}
+}

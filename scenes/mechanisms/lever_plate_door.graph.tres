@@ -1,0 +1,58 @@
+[gd_resource type="Resource" format=3 uid="uid://ctpae8abq65vm"]
+
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/branch_mechanisms/graph/definition.gd" id="1_xy4nj"]
+
+[resource]
+script = ExtResource("1_xy4nj")
+definition_id = "mechanism_ce2da37417ee4aba"
+display_name = "拉杆 + 压力板 → AND → 门"
+nodes = Array[Dictionary]([{
+"id": "lever_state",
+"kind": "lever",
+"label": "拉杆状态",
+"params": {
+"object_id": "lever"
+}
+}, {
+"id": "plate_state",
+"kind": "plate",
+"label": "压力板状态",
+"params": {
+"object_id": "plate"
+}
+}, {
+"id": "both",
+"kind": "and",
+"label": "AND · 同时满足",
+"params": {}
+}, {
+"id": "door_target",
+"kind": "door",
+"label": "门目标开合",
+"params": {
+"object_id": "door"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "lever_state",
+"in": "a",
+"out": "value",
+"to": "both"
+}, {
+"from": "plate_state",
+"in": "b",
+"out": "value",
+"to": "both"
+}, {
+"from": "both",
+"in": "powered",
+"out": "value",
+"to": "door_target"
+}])
+positions = {
+"both": Vector2(380, 150),
+"door_target": Vector2(730, 150),
+"lever_state": Vector2(40, 70),
+"plate_state": Vector2(40, 280)
+}
+view_offset = Vector2(0, -430)

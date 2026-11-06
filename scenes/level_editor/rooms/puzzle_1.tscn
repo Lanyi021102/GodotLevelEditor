@@ -1,0 +1,95 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/room.gd" id="1_cv327"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/whitebox_block.gd" id="2_di2fp"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/connection.gd" id="3_62ecn"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/placement.gd" id="4_umwp2"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/region.gd" id="5_s88kv"]
+
+[node name="Puzzle1" type="Node3D" unique_id=1942402412]
+script = ExtResource("1_cv327")
+room_id = "puzzle_1"
+display_name = "驻影之门"
+
+[node name="Floor" type="Node3D" parent="." unique_id=2070770430]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+script = ExtResource("2_di2fp")
+object_id = "floor"
+size = Vector3(20, 3.6, 20)
+
+[node name="WallNorthA" type="Node3D" parent="." unique_id=700926969]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.65, -9.85)
+script = ExtResource("2_di2fp")
+object_id = "wall_north_a"
+size = Vector3(8, 1.3, 0.3)
+
+[node name="WallNorthB" type="Node3D" parent="." unique_id=1273885309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.65, -9.85)
+script = ExtResource("2_di2fp")
+object_id = "wall_north_b"
+size = Vector3(8, 1.3, 0.3)
+
+[node name="WallSouth" type="Node3D" parent="." unique_id=1825947022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 9.85)
+script = ExtResource("2_di2fp")
+object_id = "wall_south"
+size = Vector3(20, 1.3, 0.3)
+
+[node name="WallEast" type="Node3D" parent="." unique_id=1317562193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85, 0.65, 0)
+script = ExtResource("2_di2fp")
+object_id = "wall_east"
+size = Vector3(0.3, 1.3, 20)
+
+[node name="WallWestA" type="Node3D" parent="." unique_id=1804212895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 0.65, -6)
+script = ExtResource("2_di2fp")
+object_id = "wall_west_a"
+size = Vector3(0.3, 1.3, 8)
+
+[node name="WallWestB" type="Node3D" parent="." unique_id=102498004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 0.65, 6)
+script = ExtResource("2_di2fp")
+object_id = "wall_west_b"
+size = Vector3(0.3, 1.3, 8)
+
+[node name="West" type="Node3D" parent="." unique_id=633564728]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -10, 0, 0)
+script = ExtResource("3_62ecn")
+object_id = "west"
+
+[node name="North" type="Node3D" parent="." unique_id=348755523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+script = ExtResource("3_62ecn")
+object_id = "north"
+
+[node name="PlateA" type="Node3D" parent="." unique_id=1748176932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.02, 4)
+script = ExtResource("4_umwp2")
+object_id = "plate_a"
+source_ids = PackedStringArray()
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="Door" type="Node3D" parent="." unique_id=1626596674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -4)
+script = ExtResource("4_umwp2")
+object_id = "door"
+component_kind = "door"
+source_ids = PackedStringArray("plate_a")
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="PartitionA" type="Node3D" parent="." unique_id=477166205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9, 1.3, -4)
+script = ExtResource("2_di2fp")
+object_id = "partition_a"
+size = Vector3(8.2, 2.6, 0.4)
+
+[node name="PartitionB" type="Node3D" parent="." unique_id=432079451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9, 1.3, -4)
+script = ExtResource("2_di2fp")
+object_id = "partition_b"
+size = Vector3(8.2, 2.6, 0.4)
+
+[node name="GoalRegion" type="Area3D" parent="." unique_id=88526017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.3)
+script = ExtResource("5_s88kv")

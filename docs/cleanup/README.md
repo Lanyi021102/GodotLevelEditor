@@ -1,0 +1,50 @@
+# 历史内容清理与验证
+
+2026-11-02，用户确认以新工具链为保留基线，移除历史演示及旧风格。
+
+## 当前保留
+
+三套节点编辑器、用户制作的房间与机关、原生可编辑 HUD、正常比例角色及其可重建源资源；通用回溯、分身、能量、感知、机关和持续进度。
+
+默认入口 scenes/main.tscn 组合连续世界。共享会话位于 scripts/core/game_session.gd，相机位于 scripts/camera/orbit_camera.gd。移除历史继承链、环境专用材质与效果、固定章节标题、旧角色，以及演示入口、截图、备份文本和日志。白盒默认灰色，HUD 采用灰阶；功能性身份色及节点分类色保留。
+
+## 清理范围
+
+移除了 289 个源内容文件，另外清除 88 个过期生成缓存文件。详细清单与修改文件见 [removed_files.json](removed_files.json)。new_room 与 new_mechanism1 的自建资源与清理前逐字节一致。
+
+工程外恢复包：`/Users/lanyi/branch_cleanup_backups/branch_before_cleanup_2026-11-02_134233.zip`。恢复包包含清理前工程源文件与资产，排除可重建缓存，已完成 ZIP 完整性校验；工程内不保留已删除内容的副本。未删除用户目录中的既有存档，新入口使用独立的 branch_world_progress.json。
+
+## 验证
+
+各项为当前文件状态下实际运行结果。visual 是同一集成场景的图形运行并额外写出截图；不把重复运行解释为额外功能覆盖。
+
+| 检查 | 通过 / 失败 |
+|---|---|
+| import | 通过，无脚本错误 |
+| main | 通过，无脚本错误 |
+| enemy | 45 / 0 |
+| mechanisms | 48 / 0 |
+| level | 82 / 0 |
+| current_world | 20 / 0 |
+| hud | 88 / 0 |
+| clone | 37 / 0 |
+| timeline | 21 / 0 |
+| level_v2 | 98 / 0 |
+| face | 20 / 0 |
+| enemy_canvas | 42 / 0 |
+| mechanism_canvas | 33 / 0 |
+| level_canvas | 35 / 0 |
+| resources | 26 / 0 |
+| visual | 21 / 0 |
+
+日志见 validation_logs/，结构化结果见 [validation.json](validation.json)。[当前实际运行画面](current_world.png) 已人工目视检查。
+
+关键集成覆盖：真实玩家暂停、记录冻结、继续、驻影、分身角色一致性、循环回放、移除分身、机关快照恢复、独立存档重载、重置保留明确持续进度。关卡测试另覆盖三房通关、双向空间连接与永久捷径。
+
+R 当前重置整个运行世界的临时状态与分身；房间级回溯隔离仍需后续实现。编辑器机关图的主动交互、分身动作事件与扩展攀爬能力沿用专项待办，不因清理被视为已实现。
+
+验证入口：tools/runtime/test_current_world.tscn；核心分身隔离场景：tools/runtime/session_fixture.tscn；其他入口见各专项 README。
+
+## 后续光照保留
+
+2026-11-02 用户指定恢复白模空岛氛围作为光照 V1。该环境已单独整理为可复用光照资源，并应用于当前连续世界。恢复范围与本轮验证见 [光照 V1](../lighting/cloud_island_v1/README.md)。以上清理与验证记录仍对应清理完成时的状态。

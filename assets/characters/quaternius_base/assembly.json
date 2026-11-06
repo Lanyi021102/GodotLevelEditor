@@ -1,0 +1,27 @@
+{
+	"body_scale": [
+		0.86,
+		1.0,
+		0.9
+	],
+	"clips": {
+		"Crouch_Idle": "Crouch_Idle",
+		"Idle": "Idle",
+		"Jump_Idle": "Jump",
+		"Jump_Land": "Jump_Land",
+		"Jump_Start": "Jump_Start",
+		"Running_A": "Jog_Fwd",
+		"Walking_A": "Walk",
+		"Walking_C": "Crouch_Fwd"
+	},
+	"head_scale": [
+		1.12,
+		1.1,
+		1.12
+	],
+	"missing_bones": [],
+	"pelvis_height_ratio": 1.03534418219788,
+	"saved": true,
+	"source_bones": 65,
+	"target_bones": 65
+}

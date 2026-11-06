@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BranchLevelGraph" format=3 uid="uid://d3b26w2hsocnu"]
+
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/branch_level_editor/runtime/level_graph.gd" id="1_7aedm"]
+
+[resource]
+script = ExtResource("1_7aedm")
+graph_id = "demo_topology"
+graph_kind = "topology"
+view_zoom = 0.23256795

@@ -1,0 +1,28 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local caches, generated builds, and operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+__pycache__/
+/.validation/
+/build/
+/builds/
+/exports/
+/dist/
+*.log
+*.tmp
+*.bak
+*.translation
+
+# Local credentials (Godot 4 stores export credentials inside .godot/)
+.env
+.env.*
+!.env.example
+/export_credentials.cfg
+
+# Temporary files produced by editor tests
+/tools/mechanisms/.canvas_test_*
+/tools/enemy_editor/.roundtrip.tres*

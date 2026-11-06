@@ -1,0 +1,77 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/room.gd" id="1_x1sch"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/whitebox_block.gd" id="2_jrgxq"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/connection.gd" id="3_t4hf5"]
+[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/placement.gd" id="4_ht3ec"]
+
+[node name="Atrium" type="Node3D" unique_id=2019474688]
+script = ExtResource("1_x1sch")
+room_id = "atrium"
+display_name = "中庭"
+
+[node name="Floor" type="Node3D" parent="." unique_id=782993847]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+script = ExtResource("2_jrgxq")
+object_id = "floor"
+size = Vector3(20, 3.6, 20)
+
+[node name="WallNorthA" type="Node3D" parent="." unique_id=334270917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.65, -9.85)
+script = ExtResource("2_jrgxq")
+object_id = "wall_north_a"
+size = Vector3(8, 1.3, 0.3)
+
+[node name="WallNorthB" type="Node3D" parent="." unique_id=538842118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.65, -9.85)
+script = ExtResource("2_jrgxq")
+object_id = "wall_north_b"
+size = Vector3(8, 1.3, 0.3)
+
+[node name="WallSouth" type="Node3D" parent="." unique_id=189709591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 9.85)
+script = ExtResource("2_jrgxq")
+object_id = "wall_south"
+size = Vector3(20, 1.3, 0.3)
+
+[node name="WallEastA" type="Node3D" parent="." unique_id=401203920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85, 0.65, -6)
+script = ExtResource("2_jrgxq")
+object_id = "wall_east_a"
+size = Vector3(0.3, 1.3, 8)
+
+[node name="WallEastB" type="Node3D" parent="." unique_id=185370628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85, 0.65, 6)
+script = ExtResource("2_jrgxq")
+object_id = "wall_east_b"
+size = Vector3(0.3, 1.3, 8)
+
+[node name="WallWest" type="Node3D" parent="." unique_id=4651214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 0.65, 0)
+script = ExtResource("2_jrgxq")
+object_id = "wall_west"
+size = Vector3(0.3, 1.3, 20)
+
+[node name="East" type="Node3D" parent="." unique_id=1709698045]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 10, 0, 0)
+script = ExtResource("3_t4hf5")
+object_id = "east"
+
+[node name="North" type="Node3D" parent="." unique_id=986068756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+script = ExtResource("3_t4hf5")
+object_id = "north"
+
+[node name="PlayerSpawn" type="Node3D" parent="." unique_id=2138863002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+script = ExtResource("4_ht3ec")
+object_id = "player_spawn"
+component_kind = "placeholder"
+source_ids = PackedStringArray()
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="CentralCover" type="Node3D" parent="." unique_id=1029625243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+script = ExtResource("2_jrgxq")
+object_id = "central_cover"
+size = Vector3(3, 1.2, 3)

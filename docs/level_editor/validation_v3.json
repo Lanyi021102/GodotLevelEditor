@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-31",
+  "plugin_version": "0.3.0",
+  "engine": "4.7.1.stable.official.a13da4feb",
+  "suites": {
+    "face_push_pull": {
+      "passed": 20,
+      "failed": 0,
+      "log": "v3_face_push_pull.log"
+    },
+    "whitebox_and_gameplay_nodes": {
+      "passed": 98,
+      "failed": 0,
+      "log": "v3_features.log"
+    },
+    "level_editor": {
+      "passed": 82,
+      "failed": 0,
+      "log": "v3_regression.log"
+    },
+    "native_editor": {
+      "passed": 35,
+      "failed": 0,
+      "log": "v3_editor.log"
+    },
+    "campaign_regression": {
+      "passed": 46,
+      "failed": 0,
+      "log": "v3_campaign.log"
+    }
+  },
+  "total_passed": 281,
+  "total_failed": 0,
+  "verified": [
+    "sixteen_unit_whitebox_shapes_and_matching_collision",
+    "real_hollow_doorway_window_and_tube_collision",
+    "nonuniform_scaling_updates_actual_collision",
+    "native_scene_drag_payload_and_mesh_previews",
+    "point_one_size_and_scale_snap_with_native_undo_redo",
+    "scene_and_graph_save_reload",
+    "room_copy_ownership_and_graph_selection_binding",
+    "categorized_chinese_nodes_and_undoable_layout",
+    "real_room_entry_item_branch_switch_door_enemy_patrol_and_player_kill",
+    "wire_changes_alter_runtime_behavior",
+    "snapshot_restore_without_duplicate_trigger_or_kill_side_effects",
+    "bounded_event_queue_and_runtime_trace",
+    "connected_planar_face_selection_and_orange_highlight",
+    "face_push_pull_inward_and_outward_along_world_normal_at_point_one",
+    "opposite_vertices_anchored_and_collision_rebuilt",
+    "repeated_face_edit_and_inclined_surface_edit",
+    "native_mouse_input_commit_escape_cancel_undo_redo",
+    "native_translation_snap_enabled_at_point_one"
+  ],
+  "formal_save_written": false,
+  "default_scene": "res://scenes/whitebox_island.tscn",
+  "sample": "res://scenes/level_editor/continuous_world.tscn",
+  "interactive_sample": "res://scenes/level_editor/logic_playground.tscn",
+  "editor_capture": "face_push_pull.png",
+  "pending_integration": [
+    "formal_player_state_inventory_and_death_bridge",
+    "clones_and_recorded_interactions",
+    "timeline_and_freeze_registration",
+    "shared_event_forwarding",
+    "formal_save_writer",
+    "mechanism_graph_prefab_migration"
+  ],
+  "geometry_edit_scope": {
+    "format_version": 1,
+    "editable": "connected coplanar whitebox surface",
+    "excluded": [
+      "arbitrary boolean cuts",
+      "self intersection detection",
+      "replacement visual scene meshes"
+    ]
+  }
+}

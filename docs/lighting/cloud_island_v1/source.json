@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "name": "白模空岛氛围 V1",
+  "restored_on": "2026-11-02",
+  "source_archive": "/Users/lanyi/branch_cleanup_backups/branch_before_cleanup_2026-11-02_134233.zip",
+  "environment_source": "scripts/whitebox_island.gd::_setup_environment",
+  "shader_sources": {
+    "assets/shaders/island_sky.gdshader": {
+      "target": "assets/shaders/lighting/cloud_island_v1_sky.gdshader",
+      "sha256": "ec576e7310ede49eeaa7e200ce924e6ff7fe69b381a4d9d29f5996a9ed80f092"
+    },
+    "assets/shaders/island_clouds.gdshader": {
+      "target": "assets/shaders/lighting/cloud_island_v1_clouds.gdshader",
+      "sha256": "c138b6ce2d693499e318242860280dff644b93993e110456f7d56694533952a3"
+    }
+  },
+  "original_camera_reference": {
+    "projection": "perspective",
+    "fov_degrees": 22.0,
+    "pitch_degrees": 48.0,
+    "yaw_degrees": 34.0,
+    "distance_parameter": 35.5,
+    "spring_length_multiplier": 2.15,
+    "dof_amount": 0.13,
+    "dof_near_offset": 4.8,
+    "dof_far_offset": 5.5,
+    "dof_near_transition": 5.5,
+    "dof_far_transition": 7.0
+  },
+  "scope": "Lighting, sky and cloud atmosphere. Current camera and HUD are independent."
+}

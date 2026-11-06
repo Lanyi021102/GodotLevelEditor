@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-30",
+  "godot": "4.7.1.stable.official.a13da4feb",
+  "checks": {
+    "mechanism_runtime": {
+      "passed": 48,
+      "failed": 0
+    },
+    "editor_canvas": {
+      "passed": 33,
+      "failed": 0
+    },
+    "campaign_regression": {
+      "passed": 46,
+      "failed": 0
+    },
+    "legacy_puzzles": {
+      "passed": 51,
+      "failed": 0
+    }
+  },
+  "editor_qa": "Isolated copy using the same addon, graphical editor, actual EngineDebugger transport and screenshot inspection",
+  "integration_pending": [
+    "player interaction and clone action replay",
+    "Timeline root registration and freeze ownership",
+    "persistent save policy",
+    "grass and ladder components"
+  ],
+  "presentation_update": {
+    "date": "2026-10-31",
+    "scope": "Node category colors, input/output labels, category-preserving runtime highlighting",
+    "graphical_canvas": {
+      "passed": 33,
+      "failed": 0
+    },
+    "headless_canvas": {
+      "passed": 33,
+      "failed": 0
+    },
+    "screenshot": "node_colors_preview.png",
+    "runtime_or_resource_format_changes": false,
+    "qa_notes": [
+      "A prior graphical automation run crashed inside native editor scene close; the final graphical run separates scene teardown across editor frames and passes.",
+      "Undo verification compares all saved pre-edit endpoints instead of assuming the sample always starts with AND as its driver."
+    ]
+  }
+}

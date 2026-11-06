@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-30",
+  "engine": "Godot 4.7.1.stable.official.a13da4feb",
+  "checks": {
+    "runtime": {
+      "passed": 45,
+      "failed": 0
+    },
+    "canvas": {
+      "passed": 26,
+      "failed": 0
+    },
+    "debugger": {
+      "passed": 5,
+      "failed": 0
+    },
+    "stealth": {
+      "passed": 45,
+      "failed": 0
+    },
+    "campaign": {
+      "passed": 46,
+      "failed": 0
+    }
+  },
+  "total": {
+    "passed": 167,
+    "failed": 0
+  }
+}

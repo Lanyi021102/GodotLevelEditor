@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-02",
+  "preset": "res://scenes/lighting/sunlit_miniature_v2.tscn",
+  "unique_runtime_checks": 44,
+  "failed": 0,
+  "existing_source_files_compared": 190,
+  "owned_existing_source_edits": [
+    "scenes/3cplayground.tscn",
+    "scenes/level_editor/continuous_world.tscn",
+    "tools/level_editor/build_sample.gd"
+  ],
+  "owned_existing_source_edits_are_lighting_reference_only": true,
+  "concurrent_source_updates_observed_and_preserved": [
+    "assets/shaders/whitebox/metric_grid.gdshader",
+    "addons/branch_level_editor/runtime/whitebox_block.gd"
+  ],
+  "unexpected_source_changes": [],
+  "surface_materials_written_by_this_task": [],
+  "v1_baseline_unchanged": true,
+  "character_assets_and_user_room_mechanism_resources_unchanged": true,
+  "project_settings_changes": [
+    "rendering/lights_and_shadows/directional_shadow/size=4096 (explicit existing default)",
+    "rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3 (Soft Medium)"
+  ],
+  "checks": [
+    {
+      "log": "import_final.log",
+      "errors": [],
+      "passed": 0
+    },
+    {
+      "log": "focus_check.log",
+      "errors": [],
+      "passed": 11
+    },
+    {
+      "log": "3c_check.log",
+      "errors": [],
+      "passed": 33
+    },
+    {
+      "log": "graphical_focus.log",
+      "errors": [],
+      "passed": 11
+    },
+    {
+      "log": "final_capture.log",
+      "errors": [],
+      "passed": 0
+    },
+    {
+      "log": "playground_capture.log",
+      "errors": [],
+      "passed": 0
+    }
+  ],
+  "graphical_review": "Actual Metal Forward+ output at 1600x900 reviewed at default world spawn, closer zoom, mechanisms, and 3C playground. Player area remains sharp; warmer sunlight with cooler readable shadows. Captures are unedited viewport images.",
+  "comparison_note": "The two concurrent updates add curved-surface grid projection; this task preserved them and did not edit any surface materials."
+}

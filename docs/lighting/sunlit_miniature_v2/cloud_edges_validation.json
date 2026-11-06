@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-02",
+  "changes": [
+    "World-space drifting billow fog in empty space and below islands",
+    "Floors extend downward to 3.6m, original top height remains 0",
+    "CameraAttributes attached only at runtime; authored editor WorldEnvironment has none"
+  ],
+  "runtime_and_level_checks": 133,
+  "failed_assertions": 0,
+  "editor_hint_checks": 2,
+  "materials_character_assets_and_editor_implementation_unchanged": true,
+  "room_changes_are_floor_height_and_depth_only": true,
+  "changed_existing_sources": [
+    "assets/shaders/lighting/sunlit_miniature_v2_clouds.gdshader",
+    "scenes/3cplayground.tscn",
+    "scenes/level_editor/rooms/puzzle_3.tscn",
+    "scenes/level_editor/rooms/puzzle_2.tscn",
+    "scenes/level_editor/rooms/puzzle_1.tscn",
+    "scenes/level_editor/rooms/atrium.tscn",
+    "scenes/lighting/sunlit_miniature_v2.tscn",
+    "scripts/presentation/miniature_lighting.gd",
+    "tools/level_editor/build_sample.gd",
+    "tools/lighting/test_lighting.gd"
+  ],
+  "checks": [
+    {
+      "log": "import.log",
+      "pass_count": 0,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "log": "check.log",
+      "pass_count": 18,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "log": "3c.log",
+      "pass_count": 33,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "log": "level.log",
+      "pass_count": 82,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "log": "capture.log",
+      "pass_count": 0,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "log": "3c_capture.log",
+      "pass_count": 0,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": ""
+    },
+    {
+      "log": "editor_check.log",
+      "pass_count": 2,
+      "failed_assertions": 0,
+      "errors": [],
+      "note": "Custom editor test loop emitted shutdown resource warnings; both editor assertions passed."
+    }
+  ],
+  "live_editor_note": "Current user editor retained old resources during visual inspection. Source and fresh editor-hint process are verified. Save work and reopen the project to refresh the current session; do not discard unsaved edits.",
+  "screenshots": "Unedited 1600x900 Metal Forward+ viewport captures of actual scenes."
+}

@@ -1,0 +1,14 @@
+{
+  "author": "Quaternius",
+  "base_source": "https://quaternius.itch.io/universal-base-characters",
+  "animation_source": "https://quaternius.itch.io/universal-animation-library",
+  "license": "CC0-1.0",
+  "date": "2026-10-30",
+  "base_model": "Superhero_Male_FullBody",
+  "regular_not_in_free_package": true,
+  "modification_authorized": "User selected free male adjusted to normal proportions",
+  "archives_sha256": {
+    "universal-base-characters": "fdbf1804c90dfc1ea03e992bff7da2dfd1a79318e13270a660180f9308455f40",
+    "universal-animation-library": "cc73fc4e495b82958207316596317a3f40b9fa38065bde1027937452da537724"
+  }
+}

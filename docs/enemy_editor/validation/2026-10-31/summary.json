@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-31",
+  "scope": "enemy editor presentation only",
+  "engine": "Godot 4.7.1",
+  "checks": {
+    "canvas": {
+      "passed": 42,
+      "failed": 0
+    },
+    "runtime": {
+      "passed": 45,
+      "failed": 0
+    },
+    "debugger": {
+      "passed": 5,
+      "failed": 0
+    }
+  },
+  "total": {
+    "passed": 92,
+    "failed": 0
+  },
+  "unchanged_files": {
+    "project.godot": true,
+    "scripts/stealth/guard_ai.gd": true,
+    "resources/enemies/guard_default.tres": true,
+    "addons/enemy_editor/runtime/enemy_machine.gd": true,
+    "addons/enemy_editor/runtime/guard_template.gd": true,
+    "addons/enemy_editor/runtime/enemy_definition.gd": true,
+    "addons/branch_mechanisms/graph/node_presentation.gd": true,
+    "addons/branch_mechanisms/editor_panel.gd": true
+  },
+  "visual_review": [
+    "Native Godot GraphEdit screenshot: six-category legend, input/output directions and type hints; four state nodes do not overlap.",
+    "Native Godot screenshot with an actual debug child and Timeline rewind: selected suspicious state retains teal category color, green outline/dot and rewind/current-value text."
+  ]
+}

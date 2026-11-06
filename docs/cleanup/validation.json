@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-02",
+  "engine": "Godot 4.7.1",
+  "main_scene": "res://scenes/main.tscn",
+  "backup": "/Users/lanyi/branch_cleanup_backups/branch_before_cleanup_2026-11-02_134233.zip",
+  "removed_source_files": 289,
+  "pruned_generated_cache_files": 88,
+  "authored_content_checks": [
+    {
+      "file": "scenes/mechanisms/new_mechanism1.graph.tres",
+      "unchanged": true
+    },
+    {
+      "file": "scenes/mechanisms/new_mechanism1.tscn",
+      "unchanged": true
+    },
+    {
+      "file": "scenes/level_editor/rooms/new_room.tscn",
+      "unchanged": true
+    }
+  ],
+  "checks": [
+    {
+      "suite": "import",
+      "errors": [],
+      "passed": null,
+      "failed": 0
+    },
+    {
+      "suite": "main",
+      "errors": [],
+      "passed": null,
+      "failed": 0
+    },
+    {
+      "suite": "enemy",
+      "errors": [],
+      "passed": 45,
+      "failed": 0
+    },
+    {
+      "suite": "mechanisms",
+      "errors": [],
+      "passed": 48,
+      "failed": 0
+    },
+    {
+      "suite": "level",
+      "errors": [],
+      "passed": 82,
+      "failed": 0
+    },
+    {
+      "suite": "current_world",
+      "errors": [],
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "suite": "hud",
+      "errors": [],
+      "passed": 88,
+      "failed": 0
+    },
+    {
+      "suite": "clone",
+      "errors": [],
+      "passed": 37,
+      "failed": 0
+    },
+    {
+      "suite": "timeline",
+      "errors": [],
+      "passed": 21,
+      "failed": 0
+    },
+    {
+      "suite": "level_v2",
+      "errors": [],
+      "passed": 98,
+      "failed": 0
+    },
+    {
+      "suite": "face",
+      "errors": [],
+      "passed": 20,
+      "failed": 0
+    },
+    {
+      "suite": "enemy_canvas",
+      "errors": [],
+      "passed": 42,
+      "failed": 0
+    },
+    {
+      "suite": "mechanism_canvas",
+      "errors": [],
+      "passed": 33,
+      "failed": 0
+    },
+    {
+      "suite": "level_canvas",
+      "errors": [],
+      "passed": 35,
+      "failed": 0
+    },
+    {
+      "suite": "resources",
+      "errors": [],
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "suite": "visual",
+      "errors": [],
+      "passed": 21,
+      "failed": 0
+    }
+  ],
+  "visual_review": "current_world.png inspected: neutral whitebox, readable native HUD, normal-proportion character; no retired environment effects."
+}
