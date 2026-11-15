@@ -1,12 +1,12 @@
 extends Node
-const F := preload("res://addons/branch_level_editor/scene_factory.gd")
-const G := preload("res://addons/branch_level_editor/runtime/level_graph.gd")
-const SHAPES := preload("res://addons/branch_level_editor/runtime/whitebox_shapes.gd")
-const RUNNER := preload("res://addons/branch_level_editor/runtime/event_runner.gd")
-const DEMO := preload("res://scenes/level_editor/logic_playground.tscn")
+const F := preload("res://addons/godot_level_editor/scene_factory.gd")
+const G := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
+const SHAPES := preload("res://addons/godot_level_editor/runtime/whitebox_shapes.gd")
+const RUNNER := preload("res://addons/godot_level_editor/runtime/event_runner.gd")
+const DEMO := preload("res://scenes/levels/logic_playground.tscn")
 var passed := 0
 var failed := 0
-var directory := "/tmp/branch_level_v2_" + str(OS.get_process_id())
+var directory := "/tmp/godot_level_editor_level_v2_" + str(OS.get_process_id())
 func _ready() -> void:
 	get_tree().create_timer(70).timeout.connect(func(): push_error("V2 watchdog"); get_tree().quit(2))
 	DirAccess.make_dir_recursive_absolute(directory)
@@ -93,7 +93,7 @@ func _logic() -> void:
 	actor.travel = Vector3.ZERO
 	_check(world.runner.counts.get("enter", 0) == 1, "real Room volume emits player-enter trigger once")
 	_check(world.runner.values.key and world.runner.values.if_key, "inventory condition reads actual player adapter")
-	_check(lever.is_powered(), "true branch actually opens switch")
+	_check(lever.is_powered(), "true godot_level_editor actually opens switch")
 	_check(guard.is_physics_processing() and guard.enemy_runtime_state().state_id == "patrol", "action enables original enemy patrol state machine")
 	await _wait(60)
 	_check(world.object_by_id("demo_room/door").runtime_component.is_open(), "opened switch actually drives existing door")
@@ -116,7 +116,7 @@ func _logic() -> void:
 	await _wait(35)
 	actor.travel = Vector3.ZERO
 	_check(agent.dead and deaths.size() == 2, "restored trigger becomes active after a real exit and reentry")
-	var missing: BranchLevelGraph = world.events.duplicate(true)
+	var missing: GodotLevelEditorLevelGraph = world.events.duplicate(true)
 	for n in missing.nodes:
 		if n.kind == "room_enter": n.params.room = "missing_room"
 	var previous: Resource = world.events
@@ -131,7 +131,7 @@ func _logic() -> void:
 	actor.travel = Vector3.RIGHT
 	await _wait(65)
 	actor.travel = Vector3.ZERO
-	_check(not world.runner.values.key and not world.object_by_id("demo_room/switch").runtime_component.is_powered(), "missing key takes false branch and leaves switch closed")
+	_check(not world.runner.values.key and not world.object_by_id("demo_room/switch").runtime_component.is_powered(), "missing key takes false godot_level_editor and leaves switch closed")
 	_check(world.runner.counts.get("no_key", 0) == 1 and world.runner.counts.get("open_switch", 0) == 0, "false output executes different connected behavior")
 	world.queue_free()
 	await _wait(3)

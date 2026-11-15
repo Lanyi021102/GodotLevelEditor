@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" path="res://scenes/humanoid_player.tscn" id="actor"]
 [ext_resource type="Script" uid="uid://b1ucc511b3u4a" path="res://scripts/camera/orbit_camera.gd" id="camera"]
-[ext_resource type="Script" uid="uid://b3qja5esshnr5" path="res://addons/branch_mechanisms/runtime/door.gd" id="door"]
+[ext_resource type="Script" uid="uid://b3qja5esshnr5" path="res://addons/godot_level_editor_mechanisms/runtime/door.gd" id="door"]
 [ext_resource type="Material" path="res://resources/materials/whitebox_metric_grid.tres" id="grid"]
 [ext_resource type="Shader" uid="uid://ckyofilbtd22s" path="res://assets/shaders/whitebox/metric_grid.gdshader" id="grid_shader"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="hud"]
-[ext_resource type="Script" uid="uid://bnx7a8ybqrk0d" path="res://addons/branch_mechanisms/runtime/lever.gd" id="lever"]
+[ext_resource type="Script" uid="uid://bnx7a8ybqrk0d" path="res://addons/godot_level_editor_mechanisms/runtime/lever.gd" id="lever"]
 [ext_resource type="PackedScene" path="res://scenes/lighting/sunlit_miniature_v2.tscn" id="lighting"]
 [ext_resource type="Script" uid="uid://m4e26hmydjr6" path="res://scripts/3cplayground.gd" id="session"]
 
@@ -622,21 +622,20 @@ walk_animation_speed = 0.9
 run_animation_speed = 5.43
 crouch_animation_speed = 0.66
 
-[node name="Trails" type="Node3D" parent="." unique_id=2063342012]
-
 [node name="CameraRig" type="Node3D" parent="." unique_id=692627715]
 script = ExtResource("camera")
-distance = 24.0
-pitch_degrees = 48.0
+target_path = NodePath("../Player")
+distance = 3.8
+pitch_degrees = 10.0
 yaw_degrees = 0.0
 
 [node name="Arm" type="SpringArm3D" parent="CameraRig" unique_id=961852285]
-collision_mask = 0
-spring_length = 24.0
+collision_mask = 1
+spring_length = 3.8
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/Arm" unique_id=166388461]
-projection = 1
 current = true
-size = 19.2
+fov = 65.0
+near = 0.08
 
 [node name="HUD" parent="." unique_id=1800182825 instance=ExtResource("hud")]

@@ -27,8 +27,8 @@
     "addons/enemy_editor/runtime/enemy_machine.gd": true,
     "addons/enemy_editor/runtime/guard_template.gd": true,
     "addons/enemy_editor/runtime/enemy_definition.gd": true,
-    "addons/branch_mechanisms/graph/node_presentation.gd": true,
-    "addons/branch_mechanisms/editor_panel.gd": true
+    "addons/godot_level_editor_mechanisms/graph/node_presentation.gd": true,
+    "addons/godot_level_editor_mechanisms/editor_panel.gd": true
   },
   "visual_review": [
     "Native Godot GraphEdit screenshot: six-category legend, input/output directions and type hints; four state nodes do not overlap.",

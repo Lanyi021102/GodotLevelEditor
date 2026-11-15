@@ -1,0 +1,13 @@
+{
+  "checked_existing_files": 60,
+  "unchanged": 59,
+  "observed_changes_during_parallel_work": [
+    {
+      "path": "scenes/levels/5_adwa.tscn",
+      "before": "3450bc9c1031b05c1d0c51484c7fb921838ac17c23e68f288a457e9dbadcf306",
+      "after": "76e4ebc169999d8fed5598cf3fd6195702e52b5e6c5c19c0f544bebed2351123"
+    }
+  ],
+  "all_existing_mechanism_assets_unchanged": true,
+  "note": "New scenes/resources were added separately; validation and roundtrip writes ran in isolated copies. Existing mechanism assets and user workbooks were preserved."
+}

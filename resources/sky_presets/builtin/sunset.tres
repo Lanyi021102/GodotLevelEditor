@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_sky/preset.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "暖色黄昏"
+sun_mode = 1
+hour = 17.0
+sun_color = Color(1, 0.65, 0.35, 1)
+sun_energy = 1.6
+ambient_energy = 0.45
+cloud_coverage = 0.35

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://do0fquuxroi1c"]
 
-[ext_resource type="Script" uid="uid://cx88rnty8tuha" path="res://addons/branch_mechanisms/runtime/assembly.gd" id="1_kdkdj"]
+[ext_resource type="Script" uid="uid://cx88rnty8tuha" path="res://addons/godot_level_editor_mechanisms/runtime/assembly.gd" id="1_kdkdj"]
 [ext_resource type="Resource" uid="uid://ci7tgmdnimkky" path="res://scenes/mechanisms/new_mechanism1.graph.tres" id="2_00nfq"]
-[ext_resource type="Script" uid="uid://bnx7a8ybqrk0d" path="res://addons/branch_mechanisms/runtime/lever.gd" id="3_nl7mp"]
-[ext_resource type="Script" uid="uid://dqspd6gm2oort" path="res://addons/branch_mechanisms/runtime/plate.gd" id="4_ou8u2"]
-[ext_resource type="Script" uid="uid://b3qja5esshnr5" path="res://addons/branch_mechanisms/runtime/door.gd" id="5_6fqqq"]
+[ext_resource type="Script" uid="uid://bnx7a8ybqrk0d" path="res://addons/godot_level_editor_mechanisms/runtime/lever.gd" id="3_nl7mp"]
+[ext_resource type="Script" uid="uid://dqspd6gm2oort" path="res://addons/godot_level_editor_mechanisms/runtime/plate.gd" id="4_ou8u2"]
+[ext_resource type="Script" uid="uid://b3qja5esshnr5" path="res://addons/godot_level_editor_mechanisms/runtime/door.gd" id="5_6fqqq"]
 
 [node name="LeverPlateDoor" type="Node3D" unique_id=448209140]
 process_physics_priority = -10

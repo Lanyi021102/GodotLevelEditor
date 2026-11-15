@@ -1,0 +1,4 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://tools/level_editor/test_standalone_play.gd" id="1"]
+[node name="StandalonePlayTest" type="Node"]
+script = ExtResource("1")

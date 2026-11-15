@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="BranchLevelGraph" format=3 uid="uid://c71wqb2q5xovc"]
+[gd_resource type="Resource" script_class="GodotLevelEditorLevelGraph" format=3 uid="uid://c71wqb2q5xovc"]
 
-[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/branch_level_editor/runtime/level_graph.gd" id="1_1bbok"]
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/runtime/level_graph.gd" id="1_1bbok"]
 
 [resource]
 script = ExtResource("1_1bbok")

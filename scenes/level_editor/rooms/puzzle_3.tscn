@@ -1,11 +1,11 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/room.gd" id="1_3fj33"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/whitebox_block.gd" id="2_8qg27"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/connection.gd" id="3_13eb3"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/placement.gd" id="4_y1hen"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/room.gd" id="1_3fj33"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/whitebox_block.gd" id="2_8qg27"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/connection.gd" id="3_13eb3"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/placement.gd" id="4_y1hen"]
 [ext_resource type="Resource" path="res://resources/enemies/guard_default.tres" id="5_b2fd2"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/region.gd" id="6_ehdsc"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/region.gd" id="6_ehdsc"]
 
 [node name="Puzzle3" type="Node3D" unique_id=53501073]
 script = ExtResource("1_3fj33")

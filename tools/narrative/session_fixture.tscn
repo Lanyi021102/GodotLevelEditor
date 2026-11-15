@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://d4hxcrxj430cn"]
+
+[ext_resource type="Script" uid="uid://dmubuw6lmemjj" path="res://scripts/main.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://boculk7afqsnh" path="res://scenes/levels/continuous_world.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/humanoid_player.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b7wbepifdx4fv" path="res://scenes/hud.tscn" id="4"]
+[ext_resource type="Script" uid="uid://b1ucc511b3u4a" path="res://scripts/camera/orbit_camera.gd" id="5"]
+[ext_resource type="Script" uid="uid://6lwk8boqdoyq" path="res://addons/godot_level_editor/runtime/actor_agent.gd" id="6"]
+[ext_resource type="PackedScene" path="res://scenes/narrative/reception.tscn" id="7_narrative"]
+
+[node name="GodotLevelEditor" type="Node3D" unique_id=1867796458]
+script = ExtResource("1")
+persist_progress = false
+
+[node name="World" parent="." unique_id=1119635326 instance=ExtResource("2")]
+process_mode = 1
+
+[node name="Player" parent="." unique_id=25565748 instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.08, 4)
+walk_animation_speed = 0.9
+run_animation_speed = 5.43
+crouch_animation_speed = 0.66
+
+[node name="LevelAgent" type="Node" parent="Player" unique_id=71739472]
+script = ExtResource("6")
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=363986544]
+script = ExtResource("5")
+target_path = NodePath("../Player")
+
+[node name="Arm" type="SpringArm3D" parent="CameraRig" unique_id=1458445824]
+spring_length = 3.8
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Arm" unique_id=1854467192]
+current = true
+fov = 65.0
+near = 0.08
+
+[node name="HUD" parent="." unique_id=1208700496 instance=ExtResource("4")]
+
+[node name="Narrative" parent="." unique_id=1323848393 instance=ExtResource("7_narrative")]

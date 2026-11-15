@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/mechanisms/whitebox_v1/test_runtime.gd" id="1"]
+
+[node name="MechanismWhiteboxTests" type="Node"]
+script = ExtResource("1")

@@ -1,7 +1,7 @@
 extends Node
-const FACTORY := preload("res://addons/branch_level_editor/scene_factory.gd")
-const GRAPH := preload("res://addons/branch_level_editor/runtime/level_graph.gd")
-const WORLD := preload("res://addons/branch_level_editor/runtime/world.gd")
+const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
+const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
+const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
 
 func _ready() -> void:
 	_build.call_deferred()
@@ -57,7 +57,7 @@ func _build() -> void:
 		_assert_ok(FACTORY.save_scene(room, "res://scenes/level_editor/rooms/%s.tscn" % info[0]))
 		room.free()
 	var topology := GRAPH.new()
-	topology.graph_id = "branch_topology_v1"
+	topology.graph_id = "godot_level_editor_topology_v1"
 	topology.graph_kind = "topology"
 	var pairs := [["atrium/east", "puzzle_1/west"], ["puzzle_1/north", "puzzle_2/south"], ["puzzle_2/west", "puzzle_3/east"], ["puzzle_3/south", "atrium/north"]]
 	for i in pairs.size():
@@ -67,7 +67,7 @@ func _build() -> void:
 			topology.positions[id] = Vector2(60 + j * 480, 40 + i * 160)
 		topology.edges.append({"id": "link_%d" % i, "from": "port_%d_0" % i, "from_port": "space", "to": "port_%d_1" % i, "to_port": "space"})
 	var events := GRAPH.new()
-	events.graph_id = "branch_events_v1"
+	events.graph_id = "godot_level_editor_events_v1"
 	for i in 3:
 		var suffix := str(i + 1)
 		_node(events, "source_" + suffix, "source", {"object": "puzzle_%s/door" % suffix, "query": "open"}, Vector2(40, 40 + i * 240))
@@ -84,7 +84,7 @@ func _build() -> void:
 	_assert_ok(ResourceSaver.save(topology, "res://resources/level_editor/world_topology.tres"))
 	_assert_ok(ResourceSaver.save(events, "res://resources/level_editor/world_events.tres"))
 	var world := WORLD.new()
-	world.name = "BranchWorld"
+	world.name = "GodotLevelEditorWorld"
 	world.topology = load("res://resources/level_editor/world_topology.tres")
 	world.events = load("res://resources/level_editor/world_events.tres")
 	var positions := [Vector3.ZERO, Vector3(20, 0, 0), Vector3(20, 0, -20), Vector3(0, 0, -20)]
@@ -109,16 +109,16 @@ func _build() -> void:
 		get_tree().quit(1)
 		world.free()
 		return
-	_assert_ok(FACTORY.save_scene(world, "res://scenes/level_editor/continuous_world.tscn"))
+	_assert_ok(FACTORY.save_scene(world, "res://scenes/levels/continuous_world.tscn"))
 	world.free()
 	print("LEVEL SAMPLE: 4 room scenes + 2 graphs + continuous world saved")
 	get_tree().quit()
 
-func _node(graph: BranchLevelGraph, id: String, kind: String, params: Dictionary, at: Vector2) -> void:
+func _node(graph: GodotLevelEditorLevelGraph, id: String, kind: String, params: Dictionary, at: Vector2) -> void:
 	graph.nodes.append({"id": id, "kind": kind, "label": GRAPH.LABELS[kind], "params": params})
 	graph.positions[id] = at
 
-func _edge(graph: BranchLevelGraph, a: String, ap: String, b: String, bp: String) -> void:
+func _edge(graph: GodotLevelEditorLevelGraph, a: String, ap: String, b: String, bp: String) -> void:
 	graph.edges.append({"id": "edge_%s_%s" % [a, b], "from": a, "from_port": ap, "to": b, "to_port": bp})
 
 func _assert_ok(err: Error) -> void:

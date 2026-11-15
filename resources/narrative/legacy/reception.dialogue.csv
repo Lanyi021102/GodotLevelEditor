@@ -1,0 +1,4 @@
+version,group_id,group_name,group_order,comment_id,comment_name,comment_order,line_id,line_order,speaker,color,text,type,duration
+2,group_695718d8d1d81432,初次报到,0,reception_intro,进入对话,0,reception_001,0,接待员,#99d1f5ff,欢迎来到时间管理局。你就是今天报到的新特工吧？,对白,0.0
+2,group_695718d8d1d81432,初次报到,0,reception_intro,进入对话,0,reception_002,1,特工,#f7c475ff,是的，我来领取任务。,对白,0.0
+2,group_695718d8d1d81432,初次报到,0,reception_intro,进入对话,0,reception_003,2,接待员,#99d1f5ff,报到完成。先熟悉中庭，我们很快会通知你下一项任务。,引导,0.0

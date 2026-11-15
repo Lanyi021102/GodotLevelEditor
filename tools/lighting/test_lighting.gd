@@ -29,9 +29,9 @@ func _ready() -> void:
 	var rig: Node3D = game.get_node("CameraRig")
 	var camera: Camera3D = rig.camera
 	check(game.world.runtime_valid, "default authored world still assembles")
-	check(camera.projection == Camera3D.PROJECTION_ORTHOGONAL, "existing camera projection is retained")
+	check(camera.projection == Camera3D.PROJECTION_PERSPECTIVE, "third-person perspective camera is retained by lighting")
 	check(camera.attributes == null and attributes != null, "V2 owns post-processing without overwriting camera resources")
-	check(attributes.dof_blur_near_enabled and attributes.dof_blur_far_enabled, "depth of field enables only in the running instance")
+	check(not attributes.dof_blur_near_enabled and not attributes.dof_blur_far_enabled, "third-person gameplay keeps distant clues sharp")
 	var unchanged_editor: Node = load("res://scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
 	check(unchanged_editor.get_node("WorldEnvironment").camera_attributes == null, "running the game does not attach blur to the authored editor scene")
 	unchanged_editor.free()
@@ -48,13 +48,11 @@ func _ready() -> void:
 		rig._apply()
 		await wait(3)
 		check(in_focus(camera, attributes, game.player.global_position + Vector3.UP), "focus follows zoom and rotation at distance %.1f" % distance)
-	# Frozen time still permits camera updates; the lighting must follow it.
-	Timeline.rewind_to_frame(Timeline.head)
-	check(Timeline.frozen, "time is paused for the camera check")
+	# Lighting follows a distant camera while whitebox simulation runs.
 	rig.distance = 19.0
 	rig._apply()
 	await wait(3)
-	check(in_focus(camera, attributes, game.player.global_position + Vector3.UP), "focus updates while gameplay is paused")
+	check(in_focus(camera, attributes, game.player.global_position + Vector3.UP), "focus updates for a distant whitebox view")
 	var other: Node = load("res://scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
 	check(attributes != other.runtime_camera_attributes, "separate V2 instances have independent focus resources")
 	other.free()
@@ -63,6 +61,5 @@ func _ready() -> void:
 	v1.free()
 	game.queue_free()
 	await wait(3)
-	Timeline.clear()
 	print("LIGHTING: %d checks, %d failed" % [checks, failures])
 	get_tree().quit(1 if failures else 0)

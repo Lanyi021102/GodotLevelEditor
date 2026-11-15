@@ -1,11 +1,15 @@
-# Branch 双机协作
+# GodotLevelEditor 双机协作
 
 两台电脑各自保留本地工程，通过 Git 提交与 GitHub 仓库交换版本。两端统一使用 Godot 4.7.1。
+
+当前私有仓库：[Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)。2026-11-16 从 `branch` 改为项目当前名称，保留原有提交历史和 `baseline-2026-11-06` 标签。本地目录名不影响项目或仓库名称。
+
+已经克隆旧仓库的电脑，可在项目目录执行 `git remote set-url origin https://github.com/Lanyi021102/GodotLevelEditor.git` 更新远程地址。
 
 ## 第一次使用 Windows
 
 1. 安装 GitHub Desktop，登录拥有仓库访问权限的 GitHub 账号。
-2. 将 `Lanyi021102/branch` 克隆到普通本地目录，例如 `D:\Projects\branch`。避免放入 OneDrive 等自动同步目录。
+2. 将 `Lanyi021102/GodotLevelEditor` 克隆到普通本地目录，例如 `D:\Projects\godot_level_editor`。避免放入 OneDrive 等自动同步目录。
 3. 在 Godot 项目管理器中导入该目录的 `project.godot`，等待资源导入完成。
 4. F5 运行默认场景；检查三套编辑器、角色、材质和输入。现有 `启动项目.command` 供 macOS 使用，Windows 直接从 Godot 打开工程。
 

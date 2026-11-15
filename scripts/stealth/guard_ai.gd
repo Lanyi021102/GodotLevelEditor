@@ -82,6 +82,14 @@ var _anim_state := ""
 
 func _ready() -> void:
 	_configure_enemy()
+	if _machine.definition != null and _machine.definition.appearance != null:
+		var previous := get_node("ModelRoot")
+		remove_child(previous)
+		previous.queue_free()
+		var visual := preload("res://addons/enemy_editor/npc_visual.gd").new()
+		visual.name = "ModelRoot"
+		visual.appearance = _machine.definition.appearance
+		add_child(visual)
 	var route := get_node_or_null(patrol_route) if not patrol_route.is_empty() else null
 	if route != null:
 		patrol_points.clear()
@@ -377,7 +385,7 @@ func _report_enemy_state(rewound: bool) -> void:
 	if not EngineDebugger.is_active() or not is_inside_tree(): return
 	var data := enemy_runtime_state()
 	data["rewound"] = rewound
-	EngineDebugger.send_message("branch_enemy:state", [data])
+	EngineDebugger.send_message("godot_level_editor_enemy:state", [data])
 
 func _exit_tree() -> void:
-	if EngineDebugger.is_active(): EngineDebugger.send_message("branch_enemy:remove", [str(get_path())])
+	if EngineDebugger.is_active(): EngineDebugger.send_message("godot_level_editor_enemy:remove", [str(get_path())])

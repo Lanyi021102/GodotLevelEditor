@@ -1,0 +1,19 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="1_l2ynf"]
+
+[resource]
+script = ExtResource("1_l2ynf")
+definition_id = "wb_v1_pressure_plate"
+display_name = "压力板"
+nodes = Array[Dictionary]([{
+"id": "pressure_plate_component",
+"kind": "pressure_plate",
+"label": "压力板组件",
+"params": {
+"object_id": "pressure_plate"
+}
+}])
+positions = {
+"pressure_plate_component": Vector2(40, 60)
+}

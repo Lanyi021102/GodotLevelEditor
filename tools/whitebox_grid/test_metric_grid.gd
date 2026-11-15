@@ -1,6 +1,6 @@
 extends Node3D
-const BLOCK := preload("res://addons/branch_level_editor/runtime/whitebox_block.gd")
-const SHAPES := preload("res://addons/branch_level_editor/runtime/whitebox_shapes.gd")
+const BLOCK := preload("res://addons/godot_level_editor/runtime/whitebox_block.gd")
+const SHAPES := preload("res://addons/godot_level_editor/runtime/whitebox_shapes.gd")
 const GRID := preload("res://scripts/tools/metric_grid.gd")
 var failures := 0
 var checks := 0

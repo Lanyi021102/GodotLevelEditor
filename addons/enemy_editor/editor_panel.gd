@@ -1,6 +1,7 @@
 @tool
 extends VBoxContainer
 signal definition_saved(path: String)
+signal definition_opened(path: String)
 signal focus_guard_requested
 signal bind_guard_requested
 signal create_route_requested
@@ -47,14 +48,19 @@ var _rebuilding := false
 var _paused_sessions: Dictionary = {}
 var _clipboard: Array[Dictionary] = []
 var _clipboard_edges: Array[Dictionary] = []
+var library_actions: Array[Button] = []
+var workspaces: TabContainer
+var appearance_panel: Control
+var npc_scene_dialog: EditorFileDialog
+var behavior_controls: Array[Control] = []
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var bar := HBoxContainer.new()
+	var bar := HFlowContainer.new()
 	add_child(bar)
-	_button(bar, "守卫模板", func(): _guard_discard(_new_template))
-	_button(bar, "打开", func(): _guard_discard(func(): open_dialog.popup_centered_ratio(0.65)))
+	library_actions.append(_button(bar, "守卫模板", func(): _guard_discard(_new_template)))
+	library_actions.append(_button(bar, "打开", func(): _guard_discard(func(): open_dialog.popup_centered_ratio(0.65))))
 	_button(bar, "重载", func():
 		if not file_path.is_empty(): _guard_discard(func(): _load(file_path)))
 	_button(bar, "保存", save)
@@ -62,21 +68,24 @@ func _ready() -> void:
 	_button(bar, "撤销", func(): history.undo())
 	_button(bar, "重做", func(): history.redo())
 	_button(bar, "验证", _validate)
-	_button(bar, "+ 搜索节点", _show_search)
-	_button(bar, "复制", _copy_selected)
-	_button(bar, "粘贴", _paste_selected)
+	_button(bar, "生成 NPC 素材…", _choose_npc_scene)
+	behavior_controls.append(_button(bar, "+ 搜索节点", _show_search))
+	behavior_controls.append(_button(bar, "复制", _copy_selected))
+	behavior_controls.append(_button(bar, "粘贴", _paste_selected))
 	path_label = Label.new()
 	path_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	path_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	bar.add_child(path_label)
-	var scene_bar := HBoxContainer.new()
+	var scene_bar := HFlowContainer.new()
 	add_child(scene_bar)
+	behavior_controls.append(scene_bar)
 	_button(scene_bar, "绑定到所选守卫", func(): bind_guard_requested.emit())
 	_button(scene_bar, "定位三维守卫", func(): focus_guard_requested.emit())
 	_button(scene_bar, "创建巡逻路点", func(): create_route_requested.emit())
-	scene_label = _label(scene_bar, "在场景树选择守卫后可绑定定义；位置和路点在三维视口编辑。")
+	scene_label = _label(scene_bar, "")
 	var debug_bar := HBoxContainer.new()
 	add_child(debug_bar)
+	behavior_controls.append(debug_bar)
 	_label(debug_bar, "运行实例")
 	instances = OptionButton.new()
 	instances.custom_minimum_size.x = 280
@@ -84,13 +93,24 @@ func _ready() -> void:
 	instances.item_selected.connect(func(index: int):
 		selected_instance = str(instances.get_item_metadata(index))
 		_highlight())
-	runtime_label = _label(debug_bar, "启动游戏后显示；暂停与回溯时同步高亮")
+	runtime_label = _label(debug_bar, "")
 	runtime_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	runtime_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	Presentation.add_legend(self)
+	workspaces = TabContainer.new()
+	workspaces.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	add_child(workspaces)
+	appearance_panel = preload("res://addons/enemy_editor/appearance_panel.gd").new()
+	appearance_panel.name = "模型与动画"
+	appearance_panel.appearance_changed.connect(_set_appearance)
+	appearance_panel.operation_error.connect(func(message: String): status.text = message)
+	workspaces.add_child(appearance_panel)
 	var split := HSplitContainer.new()
+	split.name = "行为图"
 	split.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	add_child(split)
+	workspaces.add_child(split)
+	workspaces.tab_changed.connect(func(index: int):
+		for control in behavior_controls: control.visible = index == 1)
 	graph = GraphEdit.new()
 	graph.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	graph.custom_minimum_size = Vector2(480, 440)
@@ -136,6 +156,12 @@ func _ready() -> void:
 	save_dialog.current_path = "res://resources/enemies/new_enemy.tres"
 	save_dialog.file_selected.connect(_save_to)
 	add_child(save_dialog)
+	npc_scene_dialog = EditorFileDialog.new()
+	npc_scene_dialog.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE
+	npc_scene_dialog.access = EditorFileDialog.ACCESS_RESOURCES
+	npc_scene_dialog.add_filter("*.tscn", "NPC 场景")
+	npc_scene_dialog.file_selected.connect(create_npc_scene)
+	add_child(npc_scene_dialog)
 	discard_dialog = ConfirmationDialog.new()
 	discard_dialog.dialog_text = "有未保存修改。继续将丢弃这些修改。"
 	discard_dialog.confirmed.connect(func():
@@ -157,6 +183,7 @@ func _ready() -> void:
 	search_dialog.confirmed.connect(_add_search_result)
 	add_child(search_dialog)
 	_new_template()
+	for control in behavior_controls: control.hide()
 
 func _tab(title: String) -> VBoxContainer:
 	var scroll := ScrollContainer.new()
@@ -237,7 +264,7 @@ func _new_template() -> void:
 	selected_edge = ""
 	_saved_signature = _signature()
 	_refresh()
-	status.text = "守卫模板副本：请另存为 .tres，然后赋给守卫的 Enemy Definition。"
+	status.text = ""
 
 func _load(path: String) -> void:
 	var loaded := Store.load_definition(path)
@@ -261,6 +288,7 @@ func _load(path: String) -> void:
 	_saved_signature = _signature()
 	_update_dirty()
 	_validate()
+	definition_opened.emit(path)
 
 func save() -> void:
 	get_viewport().gui_release_focus()
@@ -289,14 +317,50 @@ func _save_to(path: String) -> void:
 	definition_saved.emit(path)
 
 func _signature() -> String:
-	return var_to_str([definition.display_name, definition.initial_state, definition.states, definition.transitions, definition.parameters, definition.layout])
+	return _definition_signature(definition)
+
+func _definition_signature(value: EnemyDefinition) -> String:
+	return var_to_str([value.display_name, value.initial_state, value.states, value.transitions, value.parameters, value.layout, value.appearance.signature() if value.appearance != null else ""])
+
+func _set_appearance(value: Resource) -> void:
+	var before := definition.duplicate(true) as EnemyDefinition
+	definition.appearance = value
+	_record(before, "修改 NPC 模型与动画")
+	status.text = "未保存"
+
+func _choose_npc_scene() -> void:
+	if file_path.is_empty() or dirty:
+		status.text = "请先保存当前 NPC，再生成素材。"
+		return
+	npc_scene_dialog.current_path = "res://scenes/npcs/" + file_path.get_file().get_basename() + ".tscn"
+	npc_scene_dialog.popup_centered_ratio(0.65)
+
+func create_npc_scene(path: String) -> bool:
+	if file_path.is_empty() or dirty: status.text = "请先保存当前 NPC。"; return false
+	if not path.begins_with("res://") or not path.ends_with(".tscn"): status.text = "请保存为项目内的 .tscn 场景。"; return false
+	if FileAccess.file_exists(path): status.text = "同名场景已存在，请另选文件名。"; return false
+	var root := preload("res://scenes/guard.tscn").instantiate()
+	root.name = definition.display_name.validate_node_name()
+	root.enemy_definition = ResourceLoader.load(file_path, "", ResourceLoader.CACHE_MODE_REPLACE)
+	if definition.appearance != null:
+		var model_root := root.get_node("ModelRoot")
+		model_root.set_script(preload("res://addons/enemy_editor/npc_visual.gd"))
+		model_root.npc_definition = root.enemy_definition
+	var packed := PackedScene.new()
+	var result := packed.pack(root)
+	root.free()
+	if result == OK: result = ResourceSaver.save(packed, path)
+	if result != OK: status.text = "生成 NPC 素材失败：" + error_string(result); return false
+	EditorInterface.get_resource_filesystem().scan()
+	status.text = "已生成 NPC 素材：" + path
+	return true
 
 func _update_dirty() -> void:
 	dirty = _signature() != _saved_signature
 	path_label.text = ("● " if dirty else "") + (file_path if not file_path.is_empty() else "未保存模板")
 
 func _record(before: EnemyDefinition, title := "编辑敌人") -> void:
-	if var_to_str([before.display_name, before.initial_state, before.states, before.transitions, before.parameters, before.layout]) == _signature():
+	if _definition_signature(before) == _signature():
 		return
 	history.create_action(title)
 	history.add_do_method(_apply_snapshot.bind(definition.duplicate(true)))
@@ -312,6 +376,7 @@ func _apply_snapshot(snapshot: EnemyDefinition) -> void:
 
 func _refresh() -> void:
 	_update_dirty()
+	appearance_panel.bind(definition.appearance, file_path)
 	_render_graph()
 	_render_state()
 	_render_edges()
@@ -567,6 +632,7 @@ func clear_session(session_id: int) -> void:
 
 func _rebuild_instances() -> void:
 	instances.clear()
+	instances.get_parent().visible = not runtime.is_empty()
 	for key in runtime:
 		instances.add_item(str(runtime[key].instance) + " [会话 %s]" % runtime[key].get("session", 0))
 		instances.set_item_metadata(instances.item_count - 1, key)
@@ -586,14 +652,14 @@ func _highlight() -> void:
 			var active: bool = matching and str(child.name) == "s_" + str(packet.get("state_id", ""))
 			var id := str(child.name).trim_prefix("s_")
 			child.title = Presentation.title(str(definition.state_by_id(id).get("label", id)), id == definition.initial_state, active, mode)
-			var value := "剩余 %.2f s · 警觉 %.1f" % [packet.get("timer", 0.0), packet.get("alert", 0.0)] if active else ("非活动状态" if matching else "未运行")
+			var value := "剩余 %.2f s · 警觉 %.1f" % [packet.get("timer", 0.0), packet.get("alert", 0.0)] if active else ("非活动状态" if matching else "")
 			Presentation.show_runtime(child, active, mode, value, "最近转换原因：" + reason if active else "")
 	for i in edge_list.item_count:
 		var active: bool = matching and edge_list.get_item_metadata(i) == packet.get("last_transition", "")
 		edge_list.set_item_custom_fg_color(i, Color("16956b") if active else edge_list.get_theme_color("font_color"))
 	runtime_label.tooltip_text = "实例 %s\n定义 %s\n行为 %s · 速度 %s m/s\n状态 %s · 剩余 %s s\n警觉 %s · 看见目标 %s\n最近转换 %s" % [packet.get("instance", ""), packet.get("definition", ""), packet.get("behavior", ""), packet.get("speed", 0.0), packet.get("state_id", ""), packet.get("timer", 0.0), packet.get("alert", 0.0), packet.get("seen", false), packet.get("last_reason", packet.get("last_transition", ""))]
 	if packet.is_empty():
-		runtime_label.text = "启动游戏后显示；暂停与回溯时同步高亮"
+		runtime_label.text = ""
 	elif not matching:
 		runtime_label.text = "实例使用其他定义：" + str(packet.get("definition", ""))
 	else:
@@ -689,6 +755,7 @@ func set_scene_guard_label(text: String) -> void:
 
 
 func _exit_tree() -> void:
+	if get_meta("godot_level_editor_reparenting", false): return
 	if is_instance_valid(history): history.free()
 
 

@@ -1,6 +1,7 @@
 extends Node3D
-const BLOCK := preload("res://addons/branch_level_editor/runtime/whitebox_block.gd")
-const EDIT := preload("res://addons/branch_level_editor/face_edit.gd")
+const BLOCK := preload("res://addons/godot_level_editor/runtime/whitebox_block.gd")
+const EDIT := preload("res://addons/godot_level_editor/face_edit.gd")
+const ELEMENTS := preload("res://addons/godot_level_editor/mesh_elements.gd")
 var passed := 0
 var failed := 0
 func check(value: bool, title: String) -> void:
@@ -34,7 +35,7 @@ func _ready() -> void:
 	for _i in 3: await get_tree().physics_frame
 	var hit := get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(Vector3(0, 2, 0), Vector3(0, -1, 0)))
 	check(not hit.is_empty() and is_equal_approx(hit.position.y, 0.8), "runtime collision follows the pushed surface")
-	var path := "/tmp/branch_face_edit_%d.tscn" % OS.get_process_id()
+	var path := "/tmp/godot_level_editor_face_edit_%d.tscn" % OS.get_process_id()
 	var scene := PackedScene.new()
 	scene.pack(block)
 	check(ResourceSaver.save(scene, path) == OK, "pushed geometry saves as a room-compatible tscn object")
@@ -47,6 +48,25 @@ func _ready() -> void:
 	block.apply_face_state(state)
 	check(is_equal_approx(block.to_global(block.geometry().get_aabb().end).y, 0.1), "inward push actually retracts the selected surface")
 	check(EDIT.pushed_state(block, faces, face, before, -1.1).is_empty(), "inverted or collapsed surfaces are rejected")
+	block.apply_face_state(before)
+	# Translate in the face plane and rotate about its own center, rather than
+	# moving the whole block. Shared vertices move once, opposite ones stay fixed.
+	var pivot: Transform3D = EDIT.face_transform(face)
+	var rotation := Basis(Vector3(1, 0, 1).normalized(), deg_to_rad(17))
+	var delta := Transform3D(rotation, pivot.origin - rotation * pivot.origin + Vector3(0.2, 0.1, 0))
+	state = EDIT.transformed_state(block, faces, face, before, delta)
+	check(not state.is_empty(), "a face supports combined translation and rotation about its center")
+	block.apply_face_state(state)
+	var transformed_faces: PackedVector3Array = block.geometry().get_faces()
+	var all_vertices_match := true
+	for i in faces.size():
+		var expected: Vector3 = delta * faces[i] if face.points.has(EDIT.point_key(faces[i])) else faces[i]
+		all_vertices_match = all_vertices_match and block.to_global(transformed_faces[i]).distance_to(expected) < 0.0001
+	check(all_vertices_match, "only selected face vertices move; all copies on neighboring triangles remain welded")
+	var rotated_face := EDIT.planar_face(transformed_faces, top.triangle)
+	check(rotated_face.points.size() == 4 and rotated_face.normal.distance_to(rotation * Vector3.UP) < 0.0001, "rotation preserves a planar selectable quad and updates its normal")
+	check(block.to_global(rotated_face.center).is_equal_approx(pivot.origin + Vector3(0.2, 0.1, 0)), "face pivot follows the translated center after mesh recentering")
+	check(EDIT.transformed_state(block, faces, face, before, Transform3D(Basis.IDENTITY, Vector3.DOWN * 2)).is_empty(), "face transforms reject inversion just like normal pushes")
 	block.apply_face_state(before)
 	block.rotation_degrees.y = 32
 	block.scale = Vector3(2, 1.5, 0.5)
@@ -71,7 +91,40 @@ func _ready() -> void:
 	check(not block.has_mesh_edit(), "shape parameter change uses its own generated shape")
 	block.shape_kind = "ramp"
 	check(block.has_mesh_edit(), "undoing a shape choice retains the original face edit data")
+	_test_components(block)
 	block.queue_free()
 	for _i in 3: await get_tree().physics_frame
 	print("FACE PUSH PULL: %d passed / %d failed" % [passed, failed])
 	get_tree().quit(1 if failed else 0)
+
+func _test_components(block: Node3D) -> void:
+	block.shape_kind = "box"
+	block.apply_face_state({"size": Vector3.ONE, "mesh_edit": {}, "transform": Transform3D.IDENTITY})
+	var faces: PackedVector3Array = block.geometry().get_faces()
+	var before := EDIT.capture(block)
+	var data := ELEMENTS.build(faces)
+	check(data.vertices.size() == 8, "box topology welds triangle copies into eight editable vertices")
+	check(data.edges.size() == 12, "box has twelve selectable edges with no coplanar triangle diagonals")
+	for mode in ["edge", "point"]:
+		var id: int = data.edges[0].id if mode == "edge" else data.vertices[0].id
+		var element := ELEMENTS.selection(faces, mode, id, data)
+		check(element.points.size() == (2 if mode == "edge" else 1), "selection identifies only the requested %s vertices" % mode)
+		var delta := Transform3D(Basis.IDENTITY, Vector3(0.1, 0.2, 0.1))
+		var state := EDIT.transformed_state(block, faces, element, before, delta)
+		check(not state.is_empty(), "%s translation produces valid shared geometry" % mode)
+		if state.is_empty(): continue
+		block.apply_face_state(state)
+		var live: PackedVector3Array = block.geometry().get_faces()
+		var matches := true
+		for i in faces.size():
+			var expected: Vector3 = delta * faces[i] if element.points.has(EDIT.point_key(faces[i])) else faces[i]
+			matches = matches and block.to_global(live[i]).distance_to(expected) < 0.0001
+		check(matches, "%s edit keeps all unselected vertices anchored and shared triangle copies welded" % mode)
+		block.apply_face_state(before)
+		var rotation := Basis(Vector3.UP, deg_to_rad(15))
+		var rotated := Transform3D(rotation, element.center - rotation * element.center)
+		state = EDIT.transformed_state(block, faces, element, before, rotated)
+		if mode == "point":
+			check(state == before, "a vertex rotated around itself is a true no-op without spurious mesh data")
+		else:
+			check(not state.is_empty() and state != before, "an edge rotates around its midpoint while neighboring triangles remain valid")

@@ -6,13 +6,13 @@
   "existing_source_files_compared": 190,
   "owned_existing_source_edits": [
     "scenes/3cplayground.tscn",
-    "scenes/level_editor/continuous_world.tscn",
+    "scenes/levels/continuous_world.tscn",
     "tools/level_editor/build_sample.gd"
   ],
   "owned_existing_source_edits_are_lighting_reference_only": true,
   "concurrent_source_updates_observed_and_preserved": [
     "assets/shaders/whitebox/metric_grid.gdshader",
-    "addons/branch_level_editor/runtime/whitebox_block.gd"
+    "addons/godot_level_editor/runtime/whitebox_block.gd"
   ],
   "unexpected_source_changes": [],
   "surface_materials_written_by_this_task": [],

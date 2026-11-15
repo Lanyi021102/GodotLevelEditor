@@ -1,6 +1,6 @@
 [gd_resource type="Resource" format=3 uid="uid://ci7tgmdnimkky"]
 
-[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/branch_mechanisms/graph/definition.gd" id="1_nrtfk"]
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="1_nrtfk"]
 
 [resource]
 script = ExtResource("1_nrtfk")
@@ -55,5 +55,5 @@ positions = {
 "lever_state": Vector2(40, 70),
 "plate_state": Vector2(40, 280)
 }
-view_offset = Vector2(-156.33313, -328.5154)
-view_zoom = 0.6771637
+view_offset = Vector2(-177.57523, -191.41035)
+view_zoom = 2.0736003

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="1_40qqk"]
+
+[resource]
+script = ExtResource("1_40qqk")
+definition_id = "wb_v1_lift_platform"
+display_name = "升降台"
+nodes = Array[Dictionary]([{
+"id": "lift_platform_component",
+"kind": "lift_platform",
+"label": "升降台组件",
+"params": {
+"object_id": "lift_platform"
+}
+}])
+positions = {
+"lift_platform_component": Vector2(40, 60)
+}

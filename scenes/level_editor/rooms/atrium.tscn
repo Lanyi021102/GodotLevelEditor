@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/room.gd" id="1_x1sch"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/whitebox_block.gd" id="2_jrgxq"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/connection.gd" id="3_t4hf5"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/placement.gd" id="4_ht3ec"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/room.gd" id="1_x1sch"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/whitebox_block.gd" id="2_jrgxq"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/connection.gd" id="3_t4hf5"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/placement.gd" id="4_ht3ec"]
 
 [node name="Atrium" type="Node3D" unique_id=2019474688]
 script = ExtResource("1_x1sch")

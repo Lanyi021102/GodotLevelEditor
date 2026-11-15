@@ -18,8 +18,8 @@ Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
 [PASS] R operation commits future recording as a clone
 [PASS] R preserves controlled body and waits for T
 [PASS] rewind before creation hides clone and collision
-[PASS] branch before creation retains immutable scheduled clone
-[PASS] existing recording is unchanged by branching
+[PASS] godot_level_editor before creation retains immutable scheduled clone
+[PASS] existing recording is unchanged by godot_level_editoring
 [PASS] clone replays recorded F with actor range check
 [PASS] clone stops after a single pass
 [PASS] clone remains at its endpoint

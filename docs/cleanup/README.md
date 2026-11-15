@@ -12,7 +12,7 @@
 
 移除了 289 个源内容文件，另外清除 88 个过期生成缓存文件。详细清单与修改文件见 [removed_files.json](removed_files.json)。new_room 与 new_mechanism1 的自建资源与清理前逐字节一致。
 
-工程外恢复包：`/Users/lanyi/branch_cleanup_backups/branch_before_cleanup_2026-11-02_134233.zip`。恢复包包含清理前工程源文件与资产，排除可重建缓存，已完成 ZIP 完整性校验；工程内不保留已删除内容的副本。未删除用户目录中的既有存档，新入口使用独立的 branch_world_progress.json。
+工程外恢复包：`/Users/lanyi/branch_cleanup_backups/branch_before_cleanup_2026-11-02_134233.zip`。恢复包包含清理前工程源文件与资产，排除可重建缓存，已完成 ZIP 完整性校验；工程内不保留已删除内容的副本。未删除用户目录中的既有存档，新入口使用独立的 godot_level_editor_world_progress.json。
 
 ## 验证
 

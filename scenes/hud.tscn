@@ -1,21 +1,18 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="1"]
-[ext_resource type="Theme" path="res://resources/ui/hud_theme.tres" id="2"]
-[node name="HUD" type="CanvasLayer"]
+[gd_scene format=3 uid="uid://b7wbepifdx4fv"]
+
+[ext_resource type="Script" uid="uid://bo53cpxaf0br5" path="res://scripts/hud.gd" id="1"]
+[ext_resource type="Theme" uid="uid://djxbjcqwgxuwh" path="res://resources/ui/hud_theme.tres" id="2"]
+
+[node name="HUD" type="CanvasLayer" unique_id=2018210007]
 process_mode = 3
 script = ExtResource("1")
-[node name="Root" type="Control" parent="."]
+
+[node name="Root" type="Control" parent="." unique_id=1640540254]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("2")
-[node name="PauseButton" type="Button" parent="Root"]
-unique_name_in_owner = true
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 66.0
-offset_bottom = 66.0
-focus_mode = 0
-text = "Ⅱ"

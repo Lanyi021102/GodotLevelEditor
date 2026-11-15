@@ -9,7 +9,7 @@ func _ready() -> void:
 func _run() -> void:
 	var scene_path := "res://scenes/main.tscn"
 	var lighting_path := ""
-	var output := "/tmp/branch_sunlight_v2/before"
+	var output := "/tmp/godot_level_editor_sunlight_v2/before"
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--scene="): scene_path = argument.trim_prefix("--scene=")
 		if argument.begins_with("--lighting="): lighting_path = argument.trim_prefix("--lighting=")
@@ -42,7 +42,6 @@ func _run() -> void:
 		await _capture(output.path_join("mechanisms.png"))
 	game.queue_free()
 	await _wait(3)
-	Timeline.clear()
 	get_tree().quit()
 
 func _wait(count: int) -> void:

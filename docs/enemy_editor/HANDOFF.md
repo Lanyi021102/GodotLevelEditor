@@ -10,7 +10,7 @@
 
 ## 公共接口与归属
 
-- 详见 [INTERFACES.md](INTERFACES.md)。新增 `EnemyDefinition`、`EnemyMachine`、`GuardAI.enemy_definition/enemy_instance_id/patrol_route`、`enemy_runtime_state()`；使用 `branch_enemy` 调试通道。
+- 详见 [INTERFACES.md](INTERFACES.md)。新增 `EnemyDefinition`、`EnemyMachine`、`GuardAI.enemy_definition/enemy_instance_id/patrol_route`、`enemy_runtime_state()`；使用 `godot_level_editor_enemy` 调试通道。
 - 本专项公共修改仅为 `scripts/stealth/guard_ai.gd` 的适配与 `project.godot` 的插件启用项；保留其他专项插件条目。
 - 其余文件归属 `addons/enemy_editor/`、`resources/enemies/`、`scenes/enemy_editor/`、`tools/enemy_editor/`、`docs/enemy_editor/`。未修改 Timeline、玩家、存档、HUD 或公共场景。
 - 旧 `State` 整数保持四状态映射；自定义新状态的旧 `state` 为 -1，跨模块读取字符串状态请使用 `enemy_runtime_state().state_id`。

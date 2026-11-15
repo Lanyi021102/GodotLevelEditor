@@ -1,5 +1,5 @@
 extends "res://scripts/player.gd"
-## Normal-proportion locomotion, retaining the existing deterministic replay protocol.
+## Normal-proportion whitebox locomotion.
 @export var walk_animation_speed := 0.90
 @export var run_animation_speed := 5.43
 @export var crouch_animation_speed := 0.66
@@ -10,8 +10,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var yaw_before := _model_root.rotation.y
 	super._physics_process(delta)
-	if mode != Mode.INPUT:
-		return
 	var flat := Vector2(velocity.x, velocity.z)
 	# Turn with actual travel, including reversals and braking, rather than turning ahead of the feet.
 	if flat.length() > 0.12:

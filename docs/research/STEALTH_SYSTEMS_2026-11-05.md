@@ -1,4 +1,4 @@
-# 潜行、社会互动与多路径箱庭：调研及 Branch 设计建议
+# 潜行、社会互动与多路径箱庭：调研及 GodotLevelEditor 设计建议
 
 日期：2026-11-05。用途：为用户手工制作关卡提供系统依据。本文件是调研与设计建议，不是已实现功能清单。
 
@@ -18,7 +18,7 @@ NPC 不预设为敌人。玩家可以交涉、获得许可、伪装、偷窃、�
 
 本轮查阅官方功能介绍、官方游戏手册、开发者撰文和开发者直接访谈。没有重新实玩所有样本，也没有把社区猜测的数值当作事实。不同系列作品、模式和版本不能混用。
 
-原作说明与“迁移到 Branch”的建议分开记录。后文的警戒分层、权限表、气泡交互和剧院方案均是本项目建议，不声称原作内部采用完全相同的数据结构。
+原作说明与“迁移到 GodotLevelEditor”的建议分开记录。后文的警戒分层、权限表、气泡交互和剧院方案均是本项目建议，不声称原作内部采用完全相同的数据结构。
 
 ## 3. 样本与可迁移内容
 
@@ -26,7 +26,7 @@ NPC 不预设为敌人。玩家可以交涉、获得许可、伪装、偷窃、�
 
 **查证内容：**IO Interactive 官方介绍强调伪装、工具、环境、操纵人物、窃听与机会发现，共同支持自由选择行动方式。Mette Podenphant Andersen 的 GDC 2019 讲座以社会空间解释《Hitman 2》的关卡设计。[官方功能介绍](https://ioi.dk/hitman/game-features)；[开发者讲座页面](https://www.gdcvault.com/play/1025879/Level-Design-Workshop-Hitman-Levels)。
 
-**适合 Branch：**给每个区域定义用途与进入理由。剧院广场、观众厅、后台、舞台中央具有不同规则；拿着梯子、持有票券、接受剧务邀请分别提供不同的行动机会。通过 NPC 的工作和环境布局传达规则。
+**适合 GodotLevelEditor：**给每个区域定义用途与进入理由。剧院广场、观众厅、后台、舞台中央具有不同规则；拿着梯子、持有票券、接受剧务邀请分别提供不同的行动机会。通过 NPC 的工作和环境布局传达规则。
 
 **边界：**讲座页面只能确认主题和摘要；本轮未取得完整幻灯片正文，不据此声称核实了该讲座的全部分类、当前 WOA 各模式的识破条件或警戒公式。
 
@@ -34,7 +34,7 @@ NPC 不预设为敌人。玩家可以交涉、获得许可、伪装、偷窃、�
 
 **查证内容：**Eidos 官方《Deus Ex》介绍明确提供交谈、战斗和技能等解法。《Human Revolution — Director's Cut》官方手册分别说明中立/巡逻/怀疑/攻击状态，密码或黑客进入设备，黑客失败引发锁定和警报，以及通过对话说服特定角色。[系列初代官方介绍](https://www.eidosmontreal.com/games/deus-ex/)；[HR Director's Cut 官方手册，PDF 第 5、8–9 页](https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/238010/manuals/DXHR-DC_PC_MAN_EN.pdf)。
 
-**适合 Branch：**将“交涉成功”“取得权限”“从其他入口绕过”“强行突破”做成几条真实可用的路。赛博关的工具分别作用于门禁、传感器、信息或人员，而不是每扇门都要求同一种小游戏。
+**适合 GodotLevelEditor：**将“交涉成功”“取得权限”“从其他入口绕过”“强行突破”做成几条真实可用的路。赛博关的工具分别作用于门禁、传感器、信息或人员，而不是每扇门都要求同一种小游戏。
 
 **边界：**本条明确区分初代与 HR，未用这些规则代替《Mankind Divided》最终版的具体实现。
 
@@ -42,45 +42,45 @@ NPC 不预设为敌人。玩家可以交涉、获得许可、伪装、偷窃、�
 
 **查证内容：**参与开发的 Brook Miles 在 Game AI Pro 章节中说明，NPC 不仅需要发现玩家，还要感知噪声、异常和倒下的同伴，形成调查目标；Nels Anderson 的设计规则说明强调可理解的视听反馈与有限的失败代价。[开发者技术章节](https://www.gameaipro.com/GameAIPro/GameAIPro_Chapter32_How_to_Catch_a_Ninja_NPC_Awareness_in_a_2D_Stealth_Platformer.pdf)；[主设计师设计规则说明](https://www.gamedeveloper.com/design/-i-mark-of-the-ninja-i-s-five-stealth-design-rules)。
 
-**适合 Branch：**NPC 先查看听见声音的位置，再决定下一步；玩家可以知道它正在调查什么。用转头、问号、短气泡、搜索位置和声音范围支持计划，而不是只在失败后宣布被发现。
+**适合 GodotLevelEditor：**NPC 先查看听见声音的位置，再决定下一步；玩家可以知道它正在调查什么。用转头、问号、短气泡、搜索位置和声音范围支持计划，而不是只在失败后宣布被发现。
 
-**边界：**横版游戏的尺度和可见性规则不能直接套到俯视三维场景；Branch 需要自己验证遮挡、高差与提示拥挤问题。
+**边界：**横版游戏的尺度和可见性规则不能直接套到俯视三维场景；GodotLevelEditor 需要自己验证遮挡、高差与提示拥挤问题。
 
 ### 3.4 Invisible, Inc.：把安全升级变成具体事件
 
 **查证内容：**设计师 James Lantz 的自述说明，安全等级既受部分玩家行为影响，也会随回合推进；升级可提高防火墙或带来巡逻。他同时承认持续时间压力让部分玩家感到不公平，并说明提高反馈可预测性的过程。[开发者原文](https://www.gamedeveloper.com/design/game-design-deep-dive-alarm-systems-in-klei-s-i-invisible-inc-i-)。
 
-**适合 Branch：**警戒变化带来可见的世界反应，例如加强验票、派人检查窗口、增加一道后台岗哨。
+**适合 GodotLevelEditor：**警戒变化带来可见的世界反应，例如加强验票、派人检查窗口、增加一道后台岗哨。
 
-**需要调整：**Branch 的轻松探索适合先用事件触发升级，不直接采用“站着观察也不断升级”的回合计时压力。
+**需要调整：**GodotLevelEditor 的轻松探索适合先用事件触发升级，不直接采用“站着观察也不断升级”的回合计时压力。
 
 ### 3.5 Dishonored：长期世界反应与即时警报分开
 
 **查证内容：**Harvey Smith 在 2012 年直接访谈中描述，玩家暴力行为和部分任务选择会影响后续人物对话、场景状况和结局分支。[开发者访谈](https://attackofthefanboy.com/e3/dishonored-developer-harvey-smith-talks-chaos-system-immersive-world-dunwall/)。
 
-**适合 Branch：**剧院发生骚乱后，工作人员可能取消帮助、改变工作位置或加强后台检查；这些后果可以持续到撤离，而不等同于每个 NPC 一直追赶主角。
+**适合 GodotLevelEditor：**剧院发生骚乱后，工作人员可能取消帮助、改变工作位置或加强后台检查；这些后果可以持续到撤离，而不等同于每个 NPC 一直追赶主角。
 
-**边界：**来源是发售前设计访谈，适合说明设计意图，不用来确认最终版分数、杀人数阈值或续作公式。Branch 暂不需要覆盖所有时间线的单一善恶数值。
+**边界：**来源是发售前设计访谈，适合说明设计意图，不用来确认最终版分数、杀人数阈值或续作公式。GodotLevelEditor 暂不需要覆盖所有时间线的单一善恶数值。
 
 ### 3.6 Chants of Sennaar：通过生活情境验证推断
 
 **查证内容：**Rundisc 的 Julien Moya 在访谈中说明，语言理解来自观察人物与生活情境；重要信息在不同情境重复出现，让玩家验证假设，困难处通过补充情境线索调整。[开发者直接访谈](https://www.gamedeveloper.com/design/immersing-players-in-the-culture-of-a-people-with-language-puzzler-chants-of-sennaar)。
 
-**适合 Branch：**洞穴关可以用壁画、携物路线、食物交换和仪式动作表达线索。同一信息至少有两种相互支持的呈现，玩家能用行动验证猜测。
+**适合 GodotLevelEditor：**洞穴关可以用壁画、携物路线、食物交换和仪式动作表达线索。同一信息至少有两种相互支持的呈现，玩家能用行动验证猜测。
 
-**边界：**原作有可解读语言；借鉴的是情境推断方法。Branch 的洞穴时间线是否完全没有口语，属于虚构设定，不据此推断真实远古人类没有语言。
+**边界：**原作有可解读语言；借鉴的是情境推断方法。GodotLevelEditor 的洞穴时间线是否完全没有口语，属于虚构设定，不据此推断真实远古人类没有语言。
 
 ### 3.7 Oxenfree：贴着角色的对话与沉默
 
 **查证内容：**Adam Hines 与 Sean Krankel 的直接访谈介绍贴着角色的气泡和连续对话。Netflix 官方支持说明，忽略提示可能形成沉默或默认回应，并影响互动。[开发者访谈](https://www.gamedeveloper.com/design/how-i-oxenfree-i-s-narrative-unfolds-like-a-free-flowing-conversation)；[官方沉默说明](https://games-netflix.helpshift.com/hc/en/31-oxenfree/faq/1201-what-happens-if-i-ignore-a-conversation-prompt/)。
 
-**适合 Branch：**保留玩家头顶选项气泡，让回应发生在箱庭场景里；沉默、离开、展示物品都可以成为有语义的选择。
+**适合 GodotLevelEditor：**保留玩家头顶选项气泡，让回应发生在箱庭场景里；沉默、离开、展示物品都可以成为有语义的选择。
 
-**边界：**这是交互呈现参考，原作不是潜行警戒系统模板；不能据此认定它具备 Branch 所需的攻击、权限与举报机制。
+**边界：**这是交互呈现参考，原作不是潜行警戒系统模板；不能据此认定它具备 GodotLevelEditor 所需的攻击、权限与举报机制。
 
 ## 4. 建议的共同系统：四件事分别判断
 
-以下全部为 Branch 设计建议。
+以下全部为 GodotLevelEditor 设计建议。
 
 | 判断 | 需要回答的问题 | 剧院例子 |
 |---|---|---|

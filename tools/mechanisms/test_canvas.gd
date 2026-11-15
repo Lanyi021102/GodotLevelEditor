@@ -13,7 +13,7 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 	await frames(panel, 30)
 	EditorInterface.open_scene_from_path("res://scenes/mechanisms/lever_plate_door.tscn")
 	await frames(panel, 25)
-	EditorInterface.set_main_screen_editor("机关蓝图")
+	(panel.get_tree().get_first_node_in_group("godot_level_editor_editor_suite").open_tab("机关") if panel.get_tree().get_first_node_in_group("godot_level_editor_editor_suite") != null else EditorInterface.set_main_screen_editor("机关蓝图"))
 	await frames(panel, 10)
 	if not is_instance_valid(panel.assembly):
 		check(false, "editor binds assembly scene")

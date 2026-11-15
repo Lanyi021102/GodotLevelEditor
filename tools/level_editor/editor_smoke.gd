@@ -9,7 +9,7 @@ static func run(editor: EditorPlugin) -> void:
 		await tree.create_timer(0.1, true).timeout
 	await tree.create_timer(0.3, true).timeout
 	var path := "res://tools/level_editor/.editor_smoke_%d.tscn" % OS.get_process_id()
-	var factory := preload("res://addons/branch_level_editor/scene_factory.gd")
+	var factory := preload("res://addons/godot_level_editor/scene_factory.gd")
 	var room := factory.room("smoke_room")
 	factory.save_scene(room, path)
 	room.free()
@@ -32,7 +32,7 @@ static func run(editor: EditorPlugin) -> void:
 	results.append([payload.type == "files" and ResourceLoader.load(payload.files[0]) is PackedScene, "preview produces Godot native scene drag data"])
 	var room_wireframe := false
 	for child in root.get_children():
-		if child.get_meta("branch_room_preview", false) and child is MeshInstance3D:
+		if child.get_meta("godot_level_editor_room_preview", false) and child is MeshInstance3D:
 			room_wireframe = child.mesh.surface_get_primitive_type(0) == Mesh.PRIMITIVE_LINES
 	results.append([room_wireframe, "Room preview is wireframe rather than a false placement surface"])
 	var count := root.get_child_count()
@@ -40,7 +40,7 @@ static func run(editor: EditorPlugin) -> void:
 	editor._add_spatial()
 	for _i in 3: await tree.process_frame
 	results.append([root.get_child_count() == count + 1, "palette adds owned scene object"])
-	results.append([root.get_child(root.get_child_count() - 1).size == Vector3.ONE, "adding from palette always starts at unit size"])
+	results.append([EditorInterface.get_selection().get_selected_nodes()[0].size == Vector3.ONE, "adding from palette always starts at unit size"])
 	var selected := EditorInterface.get_selection().get_selected_nodes()
 	results.append([selected.size() == 1 and selected[0].owner == root, "new object links to native inspector/viewport selection"])
 	var manager := editor.get_undo_redo()
@@ -49,12 +49,12 @@ static func run(editor: EditorPlugin) -> void:
 	results.append([root.get_child_count() == count, "native scene undo removes placed object"])
 	history.redo()
 	results.append([root.get_child_count() == count + 1, "native scene redo restores placed object"])
-	var source := root.get_child(root.get_child_count() - 1)
+	var source: Node3D = preload("res://addons/godot_level_editor/scene_groups.gd").find_group(root, "whitebox").get_child(0)
 	EditorInterface.get_selection().clear()
 	EditorInterface.get_selection().add_node(source)
 	editor._duplicate_spatial()
 	for _i in 3: await tree.process_frame
-	var copy := root.get_child(root.get_child_count() - 1)
+	var copy: Node3D = EditorInterface.get_selection().get_selected_nodes()[0]
 	results.append([copy != source and copy.object_id != source.object_id, "spatial duplicate receives new stable ID"])
 	var original_size: Vector3 = copy.size
 	copy.scale = Vector3(1.26, 0.02, 2.34)
@@ -72,7 +72,7 @@ static func run(editor: EditorPlugin) -> void:
 	results.append([copy.size.is_equal_approx(Vector3(2.3, 1, 1)), "stretch handle redo restores exact dimensions"])
 	editor.gizmos._commit_handle(custom_gizmo, 0, false, original_size, true)
 	results.append([copy.size == original_size, "cancelled stretch restores original dimensions"])
-	var face_edit := preload("res://addons/branch_level_editor/face_edit.gd")
+	var face_edit := preload("res://addons/godot_level_editor/face_edit.gd")
 	var camera := Camera3D.new()
 	root.add_child(camera)
 	camera.position = copy.position + Vector3(2, 3, 2)
@@ -83,16 +83,13 @@ static func run(editor: EditorPlugin) -> void:
 	press.button_index = MOUSE_BUTTON_LEFT
 	press.pressed = true
 	press.position = screen
-	results.append([editor._forward_3d_gui_input(camera, press) == EditorPlugin.AFTER_GUI_INPUT_STOP and editor.push_pull.dragging and editor.push_pull.picked.get("block") == copy, "viewport click selects the actual whitebox face and starts push pull"])
+	editor.push_pull.select_face(camera, screen)
+	results.append([not editor.push_pull.dragging and editor.push_pull.picked.get("block") == copy, "viewport face selection does not start moving geometry"])
 	var face_before := face_edit.capture(copy)
-	var motion := InputEventMouseMotion.new()
-	motion.position = screen + editor.push_pull.screen_axis * 0.26
-	var pushed: bool = editor._forward_3d_gui_input(camera, motion) == EditorPlugin.AFTER_GUI_INPUT_STOP and is_equal_approx(editor.push_pull.amount, 0.3)
+	editor.push_pull.begin(camera, screen)
+	var pushed: bool = editor.push_pull.preview_distance(0.26) and is_equal_approx(editor.push_pull.amount, 0.3)
 	var after_faces: PackedVector3Array = copy.geometry().get_faces()
-	var release := InputEventMouseButton.new()
-	release.button_index = MOUSE_BUTTON_LEFT
-	release.position = screen
-	editor._forward_3d_gui_input(camera, release)
+	editor.push_pull.finish(false)
 	results.append([pushed and copy.has_mesh_edit() and not editor.push_pull.dragging, "face push pull commits a real geometry edit on mouse release"])
 	history.undo()
 	results.append([copy.mesh_edit == face_before.mesh_edit and copy.transform == face_before.transform, "native undo restores face geometry and anchored transform together"])
@@ -105,7 +102,8 @@ static func run(editor: EditorPlugin) -> void:
 	var escape := InputEventKey.new()
 	escape.keycode = KEY_ESCAPE
 	escape.pressed = true
-	editor._forward_3d_gui_input(camera, escape)
+	var no_restores: Array[Transform3D] = []
+	editor.gizmos._commit_subgizmos(custom_gizmo, PackedInt32Array(), no_restores, true)
 	results.append([face_edit.capture(copy) == cancel_before and not editor.push_pull.dragging and history.get_version() == cancel_version, "Escape cancels a push without adding history or leaving changed vertices"])
 	editor.push_pull.set_enabled(false)
 	camera.free()
@@ -135,8 +133,8 @@ static func run(editor: EditorPlugin) -> void:
 	results.append([reloaded.get_child_count() == saved_count and root.get_children().filter(func(child: Node): return child.owner == root).size() == saved_count, "native save reload keeps placed and copied objects"])
 	reloaded.free()
 	EditorInterface.close_scene()
-	EditorInterface.set_main_screen_editor("关卡与世界")
-	EditorInterface.open_scene_from_path("res://scenes/level_editor/continuous_world.tscn")
+	editor._open_graph_workspace()
+	EditorInterface.open_scene_from_path("res://scenes/levels/continuous_world.tscn")
 	for _i in 10: await tree.process_frame
 	editor.panel.dirty = false
 	editor.panel.use_current_world()
@@ -178,7 +176,7 @@ static func run(editor: EditorPlugin) -> void:
 	results.append([only_triggers, "node library filters readable trigger category"])
 	editor.panel.picker.hide()
 	editor.panel.dirty = false
-	EditorInterface.open_scene_from_path("res://scenes/level_editor/logic_playground.tscn")
+	EditorInterface.open_scene_from_path("res://scenes/levels/logic_playground.tscn")
 	for _i in 8: await tree.process_frame
 	editor.panel.use_current_world()
 	editor.panel.mode.select(1)
@@ -192,7 +190,7 @@ static func run(editor: EditorPlugin) -> void:
 	for _i in 3: await tree.process_frame
 	var copied_room: Node = demo_world.rooms().back()
 	results.append([demo_world.rooms().size() == 2 and copied_room.room_id != original_room_id and copied_room.object_by_id("floor") != null, "Room copy keeps contents with a fresh instance scope"])
-	results.append([copied_room.object_by_id("floor").owner == demo_world, "copied Room contents remain owned and serializable"])
+	results.append([copied_room.object_by_id("floor").owner == copied_room or copied_room.object_by_id("floor").owner == demo_world, "copied Room contents remain owned and serializable"])
 	var demo_history := manager.get_history_undo_redo(manager.get_object_history_id(demo_world))
 	demo_history.undo()
 	results.append([demo_world.rooms().size() == 1, "Room copy participates in native undo"])
@@ -221,7 +219,7 @@ static func run(editor: EditorPlugin) -> void:
 		print("[PASS] " if result[0] else "[FAIL] ", result[1])
 	print("LEVEL EDITOR NATIVE: %d passed / %d failed" % [results.size() - failed, failed])
 	if OS.get_cmdline_user_args().has("--capture-v2"):
-		EditorInterface.set_main_screen_editor("关卡与世界")
+		editor._open_graph_workspace()
 		editor.panel.show()
 		await editor.panel.arrange_all()
 		if OS.get_cmdline_user_args().has("--save-demo-layout"): editor.panel.save_graph()

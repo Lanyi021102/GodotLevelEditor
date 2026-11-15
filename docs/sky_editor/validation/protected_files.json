@@ -1,0 +1,9 @@
+{
+  "scenes/levels/whitebox_world.tscn": false,
+  "scenes/levels/4_TestLevel.tscn": true,
+  "scenes/lighting/cloud_island_v1.tscn": true,
+  "resources/lighting/cloud_island_v1.tres": true,
+  "resources/lighting/sunlit_miniature_v2.tres": true,
+  "配表/levels.xlsx": true,
+  "配表/events.xlsx": true
+}

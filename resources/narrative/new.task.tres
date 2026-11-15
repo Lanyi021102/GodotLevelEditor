@@ -1,0 +1,10 @@
+[gd_resource type="Resource" format=3 uid="uid://byslldnybxo4y"]
+
+[ext_resource type="Resource" path="res://resources/narrative/reception.dialogue.tres" id="1_xwegb"]
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor_narrative/runtime/task_definition.gd" id="2_2s2xx"]
+
+[resource]
+script = ExtResource("2_2s2xx")
+dialogue_library = ExtResource("1_xwegb")
+graph_id = "task_a685cfd9ef99253d4275d495"
+view_scroll = Vector2(252.16669, 0)

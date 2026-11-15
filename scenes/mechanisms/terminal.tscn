@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/assembly.gd" id="1_0hb3c"]
+[ext_resource type="Resource" path="res://scenes/mechanisms/terminal.graph.tres" id="2_k8orl"]
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/stateful_component.gd" id="3_wncxy"]
+
+[node name="Terminal" type="Node3D" unique_id=1767905264]
+script = ExtResource("1_0hb3c")
+instance_id = "wb_v1_terminal"
+object_id = "terminal"
+primary_component = NodePath("Terminal")
+definition = ExtResource("2_k8orl")
+
+[node name="Terminal" type="Node3D" parent="." unique_id=2106379735]
+script = ExtResource("3_wncxy")
+component_type = "terminal"
+object_id = "terminal"
+initial_state = "ready"
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "terminal"

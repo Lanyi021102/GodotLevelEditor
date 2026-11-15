@@ -1,9 +1,9 @@
 extends Node
-const WORLD_SCENE := preload("res://scenes/level_editor/continuous_world.tscn")
-const GRAPH := preload("res://addons/branch_level_editor/runtime/level_graph.gd")
-const FACTORY := preload("res://addons/branch_level_editor/scene_factory.gd")
-const PANEL := preload("res://addons/branch_level_editor/graph_panel.gd")
-const RUNNER := preload("res://addons/branch_level_editor/runtime/event_runner.gd")
+const WORLD_SCENE := preload("res://scenes/levels/continuous_world.tscn")
+const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
+const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
+const PANEL := preload("res://addons/godot_level_editor/graph_panel.gd")
+const RUNNER := preload("res://addons/godot_level_editor/runtime/event_runner.gd")
 const ACTOR := preload("res://tools/level_editor/test_actor.gd")
 var passed := 0
 var failed := 0
@@ -14,7 +14,7 @@ var crossings: Array = []
 var completions: Array = []
 var checkpoints: Array = []
 var objectives: Array = []
-var folder := "/tmp/branch_level_editor_" + str(OS.get_process_id())
+var folder := "/tmp/godot_level_editor_" + str(OS.get_process_id())
 
 func _ready() -> void:
 	get_tree().create_timer(90).timeout.connect(func(): push_error("LEVEL EDITOR watchdog"); get_tree().quit(2))
@@ -109,18 +109,18 @@ func _test_scene_roundtrip() -> void:
 		if id == "puzzle_3":
 			_check(fresh.object_by_id("door").source_ids == PackedStringArray(["plate_a", "plate_b", "breaker"]), "legacy component bindings survive room reload")
 		fresh.free()
-	var graph: BranchLevelGraph = load("res://resources/level_editor/world_events.tres").duplicate(true)
+	var graph: GodotLevelEditorLevelGraph = load("res://resources/level_editor/world_events.tres").duplicate(true)
 	graph.positions["goal_1"] = Vector2(123, -67)
 	graph.view_scroll = Vector2(98, 43)
 	graph.view_zoom = 1.2
 	_check(ResourceSaver.save(graph, folder + "/events.tres") == OK, "graph saves to .tres")
-	var fresh_graph: BranchLevelGraph = ResourceLoader.load(folder + "/events.tres", "", ResourceLoader.CACHE_MODE_IGNORE)
+	var fresh_graph: GodotLevelEditorLevelGraph = ResourceLoader.load(folder + "/events.tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	_check(fresh_graph.snapshot() == graph.snapshot(), "nodes + parameters + wires + layout + view reload exactly")
 
 func _test_graph_validation() -> void:
-	var base: BranchLevelGraph = load("res://resources/level_editor/world_events.tres")
+	var base: GodotLevelEditorLevelGraph = load("res://resources/level_editor/world_events.tres")
 	_check(base.validate().is_empty(), "sample event graph validates")
-	var bad: BranchLevelGraph = base.duplicate(true)
+	var bad: GodotLevelEditorLevelGraph = base.duplicate(true)
 	bad.schema_version = 999
 	_check(not bad.validate().is_empty() and not RUNNER.new().configure(bad, Callable()), "unsupported version rejected")
 	bad = base.duplicate(true)
@@ -163,7 +163,7 @@ func _test_data_types() -> void:
 func _test_canvas() -> void:
 	var panel := PANEL.new()
 	add_child(panel)
-	var graph: BranchLevelGraph = load("res://resources/level_editor/world_events.tres").duplicate(true)
+	var graph: GodotLevelEditorLevelGraph = load("res://resources/level_editor/world_events.tres").duplicate(true)
 	panel.open_graph(graph)
 	await get_tree().process_frame
 
@@ -204,7 +204,7 @@ func _test_canvas() -> void:
 	_check(panel.canvas.get_node("source_1/Runtime").text.contains("启动时定义"), "runtime definition mismatch is shown explicitly")
 	_check(panel.canvas.get_node("source_1/Runtime").text.contains("已恢复快照"), "rewind refresh is displayed while paused")
 	panel.clear_session(1)
-	_check(panel.canvas.get_node("source_1/Runtime").text.contains("无运行实例"), "stopped session clears runtime display")
+	_check(not panel.canvas.get_node("source_1/Runtime").visible and not panel.canvas.get_node("source_1").get_meta("runtime_active"), "stopped session clears runtime display")
 	graph.take_over_path(folder + "/canvas.tres")
 	_check(panel.save_graph(), "canvas save button writes validated definition")
 	panel.save_reload()
@@ -248,7 +248,7 @@ func _solve_room(index: int) -> void:
 	await _wait(5)
 
 func _test_changed_wire() -> void:
-	var changed: BranchLevelGraph = world.events.duplicate(true)
+	var changed: GodotLevelEditorLevelGraph = world.events.duplicate(true)
 	changed.edges = changed.edges.filter(func(e: Dictionary): return not (e.from == "goal_3" and e.to == "latch_3"))
 	var runner := RUNNER.new()
 	_check(runner.configure(changed, world.object_by_id), "disconnected graph remains a valid definition")
@@ -290,7 +290,7 @@ func _actor(at: Vector3, is_clone_actor: bool, controlled: bool) -> CharacterBod
 	var body := ACTOR.new()
 	body.position = at
 	body.clone_actor = is_clone_actor
-	if controlled: body.add_to_group("branch_player")
+	if controlled: body.add_to_group("godot_level_editor_player")
 	add_child(body)
 	return body
 

@@ -1,0 +1,12 @@
+{
+  "files_checked": 56,
+  "unchanged": 55,
+  "changes_observed_during_work": [
+    {
+      "path": "scenes/levels/whitebox_world.tscn",
+      "before": "89859f24824df13c0f84915ea797c5cf1fce215ee865a2c096c72ef13f9ede99",
+      "after": "094ef241c8d5ba6380d7068d10dff2670868c926eef1d5e669b478dabe719e15"
+    }
+  ],
+  "note": "白盒场景仅观察到 CameraAttributesPractical 子资源自动 ID 及其引用重新序列化，参数与结构一致；保留当前文件。功能验证在临时副本运行。"
+}

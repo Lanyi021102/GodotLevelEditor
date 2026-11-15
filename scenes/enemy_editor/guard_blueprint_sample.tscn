@@ -1,77 +1,97 @@
-[gd_scene load_steps=14 format=3]
-[ext_resource type="Script" path="res://tools/enemy_editor/sample.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/guard.tscn" id="2"]
+[gd_scene format=3 uid="uid://b060e3vy03ahu"]
+
+[ext_resource type="Script" uid="uid://hda2djg12g22" path="res://tools/enemy_editor/sample.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dy58llmy6cpb5" path="res://scenes/guard.tscn" id="2"]
 [ext_resource type="Resource" path="res://resources/enemies/guard_default.tres" id="3"]
-[ext_resource type="Script" path="res://tools/enemy_editor/sample_target.gd" id="4"]
-[ext_resource type="Script" path="res://scripts/actors/player_rewindable.gd" id="5"]
-[sub_resource type="BoxMesh" id="floor_mesh"]
-size = Vector3(28, 0.3, 28)
-[sub_resource type="BoxShape3D" id="floor_shape"]
-size = Vector3(28, 0.3, 28)
-[sub_resource type="StandardMaterial3D" id="floor_mat"]
-albedo_color = Color(0.06, 0.11, 0.16, 1)
-[sub_resource type="CapsuleMesh" id="target_mesh"]
-radius = 0.3
-height = 1.6
-[sub_resource type="CapsuleShape3D" id="target_shape"]
-radius = 0.3
-height = 1.6
-[sub_resource type="StandardMaterial3D" id="target_mat"]
-albedo_color = Color(0.25, 0.9, 0.85, 1)
+[ext_resource type="Script" uid="uid://c7is1jfqmuko7" path="res://tools/enemy_editor/sample_target.gd" id="4"]
+
 [sub_resource type="Environment" id="env"]
 background_mode = 1
 background_color = Color(0.035, 0.06, 0.09, 1)
 ambient_light_source = 3
 ambient_light_color = Color(0.7, 0.8, 1, 1)
 ambient_light_energy = 0.7
+
+[sub_resource type="StandardMaterial3D" id="floor_mat"]
+albedo_color = Color(0.06, 0.11, 0.16, 1)
+
+[sub_resource type="BoxMesh" id="floor_mesh"]
+size = Vector3(28, 0.3, 28)
+
+[sub_resource type="BoxShape3D" id="floor_shape"]
+size = Vector3(28, 0.3, 28)
+
+[sub_resource type="StandardMaterial3D" id="target_mat"]
+albedo_color = Color(0.25, 0.9, 0.85, 1)
+
+[sub_resource type="CapsuleMesh" id="target_mesh"]
+radius = 0.3
+height = 1.6
+
+[sub_resource type="CapsuleShape3D" id="target_shape"]
+radius = 0.3
+height = 1.6
+
 [sub_resource type="CameraAttributesPractical" id="camera_attributes"]
-[node name="EnemyBlueprintSample" type="Node3D"]
+
+[node name="EnemyBlueprintSample" type="Node3D" unique_id=658480166]
 script = ExtResource("1")
-[node name="Environment" type="WorldEnvironment" parent="."]
+
+[node name="Environment" type="WorldEnvironment" parent="." unique_id=1976368772]
 environment = SubResource("env")
-[node name="Sun" type="DirectionalLight3D" parent="."]
-rotation_degrees = Vector3(-60, -30, 0)
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=2075046483]
+transform = Transform3D(0.8660254, 0.43301272, -0.24999999, 0, 0.49999997, 0.86602545, 0.5, -0.75, 0.43301266, 0, 0, 0)
 light_energy = 1.3
 shadow_enabled = true
-[node name="Floor" type="StaticBody3D" parent="."]
-position = Vector3(0, -0.15, 0)
-[node name="Mesh" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("floor_mesh")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=549493783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor" unique_id=483673070]
 material_override = SubResource("floor_mat")
-[node name="Shape" type="CollisionShape3D" parent="Floor"]
+mesh = SubResource("floor_mesh")
+
+[node name="Shape" type="CollisionShape3D" parent="Floor" unique_id=958614504]
 shape = SubResource("floor_shape")
-[node name="Guard" parent="." instance=ExtResource("2")]
-position = Vector3(0, 0.1, 0)
+
+[node name="Guard" parent="." unique_id=1041166247 instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 enemy_definition = ExtResource("3")
 enemy_instance_id = "enemy_blueprint_sample_guard"
 patrol_route = NodePath("PatrolRoute")
-[node name="PatrolRoute" type="Node3D" parent="Guard"]
-[node name="Point1" type="Marker3D" parent="Guard/PatrolRoute"]
-position = Vector3(-5, 0, -3)
-[node name="Point2" type="Marker3D" parent="Guard/PatrolRoute"]
-position = Vector3(5, 0, -3)
-[node name="Point3" type="Marker3D" parent="Guard/PatrolRoute"]
-position = Vector3(5, 0, 3)
-[node name="Point4" type="Marker3D" parent="Guard/PatrolRoute"]
-position = Vector3(-5, 0, 3)
-[node name="Target" type="CharacterBody3D" parent="."]
-position = Vector3(0, 0.1, 8)
+
+[node name="PatrolRoute" type="Node3D" parent="Guard" unique_id=1430171749]
+
+[node name="Point1" type="Marker3D" parent="Guard/PatrolRoute" unique_id=1436650736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
+
+[node name="Point2" type="Marker3D" parent="Guard/PatrolRoute" unique_id=2139298890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+
+[node name="Point3" type="Marker3D" parent="Guard/PatrolRoute" unique_id=590856200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+
+[node name="Point4" type="Marker3D" parent="Guard/PatrolRoute" unique_id=1933320997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
+
+[node name="Target" type="CharacterBody3D" parent="." unique_id=1656162195]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("4")
-[node name="Mesh" type="MeshInstance3D" parent="Target"]
-position = Vector3(0, 0.8, 0)
-mesh = SubResource("target_mesh")
+
+[node name="Mesh" type="MeshInstance3D" parent="Target" unique_id=953990162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 material_override = SubResource("target_mat")
-[node name="Shape" type="CollisionShape3D" parent="Target"]
-position = Vector3(0, 0.8, 0)
+mesh = SubResource("target_mesh")
+
+[node name="Shape" type="CollisionShape3D" parent="Target" unique_id=1164287127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("target_shape")
-[node name="Rewindable" type="Node" parent="Target"]
-script = ExtResource("5")
-[node name="Camera" type="Camera3D" parent="."]
-position = Vector3(0, 22, 16)
-rotation_degrees = Vector3(-54, 0, 0)
-projection = 1
-size = 30
-current = true
+
+[node name="Camera" type="Camera3D" parent="." unique_id=1543089299]
+transform = Transform3D(1, 0, 0, 0, 0.5877853, 0.809017, 0, -0.809017, 0.5877853, 0, 22, 16)
 attributes = SubResource("camera_attributes")
+projection = 1
+current = true
+size = 30.0

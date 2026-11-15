@@ -1,5 +1,7 @@
 # 晴日微缩光照 V2
 
+2026-11-12 第三人称适配：透视游玩镜头停用微缩景深，让远处人物、门和线索保持清晰；V2 日光、补光、环境与曝光继续保留。景深组件仍计算观察深度，正交检查视角按 `runtime_depth_of_field` 使用原景深配置。当前越肩视角与验证见 [第三人称相机](../../3cplayground/THIRD_PERSON.md)，下文保留最初光照制作记录。
+
 2026-11-02。按用户提供的两张 Tiny Glade 参考调整光照与后期：暖色侧上方阳光、偏冷且可读的阴影、柔和的微缩景深。场景表面材质、网格、贴图与角色外观保持原样，因此当前仍呈现现有白盒的颜色和纹理。
 
 ## 接入与资源
@@ -34,7 +36,7 @@ V1 的场景、Environment 和两份着色器逐字节保留，可将 Lighting �
 - 光照专项：11 项通过，包含人物头脚及近处交互区域保持在焦内、最小/最大缩放与旋转、暂停观察、资源实例隔离及 V1 可加载。
 - 当前 3C 集成：33 项通过，覆盖走跑刹停、跳跃、回溯、多个固定分身、主动交互回放与默认世界装配。
 - 实际 Metal Forward+、1600×900 渲染检查默认关卡的出生点、近景和机关区域，以及 3C 测试场。截图直接来自游戏视口，未作图片后期处理。
-- 源文件校验：本次编辑的三个既有源文件，变化仅为 Lighting 引用从 V1 改为 V2；Project Settings 另增加软阴影质量配置。角色资产、用户房间与机关资源、V1 光照均与开工校验值一致。检查期间另外观察到 `assets/shaders/whitebox/metric_grid.gdshader` 与 `addons/branch_level_editor/runtime/whitebox_block.gd` 出现并行更新（曲面网格投影），本次未写入或回退这两个文件，因此不把全工程表面材质声明为逐字节未变。详情见 `validation.json`。
+- 源文件校验：本次编辑的三个既有源文件，变化仅为 Lighting 引用从 V1 改为 V2；Project Settings 另增加软阴影质量配置。角色资产、用户房间与机关资源、V1 光照均与开工校验值一致。检查期间另外观察到 `assets/shaders/whitebox/metric_grid.gdshader` 与 `addons/godot_level_editor/runtime/whitebox_block.gd` 出现并行更新（曲面网格投影），本次未写入或回退这两个文件，因此不把全工程表面材质声明为逐字节未变。详情见 `validation.json`。
 
 [同机位修改前](before.png) · [当前出生点](preview.png) · [近景](close.png) · [机关区域](mechanisms.png) · [3C 测试场](playground.png)
 

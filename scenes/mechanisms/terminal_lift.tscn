@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/assembly.gd" id="1_jaki0"]
+[ext_resource type="Resource" path="res://scenes/mechanisms/terminal_lift.graph.tres" id="2_ek040"]
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/stateful_component.gd" id="3_748t8"]
+
+[node name="TerminalLift" type="Node3D" unique_id=1851803864]
+script = ExtResource("1_jaki0")
+instance_id = "wb_v1_terminal_lift"
+object_id = "terminal_lift"
+primary_component = NodePath("Lift")
+definition = ExtResource("2_ek040")
+
+[node name="Terminal" type="Node3D" parent="." unique_id=1647417629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1.5)
+script = ExtResource("3_748t8")
+component_type = "terminal"
+object_id = "terminal"
+initial_state = "ready"
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "terminal"
+
+[node name="Lift" type="Node3D" parent="." unique_id=1290964816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("3_748t8")
+component_type = "lift_platform"
+object_id = "lift"
+interaction_enabled = false
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "lift_platform"

@@ -1,0 +1,8 @@
+{
+  "checked_existing_files": 68,
+  "unchanged_files": 67,
+  "changes_observed_during_work": [
+    "scenes/levels/5_adwa.tscn"
+  ],
+  "note": "No bulk migration was performed. Existing root-level objects were explicitly checked to remain in place in the native-drop and runtime tests. Changes outside these temporary fixtures were preserved."
+}

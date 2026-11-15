@@ -19,7 +19,7 @@ static func run(editor: EditorPlugin) -> bool:
 	panel.canvas.scroll_offset = Vector2(-25, 160)
 	panel.status.text = "分类色表示职责；端口和连线颜色表示连接类型。左侧输入 → 右侧输出。"
 	await _capture(editor, "node_colors_editing.png")
-	EditorInterface.play_custom_scene("res://scenes/level_editor/logic_playground.tscn")
+	EditorInterface.play_custom_scene("res://scenes/levels/logic_playground.tscn")
 	for _i in 80:
 		if not panel._packets.is_empty(): break
 		await tree.create_timer(0.1, true).timeout
@@ -34,7 +34,7 @@ static func run(editor: EditorPlugin) -> bool:
 	await tree.create_timer(0.5, true).timeout
 	panel.graph.apply_snapshot(before)
 	panel.dirty = false
-	EditorInterface.open_scene_from_path("res://scenes/level_editor/continuous_world.tscn")
+	EditorInterface.open_scene_from_path("res://scenes/levels/continuous_world.tscn")
 	for _i in 10: await tree.process_frame
 	panel.use_current_world()
 	panel.mode.select(1)
@@ -72,5 +72,5 @@ static func _capture(editor: EditorPlugin, filename: String) -> void:
 	await RenderingServer.frame_post_draw
 	var screenshot := EditorInterface.get_base_control().get_viewport().get_texture().get_image()
 	# Save outside res:// so import scanning cannot obscure the next capture.
-	var error := screenshot.save_png("/tmp/branch_" + filename)
+	var error := screenshot.save_png("/tmp/godot_level_editor_" + filename)
 	print("PRESENTATION CAPTURE: ", filename, " ", error_string(error))

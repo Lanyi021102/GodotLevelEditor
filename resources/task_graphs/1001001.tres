@@ -1,0 +1,101 @@
+[gd_resource type="Resource" format=3 uid="uid://c1o6rr1fcf2fw"]
+
+[ext_resource type="Resource" uid="uid://bpccra5si70yl" path="res://resources/narrative/reception.dialogue.tres" id="1_uinac"]
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor_narrative/runtime/task_definition.gd" id="2_kyqny"]
+
+[resource]
+script = ExtResource("2_kyqny")
+dialogue_library = ExtResource("1_uinac")
+graph_id = "task_1001001"
+nodes = Array[Dictionary]([{
+"id": "enter",
+"kind": "start",
+"params": {}
+}, {
+"id": "begin",
+"kind": "task_start",
+"params": {
+"task": "1001001"
+}
+}, {
+"id": "hint",
+"kind": "objective",
+"params": {
+"text": "任务：找到中庭接待员，靠近后按 F 对话。"
+}
+}, {
+"id": "interact",
+"kind": "npc_interact",
+"params": {
+"npc": "receptionist",
+"task": "1001001"
+}
+}, {
+"id": "show",
+"kind": "show_dialog",
+"params": {
+"dialog_id": "reception_intro"
+}
+}, {
+"id": "finished",
+"kind": "dialog_completed",
+"params": {
+"dialog_id": "reception_intro",
+"task": "1001001"
+}
+}, {
+"id": "complete",
+"kind": "task_complete",
+"params": {
+"task": "1001001"
+}
+}, {
+"id": "done",
+"kind": "objective",
+"params": {
+"text": "✓ 任务完成：已向接待员报到。"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "enter",
+"from_port": "then",
+"id": "edge_0",
+"to": "begin",
+"to_port": "run"
+}, {
+"from": "begin",
+"from_port": "then",
+"id": "edge_1",
+"to": "hint",
+"to_port": "run"
+}, {
+"from": "interact",
+"from_port": "then",
+"id": "edge_2",
+"to": "show",
+"to_port": "run"
+}, {
+"from": "finished",
+"from_port": "then",
+"id": "edge_3",
+"to": "complete",
+"to_port": "run"
+}, {
+"from": "complete",
+"from_port": "then",
+"id": "edge_4",
+"to": "done",
+"to_port": "run"
+}])
+positions = {
+"begin": Vector2(400, 140),
+"complete": Vector2(700, 1160),
+"done": Vector2(1140, 1160),
+"enter": Vector2(40, 140),
+"finished": Vector2(20, 1140),
+"hint": Vector2(820, 140),
+"interact": Vector2(40, 640),
+"show": Vector2(540, 600)
+}
+view_scroll = Vector2(-878.1603, -481)
+view_zoom = 0.36602503

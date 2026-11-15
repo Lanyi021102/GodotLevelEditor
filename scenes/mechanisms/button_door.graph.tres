@@ -1,0 +1,51 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="1_763va"]
+
+[resource]
+script = ExtResource("1_763va")
+definition_id = "wb_v1_button_door"
+display_name = "按钮打开滑动门"
+nodes = Array[Dictionary]([{
+"id": "button_component",
+"kind": "button",
+"label": "按钮组件",
+"params": {
+"object_id": "button"
+}
+}, {
+"id": "door_component",
+"kind": "sliding_door",
+"label": "滑动门组件",
+"params": {
+"object_id": "door"
+}
+}, {
+"id": "pressed",
+"kind": "state_entered",
+"label": "进入指定状态时",
+"params": {
+"object_id": "button",
+"state": "pressed"
+}
+}, {
+"id": "open",
+"kind": "perform_action",
+"label": "请求机关执行动作",
+"params": {
+"action": "open",
+"object_id": "door"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "pressed",
+"in": "trigger",
+"out": "fired",
+"to": "open"
+}])
+positions = {
+"button_component": Vector2(40, 60),
+"door_component": Vector2(40, 240),
+"open": Vector2(720, 60),
+"pressed": Vector2(360, 60)
+}

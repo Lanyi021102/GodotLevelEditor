@@ -1,15 +1,14 @@
 extends "res://scripts/core/game_session.gd"
 ## 工具链连续世界入口。美术与关卡布局由场景资源提供。
 @export var persist_progress := true
-@onready var world: Node3D = $World
-const ADAPTER := preload("res://scripts/actors/player_rewindable.gd")
+@export_node_path("Node3D") var world_path := NodePath("World")
+@onready var world: Node3D = get_node(world_path)
 var _world_states: Dictionary = {}
 var _current_room := ""
 
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
 	super._ready()
-	get_window().title = "Branch"
+	get_window().title = "GodotLevelEditor · 白盒编辑器"
 	world.objective_changed.connect(hud.set_objective)
 	world.goal_completed.connect(_on_goal_completed)
 	world.progress_requested.connect(_on_progress_requested)
@@ -17,6 +16,12 @@ func _ready() -> void:
 
 func _initialize_world() -> void:
 	await get_tree().physics_frame
+	for marker in world.find_children("*", "Marker3D", true, false):
+		if marker.get_script() == preload("res://addons/godot_level_editor/runtime/spawn_marker.gd") and marker.role == "player":
+			player.global_transform = marker.global_transform
+			player.spawn_transform = marker.global_transform
+			camera_rig.snap_to_target()
+			break
 	_register_component("world", world)
 	for id in world.runtime_components():
 		_register_component(id, world.runtime_components()[id])
@@ -27,17 +32,16 @@ func _initialize_world() -> void:
 	if persist_progress:
 		SaveSystem.load_game()
 	_set_location(world.start_room_id)
-	hud.set_objective("探索房间，通过回溯与固定分身安排协作。")
+	hud.set_objective("白盒试玩：探索空间并测试交互。")
 	_refresh_progress()
+	var tasks := get_node_or_null("Narrative/Tasks")
+	if tasks != null and tasks.valid:
+		tasks.task_completed.connect(func(_id: String):
+			if persist_progress: SaveSystem.save_game.call_deferred())
 
 func _register_component(_id: String, component: Node) -> void:
 	if not is_instance_valid(component) or not component.has_method("tl_capture") or _world_states.has(component):
 		return
-	if not component.has_node("Rewindable"):
-		var adapter := ADAPTER.new()
-		adapter.name = "Rewindable"
-		adapter.trail_enabled = false
-		component.add_child(adapter)
 	_world_states[component] = component.tl_capture().duplicate(true)
 
 func _set_location(id: String) -> void:
@@ -56,7 +60,6 @@ func _reset_room() -> void:
 	hud.hide_banner()
 	_set_location(world.start_room_id)
 	_refresh_progress()
-	Timeline.resume()
 
 func _on_goal_completed(_id: String) -> void:
 	_refresh_progress()
@@ -73,8 +76,13 @@ func _on_progress_requested(_progress: Dictionary) -> void:
 	if persist_progress: SaveSystem.save_game()
 
 func save_payload() -> Dictionary:
-	return world.capture_progress() if world.runtime_valid else {}
+	var progress: Dictionary = world.capture_progress() if world.runtime_valid else {}
+	var tasks := get_node_or_null("Narrative/Tasks")
+	if tasks != null and tasks.valid: progress["narrative"] = tasks.capture_progress()
+	return progress
 
 func apply_progress(progress: Dictionary) -> void:
 	if not progress.is_empty(): world.restore_progress(progress)
+	var tasks := get_node_or_null("Narrative/Tasks")
+	if tasks != null and tasks.valid and progress.has("narrative"): tasks.restore_progress(progress.narrative)
 	_refresh_progress()

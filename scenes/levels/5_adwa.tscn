@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://suuocihc3g1x"]
+
+[ext_resource type="Script" uid="uid://cd4d8g57080oe" path="res://addons/godot_level_editor/runtime/world.gd" id="1_ve76j"]
+[ext_resource type="Resource" path="res://resources/sky_presets/builtin/clear.tres" id="2_fk6kk"]
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/runtime/level_graph.gd" id="3_f410i"]
+[ext_resource type="Script" uid="uid://t4nj3ytoa33i" path="res://addons/godot_level_editor/runtime/whitebox_block.gd" id="4_1x1o7"]
+[ext_resource type="Script" uid="uid://cj5k63in1sy7k" path="res://addons/godot_level_editor/runtime/level_logic_graph.gd" id="4_3gbbo"]
+[ext_resource type="Script" uid="uid://c4qnfrq8rh8d8" path="res://addons/godot_level_editor/runtime/spawn_marker.gd" id="5_3gbbo"]
+[ext_resource type="PackedScene" path="res://scenes/lighting/sunlit_miniature_v2.tscn" id="6_mfwc3"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/palette_assets/box.tscn" id="7_ve76j"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/palette_assets/placeholder.tscn" id="9_mfwc3"]
+[ext_resource type="Script" uid="uid://dgig88tw68isw" path="res://addons/godot_level_editor/runtime/entity_profile.gd" id="10_sjqjf"]
+[ext_resource type="Script" uid="uid://b7qjdgwd45pxm" path="res://addons/godot_level_editor/runtime/entity_binding.gd" id="11_1b1e8"]
+
+[sub_resource type="Resource" id="Resource_1b1e8"]
+script = ExtResource("3_f410i")
+graph_id = "level_5_topology"
+graph_kind = "topology"
+
+[sub_resource type="Resource" id="Resource_nvred"]
+script = ExtResource("3_f410i")
+graph_id = "level_5_events"
+
+[sub_resource type="Resource" id="Resource_1u5yh"]
+script = ExtResource("4_3gbbo")
+graph_id = "level_5_level_logic"
+view_scroll = Vector2(0, -38)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rjl7t"]
+resource_local_to_scene = true
+dof_blur_far_distance = 33.5
+dof_blur_far_transition = 9.0
+dof_blur_near_distance = 23.5
+dof_blur_near_transition = 6.0
+dof_blur_amount = 0.085
+
+[sub_resource type="Resource" id="Resource_fvx1r"]
+resource_local_to_scene = true
+script = ExtResource("10_sjqjf")
+kind = "mechanism"
+model_id = "default"
+
+[node name="Adwa" type="Node3D" unique_id=1882366507]
+script = ExtResource("1_ve76j")
+sky_preset = ExtResource("2_fk6kk")
+world_id = "level_5"
+level_id = "5"
+start_room_id = ""
+topology = SubResource("Resource_1b1e8")
+events = SubResource("Resource_nvred")
+level_logic = SubResource("Resource_1u5yh")
+
+[node name="LayoutFloor" type="Node3D" parent="." unique_id=91242331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+script = ExtResource("4_1x1o7")
+object_id = "layout_floor"
+size = Vector3(20, 3.6000001, 20)
+
+[node name="PlayerSpawn" type="Marker3D" parent="." unique_id=1239093340]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -2)
+script = ExtResource("5_3gbbo")
+object_id = "player_spawn"
+
+[node name="SunlitMiniatureV2" parent="." unique_id=888022585 instance=ExtResource("6_mfwc3")]
+process_mode = 3
+process_priority = 10
+runtime_camera_attributes = SubResource("CameraAttributesPractical_rjl7t")
+
+[node name="WhiteboxBox" parent="." unique_id=1182010426 instance=ExtResource("7_ve76j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.049999982, 0.95000005, -0.39999998)
+mesh_edit = {
+"signature": ["box", 6, 0.2, 0.2, 90.0, 0.25],
+"version": 1,
+"vertices": PackedVector3Array(-0.49999982, 0.5, 0.49999997, 0.49999982, 0.5, 0.49999997, -0.49999982, -0.5, 0.49999997, 0.49999982, 0.5, 0.49999997, 0.49999982, -0.5, 0.49999997, -0.49999982, -0.5, 0.49999997, 0.49999982, 0.5, -0.49999997, -0.49999982, 0.5, -0.49999997, 0.49999982, -0.5, -0.49999997, -0.49999982, 0.5, -0.49999997, -0.49999982, -0.5, -0.49999997, 0.49999982, -0.5, -0.49999997, 0.49999982, 0.5, 0.49999997, 0.49999982, 0.5, -0.49999997, 0.49999982, -0.5, 0.49999997, 0.49999982, 0.5, -0.49999997, 0.49999982, -0.5, -0.49999997, 0.49999982, -0.5, 0.49999997, -0.49999982, 0.5, -0.49999997, -0.49999982, 0.5, 0.49999997, -0.49999982, -0.5, -0.49999997, -0.49999982, 0.5, 0.49999997, -0.49999982, -0.5, 0.49999997, -0.49999982, -0.5, -0.49999997, 0.49999982, 0.5, 0.49999997, -0.49999982, 0.5, 0.49999997, 0.49999982, 0.5, -0.49999997, -0.49999982, 0.5, 0.49999997, -0.49999982, 0.5, -0.49999997, 0.49999982, 0.5, -0.49999997, -0.49999982, -0.5, 0.49999997, 0.49999982, -0.5, 0.49999997, -0.49999982, -0.5, -0.49999997, 0.49999982, -0.5, 0.49999997, 0.49999982, -0.5, -0.49999997, -0.49999982, -0.5, -0.49999997)
+}
+object_id = "object_26dc592fb0429b17c247e0a9"
+size = Vector3(0.1, 1.9, 1.6)
+
+[node name="WhiteboxBox2" parent="." unique_id=1011265529 instance=ExtResource("7_ve76j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.5, -0.6)
+object_id = "object_8ac58726ed69a4b43835f701"
+
+[node name="WhiteboxBox3" parent="." unique_id=845245434 instance=ExtResource("7_ve76j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.25, 0.049999952, 1)
+mesh_edit = {
+"signature": ["box", 6, 0.2, 0.2, 90.0, 0.25],
+"version": 1,
+"vertices": PackedVector3Array(-0.49999997, -0.023809513, 0.5, 0.49999997, 0.49999994, 0.5, -0.49999997, -0.49999994, 0.5, 0.49999997, 0.49999994, 0.5, 0.49999997, 0.023809513, 0.5, -0.49999997, -0.49999994, 0.5, 0.49999997, 0.49999994, -0.5, -0.49999997, -0.023809513, -0.5, 0.49999997, 0.023809513, -0.5, -0.49999997, -0.023809513, -0.5, -0.49999997, -0.49999994, -0.5, 0.49999997, 0.023809513, -0.5, 0.49999997, 0.49999994, 0.5, 0.49999997, 0.49999994, -0.5, 0.49999997, 0.023809513, 0.5, 0.49999997, 0.49999994, -0.5, 0.49999997, 0.023809513, -0.5, 0.49999997, 0.023809513, 0.5, -0.49999997, -0.023809513, -0.5, -0.49999997, -0.023809513, 0.5, -0.49999997, -0.49999994, -0.5, -0.49999997, -0.023809513, 0.5, -0.49999997, -0.49999994, 0.5, -0.49999997, -0.49999994, -0.5, 0.49999997, 0.49999994, 0.5, -0.49999997, -0.023809513, 0.5, 0.49999997, 0.49999994, -0.5, -0.49999997, -0.023809513, 0.5, -0.49999997, -0.023809513, -0.5, 0.49999997, 0.49999994, -0.5, -0.49999997, -0.49999994, 0.5, 0.49999997, 0.023809513, 0.5, -0.49999997, -0.49999994, -0.5, 0.49999997, 0.023809513, 0.5, 0.49999997, 0.023809513, -0.5, -0.49999997, -0.49999994, -0.5)
+}
+object_id = "object_fe511a68bf18f2432045c487"
+size = Vector3(3.7, 2.1000001, 1)
+
+[node name="机关" type="Node3D" parent="." unique_id=2032091453]
+metadata/godot_level_editor_content_group = "mechanism"
+
+[node name="Mechanism" parent="机关" unique_id=812294671 instance=ExtResource("9_mfwc3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, -0.5)
+object_id = "object_c507e662d5b26fb7abdff9b8"
+component_kind = "door"
+source_ids = PackedStringArray()
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+placeholder_contract = ""
+metadata/godot_level_editor_entity = SubResource("Resource_fvx1r")
+metadata/_edit_group_ = true
+
+[node name="EntityProperties" type="Node3D" parent="机关/Mechanism" unique_id=188165407]
+process_mode = 3
+script = ExtResource("11_1b1e8")

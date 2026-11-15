@@ -1,0 +1,19 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="1_eecil"]
+
+[resource]
+script = ExtResource("1_eecil")
+definition_id = "wb_v1_toggle_switch"
+display_name = "拉杆"
+nodes = Array[Dictionary]([{
+"id": "toggle_switch_component",
+"kind": "toggle_switch",
+"label": "拉杆组件",
+"params": {
+"object_id": "toggle_switch"
+}
+}])
+positions = {
+"toggle_switch_component": Vector2(40, 60)
+}

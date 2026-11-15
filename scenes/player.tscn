@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cy7iiml77owj"]
 
 [ext_resource type="Script" uid="uid://bnyegk0mflomi" path="res://scripts/player.gd" id="1_player"]
-[ext_resource type="Script" uid="uid://b6t0s5hpsh8f3" path="res://scripts/actors/player_rewindable.gd" id="2_rewindable"]
 [ext_resource type="Script" uid="uid://cm800ywsol72f" path="res://scripts/actors/character_model.gd" id="3_model"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
@@ -17,8 +16,3 @@ shape = SubResource("CapsuleShape3D_player")
 
 [node name="ModelRoot" type="Node3D" parent="." unique_id=1094446472]
 script = ExtResource("3_model")
-
-[node name="Rewindable" type="Node" parent="." unique_id=109770423]
-script = ExtResource("2_rewindable")
-trail_color = Color(0.97, 0.97, 1, 0.6)
-display_name = "本体"

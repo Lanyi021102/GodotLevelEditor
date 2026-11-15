@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/assembly.gd" id="1_6onws"]
+[ext_resource type="Resource" path="res://scenes/mechanisms/hinged_door.graph.tres" id="2_mx8ly"]
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/stateful_component.gd" id="3_ajvmp"]
+
+[node name="HingedDoor" type="Node3D" unique_id=376832000]
+script = ExtResource("1_6onws")
+instance_id = "wb_v1_hinged_door"
+object_id = "hinged_door"
+primary_component = NodePath("HingedDoor")
+definition = ExtResource("2_mx8ly")
+
+[node name="HingedDoor" type="Node3D" parent="." unique_id=387312048]
+script = ExtResource("3_ajvmp")
+component_type = "hinged_door"
+object_id = "hinged_door"
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "hinged_door"

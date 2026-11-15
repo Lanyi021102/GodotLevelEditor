@@ -2,7 +2,7 @@
 extends RefCounted
 ## Enemy-only adapter for the mechanism blueprint's pure presentation helpers.
 ## FSM entries are persistent states, even when their behavior performs an action.
-const Shared := preload("res://addons/branch_mechanisms/graph/node_presentation.gd")
+const Shared := preload("res://addons/godot_level_editor_mechanisms/graph/node_presentation.gd")
 const CATEGORIES := Shared.CATEGORIES
 const TEXT := Shared.TEXT
 const MUTED := Shared.MUTED
@@ -16,13 +16,13 @@ const LEGEND_LABELS := {"condition": "判断", "trigger": "触发事件", "state
 
 static func apply_state(node: GraphNode) -> void:
 	var color: Color = CATEGORIES[CATEGORY].color
-	var body := Color("202833").lerp(color, 0.16)
-	var panel := Shared._box(body, color.lightened(0.18), false)
-	var selected := Shared._box(body, Color("e0ebff"), false, 3)
+	var body := Color("ffffff")
+	var panel := Shared._box(body, Color("dce3ed"), false)
+	var selected := Shared._box(body, Color("2563eb"), false, 2)
 	var active := Shared._box(body, ACTIVE, false, 2)
 	var active_selected := Shared._box(body, ACTIVE, false, 3)
 	var titlebar := Shared._box(color, color.lightened(0.18), true)
-	var titlebar_selected := Shared._box(color, Color("e0ebff"), true, 3)
+	var titlebar_selected := Shared._box(color, Color("2563eb"), true, 2)
 	node.set_meta("node_category", CATEGORY)
 	node.set_meta("category_panel", panel)
 	node.set_meta("category_selected_panel", selected)
@@ -38,28 +38,24 @@ static func apply_state(node: GraphNode) -> void:
 	node.tooltip_text = "持续敌人状态；行为和计时由定义执行。\n左侧输入状态进入，右侧输出条件转换。\n节点分类色表示职责，端口和连线色表示状态转换的连接语义。"
 	for child in node.get_titlebar_hbox().get_children():
 		if child is Label:
-			child.add_theme_color_override("font_color", TEXT)
+			child.add_theme_color_override("font_color", Shared.TITLE_TEXT)
 			child.add_theme_font_size_override("font_size", 16)
 
 static func add_ports(node: GraphNode) -> void:
-	# Slot 0 is a heading with no ports. Slot 1 is the ONLY enabled slot,
-	# therefore GraphEdit input/output indices both remain 0 (not 1).
-	var directions := Shared.direction_row(true, true)
-	for label in directions.get_children(): label.add_theme_font_size_override("font_size", 14)
-	node.add_child(directions)
 	var row := Shared.port_row("状态进入", "条件转换", "输入 state_enter [状态转换]：进入此状态；输出 state_exit [状态转换]：按事件、全部条件、优先级及稳定顺序选择下一状态。")
 	row.name = "TransitionPorts"
 	for label in row.get_children(): label.add_theme_font_size_override("font_size", 16)
 	row.get_node("InputLabel").tooltip_text = "输入端口 state_enter；类型：状态转换；连接索引：0。"
 	row.get_node("OutputLabel").tooltip_text = "输出端口 state_exit；类型：状态转换；连接索引：0。条件与优先级在转换页编辑。"
 	node.add_child(row)
-	node.set_slot(1, true, 0, INPUT_COLOR, true, 0, OUTPUT_COLOR)
+	node.set_slot(0, true, 0, INPUT_COLOR, true, 0, OUTPUT_COLOR)
 
 static func add_legend(parent: Node) -> void:
 	var legend := HFlowContainer.new()
 	legend.name = "CategoryLegend"
 	legend.add_theme_constant_override("h_separation", 16)
 	parent.add_child(legend)
+	legend.hide()
 	for key in CATEGORIES:
 		var item := Label.new()
 		item.name = key
@@ -83,6 +79,7 @@ static func show_runtime(node: GraphNode, active: bool, mode: String, value: Str
 	var label := node.get_node("RuntimeValue") as Label
 	label.add_theme_font_size_override("font_size", 16)
 	label.text = ("● " + mode if active else value)
+	label.visible = not label.text.is_empty()
 	label.add_theme_color_override("font_color", ACTIVE if active else MUTED)
 	label.tooltip_text = hint
 	var values := node.get_node("RuntimeMetrics") as Label
@@ -92,4 +89,4 @@ static func show_runtime(node: GraphNode, active: bool, mode: String, value: Str
 	values.tooltip_text = hint
 
 static func title(label: String, initial: bool, active: bool, mode: String) -> String:
-	return "状态 · " + ("▶ " if initial else "") + label + (" · " + mode if active else "")
+	return label

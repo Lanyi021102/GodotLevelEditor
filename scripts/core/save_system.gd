@@ -1,13 +1,12 @@
 extends Node
 ## 存档（Autoload: SaveSystem）
 ##
-## 保存连续世界的持续进度与能力，
-## **不保存分身与时间线**（回房间重新解）。能力是元进度，走存档而不是走时间线。
+## 保存用户配置的世界与任务持续进度；旧存档的 abilities 字段忽略。
 
 signal saved(data: Dictionary)
 signal loaded(data: Dictionary)
 
-const PATH := "user://branch_world_progress.json"
+const PATH := "user://godot_level_editor_world_progress.json"
 const VERSION := 2
 var storage_path := PATH
 
@@ -40,7 +39,6 @@ func collect_state() -> Dictionary:
 			progress = node.save_payload()
 	return {
 		"version": VERSION,
-		"abilities": Abilities.snapshot(),
 		"progress": progress,
 	}
 
@@ -64,8 +62,6 @@ func load_game() -> Dictionary:
 
 
 func apply_state(data: Dictionary) -> void:
-	var ids: Array = data.get("abilities", [])
-	Abilities.restore(ids)
 	var progress: Variant = data.get("progress", {})
 	if progress is Dictionary:
 		for node in get_tree().get_nodes_in_group("main"):
@@ -77,4 +73,3 @@ func apply_state(data: Dictionary) -> void:
 func reset() -> void:
 	if has_save():
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(storage_path))
-	Abilities.clear()

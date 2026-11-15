@@ -1,6 +1,6 @@
 extends SceneTree
-const Factory := preload("res://addons/branch_mechanisms/factory.gd")
-const Store := preload("res://addons/branch_mechanisms/store.gd")
+const Factory := preload("res://addons/godot_level_editor_mechanisms/factory.gd")
+const Store := preload("res://addons/godot_level_editor_mechanisms/store.gd")
 func _initialize() -> void:
 	var sample := Factory.sample()
 	var result := Store.save_pair(sample, "res://scenes/mechanisms/lever_plate_door.tscn")

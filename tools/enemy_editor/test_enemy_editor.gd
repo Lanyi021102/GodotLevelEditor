@@ -114,8 +114,6 @@ func _test_storage() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEMP))
 
 func _test_guard() -> void:
-	Timeline.clear()
-	EnergyLedger.reset()
 	var scene := load("res://scenes/guard.tscn") as PackedScene
 	var a := scene.instantiate() as GuardAI
 	var b := scene.instantiate() as GuardAI
@@ -142,15 +140,13 @@ func _test_guard() -> void:
 	check(b._machine.current().speed == 7.0 and b.state_timer() == 2.0, "显式定义的行为参数生效")
 	var original := a.tl_capture()
 	a.alert_level = 100.0
-	var before := EnergyLedger.energy
 	a._evaluate_enemy("perception")
-	check(a.state == GuardAI.State.ALERT and is_equal_approx(before, EnergyLedger.energy), "实际暴露进入警戒且不扣能量")
+	check(a.state == GuardAI.State.ALERT, "实际感知进入编辑的警戒状态")
 	var exposed := a.tl_capture()
 	a.tl_restore(original)
 	check(a.state == GuardAI.State.SUSPICIOUS and a.alert_level == 25.0, "守卫快照恢复完整状态")
-	before = EnergyLedger.energy
 	a.tl_restore(exposed)
-	check(a.state == GuardAI.State.ALERT and EnergyLedger.energy == before, "恢复警戒不重放能量副作用")
+	check(a.state == GuardAI.State.ALERT, "恢复快照后警戒状态一致")
 	original.erase("enemy_machine")
 	a.tl_restore(original)
 	check(a.state == GuardAI.State.SUSPICIOUS and a.state_timer() == 6.0, "旧版快照回退兼容")
@@ -159,15 +155,14 @@ func _test_guard() -> void:
 	a.has_last_known = false
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	var frame := Timeline.head
+	var baseline := a.tl_capture()
 	a.heard_noise(Vector3.ZERO, 8.0, null)
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	Timeline.rewind_to_frame(frame)
-	check(a.state == GuardAI.State.PATROL and a.alert_level == 0.0, "真实 Timeline 回溯恢复运行器")
+	a.tl_restore(baseline)
+	check(a.state == GuardAI.State.PATROL and a.alert_level == 0.0, "编辑器快照恢复运行器状态")
 	var packet := a.enemy_runtime_state()
 	check(packet.definition.ends_with("guard_default.tres") and packet.state_id == "patrol", "调试包对应当前定义与回溯状态")
-	Timeline.resume()
 	a.queue_free()
 	b.queue_free()
 	await get_tree().physics_frame

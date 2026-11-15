@@ -2,7 +2,7 @@
 
 - **已完成**：Godot“机关蓝图”插件；拉杆、开关门与压力板适配；真实执行的 AND/OR/NOT、常量、比较、对象引用、上升沿与延迟节点；参数编辑、三维双向选中、复制新 ID、撤销重做、独立预览、成对保存/关闭重载、实际运行实例状态显示。
 - **资产**：`scenes/mechanisms/lever.tscn`、`door.tscn`；标准组合 `lever_plate_door.tscn` + `.graph.tres`。图资源版本 1；布局与执行语义分开；运行状态独立。
-- **复用与修改范围**：新增 `addons/branch_mechanisms/`、`scenes/mechanisms/`、`tools/mechanisms/`、本目录。`PowerDoor` 增加工具预览与幂等几何构建，旧运行/回溯接口保留；插件启用项并入已有列表。未改玩家、Timeline、SaveSystem或公共关卡组装。
+- **复用与修改范围**：新增 `addons/godot_level_editor_mechanisms/`、`scenes/mechanisms/`、`tools/mechanisms/`、本目录。`PowerDoor` 增加工具预览与幂等几何构建，旧运行/回溯接口保留；插件启用项并入已有列表。未改玩家、Timeline、SaveSystem或公共关卡组装。
 - **接口**：`interact/can_interact(actor)`、`is_powered()`；组合 `configure/step/tl_capture/tl_restore`；局部 object_id 与组合 instance_id；图资源 `.tres` 和结构 `.tscn`。完整约定见 [INTERFACES.md](INTERFACES.md)。
 - **验证**：运行逻辑 **48/48**；编辑器画布 **33/33**（含真实游戏进程 EngineDebugger 状态、停止清理、关闭重开）。Godot 4.7.1，原工程编辑器初始化无脚本错误。图形编辑器在隔离副本验证并检查截图。当前验证见 ../cleanup/README.md。
 - **总控待办**：接入玩家交互键/成功扣能量与分身动作日志；给组合根注册一次快照并协调冻结；明确房间状态与永久进度保存策略；关卡复制实例时分配新的 instance_id，按组合实例 + 局部 object_id 引用。草丛与梯子留待对应隐蔽/攀爬运行能力接口明确后扩展。

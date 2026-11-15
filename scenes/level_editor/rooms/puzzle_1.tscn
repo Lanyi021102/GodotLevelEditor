@@ -1,10 +1,10 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/room.gd" id="1_cv327"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/whitebox_block.gd" id="2_di2fp"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/connection.gd" id="3_62ecn"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/placement.gd" id="4_umwp2"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/region.gd" id="5_s88kv"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/room.gd" id="1_cv327"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/whitebox_block.gd" id="2_di2fp"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/connection.gd" id="3_62ecn"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/placement.gd" id="4_umwp2"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/runtime/region.gd" id="5_s88kv"]
 
 [node name="Puzzle1" type="Node3D" unique_id=1942402412]
 script = ExtResource("1_cv327")

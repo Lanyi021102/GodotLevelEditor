@@ -10,7 +10,7 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 		var node: GraphNode = panel.graph.get_node("s_" + str(packet.state_id))
 		if node.get_meta("runtime_active", false) and node.self_modulate == Color.WHITE and node.get_theme_stylebox("titlebar").bg_color == Color("24756e"): flags.highlight = true
 	plugin.debugger.state_received.connect(listener)
-	var pid := OS.create_process(OS.get_executable_path(), PackedStringArray(["--headless", "--path", ProjectSettings.globalize_path("res://"), "--remote-debug", "tcp://127.0.0.1:6017", "--ignore-error-breaks", "--log-file", "/tmp/branch_enemy_debug_child.log", "res://tools/enemy_editor/debug_probe.tscn"]))
+	var pid := OS.create_process(OS.get_executable_path(), PackedStringArray(["--headless", "--path", ProjectSettings.globalize_path("res://"), "--remote-debug", "tcp://127.0.0.1:6017", "--ignore-error-breaks", "--log-file", "/tmp/godot_level_editor_enemy_debug_child.log", "res://tools/enemy_editor/debug_probe.tscn"]))
 	var deadline := Time.get_ticks_msec() + 10000
 	while pid > 0 and OS.is_process_running(pid) and Time.get_ticks_msec() < deadline:
 		await panel.get_tree().create_timer(0.1).timeout

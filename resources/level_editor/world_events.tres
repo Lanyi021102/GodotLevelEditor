@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="BranchLevelGraph" format=3 uid="uid://c1faqi76cv52d"]
+[gd_resource type="Resource" script_class="GodotLevelEditorLevelGraph" format=3 uid="uid://c1faqi76cv52d"]
 
-[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/branch_level_editor/runtime/level_graph.gd" id="1_xr376"]
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/runtime/level_graph.gd" id="1_xr376"]
 
 [resource]
 script = ExtResource("1_xr376")
-graph_id = "branch_events_v1"
+graph_id = "godot_level_editor_events_v1"
 nodes = Array[Dictionary]([{
 "id": "source_1",
 "kind": "source",
@@ -215,4 +215,5 @@ positions = {
 "unlock_2": Vector2(1620, 360),
 "unlock_3": Vector2(1620, 1640)
 }
-view_scroll = Vector2(8.350037, 975.95)
+view_scroll = Vector2(-105.39667, 272.50735)
+view_zoom = 0.51315796

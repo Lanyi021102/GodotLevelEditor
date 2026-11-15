@@ -1,8 +1,8 @@
 extends Node
-const Factory := preload("res://addons/branch_mechanisms/factory.gd")
-const Store := preload("res://addons/branch_mechanisms/store.gd")
-const Definition := preload("res://addons/branch_mechanisms/graph/definition.gd")
-const Schema := preload("res://addons/branch_mechanisms/graph/schema.gd")
+const Factory := preload("res://addons/godot_level_editor_mechanisms/factory.gd")
+const Store := preload("res://addons/godot_level_editor_mechanisms/store.gd")
+const Definition := preload("res://addons/godot_level_editor_mechanisms/graph/definition.gd")
+const Schema := preload("res://addons/godot_level_editor_mechanisms/graph/schema.gd")
 var passed := 0
 var failed := 0
 var sample: Node3D

@@ -8,22 +8,29 @@ func check(ok: bool, label: String) -> void:
 	print("[PASS] " if ok else "[FAIL] ", label)
 func run(panel: Control, plugin: EditorPlugin) -> void:
 	for _i in 12: await panel.get_tree().process_frame
-	panel.show()
+	var suite := panel.get_tree().get_first_node_in_group("godot_level_editor_editor_suite")
+	if suite != null:
+		suite.open_tab("敌人")
+		var workspace: Control = suite.asset_panels["敌人"]
+		workspace.select_asset(panel.TEMPLATE_PATH)
+		workspace.enter_edit()
+	else: panel.show()
+	panel.workspaces.current_tab = 1
 	for _i in 2: await panel.get_tree().process_frame
 	check(panel.graph.get_connection_list().size() == 9, "画布显示实际转换端点")
 	var presentation = load("res://addons/enemy_editor/graph/node_presentation.gd")
-	var expected_colors := {"condition": "94700e", "trigger": "a34439", "state": "24756e", "action": "345f96", "data": "71508f", "flow": "9b592b"}
+	var expected_colors := {"condition": "976b36", "trigger": "2b6535", "state": "2b7278", "action": "244568", "data": "747c86", "flow": "a56637"}
 	var palette_ok := true
 	for key in expected_colors:
 		palette_ok = palette_ok and presentation.CATEGORIES[key].color.to_html(false) == expected_colors[key]
 	check(palette_ok, "复用机关蓝图六类职责色")
-	check(panel.get_node("CategoryLegend").get_child_count() == 7, "画布提供六类文字颜色图例及连接类型说明")
+	check(not panel.get_node("CategoryLegend").visible, "分类使用颜色，不显示常驻图例")
 	var all_states := true
 	var ports_unchanged := true
 	for child in panel.graph.get_children():
 		if child is GraphNode:
-			all_states = all_states and child.get_meta("node_category") == "state" and child.title.begins_with("状态 · ")
-			ports_unchanged = ports_unchanged and child.get_input_port_count() == 1 and child.get_output_port_count() == 1 and child.get_input_port_slot(0) == 1 and child.get_output_port_slot(0) == 1 and child.get_input_port_type(0) == 0 and child.get_output_port_type(0) == 0 and not child.is_slot_enabled_left(0) and not child.is_slot_enabled_right(0)
+			all_states = all_states and child.get_meta("node_category") == "state" and not child.title.begins_with("状态 · ")
+			ports_unchanged = ports_unchanged and child.get_input_port_count() == 1 and child.get_output_port_count() == 1 and child.get_input_port_slot(0) == 0 and child.get_output_port_slot(0) == 0 and child.get_input_port_type(0) == 0 and child.get_output_port_type(0) == 0 and child.is_slot_enabled_left(0) and child.is_slot_enabled_right(0)
 	var template_nodes: Array = panel.graph.get_children().filter(func(child: Node): return child is GraphNode)
 	var no_overlap := true
 	for i in template_nodes.size():
@@ -31,15 +38,15 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 			no_overlap = no_overlap and not Rect2(template_nodes[i].position_offset, template_nodes[i].size).intersects(Rect2(template_nodes[j].position_offset, template_nodes[j].size))
 	check(no_overlap, "默认四状态排版新增标识后不遮挡其他节点")
 	check(all_states, "持续敌人状态按状态分类，不误标为触发或动作")
-	check(ports_unchanged, "标识行无端口，启用端口连接索引仍为 0，类型不变")
+	check(ports_unchanged, "可见状态端口的连接索引保持 0，类型不变")
 	var patrol: GraphNode = panel.graph.get_node("s_patrol")
-	check(patrol.get_node("PortDirections/InputDirection").text == "输入 →" and patrol.get_node("PortDirections/OutputDirection").text == "→ 输出", "两侧方向文字靠近对应输入输出")
+	check(patrol.get_node_or_null("PortDirections") == null, "方向占位行已移除，端口直接对应可见行")
 	check(patrol.get_node("TransitionPorts/InputLabel").tooltip_text.contains("state_enter") and patrol.get_node("TransitionPorts/OutputLabel").tooltip_text.contains("state_exit"), "保留端口稳定 ID 与悬停语义")
 	var only_output = presentation.Shared.direction_row(false, true)
 	check(only_output.get_node("InputDirection").text.is_empty() and only_output.get_node("OutputDirection").text == "→ 输出", "无端口侧不显示方向标识")
 	only_output.free()
 	patrol.selected = true
-	check(patrol.get_theme_stylebox("titlebar").bg_color == Color("24756e") and patrol.get_theme_stylebox("titlebar_selected").bg_color == Color("24756e"), "选中保留状态分类色")
+	check(patrol.get_theme_stylebox("titlebar").bg_color == Color("2b7278") and patrol.get_theme_stylebox("titlebar_selected").bg_color == Color("2b7278"), "选中保留状态分类色")
 	panel.selected_state = "patrol"
 	panel._set_state("speed", 2.6)
 	check(is_equal_approx(panel.definition.state_by_id("patrol").speed, 2.6), "参数编辑仍然生效")
@@ -78,14 +85,14 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 	panel.receive_runtime("1:guard", {"instance": "/root/Guard", "definition": panel.file_path, "state_id": "alert", "timer": 3.0, "last_transition": "patrol_expose", "rewound": true, "session": 1, "alert": 100.0})
 	var active: GraphNode = panel.graph.get_node("s_alert")
 	check(active.get_meta("runtime_active") and panel.runtime_label.text.contains("回溯") and active.get_node("RuntimeValue").text.contains("回溯"), "运行状态与回溯边框、绿点、文字高亮")
-	check(active.self_modulate == Color.WHITE and active.modulate == Color.WHITE and active.get_theme_stylebox("titlebar").bg_color == Color("24756e"), "回溯不整节点染色或淡化分类色")
+	check(active.self_modulate == Color.WHITE and active.modulate == Color.WHITE and active.get_theme_stylebox("titlebar").bg_color == Color("2b7278"), "回溯不整节点染色或淡化分类色")
 	active.selected = true
-	check(active.get_theme_stylebox("panel_selected").border_color == presentation.ACTIVE and active.get_theme_stylebox("titlebar_selected").bg_color == Color("24756e"), "活动且选中时保留分类色和绿色边框")
+	check(active.get_theme_stylebox("panel_selected").border_color == presentation.ACTIVE and active.get_theme_stylebox("titlebar_selected").bg_color == Color("2b7278"), "活动且选中时保留分类色和绿色边框")
 	var signature: String = panel._signature()
 	panel.receive_runtime("1:guard", {"instance": "/root/Guard", "definition": panel.file_path, "state_id": "alert", "timer": 2.0, "last_transition": "patrol_expose", "last_reason": "巡逻 → 警戒 · 警觉 ≥ 100", "rewound": false, "session": 1, "alert": 100.0})
 	check(active.get_node("RuntimeValue").text.contains("运行中") and active.get_node("RuntimeMetrics").text.contains("警觉 100") and active.get_node("RuntimeValue").tooltip_text.contains("警觉 ≥ 100"), "保留实际执行、当前数值与最近转换原因")
 	plugin.debugger.session_pause_changed.emit(1, true)
-	check(active.get_node("RuntimeValue").text.contains("暂停") and active.get_theme_stylebox("titlebar_selected").bg_color == Color("24756e"), "调试暂停保留分类色和活动提示")
+	check(active.get_node("RuntimeValue").text.contains("暂停") and active.get_theme_stylebox("titlebar_selected").bg_color == Color("2b7278"), "调试暂停保留分类色和活动提示")
 	plugin.debugger.session_pause_changed.emit(1, false)
 	check(active.get_node("RuntimeValue").text.contains("运行中") and panel._signature() == signature, "恢复显示且运行呈现不修改定义资源")
 	panel.clear_session(1)

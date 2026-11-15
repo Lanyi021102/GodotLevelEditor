@@ -1,4 +1,40 @@
+> 当前关卡接口（2026-11-16）：关卡编辑使用整关常驻逻辑图，素材添加由三维轮盘负责；“接受任务”接取首项后自动串行后续任务。此前阶段移除的是旧房间接驳图。详见文末常驻逻辑合同与验证。
+
+2026-11-16 选择工具与步长：工具栏统一为“呼出轮盘／选中面／选中线／选中点”，三个选择模式共享 `push_pull_tool` 的单元素 subgizmo 事务，通过 `selection_id()` 和 `element_frame()` 向原生操作轴提供元素中心。`mesh_elements.gd` 按共用位置焊接顶点，合并三角形边并排除共面内部对角线；线／点按屏幕距离拾取，过滤背面及近处白盒遮挡。变换仍调用 `face_edit.transformed_state`，保留 `mesh_edit.version=1`、对象 ID、碰撞更新与原生撤销；单点绕自身旋转返回未改动状态。Esc／空白取消子选择后恢复物体轴；选择模式内隐藏旧尺寸手柄，退出模式后恢复。`plugin.edit_step` 来自工具栏可填写输入和 0.1／0.5／1 预设，同步原生平移、元素移动及轮盘放置，只写项目 EditorSettings metadata，不重写现有场景。详细接口及验证见 [选择工具与步长](selection_tools_2026-11-16/validation.md)。
+
 # 关卡专项接口 v1 · 2026-10-30
+
+## 新增物件自动分类 · 2026-11-16
+
+- `scene_groups.gd` 集中管理空 Node3D 父节点：`NPC`、`Room`、`机关`、`关卡白盒`。首次确认放置时创建，同类后续复用；取消预览不创建分组。只处理新增内容，既有根节点物件不自动迁移。
+- 容器使用 `godot_level_editor_content_group` metadata 标记职责，重命名显示名称后仍可复用；同名的业务节点不被改造或覆盖，必要时使用唯一容器名称。管理节点无脚本、不含游戏逻辑。
+- `plugin._add_nodes_undoable(parent, nodes, root, title, additional_owned=[])` 将分组创建、实例加入、owner 和旧拓扑首 Room 绑定合并到同一次原生撤销操作。批量混合素材按类别分别入组，保持一次撤销；已有分组不随撤销其他新增物件被删除。
+- 轮盘、工具栏添加、实例化 Room、复制与标准素材拖放共用新增事务。`asset_drop_tool.gd`／`asset_drop_surface.gd` 仅在原生视口拖放目录素材期间接收拖放，其他时间鼠标过滤为 IGNORE；使用原有轮盘的被动预览和落点计算，不增加三维视口。普通文件仍走原生流程。
+- `GROUPS.contents(root)` 仅展开标记的管理容器，不深入机关／NPC 预制件内部；world／Room 的读取、校验与运行初始化按此保持 `$world/object_id` 和 `room_id/object_id` 原作用域。容器不增加对象 ID，稳定 ID 和内部图引用不改。
+- 新建关卡的初始地面、新建 Room 源场景生成的白盒也按新规则归档。已有场景、出生点、保留光照资源不自动整理。
+- 检查和原生编辑器截图见 [自动分类验证](content_groups_2026-11-16/validation.md)。
+
+
+2026-11-15 面操作轴：`push_pull_tool.gd` 管理选面与变换事务，首次点击只选择面；`block_gizmo.gd` 使用原生 subgizmo 接口，将唯一一组移动／旋转轴放在相连共面的唯一顶点平均中心。原生轴优先命中，再进行全场景最近可编辑面拾取；命中别的物体时延迟切换原生选择，避免在引擎遍历 gizmo 时修改集合。选面期间隐藏白盒尺寸手柄；Esc／空白点击调用 `clear_subgizmo_selection()`，保留物体选择并恢复物体轴及尺寸手柄。退出模式、切场景、切出 3D、F5/F6 与禁用插件均清理子选择。`face_edit.gd.transformed_state` 在拖动开始时的局部坐标中变换选面全部共用顶点，随后重新包围、归一化，继续使用 `mesh_edit.version=1`；源对象 ID、父级关系与运行碰撞接口保持。非法翻转及最小厚度继续拒绝，平移与旋转沿用原生吸附及场景撤销。验证见 [面操作轴](face_gizmo_2026-11-15/validation.md)。
+
+2026-11-16 快速添加 V2：`asset_catalog.gd.assets(category)` 返回 `{path, title, category, kind}`；`template(category, lifetime)` 新增 `entity_kind/lifetime/template`，`recent_assets` 同时兼容旧路径和带存在范围的 JSON 描述。`radial_tool.gd` 托管短按切换、放置、清理和原生撤销；`radial_menu.gd` 提供六扇区、常驻／任务二级菜单、搜索和动画，不再提供父级选择。轮盘在活动 `Node3DEditorViewport` 覆盖层上方，并从窗口 `_input` 转换到动画后的控件局部坐标，避免原生覆盖层截走悬停。UI revision 允许热更新后重建旧轮盘而不重载关卡。ghost 位于编辑器 SubViewport、用户场景树之外，停用碰撞、处理及环境等副作用，不写入 `.tscn`。确认放置才创建实例，交给现有类别组织节点接入当前关卡；只刷新根作用域 ID，保留内部引用。已有出生点使用可撤销移动。切场景、切工作区、失去焦点、F5/F6 及禁用插件均清理预览。常驻检测 Room 不自动成为拓扑起始房间，旧拓扑 Room 的起始 ID 与实例使用同一撤销动作。
+
+NPC／Room／机关根 metadata `godot_level_editor_entity` 保存 schema 1 的 `entity_profile.gd` 资源，包含模型、存在范围、任务、阵营、动作和行为引用。`EntityProperties` 是被关卡拥有的普通持久化子节点；其派生 `ModelPreview` 没有 owner，不入盘。`entity_inspector.gd`、`entity_inspector_panel.gd`、`entity_gizmo.gd` 提供原生检查器、撤销与根对象拾取。属性只改当前实例，不改源场景。任务存在性读取同一个世界的事件执行器及当前关卡 ID：任务 active 时显示和启用，结束／失败／未激活时关闭显示、处理与碰撞。事件执行器通过 `godot_level_editor_task_directors` 组提供发现入口。详见 [V2 操作、字段和验证](quick_add_v2_2026-11-15/README.md)。
+
+2026-11-15 独立试玩：直接运行 world 根场景时，运行时创建标准 PlaySession 并使用现有玩家、镜头、HUD、出生点及复位；编辑器模式和嵌入已有主场景时不创建。会话不写回用户场景。详见套件合同。
+
+2026-11-13 大世界仓库覆盖：关卡实体场景统一位于 scenes/levels/；世界导出 level_id 并使用 levels.xlsx 保存 ID、名称和中文名。关卡图移入仓库子页。常驻检测 Room 使用 uses_topology=false，旧连线房间默认 true。出生 Marker 驱动玩家初始及复位位置。详见 [套件当前合同](../godot_level_editor_suite/INTERFACES.md)。
+
+2026-11-13：产品及插件路径改名、五项蓝色导航和原生视口边界以 [当前套件接口](../godot_level_editor_suite/INTERFACES.md) 为准。隐藏的方向占位行已移除，端口对应实际可见行，具名端口与图资源连线保持兼容。
+
+## 统一窗口与节点呈现 · 2026-11-12
+
+专项入口已统一到独立“GodotLevelEditor”窗口；原 EditorPlugin 仅保留模块注册和撤销／调试支持。节点类别只用颜色，隐藏分类文字前缀、方向说明行和空运行状态；端口索引、稳定 ID 和资源版本不变。当前合同与验证见 [套件接口](../godot_level_editor_suite/INTERFACES.md)。此前有关入口和分类前缀的说明为历史记录。
+
+
+## 白盒转型覆盖说明 · 2026-11-12
+
+当前以个人白盒编辑器为目标。时间暂停、回溯／快进、录像分身、轨迹、能量和能力解锁已删除。此前时间线／分身操作要求仅为历史记录。四套编辑器、定义格式、稳定 ID、连线、组件交互及调试继续保留。组件 tl_capture/tl_restore 供状态保存、复位与编辑器操作使用，不再注册时间线；has_item 只使用角色道具接口，无接口时返回 false。主入口为空白工作区，不接入旧谜题、守卫或剧情。验证见 [转型记录](../cleanup/WHITEBOX_2026-11-12.md)。
 
 ## 米制网格呈现 · 2026-11-02
 
@@ -6,7 +42,7 @@
 
 ## v0.4 呈现统一 · 2026-10-31
 
-- 仅在 `node_presentation.gd` 维护关卡节点职责分类，直接复用 `addons/branch_mechanisms/graph/node_presentation.gd` 的颜色、节点样式、方向行、端口行及活动边框。未改机关专项文件。
+- 仅在 `node_presentation.gd` 维护关卡节点职责分类，直接复用 `addons/godot_level_editor_mechanisms/graph/node_presentation.gd` 的颜色、节点样式、方向行、端口行及活动边框。未改机关专项文件。
 - 持续读取 `source/read_state/player_state` 与记忆 `latch` 属于状态；`goal` 输出一次完成事件，属于触发；`emit_event` 下一帧投递，属于延迟／流程。该映射仅用于标题、筛选和图例，不改 `level_graph.gd` 的定义或节点 kind。
 - 方向标识行不启用端口；实际槽位行从 `i` 移到 `i+1`，启用端口的连接索引、顺序、类型和颜色完全不变。保留节点／端口 ID、连线数据、版本 1 资源格式以及运行执行器。
 - 活动样式读取现有值、执行计数和原因；事件计数增加时短暂提示，回溯清除过时提示。调试器的暂停／继续仅更新编辑器显示；不写运行实例，也不新增运行消息字段。`Runtime` 标签路径保持兼容。
@@ -19,14 +55,14 @@
 - `apply_face_state({size, transform, mesh_edit})` 原子用于编辑器撤销重做；碰撞从同一编辑网格生成。更改形状类型、阶数等生成参数会临时使用该参数的生成形状；撤销参数后恢复匹配的推拉数据，`size` 仍可继续缩放。
 - `native_snap.gd` 通过 Godot 4.7 原生吸附对话框设置平移步长 0.1 并开启吸附；根据原生控件单位和图标定位，不依赖界面语言，设置后用 `EditorInterface` 实际值校验。公共运行时玩家、Timeline、存档和事件接口不变。
 
-本专项只新增 `addons/branch_level_editor`、`scenes/level_editor`、`resources/level_editor`、`tools/level_editor` 与本文档目录；公共文件仅追加 `project.godot` 插件启用项，保留其他插件和默认入口。运行场景遵循当前清理基线。
+本专项只新增 `addons/godot_level_editor`、`scenes/level_editor`、`resources/level_editor`、`tools/level_editor` 与本文档目录；公共文件仅追加 `project.godot` 插件启用项，保留其他插件和默认入口。运行场景遵循当前清理基线。
 
 | 对象 | 接口与含义 |
 |---|---|
-| 世界根 `runtime/world.gd` | `topology`、`events` 引用两张 `BranchLevelGraph`；`world_id`、`start_room_id` 为稳定 ID |
+| 世界根 `runtime/world.gd` | `topology`、`events` 引用两张 `GodotLevelEditorLevelGraph`；`world_id`、`start_room_id` 为稳定 ID |
 | 房间根 `runtime/room.gd` | `room_id` 为实例作用域，`display_name` 可改；局部 `object_id` 不依赖节点名 |
 | 空间接驳点 | 本地 -Z 指向房间外；每条图边连接两个接驳点，允许双向连续穿行；未连接的接口保持封闭 |
-| 区域目标 | `controlled_actor()` 只接受 `branch_player` 组且 `is_clone()` 不为 true 的角色；角色碰撞层为 2 |
+| 区域目标 | `controlled_actor()` 只接受 `godot_level_editor_player` 组且 `is_clone()` 不为 true 的角色；角色碰撞层为 2 |
 | 组件锚点 | `component_scene` 可实例化独立机关组合/敌人场景；`component_definition` 传入守卫 `enemy_definition`；`component_output_path` 选择组合内部的读取端点 |
 | 机关读取端点 | `is_powered() -> bool` 或 `is_open() -> bool`；只读查询，不绕过机关图改变门状态 |
 | 白盒块 | `size` 控制碰撞体，`visual_scene` 可替换表现；模型应只包含表现节点，布局和逻辑继续复用 |
@@ -54,14 +90,14 @@
 - 首版三房保留已有 PressurePlate/KineticPlate/Breaker/PowerDoor 接口和局部 `source_ids` 兼容装配。赋予 `component_scene` 时不再追加这些旧连线，也不覆盖组合内组件参数；后续由总控协调替换成已验收的机关图预制组合。
 - `placeholder` 没有场景时仅保留接口占位，不提供虚假通电/攀爬等行为。玩家、草丛和梯子等缺失能力用 `placeholder_contract` 写明条件与待实现接口；`world.warnings()` 可列出。
 - 旧电闸离场时关闭自己的动态暗区；LightZones 尚无单项注销接口，反复加载的区域槽回收交总控协调。
-- 调试使用只读 `branch_level:state/remove` 通道。包包含编辑器会话、实例路径、世界/图 ID、语义摘要、实际值与最近原因；同一定义的多个实例分开显示，运行不接受编辑器写状态。
+- 调试使用只读 `godot_level_editor_level:state/remove` 通道。包包含编辑器会话、实例路径、世界/图 ID、语义摘要、实际值与最近原因；同一定义的多个实例分开显示，运行不接受编辑器写状态。
 
 ## v0.2 适配 · 2026-10-30
 
 - 仍使用格式版本 1，新增预制节点类型；旧节点/端口 ID 与四房世界继续兼容。中文名称只影响显示，不作为引用。
 - 白盒新增 `shape_kind/steps/step_height/thickness/curve_angle/skew`。`size` 初始为 1，尺寸按 0.1 量化，最小 0.1；编辑器原生缩放也以 0.1 量化，支持非等比正缩放。旧场景通过既有 `size` 保存布局。门洞/窗洞/管道使用真实三角碰撞；形状网格与碰撞由同一生成器产生。单个定高楼梯最多 64 级。
 - `palette_assets/*.tscn` 是原生拖放预设，数据协议 `type=files`；拖放预览、落点与撤销采用 Godot 的原生场景拖放。实例在进树时分配空缺的稳定 ID，不修改共用预设。Room 编辑器表现使用线框，避免把检测体误作放置表面。
-- Room 增加 `player_entered(room_id, actor)` / `player_exited(room_id, actor)`。检测范围为局部 X/Z 各半宽、Y 从 0 到 `bounds_size.y`；排除分身，仅检测 `branch_player`、角色碰撞层 2。接驳点的旧 `room_entered(from,to,actor)` 仍表示跨接口方向，二者语义分开。
+- Room 增加 `player_entered(room_id, actor)` / `player_exited(room_id, actor)`。检测范围为局部 X/Z 各半宽、Y 从 0 到 `bounds_size.y`；排除分身，仅检测 `godot_level_editor_player`、角色碰撞层 2。接驳点的旧 `room_entered(from,to,actor)` 仍表示跨接口方向，二者语义分开。
 - 区域增加 `player_entered(actor)` / `player_exited(actor)`。世界事件图用稳定 Room ID 或 `room_id/object_id` 绑定；世界根直接摆放的物件位于 `$world/object_id` 作用域。
 - `world.publish_event(key, actor=null)` 向图发送具名事件；`emit_event` → `event_received` 在下一物理帧送达。事件与操作可分支，不执行任意表达式或任意方法名。每帧执行 64 个事件，输入/待执行队列各限制 256 项；快照增加输入队列、启动标记、执行计数和事件上下文。
 - 新操作桥位于 `runtime/level_actions.gd`。开关调用既有 `set_powered(bool)`；压力板仍由真实占位驱动。守卫优先调用可选 `level_start_patrol()`，否则通过现有 GuardAI 的公开快照接口恢复原巡逻状态后启用处理，不改敌人定义或共享状态机。
@@ -75,3 +111,17 @@
 ## 总控 3C 接口更新 · 2026-11-02
 
 共享玩家与会话已切换到 WASD/Shift/空格、Q/E 浏览后暂停、T 继续、R 固定录像分身、F 主动交互。允许回到分身生成前，已有录像不被改写。HUD 仅保留暂停按钮，能量玩法移除。组合的 can_interact/interact 与无副作用快照接口不变，玩家/分身实际接入交互记录及回放。具体合同和验证见 [3C Playground](../3cplayground/README.md)。本次未修改编辑器实现或用户关卡与机关资源。
+
+## 台本与任务兼容扩展 · 2026-11-12
+
+GodotLevelEditorLevelGraph 新增 npc_interact/dialog_completed/show_dialog/task_start/task_complete，沿用版本 1 与原端口合同。共享画布支持参数编辑和分类呈现；实际任务执行由独立 task_director 负责。正式玩家补上既有 Room 检测合同要求的 godot_level_editor_player 分组，分身仍被过滤。现有世界事件与快照格式保持兼容；说明和回归结果见 [任务接口](../narrative_editor/INTERFACES.md)。
+
+## 箱庭关卡当前接口 · 2026-11-15
+
+独立套件不再托管 level.panel，不显示“关卡图”；旧 open_tab("关卡图") 仅兼容导航到关卡编辑，不选择某个素材页。原生摆放侧栏移除节点图、起始房间和接驳点入口，新建 Room 场景／物件及 palette_assets/room.tscn 均为 uses_topology=false。world.validate 仅在存在旧 uses_topology=true 房间时要求有效 start_room_id；多个常驻检测区仍可独立触发 Room 进入事件。旧图资源、稳定 ID、运行接驳及保存格式不变，用户场景不改写。完整验证见 [箱庭工作流](../godot_level_editor_suite/sandbox_levels_2026-11-15/validation.md)。
+
+## 常驻逻辑图当前合同 · 2026-11-15
+
+world.level_logic 是独立的 level_logic_graph 资源，默认内嵌于关卡 .tscn；不覆盖既有 events/topology 资源。关卡编辑托管 level_logic_panel，仅显示逻辑画布和参数；删除五类素材仓库与列表，空间制作由轮盘负责。NPC 使用 world.objects() 中稳定的作用域引用，并在编辑与运行校验中排除 lifetime=task 的对象及其后代。新增 task_accept 的 run:event 输入与 then/failed:event 输出，参数 task 在备注中通过工作簿选择。
+
+event_director 同时维护常驻 level_runner 与各已接取事件的当前任务 runner，按既有预算和异步规则执行；触发广播到常驻图和当前有效任务图。首次直接运行关卡时自动创建唯一服务，automatic_starts=false，避免配表自动条件绕过新工作流的接取。旧显式事件执行器继续兼容原启动条件。完整边界与验证见 [常驻关卡图](level_logic_2026-11-15/README.md)。

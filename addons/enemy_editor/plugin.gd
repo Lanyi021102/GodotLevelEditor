@@ -10,6 +10,8 @@ var _assign_pending := false
 var _test_suite: RefCounted
 
 func _enter_tree() -> void:
+	set_meta("godot_level_editor_module", "enemies")
+	add_to_group("godot_level_editor_suite_modules")
 	panel = PanelScript.new()
 	panel.name = "EnemyEditor"
 	EditorInterface.get_editor_main_screen().add_child(panel)
@@ -37,9 +39,12 @@ func _enter_tree() -> void:
 	if OS.get_cmdline_user_args().has("--test-enemy-debugger"):
 		_test_suite = load("res://tools/enemy_editor/test_debugger.gd").new()
 		_test_suite.run.call_deferred(panel, self)
+	if OS.get_cmdline_user_args().has("--test-npc-appearance"):
+		_test_suite = load("res://tools/enemy_editor/test_npc_appearance.gd").new()
+		_test_suite.run.call_deferred(panel, self)
 
 func _has_main_screen() -> bool:
-	return true
+	return not _in_suite()
 
 func _get_plugin_name() -> String:
 	return "敌人状态机"
@@ -224,3 +229,6 @@ func _build() -> bool:
 		push_error("敌人场景验证失败：" + "；".join(errors))
 		return false
 	return true
+
+func _in_suite() -> bool:
+	return "res://addons/godot_level_editor_suite/plugin.cfg" in ProjectSettings.get_setting("editor_plugins/enabled", PackedStringArray())

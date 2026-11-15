@@ -1,0 +1,52 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] migrated dialogue XLSX reads all five sheets
+[PASS] migration preserves existing dialogue and comment IDs
+[PASS] events.xlsx loads event and task sheets plus persistent counters
+[PASS] editor writes valid XLSX without a CSV intermediate
+[PASS] XLSX round trip retains Unicode, quotes, XML characters and line breaks
+[PASS] XLSX retains leading zeros and monotonic ID counters
+[PASS] missing workbook returns an actionable failure
+[PASS] event IDs begin at 1001 and tasks append a three-digit suffix
+[PASS] execution order changes independently of stable IDs
+[PASS] task graph accepts automatically allocated numeric task ID
+[PASS] task graph accepts automatically allocated numeric task ID
+[PASS] task graph accepts automatically allocated numeric task ID
+[PASS] catalog XLSX saves both relational sheets and ID allocation counters
+[PASS] catalog round trip preserves event ownership and task order
+[PASS] new task after reload never reuses a previously allocated ID
+[PASS] event director starts against a real world and XLSX catalog
+[PASS] room entry independently starts its configured event
+[PASS] manual event does not begin merely because its task graph exists
+[PASS] program name can start an event independently of HUD display name
+[PASS] only the first ordered task is active
+[PASS] HUD uses event and task display names
+[PASS] future task cannot consume triggers before becoming active
+[PASS] completing first task activates the next task
+[PASS] last task automatically completes its event
+[PASS] completed event cannot repeat implicitly
+[PASS] explicit hold node overrides automatic event completion
+[PASS] active held event restores without repeating completion effects
+[PASS] explicit end node completes a held event after save/restore
+[PASS] event-level named trigger requires an exact match
+[PASS] matching received event activates event-level start condition
+[PASS] foreign progress is rejected atomically
+[PASS] task graph accepts automatically allocated numeric task ID
+[PASS] task graph accepts automatically allocated numeric task ID
+[PASS] one event allows consecutive tasks bound to different levels
+[PASS] task without a level is rejected
+[PASS] one task cannot bind multiple levels
+[PASS] next task waits when its bound level differs from current level
+[PASS] signals from the wrong level cannot advance the task
+[PASS] director can attach to a newly entered level
+[PASS] entering the task's bound level activates its graph
+[PASS] cross-level sequence completes only after each task runs in its own level
+[PASS] runtime subtitle consumes XLSX data directly
+[PASS] XLSX-backed comment plays automatically in order and ends at its boundary
+[PASS] dialogue restores the previous gameplay pause state
+[PASS] authored Room entry starts the configured event and first task
+[PASS] current task enables interaction with its NPC within range
+[PASS] player interaction input reaches ShowDialog through the authored task graph
+[PASS] dialogue hides task and NPC overlays while displaying subtitles
+[PASS] authored dialogue completion trigger finishes the task and event
+GODOT_LEVEL_EDITOR SUITE RUNTIME: 49 checks, 0 failures

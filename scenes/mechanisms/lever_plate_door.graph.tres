@@ -1,9 +1,9 @@
 [gd_resource type="Resource" format=3 uid="uid://ctpae8abq65vm"]
 
-[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/branch_mechanisms/graph/definition.gd" id="1_xy4nj"]
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="1_j3e1j"]
 
 [resource]
-script = ExtResource("1_xy4nj")
+script = ExtResource("1_j3e1j")
 definition_id = "mechanism_ce2da37417ee4aba"
 display_name = "拉杆 + 压力板 → AND → 门"
 nodes = Array[Dictionary]([{
@@ -32,6 +32,13 @@ nodes = Array[Dictionary]([{
 "params": {
 "object_id": "door"
 }
+}, {
+"id": "node_a3500cbb37869f4a",
+"kind": "bool",
+"label": "布尔常量",
+"params": {
+"value": true
+}
 }])
 edges = Array[Dictionary]([{
 "from": "lever_state",
@@ -44,7 +51,7 @@ edges = Array[Dictionary]([{
 "out": "value",
 "to": "both"
 }, {
-"from": "both",
+"from": "node_a3500cbb37869f4a",
 "in": "powered",
 "out": "value",
 "to": "door_target"
@@ -52,7 +59,9 @@ edges = Array[Dictionary]([{
 positions = {
 "both": Vector2(380, 150),
 "door_target": Vector2(730, 150),
-"lever_state": Vector2(40, 70),
-"plate_state": Vector2(40, 280)
+"lever_state": Vector2(260, 480),
+"node_a3500cbb37869f4a": Vector2(280, -80),
+"plate_state": Vector2(60, 320)
 }
-view_offset = Vector2(0, -430)
+view_offset = Vector2(-63.552063, -154.83734)
+view_zoom = 1.7148709

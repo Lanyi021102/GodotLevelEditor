@@ -1,8 +1,8 @@
 extends Node
-const F := preload("res://addons/branch_level_editor/scene_factory.gd")
-const G := preload("res://addons/branch_level_editor/runtime/level_graph.gd")
+const F := preload("res://addons/godot_level_editor/scene_factory.gd")
+const G := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
 func _ready() -> void:
-	var world := preload("res://addons/branch_level_editor/runtime/world.gd").new()
+	var world := preload("res://addons/godot_level_editor/runtime/world.gd").new()
 	world.name = "关卡节点示例"
 	world.world_id = "level_nodes_demo"
 	world.start_room_id = "demo_room"
@@ -92,7 +92,7 @@ func _ready() -> void:
 	material.albedo_color = Color("70d7e9")
 	visual.material_override = material
 	F.add_owned(actor, visual, world)
-	var agent := preload("res://addons/branch_level_editor/runtime/actor_agent.gd").new()
+	var agent := preload("res://addons/godot_level_editor/runtime/actor_agent.gd").new()
 	agent.name = "LevelAgent"
 	agent.unlocked_items = PackedStringArray(["sample_key"])
 	F.add_owned(actor, agent, world)
@@ -119,12 +119,12 @@ func _ready() -> void:
 	F.add_owned(world, hud, world)
 	var errors := world.validate()
 	if not errors.is_empty(): push_error(str(errors)); world.free(); get_tree().quit(1); return
-	var result := F.save_scene(world, "res://scenes/level_editor/logic_playground.tscn")
+	var result := F.save_scene(world, "res://scenes/levels/logic_playground.tscn")
 	world.free()
 	print("V2 DEMO: ", error_string(result))
 	get_tree().quit(0 if result == OK else 1)
-func _node(graph: BranchLevelGraph, id: String, kind: String, params: Dictionary, position_value: Vector2) -> void:
+func _node(graph: GodotLevelEditorLevelGraph, id: String, kind: String, params: Dictionary, position_value: Vector2) -> void:
 	graph.nodes.append({"id": id, "kind": kind, "label": G.LABELS[kind], "params": params})
 	graph.positions[id] = position_value
-func _edge(graph: BranchLevelGraph, a: String, ap: String, b: String, bp: String) -> void:
+func _edge(graph: GodotLevelEditorLevelGraph, a: String, ap: String, b: String, bp: String) -> void:
 	graph.edges.append({"id": "edge_" + a + "_" + b, "from": a, "from_port": ap, "to": b, "to_port": bp})

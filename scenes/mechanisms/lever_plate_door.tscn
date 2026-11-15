@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dgnwnsqtc2ifb"]
 
-[ext_resource type="Script" uid="uid://cx88rnty8tuha" path="res://addons/branch_mechanisms/runtime/assembly.gd" id="1_nv5y2"]
-[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/branch_mechanisms/graph/definition.gd" id="2_dh7u0"]
-[ext_resource type="Script" uid="uid://bnx7a8ybqrk0d" path="res://addons/branch_mechanisms/runtime/lever.gd" id="3_smncj"]
-[ext_resource type="Script" uid="uid://dqspd6gm2oort" path="res://addons/branch_mechanisms/runtime/plate.gd" id="4_rbj3n"]
-[ext_resource type="Script" uid="uid://b3qja5esshnr5" path="res://addons/branch_mechanisms/runtime/door.gd" id="5_a5vfe"]
+[ext_resource type="Script" uid="uid://cx88rnty8tuha" path="res://addons/godot_level_editor_mechanisms/runtime/assembly.gd" id="1_nv5y2"]
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor_mechanisms/graph/definition.gd" id="2_dh7u0"]
+[ext_resource type="Script" uid="uid://bnx7a8ybqrk0d" path="res://addons/godot_level_editor_mechanisms/runtime/lever.gd" id="3_smncj"]
+[ext_resource type="Script" uid="uid://dqspd6gm2oort" path="res://addons/godot_level_editor_mechanisms/runtime/plate.gd" id="4_rbj3n"]
+[ext_resource type="Script" uid="uid://b3qja5esshnr5" path="res://addons/godot_level_editor_mechanisms/runtime/door.gd" id="5_a5vfe"]
 
 [sub_resource type="Resource" id="Resource_7qfjg"]
 script = ExtResource("2_dh7u0")
@@ -63,11 +63,12 @@ edges = Array[Dictionary]([{
 positions = {
 "both": Vector2(380, 150),
 "door_target": Vector2(730, 150),
-"lever_state": Vector2(40, 70),
-"node_a3500cbb37869f4a": Vector2(70, 70),
-"plate_state": Vector2(40, 280)
+"lever_state": Vector2(260, 480),
+"node_a3500cbb37869f4a": Vector2(280, -80),
+"plate_state": Vector2(60, 180)
 }
-view_zoom = 0.8
+view_offset = Vector2(-618.9425, -330.92767)
+view_zoom = 0.96799976
 
 [node name="LeverPlateDoor" type="Node3D" unique_id=654103801]
 process_physics_priority = -10

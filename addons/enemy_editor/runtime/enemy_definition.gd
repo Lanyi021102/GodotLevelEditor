@@ -19,6 +19,8 @@ const PARAM_DEFAULTS := {"alert_rate": 100.0, "alert_decay": 40.0, "noise_alert"
 @export var parameters: Dictionary = PARAM_DEFAULTS.duplicate()
 ## Layout is editor-only; it does not determine evaluation order or world position.
 @export var layout: Dictionary = {"nodes": {}, "scroll": Vector2.ZERO, "zoom": 1.0}
+## Optional model/rig/motion configuration; null preserves legacy scenes.
+@export var appearance: Resource
 
 func state_by_id(id: String) -> Dictionary:
 	for entry in states:
@@ -30,6 +32,9 @@ func validate() -> PackedStringArray:
 	var errors := PackedStringArray()
 	if schema_version != VERSION:
 		errors.append("不支持的定义版本：%s" % schema_version)
+	if appearance != null:
+		if appearance.get_script() != preload("res://addons/enemy_editor/appearance_data.gd"): errors.append("NPC 外观资源类型无效。")
+		else: errors.append_array(appearance.validate())
 	var ids: Array[String] = []
 	for s in states:
 		var id := str(s.get("id", ""))

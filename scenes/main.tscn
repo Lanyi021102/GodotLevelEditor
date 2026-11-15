@@ -1,43 +1,35 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://djnxn3v4gugdl"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/level_editor/continuous_world.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/humanoid_player.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="4"]
-[ext_resource type="Script" path="res://scripts/camera/orbit_camera.gd" id="5"]
-[ext_resource type="Script" path="res://addons/branch_level_editor/runtime/actor_agent.gd" id="6"]
+[ext_resource type="Script" uid="uid://dmubuw6lmemjj" path="res://scripts/main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/levels/whitebox_world.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://crf4y4jb4e2m3" path="res://scenes/humanoid_player.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b7wbepifdx4fv" path="res://scenes/hud.tscn" id="4"]
+[ext_resource type="Script" uid="uid://b1ucc511b3u4a" path="res://scripts/camera/orbit_camera.gd" id="5"]
+[ext_resource type="Script" uid="uid://6lwk8boqdoyq" path="res://addons/godot_level_editor/runtime/actor_agent.gd" id="6"]
 
-[node name="Branch" type="Node3D"]
+[node name="GodotLevelEditor" type="Node3D" unique_id=170348133]
 script = ExtResource("1")
-actor_scene = ExtResource("3")
-split_cooldown = 0.4
+persist_progress = false
 
-[node name="World" parent="." instance=ExtResource("2")]
+[node name="World" parent="." unique_id=1681393793 instance=ExtResource("2")]
 process_mode = 1
 
-[node name="Player" parent="." instance=ExtResource("3")]
-position = Vector3(-4, 0.08, 4)
+[node name="Player" parent="." unique_id=1603081874 instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.08, 4)
 
-[node name="LevelAgent" type="Node" parent="Player"]
+[node name="LevelAgent" type="Node" parent="Player" unique_id=821363707]
 script = ExtResource("6")
 
-[node name="Trails" type="Node3D" parent="."]
-
-[node name="CameraRig" type="Node3D" parent="."]
+[node name="CameraRig" type="Node3D" parent="." unique_id=1231483532]
 script = ExtResource("5")
 target_path = NodePath("../Player")
-distance = 28.0
-pitch_degrees = 50.0
-yaw_degrees = 25.0
 
-[node name="Arm" type="SpringArm3D" parent="CameraRig"]
-collision_mask = 0
-spring_length = 28.0
+[node name="Arm" type="SpringArm3D" parent="CameraRig" unique_id=757826751]
+spring_length = 3.8
 
-[node name="Camera3D" type="Camera3D" parent="CameraRig/Arm"]
-projection = 1
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Arm" unique_id=1282740782]
 current = true
-size = 22.4
+fov = 65.0
+near = 0.08
 
-[node name="HUD" parent="." instance=ExtResource("4")]
-light_background = true
+[node name="HUD" parent="." unique_id=2048292104 instance=ExtResource("4")]

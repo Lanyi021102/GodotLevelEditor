@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b6xk2l6uv4tyh"]
+
+[ext_resource type="Script" uid="uid://cd4d8g57080oe" path="res://addons/godot_level_editor/runtime/world.gd" id="1_rbax2"]
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/runtime/level_graph.gd" id="2_xshvr"]
+[ext_resource type="Script" uid="uid://t4nj3ytoa33i" path="res://addons/godot_level_editor/runtime/whitebox_block.gd" id="3_ovba8"]
+
+[sub_resource type="Resource" id="Resource_w01m1"]
+script = ExtResource("2_xshvr")
+graph_kind = "topology"
+
+[sub_resource type="Resource" id="Resource_oeypo"]
+script = ExtResource("2_xshvr")
+
+[node name="DragProbe" type="Node3D" unique_id=1558889619]
+script = ExtResource("1_rbax2")
+world_id = "drag_probe"
+start_room_id = ""
+topology = SubResource("Resource_w01m1")
+events = SubResource("Resource_oeypo")
+
+[node name="Floor" type="Node3D" parent="." unique_id=71619896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+script = ExtResource("3_ovba8")
+object_id = "floor"
+size = Vector3(20, 0.4, 20)

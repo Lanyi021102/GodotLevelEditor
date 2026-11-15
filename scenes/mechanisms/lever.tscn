@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://addons/branch_mechanisms/runtime/lever.gd" id="1_oqvkw"]
+[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/lever.gd" id="1_oqvkw"]
 
 [node name="Lever_lever" type="Node3D" unique_id=1467309766]
 script = ExtResource("1_oqvkw")

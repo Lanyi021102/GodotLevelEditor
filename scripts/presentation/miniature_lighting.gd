@@ -35,6 +35,12 @@ func _disable_editor_blur() -> void:
 func _update_focus() -> void:
 	var camera := get_viewport().get_camera_3d()
 	if camera == null or attributes == null: return
+	# Miniature blur suits an overview; close gameplay cameras must keep distant clues readable.
+	var blur := runtime_depth_of_field and camera.projection != Camera3D.PROJECTION_PERSPECTIVE
+	if attributes.dof_blur_near_enabled != blur:
+		attributes.dof_blur_near_enabled = blur
+	if attributes.dof_blur_far_enabled != blur:
+		attributes.dof_blur_far_enabled = blur
 	var rig := camera.get_parent().get_parent()
 	var focus: Vector3
 	if rig is Node3D and rig.has_method("get_yaw_radians"):

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://addons/godot_level_editor_suite/runtime/event_director.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/narrative/npc.tscn" id="2"]
+[node name="Narrative" type="Node3D"]
+process_mode = 1
+[node name="Receptionist" parent="." instance=ExtResource("2")]
+position = Vector3(-4, 0, 0)
+[node name="Tasks" type="Node" parent="."]
+script = ExtResource("1")
+world_path = NodePath("../../World")

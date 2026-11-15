@@ -41,7 +41,7 @@
     "data": "#71508f",
     "flow": "#9b592b"
   },
-  "shared_presentation": "res://addons/branch_mechanisms/graph/node_presentation.gd",
+  "shared_presentation": "res://addons/godot_level_editor_mechanisms/graph/node_presentation.gd",
   "runtime_logic_changed": false,
   "graph_schema_version": 1,
   "node_and_port_ids_preserved": true,

@@ -6,15 +6,15 @@ signal session_cleared(session_id: int)
 signal session_pause_changed(session_id: int, paused: bool)
 
 func _has_capture(capture: String) -> bool:
-	return capture == "branch_enemy"
+	return capture == "godot_level_editor_enemy"
 
 func _capture(message: String, data: Array, session_id: int) -> bool:
-	if message == "branch_enemy:state" and data.size() == 1 and data[0] is Dictionary:
+	if message == "godot_level_editor_enemy:state" and data.size() == 1 and data[0] is Dictionary:
 		var packet: Dictionary = data[0].duplicate(true)
 		packet["session"] = session_id
 		state_received.emit("%d:%s" % [session_id, packet.get("instance", "")], packet)
 		return true
-	if message == "branch_enemy:remove" and data.size() == 1:
+	if message == "godot_level_editor_enemy:remove" and data.size() == 1:
 		instance_removed.emit("%d:%s" % [session_id, data[0]])
 		return true
 	return false

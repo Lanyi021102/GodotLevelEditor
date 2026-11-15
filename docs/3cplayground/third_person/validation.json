@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-12",
+  "engine": "4.7.1.stable.official.a13da4feb",
+  "renderer": "Metal Forward+ / Apple M4",
+  "headless_checks": 273,
+  "headless_suites": [
+    {
+      "suite": "3c",
+      "exit_code": 0,
+      "checks": 33,
+      "errors": []
+    },
+    {
+      "suite": "lighting",
+      "exit_code": 0,
+      "checks": 18,
+      "errors": []
+    },
+    {
+      "suite": "mechanisms",
+      "exit_code": 0,
+      "checks": 48,
+      "errors": []
+    },
+    {
+      "suite": "enemy",
+      "exit_code": 0,
+      "checks": 45,
+      "errors": []
+    },
+    {
+      "suite": "level",
+      "exit_code": 0,
+      "checks": 82,
+      "errors": []
+    },
+    {
+      "suite": "metric_grid",
+      "exit_code": 0,
+      "checks": 22,
+      "errors": []
+    },
+    {
+      "suite": "camera",
+      "exit_code": 0,
+      "checks": 25,
+      "errors": []
+    }
+  ],
+  "render_checks": 5,
+  "render_frames": [
+    "main_shoulder.png",
+    "main_focus.png",
+    "main_left_shoulder.png",
+    "3cplayground_shoulder.png"
+  ],
+  "visual_review": "Checked shoulder composition, focused view, left shoulder, playground, and distant clue readability.",
+  "interfaces": "View state stays outside snapshots; original camera yaw binding and clone interaction protocol remain compatible. Dialogue pointer capture follows the optional godot_level_editor_dialogue_player group.",
+  "preserved": "Lighting V1 and user-authored room/mechanism source paths match the initial Git baseline.",
+  "concurrent_work": "Narrative plugin and its world/task integration are being edited separately; these edits were preserved."
+}
