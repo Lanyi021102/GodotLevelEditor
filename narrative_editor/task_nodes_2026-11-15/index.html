@@ -1,0 +1,1199 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从第一个白盒关卡开始，学习场景摆放、机关连线与基础试玩。">
+      
+      
+      
+        <link rel="canonical" href="https://lanyi021102.github.io/GodotLevelEditor/narrative_editor/task_nodes_2026-11-15/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../wiki/assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Index - GodotLevelEditor Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../wiki/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2026-11-15" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="GodotLevelEditor Wiki" class="md-header__button md-logo" aria-label="GodotLevelEditor Wiki" data-md-component="logo">
+      
+  <img src="../../wiki/assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GodotLevelEditor Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lanyi021102/GodotLevelEditor" title="查看项目源码" class="md-source">
+  <div class="md-source__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">GodotLevelEditor</div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="GodotLevelEditor Wiki" class="md-nav__button md-logo" aria-label="GodotLevelEditor Wiki" data-md-component="logo">
+      
+  <img src="../../wiki/assets/logo.svg" alt="logo">
+
+    </a>
+    GodotLevelEditor Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lanyi021102/GodotLevelEditor" title="查看项目源码" class="md-source">
+  <div class="md-source__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">GodotLevelEditor</div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开始使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开始使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快速开始
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编辑器功能地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/guides/levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关卡与轮盘操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动手制作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动手制作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/tutorials/button-door/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    按钮打开一扇门
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    查阅手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    查阅手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/reference/mechanisms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    机关与节点速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    术语与快捷键
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../wiki/development/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发与维护
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开发与维护
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/development/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更新 Wiki
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/development/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预览与发布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        角色数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        通用交互
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新增节点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        执行规则
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        接口与兼容
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition note">
+<p class="admonition-title">专项资料与阶段记录</p>
+<p>本页保留模块说明、接口或阶段验证，可能同时包含历史条款。当前操作先看 <a href="../../">Wiki 首页</a>；功能边界以模块最新覆盖说明与实际实现为准。</p>
+</div>
+<h1 id="2026-11-15">通用任务节点 · 2026-11-15<a class="headerlink" href="#2026-11-15" title="Permanent link">&para;</a></h1>
+<p>本轮扩展现有“事件 → 任务 → 任务图”，新增 33 种任务节点并开放 16 种已有关卡节点。保留原有 12 种任务节点、图资源稳定 ID、事件串行排序与关卡绑定。任务图当前共支持 61 种节点；新增节点由当前套件的 event_director 运行。</p>
+<h2 id="_1">使用<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>在独立窗口打开 <strong>任务 → 任务图 → 搜索添加</strong>。节点标题使用中文，新增节点可按中文、英文或程序 kind 搜索；英文名称保存在提示中。图的节点、端口、参数、复制、撤销、保存、重开与运行高亮已接入现有画布。</p>
+<p>示例图：<code>resources/narrative/examples/generic_access.task.tres</code>。它表达“背包至少有一张 access_card，并且 body 部位穿着 work_clothes → 完成通行条件子目标 → 发送 access_granted”。打开示例后另存自己的资源；将所需节点复制到事件任务生成的图中，追加当前任务的完成节点。示例未接入默认白盒或改写现有配表。</p>
+<h3 id="_2">角色数据<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>角色的子节点挂载 <code>addons/godot_level_editor/runtime/actor_agent.gd</code>，<code>actor_path</code> 指向角色（默认 <code>..</code>）。已有玩家 LevelAgent 已使用该脚本，NPC 也可挂载。通过原生检查器配置：</p>
+<ul>
+<li><code>inventory = {"access_card": 1, "work_clothes": 1}</code>：物件 ID 与拥有数量。</li>
+<li><code>equipment = {"body": "work_clothes"}</code>：部位 ID 与当前穿着／装备的物件 ID。</li>
+<li><code>state_flags = {"ready": true}</code>：自定义布尔状态。</li>
+</ul>
+<p>“检查背包物件”按 ID 和最小数量查询；“检查角色穿着”按部位和物件 ID 查询，部位留空时检查任一部位。节点的角色对象 ID 留空表示玩家，也可选择当前关卡对象引用。查询失败返回 false，动作接口缺失或物件不足从失败端口继续。</p>
+<p>“设置角色穿着”要求角色拥有该物件，物件 ID 留空表示卸下；删除最后一件已穿戴的物件会清空相应部位。这里提供穿着数据及查询／修改接口，服装模型替换和完整背包界面由后续角色表现系统接入。旧 <code>unlocked_items</code> 仅作为兼容的初始道具清单，不涉及能力解锁。</p>
+<h3 id="_3">通用交互<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>将 <code>scenes/mechanisms/interaction_point.tscn</code> 拖入关卡或 Room，设置唯一 object_id、显示名和交互半径。玩家按现有 F 交互；任务图“物件交互时”绑定该物件引用。执行器也可接入已有机关的 <code>interacted(id, action, actor)</code> 信号，以及 NPC 的双参数互动信号。区域进入／离开直接连接现有 Region 的检测信号。</p>
+<h2 id="_4">新增节点<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>English</th>
+<th>kind</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>离开区域</td>
+<td>On Region Exit</td>
+<td><code>region_exit</code></td>
+</tr>
+<tr>
+<td>物件交互时</td>
+<td>On Object Interacted</td>
+<td><code>object_interacted</code></td>
+</tr>
+<tr>
+<td>角色状态变化时</td>
+<td>On Actor State Changed</td>
+<td><code>state_changed</code></td>
+</tr>
+<tr>
+<td>检查角色穿着</td>
+<td>Check Equipped Item</td>
+<td><code>has_equipped</code></td>
+</tr>
+<tr>
+<td>检查角色状态</td>
+<td>Check Actor State</td>
+<td><code>actor_state</code></td>
+</tr>
+<tr>
+<td>任一条件成立</td>
+<td>Any Condition</td>
+<td><code>any</code></td>
+</tr>
+<tr>
+<td>条件取反</td>
+<td>Not</td>
+<td><code>not</code></td>
+</tr>
+<tr>
+<td>比较数值</td>
+<td>Compare Numbers</td>
+<td><code>compare</code></td>
+</tr>
+<tr>
+<td>读取布尔变量</td>
+<td>Get Boolean Variable</td>
+<td><code>get_variable</code></td>
+</tr>
+<tr>
+<td>读取数值变量</td>
+<td>Get Number Variable</td>
+<td><code>get_number</code></td>
+</tr>
+<tr>
+<td>设置任务变量</td>
+<td>Set Mission Variable</td>
+<td><code>set_variable</code></td>
+</tr>
+<tr>
+<td>增减背包物件</td>
+<td>Change Inventory Item</td>
+<td><code>change_item</code></td>
+</tr>
+<tr>
+<td>设置角色穿着</td>
+<td>Set Equipped Item</td>
+<td><code>equip_item</code></td>
+</tr>
+<tr>
+<td>设置角色状态</td>
+<td>Set Actor State</td>
+<td><code>set_actor_state</code></td>
+</tr>
+<tr>
+<td>等待时长</td>
+<td>Delay</td>
+<td><code>delay</code></td>
+</tr>
+<tr>
+<td>计时器</td>
+<td>Timer</td>
+<td><code>timer</code></td>
+</tr>
+<tr>
+<td>等待条件成立</td>
+<td>Wait Until</td>
+<td><code>wait_until</code></td>
+</tr>
+<tr>
+<td>等待事件</td>
+<td>Wait For Event</td>
+<td><code>wait_event</code></td>
+</tr>
+<tr>
+<td>并行执行</td>
+<td>Parallel</td>
+<td><code>parallel</code></td>
+</tr>
+<tr>
+<td>等待全部完成</td>
+<td>Wait All</td>
+<td><code>wait_all</code></td>
+</tr>
+<tr>
+<td>等待任一完成</td>
+<td>Wait Any</td>
+<td><code>wait_any</code></td>
+</tr>
+<tr>
+<td>计数器</td>
+<td>Counter</td>
+<td><code>counter</code></td>
+</tr>
+<tr>
+<td>流程开关</td>
+<td>Gate</td>
+<td><code>gate</code></td>
+</tr>
+<tr>
+<td>取消分支</td>
+<td>Cancel Branch</td>
+<td><code>cancel_branch</code></td>
+</tr>
+<tr>
+<td>激活子目标</td>
+<td>Activate Objective</td>
+<td><code>objective_start</code></td>
+</tr>
+<tr>
+<td>完成子目标</td>
+<td>Complete Objective</td>
+<td><code>objective_complete</code></td>
+</tr>
+<tr>
+<td>子目标失败</td>
+<td>Fail Objective</td>
+<td><code>objective_fail</code></td>
+</tr>
+<tr>
+<td>检查子目标状态</td>
+<td>Check Objective State</td>
+<td><code>objective_state</code></td>
+</tr>
+<tr>
+<td>任务失败</td>
+<td>Fail Task</td>
+<td><code>task_fail</code></td>
+</tr>
+<tr>
+<td>保存检查点</td>
+<td>Save Checkpoint</td>
+<td><code>checkpoint_save</code></td>
+</tr>
+<tr>
+<td>恢复检查点</td>
+<td>Restore Checkpoint</td>
+<td><code>checkpoint_restore</code></td>
+</tr>
+<tr>
+<td>执行子图</td>
+<td>Run Subgraph</td>
+<td><code>run_subgraph</code></td>
+</tr>
+<tr>
+<td>结束子图</td>
+<td>End Subgraph</td>
+<td><code>subgraph_end</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">执行规则<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>条件 AND／OR／NOT 读取当前值；Branch 在事件到达时判断一次；Wait Until 被执行后持续读取条件，并在条件已经满足时立即继续。timeout=0 表示不限时。</li>
+<li>Delay／Timer 使用游戏物理步长，游戏暂停时不会继续计时。run 不重复启动同一个已运行的等待；cancel 清理等待并输出已取消。Timer 还输出剩余秒数。</li>
+<li>Wait For Event 仅接收激活后的事件；不追认激活前发生的消息。需要识别提前完成的行为时，记录角色状态或任务变量，再使用 Wait Until 检查。</li>
+<li>Parallel 提供 A/B/C/D 四条分支，可只连接需要的分支。scope 留空时使用稳定节点 ID，嵌套分支保留父作用域；指定名称后可以用 Cancel Branch 取消该作用域及其子级。</li>
+<li>Wait All 记住各个已连接输入端口的完成情况；重复触发 A 不会代替 B。Wait Any 第一次输入即完成。两者在 reset 前只输出一次。Wait Any 的 cancel_others 可取消同一次 Parallel 的其他分支，包括待执行事件、计时和子图。</li>
+<li>Counter 达到目标次数时只输出一次 reached；reset 后重新计数。Gate 通过 open／close 输入改变后续 run 是否允许通过。</li>
+<li>任务变量目前支持布尔与数值；同一 event_director 管理的事件／任务／子图共享变量字典，使用不同标识区分含义。数值通过 Compare Numbers 判断。</li>
+<li>子目标保存 active/completed/failed 状态及可选属性；显示在已有目标 HUD。完成／失败操作要求目标先激活，重复完成不重复生效。可选目标失败不会自动使主任务失败；设计者通过条件和连线决定推进。</li>
+<li>子图是原生任务图资源，必须通过“结束子图”返回成功或失败。子图共享变量、调用各自的台本工作簿，独立保存运行状态；最多嵌套 8 层。导出器递归包含子图和工作簿。</li>
+<li>Fail Task 停止当前事件，不推进下一任务；HUD 显示原因。有可用检查点时显示“从检查点重试”按钮并释放鼠标。外部组件也可调用 retry_from_checkpoint()。</li>
+<li>Save Checkpoint 在继续事件已入队后保存，恢复从保存节点之后接续。保存角色位置、速度、背包、穿着、状态，现有组件的 tl_capture/tl_restore 状态，以及任务变量、子目标、等待、汇合、子图和任务阶段。恢复不重放已完成动作。</li>
+<li>检查点属于同一试玩会话、同一关卡实例，拒绝跨关卡或缺失对象的恢复，不负责重新创建已删除的场景对象。检查点本体不写永久存档；原有进度存档继续保存扩展后的任务运行状态。</li>
+<li>当前任务离开所属关卡时暂停，重新进入后接续；不同事件仍可并行，事件内部任务依旧按配表顺序推进。</li>
+</ul>
+<h2 id="_6">接口与兼容<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>运行器：<code>addons/godot_level_editor_narrative/runtime/task_runner.gd</code>；通用角色桥：<code>task_actions.gd</code>；检查点：<code>task_checkpoint.gd</code>。现有共享 event_runner 只增加默认空的扩展钩子，关卡旧图继续使用原执行方式。旧独立 task_director 保留原 12 种节点兼容，遇到新节点会明确提示使用套件 event_director，避免静默不执行。</p>
+<p>事件执行器新增 task_failed(task_id, reason)、checkpoint_saved、checkpoint_restored 信号；capture_progress 的 version=1 保持兼容，新增 variables/failure_text 和各活动事件的 objectives。旧存档缺少这些字段时使用空值。节点图仍为 schema 1，未知节点和类型错误拒绝载入。运行调试复用原 godot_level_editor_narrative 通道。</p>
+<p>验证见 <a href="validation/">validation.md</a>，画布截图见 <a href="%E4%BB%BB%E5%8A%A1%E8%8A%82%E7%82%B9.png">任务节点.png</a>。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      GodotLevelEditor · Wiki V1 · 内容核对于 2026-11-16
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,101 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] box defaults to true unit bounds
+[PASS] box has matching collision triangles
+[PASS] box saves
+[PASS] box reloads shape parameters and stable ID
+[PASS] ramp defaults to true unit bounds
+[PASS] ramp has matching collision triangles
+[PASS] ramp saves
+[PASS] ramp reloads shape parameters and stable ID
+[PASS] stairs defaults to true unit bounds
+[PASS] stairs has matching collision triangles
+[PASS] stairs saves
+[PASS] stairs reloads shape parameters and stable ID
+[PASS] stairs_manual defaults to true unit bounds
+[PASS] stairs_manual has matching collision triangles
+[PASS] stairs_manual saves
+[PASS] stairs_manual reloads shape parameters and stable ID
+[PASS] cylinder defaults to true unit bounds
+[PASS] cylinder has matching collision triangles
+[PASS] cylinder saves
+[PASS] cylinder reloads shape parameters and stable ID
+[PASS] cone defaults to true unit bounds
+[PASS] cone has matching collision triangles
+[PASS] cone saves
+[PASS] cone reloads shape parameters and stable ID
+[PASS] sphere defaults to true unit bounds
+[PASS] sphere has matching collision triangles
+[PASS] sphere saves
+[PASS] sphere reloads shape parameters and stable ID
+[PASS] hemisphere defaults to true unit bounds
+[PASS] hemisphere has matching collision triangles
+[PASS] hemisphere saves
+[PASS] hemisphere reloads shape parameters and stable ID
+[PASS] skewbox defaults to true unit bounds
+[PASS] skewbox has matching collision triangles
+[PASS] skewbox saves
+[PASS] skewbox reloads shape parameters and stable ID
+[PASS] corner_curved defaults to true unit bounds
+[PASS] corner_curved has matching collision triangles
+[PASS] corner_curved saves
+[PASS] corner_curved reloads shape parameters and stable ID
+[PASS] stairs_curved defaults to true unit bounds
+[PASS] stairs_curved has matching collision triangles
+[PASS] stairs_curved saves
+[PASS] stairs_curved reloads shape parameters and stable ID
+[PASS] doorway defaults to true unit bounds
+[PASS] doorway has matching collision triangles
+[PASS] doorway saves
+[PASS] doorway reloads shape parameters and stable ID
+[PASS] window defaults to true unit bounds
+[PASS] window has matching collision triangles
+[PASS] window saves
+[PASS] window reloads shape parameters and stable ID
+[PASS] railing defaults to true unit bounds
+[PASS] railing has matching collision triangles
+[PASS] railing saves
+[PASS] railing reloads shape parameters and stable ID
+[PASS] tube defaults to true unit bounds
+[PASS] tube has matching collision triangles
+[PASS] tube saves
+[PASS] tube reloads shape parameters and stable ID
+[PASS] corner_ramp defaults to true unit bounds
+[PASS] corner_ramp has matching collision triangles
+[PASS] corner_ramp saves
+[PASS] corner_ramp reloads shape parameters and stable ID
+[PASS] stretch rounds to 0.1 and clamps minimum
+[PASS] custom quarter-tube angle survives reload independently of shape defaults
+[PASS] cube collider is solid
+[PASS] ramp winding produces a walkable top collider
+[PASS] doorway opening is actually hollow
+[PASS] doorway post remains solid
+[PASS] window opening is actually hollow
+[PASS] tube preserves its hollow center
+[PASS] nonuniform stretch expands actual box collision
+[PASS] nonuniform stretch shrinks actual box collision
+[PASS] nonuniform ramp scale updates triangle collision
+[PASS] scaled doorway keeps its collision opening
+[PASS] new nodes and Room bindings validate in saved demo
+[PASS] game-start event fires once and named event is delivered
+[PASS] actions wait for actual room entry
+[PASS] real Room volume emits player-enter trigger once
+[PASS] inventory condition reads actual player adapter
+[PASS] true godot_level_editor actually opens switch
+[PASS] action enables original enemy patrol state machine
+[PASS] opened switch actually drives existing door
+[PASS] kill action changes actual player state, visibility, processing and collision
+[PASS] death condition and execution trace reflect real result
+[PASS] snapshot restore revives without repeating kill side effect
+[PASS] snapshot restore does not re-run game start
+[FAIL] restored trigger becomes active after a real exit and reentry
+[PASS] missing Room reference is rejected
+[PASS] missing key takes false godot_level_editor and leaves switch closed
+[PASS] false output executes different connected behavior
+[PASS] disconnecting wire changes actual switch behavior despite true condition
+[PASS] missing player bridge reports explicit failure and leaves actor intact
+[PASS] named-event feedback has explicit next-frame semantics
+[PASS] named event does not infinitely recurse in same frame
+[PASS] snapshot preserves trigger queue and execution counters
+[PASS] trigger queue is bounded
+LEVEL EDITOR V2: 97 passed / 1 failed

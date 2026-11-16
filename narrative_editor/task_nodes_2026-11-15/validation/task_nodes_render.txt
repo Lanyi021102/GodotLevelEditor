@@ -1,0 +1,85 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+[PASS] named typed ports render: region_exit
+[PASS] all authoring parameters are editable: region_exit
+[PASS] named typed ports render: object_interacted
+[PASS] all authoring parameters are editable: object_interacted
+[PASS] named typed ports render: state_changed
+[PASS] all authoring parameters are editable: state_changed
+[PASS] named typed ports render: has_equipped
+[PASS] all authoring parameters are editable: has_equipped
+[PASS] named typed ports render: actor_state
+[PASS] all authoring parameters are editable: actor_state
+[PASS] named typed ports render: any
+[PASS] all authoring parameters are editable: any
+[PASS] named typed ports render: not
+[PASS] all authoring parameters are editable: not
+[PASS] named typed ports render: compare
+[PASS] all authoring parameters are editable: compare
+[PASS] named typed ports render: get_variable
+[PASS] all authoring parameters are editable: get_variable
+[PASS] named typed ports render: get_number
+[PASS] all authoring parameters are editable: get_number
+[PASS] named typed ports render: set_variable
+[PASS] all authoring parameters are editable: set_variable
+[PASS] named typed ports render: change_item
+[PASS] all authoring parameters are editable: change_item
+[PASS] named typed ports render: equip_item
+[PASS] all authoring parameters are editable: equip_item
+[PASS] named typed ports render: set_actor_state
+[PASS] all authoring parameters are editable: set_actor_state
+[PASS] named typed ports render: delay
+[PASS] all authoring parameters are editable: delay
+[PASS] named typed ports render: timer
+[PASS] all authoring parameters are editable: timer
+[PASS] named typed ports render: wait_until
+[PASS] all authoring parameters are editable: wait_until
+[PASS] named typed ports render: wait_event
+[PASS] all authoring parameters are editable: wait_event
+[PASS] named typed ports render: parallel
+[PASS] all authoring parameters are editable: parallel
+[PASS] named typed ports render: wait_all
+[PASS] all authoring parameters are editable: wait_all
+[PASS] named typed ports render: wait_any
+[PASS] all authoring parameters are editable: wait_any
+[PASS] named typed ports render: counter
+[PASS] all authoring parameters are editable: counter
+[PASS] named typed ports render: gate
+[PASS] all authoring parameters are editable: gate
+[PASS] named typed ports render: cancel_branch
+[PASS] all authoring parameters are editable: cancel_branch
+[PASS] named typed ports render: objective_start
+[PASS] all authoring parameters are editable: objective_start
+[PASS] named typed ports render: objective_complete
+[PASS] all authoring parameters are editable: objective_complete
+[PASS] named typed ports render: objective_fail
+[PASS] all authoring parameters are editable: objective_fail
+[PASS] named typed ports render: objective_state
+[PASS] all authoring parameters are editable: objective_state
+[PASS] named typed ports render: task_fail
+[PASS] all authoring parameters are editable: task_fail
+[PASS] named typed ports render: checkpoint_save
+[PASS] all authoring parameters are editable: checkpoint_save
+[PASS] named typed ports render: checkpoint_restore
+[PASS] all authoring parameters are editable: checkpoint_restore
+[PASS] named typed ports render: run_subgraph
+[PASS] all authoring parameters are editable: run_subgraph
+[PASS] named typed ports render: subgraph_end
+[PASS] all authoring parameters are editable: subgraph_end
+[PASS] node search accepts English names
+[PASS] reused inventory query is searchable by its English name
+[PASS] node search accepts Chinese names
+[PASS] palette creates a configured flow node
+[PASS] new node creation supports undo
+[PASS] new node creation supports redo
+[PASS] flow parameters apply from the inspector
+[PASS] parameter editing supports undo
+[PASS] delivered generic access example validates
+[PASS] new nodes save in native graph resources
+[PASS] save/reopen preserves all node parameters and named edges
+[PASS] rendered graph retains usable canvas and parameter width
+[PASS] editor validation preserves the user's original graph
+TASK NODES EDITOR: 79 checks, 0 failures
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

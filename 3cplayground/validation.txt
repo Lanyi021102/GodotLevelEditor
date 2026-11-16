@@ -1,0 +1,38 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+[PASS] spawn settles on the test floor
+[PASS] HUD contains only pause button
+[PASS] old action bindings removed
+[PASS] walk and Shift run have different speeds
+[PASS] real movement occurs
+[PASS] braking reaches rest
+[PASS] Space jumps rather than pausing
+[PASS] jump lands on a real 0.6m box
+[PASS] Q tap rewinds one second and remains paused
+[PASS] Q release preserves pause
+[PASS] E tap previews future up to head and remains paused
+[PASS] T resumes simulation
+[PASS] F interacts with nearest valid lever
+[PASS] rewind restores lever without interaction side effects
+[PASS] R operation commits future recording as a clone
+[PASS] R preserves controlled body and waits for T
+[PASS] rewind before creation hides clone and collision
+[PASS] godot_level_editor before creation retains immutable scheduled clone
+[PASS] existing recording is unchanged by godot_level_editoring
+[PASS] clone replays recorded F with actor range check
+[PASS] clone stops after a single pass
+[PASS] clone remains at its endpoint
+[PASS] scrubbing never returns control to a clone
+[PASS] second independent clone can be committed
+[PASS] clone reproduces the recorded jump
+[PASS] moving clone finishes at recorded endpoint
+[PASS] moving clone stops without looping
+[PASS] creating another clone never edits the first recording
+[PASS] holding Q continuously scrubs after the initial one-second step
+[PASS] deprecated energy API cannot restrict gameplay
+[PASS] pause button stops world and recording
+[PASS] actual rendered playground captured
+[PASS] default continuous world still assembles
+[PASS] default world retains shared rewind registration
+3C: 34 checks, 0 failed

@@ -1,0 +1,93 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] delay does not continue at start
+[PASS] delay continues only after elapsed physics time
+[PASS] restoring a wait neither replays nor skips its remaining duration
+[PASS] restored continuation executes once
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] Wait All deduplicates repeated inputs
+[PASS] Wait All joins events that happen on separate frames
+[PASS] completed join cannot repeatedly advance
+[PASS] partially completed join survives restore
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] Parallel activates multiple asynchronous branches
+[PASS] Wait Any advances once and cancels losing waits
+[PASS] cancelled branch never produces a late completion
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] Wait Until remains armed while condition is false
+[PASS] Wait Until reacts to later world/variable changes
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] Wait For Event consumes only events received after activation
+[PASS] armed event wait resumes on matching event
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] counter exposes count without completing early
+[PASS] counter signals target reached
+[PASS] negative delay is rejected before runtime
+[PASS] mistyped task parameters are rejected
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] subgraph completion resumes its parent
+[PASS] restored subgraph retains its remaining wait
+[PASS] restored subgraph continues normally
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] active subgraphs receive real external event triggers
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] timer exposes remaining seconds
+[PASS] timer cancellation emits only its cancellation path
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] condition wait has an explicit timeout path
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] closed gate blocks incoming execution
+[PASS] open input enables the gate
+[PASS] close input disables the gate again
+[PASS] inventory checks reject nonpositive quantities
+[PASS] an unconnected join is rejected before runtime
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] numeric comparison, NOT and OR compose with typed ports
+[PASS] graph validates: []
+[PASS] runner accepts task schema
+[PASS] nested parallel joins preserve parent scope and cancel the correct outer sibling
+[PASS] integration graph saves as a native resource
+[PASS] new nodes run through the current event/level director
+[PASS] Save Checkpoint captures a live task with queued continuation
+[PASS] active subobjective appears in the HUD
+[PASS] generic interaction uses the existing player interaction contract
+[PASS] object interaction changes the real actor inventory
+[PASS] equipment action changes the real actor slot
+[PASS] interaction chain completes its subobjective
+[PASS] inventory condition reads actual item quantities
+[PASS] inventory condition rejects an insufficient quantity
+[PASS] equipment condition checks the requested slot
+[PASS] equipment in a different slot does not satisfy the condition
+[PASS] generic inventory query can target an NPC independently of the player
+[PASS] empty equipment slot checks any equipped slot
+[PASS] actor state changes reach the active task graph
+[PASS] region enter and exit signals reach the active task graph
+[PASS] inventory cannot remove more items than owned
+[PASS] unowned equipment cannot silently become equipped
+[PASS] Fail Task stops the event without starting another task
+[PASS] failed task exposes a usable checkpoint retry button
+[PASS] task failure reason appears in the HUD
+[PASS] failed task can restore its checkpoint
+[PASS] checkpoint restores inventory and equipped slots
+[PASS] checkpoint restores variables and the active task phase
+[PASS] checkpoint restores subobjective state
+[PASS] checkpoint restores the player's spatial state
+[PASS] checkpoint resumes after the save node instead of restarting the task
+[PASS] restored interaction remains usable
+[PASS] Restore Checkpoint node safely resumes the saved graph
+[PASS] Save Progress retains the existing world/persistent-save request contract
+[PASS] extended task state supports progress round trip
+TASK NODES: 90 checks, 0 failures

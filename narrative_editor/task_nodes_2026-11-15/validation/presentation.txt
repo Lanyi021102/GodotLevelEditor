@@ -1,0 +1,142 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] event_hold preserves enabled connection indices, order, types and colors
+[PASS] event_hold omits the redundant direction row without shifting ports
+[PASS] event_hold keeps exact role color when selected
+[PASS] event_hold aligns port names to the correct edge and retains hover hints
+[PASS] event_complete preserves enabled connection indices, order, types and colors
+[PASS] event_complete omits the redundant direction row without shifting ports
+[PASS] event_complete keeps exact role color when selected
+[PASS] event_complete aligns port names to the correct edge and retains hover hints
+[PASS] npc_interact preserves enabled connection indices, order, types and colors
+[PASS] npc_interact omits the redundant direction row without shifting ports
+[PASS] npc_interact keeps exact role color when selected
+[PASS] npc_interact aligns port names to the correct edge and retains hover hints
+[PASS] dialog_completed preserves enabled connection indices, order, types and colors
+[PASS] dialog_completed omits the redundant direction row without shifting ports
+[PASS] dialog_completed keeps exact role color when selected
+[PASS] dialog_completed aligns port names to the correct edge and retains hover hints
+[PASS] show_dialog preserves enabled connection indices, order, types and colors
+[PASS] show_dialog omits the redundant direction row without shifting ports
+[PASS] show_dialog keeps exact role color when selected
+[PASS] show_dialog aligns port names to the correct edge and retains hover hints
+[PASS] task_start preserves enabled connection indices, order, types and colors
+[PASS] task_start omits the redundant direction row without shifting ports
+[PASS] task_start keeps exact role color when selected
+[PASS] task_start aligns port names to the correct edge and retains hover hints
+[PASS] task_complete preserves enabled connection indices, order, types and colors
+[PASS] task_complete omits the redundant direction row without shifting ports
+[PASS] task_complete keeps exact role color when selected
+[PASS] task_complete aligns port names to the correct edge and retains hover hints
+[PASS] start preserves enabled connection indices, order, types and colors
+[PASS] start omits the redundant direction row without shifting ports
+[PASS] start keeps exact role color when selected
+[PASS] start aligns port names to the correct edge and retains hover hints
+[PASS] room_enter preserves enabled connection indices, order, types and colors
+[PASS] room_enter omits the redundant direction row without shifting ports
+[PASS] room_enter keeps exact role color when selected
+[PASS] room_enter aligns port names to the correct edge and retains hover hints
+[PASS] region_enter preserves enabled connection indices, order, types and colors
+[PASS] region_enter omits the redundant direction row without shifting ports
+[PASS] region_enter keeps exact role color when selected
+[PASS] region_enter aligns port names to the correct edge and retains hover hints
+[PASS] event_received preserves enabled connection indices, order, types and colors
+[PASS] event_received omits the redundant direction row without shifting ports
+[PASS] event_received keeps exact role color when selected
+[PASS] event_received aligns port names to the correct edge and retains hover hints
+[PASS] emit_event preserves enabled connection indices, order, types and colors
+[PASS] emit_event omits the redundant direction row without shifting ports
+[PASS] emit_event keeps exact role color when selected
+[PASS] emit_event aligns port names to the correct edge and retains hover hints
+[PASS] set_switch preserves enabled connection indices, order, types and colors
+[PASS] set_switch omits the redundant direction row without shifting ports
+[PASS] set_switch keeps exact role color when selected
+[PASS] set_switch aligns port names to the correct edge and retains hover hints
+[PASS] enemy_patrol preserves enabled connection indices, order, types and colors
+[PASS] enemy_patrol omits the redundant direction row without shifting ports
+[PASS] enemy_patrol keeps exact role color when selected
+[PASS] enemy_patrol aligns port names to the correct edge and retains hover hints
+[PASS] kill_player preserves enabled connection indices, order, types and colors
+[PASS] kill_player omits the redundant direction row without shifting ports
+[PASS] kill_player keeps exact role color when selected
+[PASS] kill_player aligns port names to the correct edge and retains hover hints
+[PASS] set_visibility preserves enabled connection indices, order, types and colors
+[PASS] set_visibility omits the redundant direction row without shifting ports
+[PASS] set_visibility keeps exact role color when selected
+[PASS] set_visibility aligns port names to the correct edge and retains hover hints
+[PASS] player_state preserves enabled connection indices, order, types and colors
+[PASS] player_state omits the redundant direction row without shifting ports
+[PASS] player_state keeps exact role color when selected
+[PASS] player_state aligns port names to the correct edge and retains hover hints
+[PASS] has_item preserves enabled connection indices, order, types and colors
+[PASS] has_item omits the redundant direction row without shifting ports
+[PASS] has_item keeps exact role color when selected
+[PASS] has_item aligns port names to the correct edge and retains hover hints
+[PASS] branch preserves enabled connection indices, order, types and colors
+[PASS] branch omits the redundant direction row without shifting ports
+[PASS] branch keeps exact role color when selected
+[PASS] branch aligns port names to the correct edge and retains hover hints
+[PASS] port preserves enabled connection indices, order, types and colors
+[PASS] port omits the redundant direction row without shifting ports
+[PASS] port keeps exact role color when selected
+[PASS] port aligns port names to the correct edge and retains hover hints
+[PASS] source preserves enabled connection indices, order, types and colors
+[PASS] source omits the redundant direction row without shifting ports
+[PASS] source keeps exact role color when selected
+[PASS] source aligns port names to the correct edge and retains hover hints
+[PASS] constant preserves enabled connection indices, order, types and colors
+[PASS] constant omits the redundant direction row without shifting ports
+[PASS] constant keeps exact role color when selected
+[PASS] constant aligns port names to the correct edge and retains hover hints
+[PASS] number preserves enabled connection indices, order, types and colors
+[PASS] number omits the redundant direction row without shifting ports
+[PASS] number keeps exact role color when selected
+[PASS] number aligns port names to the correct edge and retains hover hints
+[PASS] greater preserves enabled connection indices, order, types and colors
+[PASS] greater omits the redundant direction row without shifting ports
+[PASS] greater keeps exact role color when selected
+[PASS] greater aligns port names to the correct edge and retains hover hints
+[PASS] object preserves enabled connection indices, order, types and colors
+[PASS] object omits the redundant direction row without shifting ports
+[PASS] object keeps exact role color when selected
+[PASS] object aligns port names to the correct edge and retains hover hints
+[PASS] read_state preserves enabled connection indices, order, types and colors
+[PASS] read_state omits the redundant direction row without shifting ports
+[PASS] read_state keeps exact role color when selected
+[PASS] read_state aligns port names to the correct edge and retains hover hints
+[PASS] all preserves enabled connection indices, order, types and colors
+[PASS] all omits the redundant direction row without shifting ports
+[PASS] all keeps exact role color when selected
+[PASS] all aligns port names to the correct edge and retains hover hints
+[PASS] goal preserves enabled connection indices, order, types and colors
+[PASS] goal omits the redundant direction row without shifting ports
+[PASS] goal keeps exact role color when selected
+[PASS] goal aligns port names to the correct edge and retains hover hints
+[PASS] latch preserves enabled connection indices, order, types and colors
+[PASS] latch omits the redundant direction row without shifting ports
+[PASS] latch keeps exact role color when selected
+[PASS] latch aligns port names to the correct edge and retains hover hints
+[PASS] unlock preserves enabled connection indices, order, types and colors
+[PASS] unlock omits the redundant direction row without shifting ports
+[PASS] unlock keeps exact role color when selected
+[PASS] unlock aligns port names to the correct edge and retains hover hints
+[PASS] objective preserves enabled connection indices, order, types and colors
+[PASS] objective omits the redundant direction row without shifting ports
+[PASS] objective keeps exact role color when selected
+[PASS] objective aligns port names to the correct edge and retains hover hints
+[PASS] checkpoint preserves enabled connection indices, order, types and colors
+[PASS] checkpoint omits the redundant direction row without shifting ports
+[PASS] checkpoint keeps exact role color when selected
+[PASS] checkpoint aligns port names to the correct edge and retains hover hints
+[PASS] building and styling every node leaves all serialized graph data unchanged
+[PASS] canvas omits persistent classification explanations
+[PASS] continuous state and remembered state stay distinct from one-shot completion events
+[PASS] actual value and reason drive a green activity indicator
+[PASS] execution count changes produce an activity pulse without implying success
+[PASS] one-shot actions show actual executions and reason instead of a false continuous-state value
+[PASS] selected paused nodes preserve category fill and mark activity on the border
+[PASS] rewind refreshes actual values and clears obsolete execution pulses
+[PASS] rewind never recolors the category title or body
+[PASS] stopping a session clears activity without changing the node role
+[PASS] selection, runtime display, pause and rewind never mutate graph resources
+NODE PRESENTATION: 139 passed / 0 failed

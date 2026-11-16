@@ -1,0 +1,1228 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从第一个白盒关卡开始，学习场景摆放、机关连线与基础试玩。">
+      
+      
+      
+        <link rel="canonical" href="https://lanyi021102.github.io/GodotLevelEditor/narrative/TIME_BUREAU_STORY/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../wiki/assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>TIME BUREAU STORY - GodotLevelEditor Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../wiki/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#v1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="GodotLevelEditor Wiki" class="md-header__button md-logo" aria-label="GodotLevelEditor Wiki" data-md-component="logo">
+      
+  <img src="../../wiki/assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GodotLevelEditor Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TIME BUREAU STORY
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lanyi021102/GodotLevelEditor" title="查看项目源码" class="md-source">
+  <div class="md-source__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">GodotLevelEditor</div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="GodotLevelEditor Wiki" class="md-nav__button md-logo" aria-label="GodotLevelEditor Wiki" data-md-component="logo">
+      
+  <img src="../../wiki/assets/logo.svg" alt="logo">
+
+    </a>
+    GodotLevelEditor Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lanyi021102/GodotLevelEditor" title="查看项目源码" class="md-source">
+  <div class="md-source__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">GodotLevelEditor</div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开始使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开始使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快速开始
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编辑器功能地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/guides/levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关卡与轮盘操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动手制作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动手制作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/tutorials/button-door/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    按钮打开一扇门
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    查阅手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    查阅手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/reference/mechanisms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    机关与节点速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    术语与快捷键
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../wiki/development/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发与维护
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开发与维护
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/development/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更新 Wiki
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/development/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预览与发布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../wiki/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 用户已确定的设定
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 故事概述建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 剧情气质
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 角色位置建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 能让玩家理解的世界规则建议
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 能让玩家理解的世界规则建议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        错位道具为什么需要回收
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        跨时间线旅行与局部时间控制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        道具与分身的唯一性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完成、失败与撤离
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 主线结构建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 一个任务的节奏
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 保留用户手工制作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 首轮范围与待定事项
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition note">
+<p class="admonition-title">专项资料与阶段记录</p>
+<p>本页保留模块说明、接口或阶段验证，可能同时包含历史条款。当前操作先看 <a href="../../">Wiki 首页</a>；功能边界以模块最新覆盖说明与实际实现为准。</p>
+</div>
+<h1 id="v1">时间管理局：剧本方案 V1<a class="headerlink" href="#v1" title="Permanent link">&para;</a></h1>
+<p>日期：2026-11-05。项目仍使用 GodotLevelEditor 名称；本标题是剧本方向，不是正式游戏命名。</p>
+<blockquote>
+<p>本日后续构想：用户提出蒸汽朋克剧院、远古群居洞穴、赛博朋克政府大楼三个关卡，以及中立 NPC、多种取得方式、行为后果和头顶气泡交互。它们优先于下文 Agent 提议的旧案件；角色和收藏家主线仍为候选。新方向的研究依据见 <a href="../../research/STEALTH_SYSTEMS_2026-11-05/">潜行与社会互动调研</a>。</p>
+</blockquote>
+<h2 id="1">1. 用户已确定的设定<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>氛围和剧情相对轻松、王道。</li>
+<li>类型为俯视角解谜与潜行箱庭。</li>
+<li>玩家是“时间管理局”的特工，拥有特殊的分身和时间控制能力。</li>
+<li>玩家在不同时间线间执行任务，回收不属于当地时间线的道具并离开。</li>
+<li>尽可能不惊动当地人，保障各条时间线的安全。</li>
+<li>关卡、机关、敌人等内容保留用户方便手工编辑的制作方式。</li>
+</ul>
+<p>以下角色、事件、世界规则和任务均为创作建议，供用户修改；不表示已经实现或全部定稿。</p>
+<h2 id="2">2. 故事概述建议<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>时间管理局每天都会收到一些奇怪的报告：钟楼里的电梯开始自己选楼层，温室里某棵树下着一场私人小雨，码头上的货箱则总想飞过屋顶。</p>
+<p>大多数人只觉得今天运气有点奇怪。特工们知道，这是某件东西走错了时间线。</p>
+<p>玩家作为正式获得外勤资格的特工，带着可以回看短暂过去、让行动记录形成实体分身的装备，前往这些地方。他需要摸清人们的日常路线，借用场所里的机关，与过去的自己配合，将错位道具悄悄带回局里。</p>
+<p>任务完成后，钟楼准时开幕，园丁终于可以放心浇花，码头工人的午餐也能按时送到。当地人继续自己的生活，只有玩家和通讯另一端的搭档，知道刚刚发生过一场小小的冒险。</p>
+<p>随着案件增多，玩家发现这些道具带着同一家巡回展览的标签。一名热爱收集奇物的旅行者，正在筹备一场“所有时代都能参加的展览”。他的愿望不坏，却没有意识到：把珍贵的东西搬离原来的地方，也可能打乱那里正在继续的生活。</p>
+<p>主角最终需要潜入展览，取回被混放的道具，修好失控的运输装置，并把包括这位冒失收藏家在内的所有人安全送回去。</p>
+<h2 id="3">3. 剧情气质<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>时间管理局是可靠、值得信任的组织。局内生活可以有轻松的同事互动、奇物归档和任务复盘。</li>
+<li>主角有能力，也有好奇心；成长体现为从“完成取物”到“同时照顾当地人的日常”，不靠不断犯低级错误推动剧情。</li>
+<li>通讯搭档提供人物陪伴和适量提示，不替玩家说出每道谜题的解法。</li>
+<li>幽默来自物品与场所的错配、分身合作和任务中的小意外；当地人的职业与处境受到尊重。</li>
+<li>普通守卫、工作人员与居民各有合理职责。玩家避开他们，是为了减少干扰。</li>
+<li>危险清楚可见，但有挽回办法。场景可以紧张，故事仍保持积极、明亮的冒险感。</li>
+<li>主线不依赖管理局黑幕、队友背叛、亲人惨剧或强行反转；后续若调整，由用户另行确定。</li>
+</ul>
+<h2 id="4">4. 角色位置建议<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>姓名、性别、外观和具体关系暂不定稿，便于用户选择。</p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>剧情职责</th>
+<th>适合的表达方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>玩家特工</td>
+<td>行动主角，善于观察和临场解决问题</td>
+<td>任务中话少但有反应，关键时刻主动帮助他人</td>
+</tr>
+<tr>
+<td>通讯搭档</td>
+<td>分析道具来源、提供任务信息，承担日常互动</td>
+<td>专业、温和，有一点相互调侃；提示按需提供</td>
+</tr>
+<tr>
+<td>外勤导师</td>
+<td>教会回收原则，为主角的判断提供支持</td>
+<td>用具体案件讲规则，允许主角独立做决定</td>
+</tr>
+<tr>
+<td>收藏家</td>
+<td>贯穿案件的对手，行动制造错位问题</td>
+<td>热情、自信、善于布置机关；受阻后加码，最终承担修复责任</td>
+</tr>
+<tr>
+<td>各案当地人</td>
+<td>让箱庭成为有人生活的场所</td>
+<td>每案围绕一个简单愿望，如开幕、送货、照看植物</td>
+</tr>
+</tbody>
+</table>
+<p>分身按既有运行合同处理为固定录像，不是拥有独立意志的新角色。相互合作的喜感来自同一个人的行动安排，不新增自由对话或独立人格系统。</p>
+<h2 id="5">5. 能让玩家理解的世界规则建议<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="_1">错位道具为什么需要回收<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>道具原有的作用与当地规律不匹配，会产生逐步扩大的异常。例如一枚远程控制器干扰机械展馆的传动，或者一粒天气种子让小范围持续下雨。首批案件优先使用可观察、可恢复的异常。</p>
+<p>局方装备经过登记与稳定处理，可以安全短时进入任务时间线；散落且未稳定的外来道具才是回收目标。需要回收的对象以调查证据和任务标记说明，不能只靠外形新奇来判断。</p>
+<p>道具离开后，不自动抹去当地人的记忆或修复一切后果。任务中造成的警觉要通过躲藏、转移注意或回退处理；局部环境的恢复可以成为撤离前的可选行动。</p>
+<h3 id="_2">跨时间线旅行与局部时间控制<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>跨时间线旅行发生在任务部署和撤离时。首版一案使用一个连续箱庭，不要求场内自由切换多个时代或实时模拟整条历史。</p>
+<p>局部时间控制沿用现有 Q/E/T 规则，只回看已记录的任务状态。特工可以记住自己看到的结果，但物理身体、机关与当地人的当前状态随快照恢复。分身固定记录动作，不能在回放时临时换一个计划。</p>
+<h3 id="_3">道具与分身的唯一性<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>回放不产生第二件目标道具。同一件道具的地点、携带者和交互状态需要统一记录与恢复。</p>
+<p>首个白盒建议只允许本体拾取和携带目标；分身负责踩板、拉杆和吸引注意。若以后允许分身搬运，再补充唯一归属与交接规则。分身是否被人员当作可疑目标，需要单独定义并验证。</p>
+<p>携带目标期间回退，目标及其归属一起恢复；不能把它永久锁在背包里再回退去拿第二次。任务物品的快照与携带系统尚未实现。</p>
+<h3 id="_4">完成、失败与撤离<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>建议基本成功条件为“本体携带目标到达指定撤离点并完成撤离”。回收与出局是同一个完成事务，避免先记已回收却没有成功撤离。</p>
+<p>警觉不是立即失败。工作人员可以查看可疑位置、封闭部分路线或展开搜索，玩家仍可调整计划。被实际抓住或跌落后的重试规则待白盒验证，不引入剧情上的永久惩罚。</p>
+<p>撤离完成后提交任务进度，结束本次可回溯会话。任务边界不允许用旧录像返回已结算的场景重复领取目标；回局和重玩另建会话。该流程是待实现合同。</p>
+<p>“未被发现”“未使当地人受伤”“恢复额外受影响的设施”可作为独立的可选评价，不强制首轮获得完美成绩。首版不设置迫使玩家速通的全局倒计时。</p>
+<h2 id="6">6. 主线结构建议<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>规模按“一案成立后再扩展”安排。后续场景、物品外观与主题均可替换。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>时间线与案件</th>
+<th>错位道具及异常</th>
+<th>解谜与潜行重点</th>
+<th>剧情推进</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>局内序章</td>
+<td>外勤资格测试</td>
+<td>用登记道具搭建安全演练</td>
+<td>走跑跳、回看、固定分身、基础交互</td>
+<td>认识搭档与回收原则，可直接复用 3C 测试思路</td>
+</tr>
+<tr>
+<td>首案</td>
+<td>钟楼开幕式</td>
+<td>未来的展台控制器被当作古董摆件，附近机械运行异常</td>
+<td>侧廊、双人机关、守卫视线、取物后捷径撤离</td>
+<td>居民希望开幕顺利；目标底部出现展览标签</td>
+</tr>
+<tr>
+<td>第二案</td>
+<td>温室里的一场小雨</td>
+<td>来自另一条时间线的天气种子，局部晴雨交替</td>
+<td>固定巡逻节奏与机关协作；天气可先只做视觉占位</td>
+<td>园丁忙着保护植物；标签与首案一致</td>
+</tr>
+<tr>
+<td>第三案</td>
+<td>码头上的漂浮货物</td>
+<td>异时空罗盘干扰附近货物的重力</td>
+<td>货运路线、高差与分身同步；漂浮玩法仅作后续候选</td>
+<td>查明运输来源，获得巡回展览的邀请线索</td>
+</tr>
+<tr>
+<td>终案</td>
+<td>不准时的奇物展</td>
+<td>多件道具混放，运输装置失控</td>
+<td>重组已学过的巡逻、机关与撤离规则</td>
+<td>阻止收藏家的冒险计划，一起完成安全疏散和归还</td>
+</tr>
+<tr>
+<td>尾声</td>
+<td>管理局归档</td>
+<td>修复后的运输装置与新的任务单</td>
+<td>自由查看已回收奇物与任务纪念</td>
+<td>主角成为可靠外勤，新的冒险仍可继续</td>
+</tr>
+</tbody>
+</table>
+<p>首案前后都只需短对话。关卡中通过场所布置、人员行为、道具异常与少量通讯推进故事，避免频繁打断操作。</p>
+<p>最终挑战建议使用“对手启动机关—玩家判断次序—分身合作修复”的形式。基础版不依赖必须击败的战斗 Boss。</p>
+<h2 id="7">7. 一个任务的节奏<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>简报：当地的生活目标、目标道具证据、进入点和预定撤离点。</li>
+<li>观察：玩家看见目标或它造成的异常，能理解自己要去哪里。</li>
+<li>调查：绕行、登高或穿过侧廊，了解巡逻与机关的规律。</li>
+<li>排演：尝试通路，回看结果，固定一个分身执行辅助动作。</li>
+<li>回收：本体通过分身提供的机会，取走唯一目标。</li>
+<li>撤离：从已理解的空间返回；一条捷径让前面的探索产生回报。</li>
+<li>复盘：展示完成情况和当地生活恢复的小片段，引出下一案。</li>
+</ol>
+<p>每案以一件主要回收物为中心，路线允许多解。额外收集项与评价后置。</p>
+<h2 id="8">8. 保留用户手工制作<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>任务设计应能表达为一张任务卡：时间线/场所、当地人的日常目标、错位道具、异常表现、入口、目标位置、巡逻、机关、撤离点、关键对话。</p>
+<p>空间、道具位置、巡逻点和机关布局由用户在 Godot 三维视口制作；机关关系、事件条件与敌人状态通过已有节点编辑器配置。Agent 实现缺少的基础组件、可靠接口与调试支持，不将每个任务写死进脚本。</p>
+<p>任务卡当前是设计文档，不表示已有任务资源编辑器。新增识别、物品、撤离和任务记录时，应先提供可编辑参数及稳定接口，再交由用户组合内容。</p>
+<h2 id="9">9. 首轮范围与待定事项<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>先验收 <a href="../FIRST_CASE_WHITEBOX/">首案白盒</a>。本轮是剧本与设计文档调整，不新增游戏场景、任务系统、角色技能或正式美术。</p>
+<p>之后根据用户选择再定主角外观与姓名、搭档关系、收藏家是否采用、任务时代及数量、低惊扰评价强度、非致命战斗是否需要、轻度类银河城回访如何保留。现有时间按键、分身合同、用户资源和手工制作工具继续作为制作依据。</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      GodotLevelEditor · Wiki V1 · 内容核对于 2026-11-16
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

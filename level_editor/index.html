@@ -1,0 +1,1078 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从第一个白盒关卡开始，学习场景摆放、机关连线与基础试玩。">
+      
+      
+      
+        <link rel="canonical" href="https://lanyi021102.github.io/GodotLevelEditor/level_editor/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../wiki/assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Index - GodotLevelEditor Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../wiki/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#v04" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="GodotLevelEditor Wiki" class="md-header__button md-logo" aria-label="GodotLevelEditor Wiki" data-md-component="logo">
+      
+  <img src="../wiki/assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GodotLevelEditor Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Lanyi021102/GodotLevelEditor" title="查看项目源码" class="md-source">
+  <div class="md-source__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">GodotLevelEditor</div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="GodotLevelEditor Wiki" class="md-nav__button md-logo" aria-label="GodotLevelEditor Wiki" data-md-component="logo">
+      
+  <img src="../wiki/assets/logo.svg" alt="logo">
+
+    </a>
+    GodotLevelEditor Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Lanyi021102/GodotLevelEditor" title="查看项目源码" class="md-source">
+  <div class="md-source__icon md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">GodotLevelEditor</div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开始使用
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开始使用
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    快速开始
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    编辑器功能地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/guides/levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关卡与轮盘操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动手制作
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动手制作
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/tutorials/button-door/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    按钮打开一扇门
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    查阅手册
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    查阅手册
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/reference/mechanisms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    机关与节点速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    术语与快捷键
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    常见问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../wiki/development/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开发与维护
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开发与维护
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/development/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更新 Wiki
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/development/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    预览与发布
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wiki/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    版本记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先试一个能操作的例子
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        面、线、点选择与编辑步长
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        白盒：选形状，直接拖进场地
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#room" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Room 与关卡对象
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        节点：触发 → 判断 → 操作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        保存
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<div class="admonition note">
+<p class="admonition-title">专项资料与阶段记录</p>
+<p>本页保留模块说明、接口或阶段验证，可能同时包含历史条款。当前操作先看 <a href="../">Wiki 首页</a>；功能边界以模块最新覆盖说明与实际实现为准。</p>
+</div>
+<h1 id="v04">关卡与世界编辑器 v0.4<a class="headerlink" href="#v04" title="Permanent link">&para;</a></h1>
+<p>2026-11-16：原生 3D 视口的 <strong>呼出轮盘</strong> 使用鼠标侧键／反引号键短按切换。六个方向为出生点、Layout 白盒、Room、机关、NPC 和最近使用；NPC、机关、Room 提供“关卡常驻／任务对象”二级菜单。选择后左键放置到当前关卡，实例属性在原生检查器中编辑。呼出、取消、悬停与页面切换带动画。详细操作、公共接口和验证见 <a href="quick_add_v2_2026-11-15/">轮盘与实例属性</a>。下文旧节点图入口以套件当前合同为准。</p>
+<p>当前以一个完整箱庭场景作为一个大关卡。使用独立 <strong>GodotLevelEditor → 关卡</strong> 管理关卡目录与整关常驻逻辑图；空间布局、白盒、Room、NPC 与机关由原生 <strong>3D</strong> 视口的添加轮盘制作。旧房间接驳图已移除，关卡图只表达常驻事件与行为。任务接取前后关卡图都运行，任务图按已接取事件的任务顺序运行。详见 <a href="level_logic_2026-11-15/">常驻关卡图</a>。</p>
+<p>下文房间接驳、关卡节点图及旧样例操作为兼容资料，不属于当前箱庭制作流程。</p>
+<h2 id="_1">先试一个能操作的例子<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>点 <strong>打开触发／操作／判断示例</strong>，按 <strong>F6</strong> 运行当前场景：</p>
+<ul>
+<li>WASD 移动预览角色；R 重新开始。</li>
+<li>走进蓝色 Room 边界：检测样例钥匙 → 打开开关 → 敌人开始巡逻 → 门升起。</li>
+<li>走进红色区域：触发“击杀玩家”，角色停用、隐藏并停止碰撞。</li>
+<li>节点工作区下方选择本次运行实例，可看“是／否”、执行次数和最近原因。</li>
+<li>想试没有钥匙：编辑“预览玩家 → LevelAgent”的 <strong>Unlocked Items</strong>，清空后保存再运行。判断节点中的道具标识为 <code>sample_key</code>。</li>
+</ul>
+<p>这是独立制作工具示例，不替换公共玩家，不写正式存档。</p>
+<h2 id="_2">面、线、点选择与编辑步长<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>原生 3D 工具栏依次提供 <strong>呼出轮盘、选中面、选中线、选中点、步长输入框</strong>。三个选择模式互斥。</p>
+<ol>
+<li>点击选择模式，再点击白盒上的元素。面显示橙色高亮；线、点模式显示可见轮廓线或顶点，并高亮悬停候选。线只包含真实折边，排除共面三角形内部对角线。</li>
+<li>选中后，唯一一组操作轴位于面中心、线段中点或顶点位置。拖箭头移动；面和线可拖圆环绕中心旋转。单个点绕自身旋转不改变位置，也不会产生无效撤销记录。</li>
+<li><strong>步长</strong>可以直接填写，按 Enter 或移开焦点应用；右侧下拉预设为 <strong>0.1、0.5、1</strong>。支持 0.001–1000 m，保留三位小数，同步到原生物体移动、面／线／点移动和轮盘放置。值保存在当前项目的编辑器设置中，切场景或重开项目后保留。</li>
+<li>拖动时 <strong>Esc／右键</strong> 取消本次变换。没有拖动时按 <strong>Esc 或点击空白处</strong> 取消元素选择，保留物体选择，恢复物体原本的操作轴，并可直接操作整个物体。关闭选择模式后恢复原尺寸手柄。</li>
+<li>可原生撤销／重做；移动和旋转后的真实网格、位置与碰撞一同保存到 <code>.tscn</code>。相邻三角形的共用顶点同步改变，未选中顶点保持世界位置。会导致邻面翻转或塌陷的操作保留最后有效形状。</li>
+</ol>
+<p>移动方向和旋转轴遵循原生世界／局部坐标设置；旋转继续使用原生角度吸附。房间实例内部的物件需要打开源房间，或先允许编辑实例子节点。替换了 <code>visual_scene</code> 的正式模型不参与白盒顶点编辑。</p>
+<p>接口、检查结果与实际截图见 <a href="selection_tools_2026-11-16/validation/">选择工具与步长验证</a>。</p>
+<h2 id="_3">白盒：选形状，直接拖进场地<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>所有默认白盒使用 <a href="../whitebox_grid/">米制网格</a>：1 m 粗线、0.5 m 中线、0.1 m 细线。编辑和运行共用，尺寸拉伸及面推拉不会把格子拉大；检查器的 Tint 控制底色。</p>
+<p>“白盒形状”有 <strong>16 种缩略图</strong>：方块、斜坡、直线楼梯、定高楼梯、圆柱、圆锥、球、半球、倾斜方块、弧形墙角、弧形楼梯、门洞、窗洞、栏杆、管道、转角斜坡。</p>
+<ul>
+<li>每个物件初始外包尺寸 <strong>1×1×1</strong>。拖缩略图或大预览图到 <strong>3D 视口</strong>，也可点“添加所选物件”。</li>
+<li>选中白盒，拖三个面手柄拉伸，拖角点整体缩放；<strong>尺寸与编辑器缩放按 0.1 吸附，最小值 0.1</strong>。Godot 原生移动、旋转、缩放工具仍可用。</li>
+<li>面板下方“选中白盒的尺寸”直接改宽、高、深；检查器可改楼梯步数、级高、壁厚、角度等。</li>
+<li>门洞、窗洞和管道保持真实孔洞碰撞；斜坡和楼梯有对应表面碰撞。模型替换可使用 <code>visual_scene</code>，继续保留这份白盒碰撞。</li>
+<li>从素材目录拖放或通过轮盘新增的内容加入当前关卡的类别组织节点；选择某个 Room 不改变新增归属。编辑房间内部内容时打开对应房间源场景。</li>
+<li>复制用“复制所选（新对象 ID）”；复制 Room 会保留内部物件，分配新的房间实例标识。</li>
+</ul>
+<p>形状类别参考作者公开的 <a href="https://dmkarpukhin.com/blockout-tools/">Blockout Tools 类型列表</a> 和<a href="https://dmkarpukhin.com/docs/blockout-tools/">使用说明</a>。本项目使用独立编写的 Godot 程序化几何，没有引入该商业插件的代码或资产。</p>
+<h2 id="room">Room 与关卡对象<a class="headerlink" href="#room" title="Permanent link">&para;</a></h2>
+<p>将物件库切到 <strong>关卡对象</strong>，可拖入 Room、触发区域、玩家出生点、接驳点、开关、门、敌人等。</p>
+<ul>
+<li><strong>Room 是房间检测范围</strong>。在检查器设置 Display Name 和 Bounds Size；它不会自动替你造墙或地板。世界中的“设选中 Room 为起始房间”可指定起点。</li>
+<li><strong>触发区域</strong>用于局部机关、危险区等，Extent 控制检测大小；出生点是供总控使用的位置标记。</li>
+<li><strong>房间接驳点</strong>控制房间间的空间通路。两端位置重合、朝向相反、宽度一致，再在房间图中连线；连线不会自动造走廊。</li>
+<li>“新建房间 .tscn”创建可复用房间文件；“实例化房间到世界”组装房间。原有中庭、三房与捷径样例仍可从“打开首版连续世界”进入。</li>
+</ul>
+<h2 id="_4">节点：触发 → 判断 → 操作<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>右键或点“搜索添加”，按类别筛选，节点和端口采用中文名称：</p>
+<table>
+<thead>
+<tr>
+<th>类别与标题色</th>
+<th>常用节点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>判断 · 深黄色 <code>#94700e</code></td>
+<td>玩家是否解锁道具、如果条件成立、同时满足两个条件、比较两个数值</td>
+</tr>
+<tr>
+<td>触发 · 朱红色 <code>#a34439</code></td>
+<td>游戏开始时、玩家进入房间时、玩家进入触发区域时、收到事件时、完成房间目标</td>
+</tr>
+<tr>
+<td>状态 · 青绿色 <code>#24756e</code></td>
+<td>检测玩家当前状态、检测机关是否开启、检测引用物件状态、记住已发生的事件</td>
+</tr>
+<tr>
+<td>动作 · 蓝色 <code>#345f96</code></td>
+<td>打开／关闭开关、敌人开始巡逻、击杀玩家、显示／隐藏物件、更新玩家目标、允许房间之间通行、请求保存进度</td>
+</tr>
+<tr>
+<td>数据／引用 · 紫色 <code>#71508f</code></td>
+<td>是／否常量、数值、引用场景物件、房间接驳点</td>
+</tr>
+<tr>
+<td>延迟／流程 · 橙色 <code>#9b592b</code></td>
+<td>发送事件：具名事件在下一物理帧送达</td>
+</tr>
+</tbody>
+</table>
+<p>标题同时写明类别，画布上方有六色文字图例。左侧 <strong>输入 →</strong>，右侧 <strong>→ 输出</strong>，没有端口的一侧不显示方向；端口名称贴近连接点。端口和连线颜色继续表示布尔、事件、数值、对象和空间等连接类型。</p>
+<p>选中、运行、暂停和恢复快照均保留分类色。活动用绿色边框、绿点和实际状态文字提示；一次事件／动作显示执行次数与原因，持续状态显示当前值。执行提示短暂亮起，暂停时保留；恢复快照不把历史执行误显示为新动作。完整原因可悬停查看。</p>
+<p><a href="node_colors_running.png">运行实例实际截图</a> · <a href="node_colors_states.png">持续状态与完成事件</a> · <a href="node_colors_topology.png">空间引用</a></p>
+<p>例子：<strong>玩家进入房间时 → 如果条件成立 → 成立：打开开关 → 敌人开始巡逻</strong>；“玩家是否解锁道具”的结果接到判断节点的“条件”。“不成立”可接另一条操作链。</p>
+<p>先选三维 Room 再添加“玩家进入房间时”，会自动绑定；也能在右侧参数中选择目标。选节点可定位场景对象，选场景对象可定位相应节点。“整理节点”可排开节点，支持撤销。</p>
+<p>事件端口表示执行一次；“是／否”端口表示当前条件，二者不直接混接。动作的“继续”和“失败”分开；尚未提供玩家/敌人接口时，节点显示失败原因。</p>
+<h2 id="_5">保存<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>图：<strong>校验并保存</strong>；<strong>保存后重载</strong>检查磁盘内容。</li>
+<li>场景：<strong>保存场景并重载校验</strong>，会重新打开已保存场景。</li>
+<li><code>.tscn</code> 保存空间物件，<code>.tres</code> 保存节点逻辑与排版。移动图节点不会移动三维对象；仅浏览和缩放画布不会阻止切图，视图可随显式保存保留。</li>
+</ul>
+<p>接口与总控待办见 <a href="INTERFACES/">INTERFACES.md</a>，验证见 <a href="PROGRESS/">PROGRESS.md</a>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>/Applications/Godot.app/Contents/MacOS/Godot<span class="w"> </span>--headless<span class="w"> </span>--path<span class="w"> </span>/Users/lanyi/branch<span class="w"> </span>res://tools/level_editor/test_v2.tscn
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>/Applications/Godot.app/Contents/MacOS/Godot<span class="w"> </span>--headless<span class="w"> </span>--path<span class="w"> </span>/Users/lanyi/branch<span class="w"> </span>res://tools/level_editor/test_level_editor.tscn
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>/Applications/Godot.app/Contents/MacOS/Godot<span class="w"> </span>--headless<span class="w"> </span>--editor<span class="w"> </span>--path<span class="w"> </span>/Users/lanyi/branch<span class="w"> </span>--<span class="w"> </span>--godot-level-editor-level-smoke
+</code></pre></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      GodotLevelEditor · Wiki V1 · 内容核对于 2026-11-16
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
