@@ -4,6 +4,8 @@
 
 将原私有仓库 `Lanyi021102/branch` 改名为 [Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)，与 `project.godot` 的项目名称一致。继续使用原仓库、`main` 分支、提交历史和既有标签；本地目录仍为 `/Users/lanyi/branch`。本地 `origin` 已更新为新地址。
 
+同日按用户要求将仓库可见性改为公开，README 与双机协作文档同步更新。
+
 此次同步包含当前脚本、编辑器插件、用户关卡与机关、NPC、资源、XLSX 配表和项目文档。按现有 `.gitignore` 排除 Godot 缓存、本机凭据、日志和导出产物；没有修改运行时接口或场景表现。README 和双机协作文档新增当前仓库地址。
 
 ## 独立副本检查

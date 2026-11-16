@@ -1,6 +1,6 @@
 # GodotLevelEditor
 
-源码仓库：[Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)（私有）。
+源码仓库：[Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)（公开）。
 
 第一批机关素材已提供按钮、拉杆、压力板、滑动门、旋转门、升降台和交互终端，机关／任务／常驻关卡图共用状态与动作节点。在“我的机关”选择素材；打开 `scenes/levels/mechanism_whitebox_v1.tscn` 后 F6 可试玩三个组合。说明见 [机关素材与状态节点](docs/mechanism_editor/whitebox_v1/README.md)。
 

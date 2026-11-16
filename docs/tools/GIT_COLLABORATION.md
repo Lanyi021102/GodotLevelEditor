@@ -2,7 +2,7 @@
 
 两台电脑各自保留本地工程，通过 Git 提交与 GitHub 仓库交换版本。两端统一使用 Godot 4.7.1。
 
-当前私有仓库：[Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)。2026-11-16 从 `branch` 改为项目当前名称，保留原有提交历史和 `baseline-2026-11-06` 标签。本地目录名不影响项目或仓库名称。
+当前公开仓库：[Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)。2026-11-16 从 `branch` 改为项目当前名称，同日按用户要求设为公开，保留原有提交历史和 `baseline-2026-11-06` 标签。本地目录名不影响项目或仓库名称。
 
 已经克隆旧仓库的电脑，可在项目目录执行 `git remote set-url origin https://github.com/Lanyi021102/GodotLevelEditor.git` 更新远程地址。
 
