@@ -18,8 +18,8 @@ def on_pre_build(config):
 
 
 def on_page_markdown(markdown, page, config, files):
-    uri = page.file.src_uri
-    if uri == "index.md" or uri.startswith("wiki/"):
+    uri = page.file.src_uri.removeprefix("en/")
+    if uri in {"index.md", "index.en.md"} or uri.startswith("wiki/"):
         return markdown
 
     page.meta.setdefault("search", {})["exclude"] = True
@@ -51,4 +51,10 @@ def on_page_markdown(markdown, page, config, files):
         '当前操作先看 [Wiki 首页](' + posixpath.relpath("index.md", posixpath.dirname(uri) or ".") + ')；'
         '功能边界以模块最新覆盖说明与实际实现为准。\n\n'
     )
+    if config["theme"].get("language") == "en":
+        notice = (
+            '!!! note "Original technical record"\n'
+            '    This module or dated verification record is kept in its original language. '
+            'Use the [current English guides](' + posixpath.relpath("index.md", posixpath.dirname(uri) or ".") + ') for the current workflow.\n\n'
+        )
     return notice + markdown

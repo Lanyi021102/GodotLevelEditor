@@ -4,7 +4,7 @@
 
 ## 打开与试玩
 
-1. 在独立编辑窗口选择 **Godot 文件系统 → content/scenes/levels/9_editor_flow_test.tscn**（关卡 9），进入编辑。也可直接打开 `content/scenes/levels/9_editor_flow_test.tscn`。
+1. 在 Godot 原生文件系统中打开 **content/scenes/levels/9_editor_flow_test.tscn**（关卡 9）。也可直接打开 `content/scenes/levels/9_editor_flow_test.tscn`。
 2. 使用原生 **运行当前场景（F6）**。WASD 移动，靠近 NPC 或按钮后按 F 交互。
 3. 走到正前方的“测试员”附近，按 F 听取说明，再按 F 结束第一段站桩对话。此时接取事件并自动检查背包与穿着。
 4. 装备确认对话出现后，再按 F 继续。对话期间尝试移动，应保持站定；结束后恢复移动。左上角显示下一项任务“按两次按钮并穿过门”。

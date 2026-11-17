@@ -30,80 +30,88 @@ class Page(HTMLParser):
 def check(site):
     errors, checked, images = [], 0, 0
     parsed = {}
-    sources = [ROOT / "docs/index.md"] + sorted((ROOT / "docs/wiki").rglob("*.md"))
+    sources = [ROOT / "docs/index.md"] + sorted(p for p in (ROOT / "docs/wiki").rglob("*.md") if not p.stem.endswith(".en"))
+    pages_checked = 0
     for source in sources:
         relative = source.relative_to(ROOT / "docs")
-        built = site / relative.with_suffix("") / "index.html"
-        if relative.name == "index.md":
-            built = site / relative.parent / "index.html"
-        if not built.exists():
-            errors.append(f"缺少页面：{built.relative_to(site)}")
-            continue
-        page = parsed.setdefault(built, Page(built))
-        for tag, url in page.links:
-            parts = urlsplit(url)
-            if parts.scheme or parts.netloc:
+        for locale in ("zh", "en"):
+            translated = source if locale == "zh" else source.with_name(source.stem + ".en.md")
+            label = str(relative) if locale == "zh" else "en/" + str(relative)
+            if not translated.exists():
+                errors.append(f"缺少英文页面：{relative}")
                 continue
-            path = unquote(parts.path)
-            if path.startswith("/"):
-                prefix = "/GodotLevelEditor/"
-                path = path[len(prefix):] if path.startswith(prefix) else path.lstrip("/")
-                target = site / path
-            else:
-                target = built.parent / path if path else built
-            target = target.resolve()
-            if target.is_dir():
-                target /= "index.html"
-            try:
-                target.relative_to(site)
-            except ValueError:
-                errors.append(f"{relative}：链接越出站点：{url}")
+            prefix = Path() if locale == "zh" else Path("en")
+            built = site / prefix / relative.with_suffix("") / "index.html"
+            if relative.name == "index.md":
+                built = site / prefix / relative.parent / "index.html"
+            if not built.exists():
+                errors.append(f"缺少页面：{built.relative_to(site)}")
                 continue
-            checked += 1
-            if tag == "img":
-                images += 1
-            if not target.is_file():
-                errors.append(f"{relative}：缺少目标：{url}")
-                continue
-            fragment = unquote(parts.fragment)
-            if fragment and target.suffix == ".html":
-                destination = parsed.setdefault(target, Page(target))
-                if fragment not in destination.ids:
-                    errors.append(f"{relative}：缺少锚点：{url}")
-
-    search_file = site / "search/search_index.json"
+            pages_checked += 1
+            page = parsed.setdefault(built, Page(built))
+            if locale == "en" and 'lang="en"' not in built.read_text(encoding="utf-8"):
+                errors.append(f"英文页面语言标记错误：{label}")
+            for tag, url in page.links:
+                parts = urlsplit(url)
+                if parts.scheme or parts.netloc:
+                    continue
+                path = unquote(parts.path)
+                if path.startswith("/"):
+                    mount = "/GodotLevelEditor/"
+                    path = path[len(mount):] if path.startswith(mount) else path.lstrip("/")
+                    target = site / path
+                else:
+                    target = built.parent / path if path else built
+                target = target.resolve()
+                if target.is_dir():
+                    target /= "index.html"
+                try:
+                    target.relative_to(site)
+                except ValueError:
+                    errors.append(f"{label}：链接越出站点：{url}")
+                    continue
+                checked += 1
+                images += tag == "img"
+                if not target.is_file():
+                    errors.append(f"{label}：缺少目标：{url}")
+                    continue
+                fragment = unquote(parts.fragment)
+                if fragment and target.suffix == ".html":
+                    destination = parsed.setdefault(target, Page(target))
+                    if fragment not in destination.ids:
+                        errors.append(f"{label}：缺少锚点：{url}")
     search_count = 0
-    if not search_file.is_file():
-        errors.append("缺少搜索索引")
-    else:
+    expected = {"wiki/getting-started/", "wiki/features/", "wiki/guides/levels/", "wiki/tutorials/button-door/", "wiki/faq/", "wiki/development/"}
+    for locale in ("zh", "en"):
+        prefix = Path() if locale == "zh" else Path("en")
+        search_file = site / prefix / "search/search_index.json"
+        shared = not search_file.is_file()
+        if shared:
+            search_file = site / "search/search_index.json"
+        if not search_file.is_file():
+            errors.append(f"缺少 {locale} 搜索索引")
+            continue
         index = json.loads(search_file.read_text(encoding="utf-8"))
         documents = index.get("docs", [])
-        search_count = len(documents)
-        locations = {urlsplit(item["location"]).path for item in documents}
+        # static-i18n shares the root index across locales by default.
+        if shared or locale == "zh":
+            documents = [item for item in documents if urlsplit(item["location"]).path.startswith("en/") == (locale == "en")]
+        search_count += len(documents)
+        locations = {urlsplit(item["location"]).path.removeprefix("en/") for item in documents}
         for location in locations:
             if location and not location.startswith("wiki/"):
-                errors.append(f"旧专项资料误入主搜索：{location}")
-        expected = {
-            "wiki/getting-started/", "wiki/features/", "wiki/guides/levels/",
-            "wiki/tutorials/button-door/", "wiki/faq/", "wiki/development/",
-        }
+                errors.append(f"{locale} 旧专项资料误入主搜索：{location}")
         for location in expected - locations:
-            errors.append(f"搜索未收录当前页面：{location}")
+            errors.append(f"{locale} 搜索未收录：{location}")
         text = " ".join(item.get("title", "") + item.get("text", "") for item in documents)
-        text = text.replace("\u200b", "").replace(" ", "")
-        for keyword in ["按钮", "出生点", "任务", "另存为"]:
+        text = text.replace("\u200b", "").replace(" ", "").lower()
+        keywords = ["按钮", "出生点", "任务", "另存为"] if locale == "zh" else ["button", "spawn", "task", "whitebox"]
+        for keyword in keywords:
             if keyword not in text:
-                errors.append(f"搜索索引缺少中文关键词：{keyword}")
+                errors.append(f"{locale} 搜索缺少关键词：{keyword}")
         if not index.get("config", {}).get("lang"):
-            errors.append("搜索索引未配置语言")
-    return {
-        "ok": not errors,
-        "wiki_pages": len(sources),
-        "checked_local_links": checked,
-        "image_references": images,
-        "search_records": search_count,
-        "errors": errors,
-    }
+            errors.append(f"{locale} 搜索索引未配置语言")
+    return {"ok": not errors, "languages": ["zh", "en"], "wiki_pages": pages_checked, "checked_local_links": checked, "image_references": images, "search_records": search_count, "errors": errors}
 
 
 def main():

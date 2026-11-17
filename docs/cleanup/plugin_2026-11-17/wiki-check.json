@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "languages": [
+    "zh",
+    "en"
+  ],
+  "wiki_pages": 42,
+  "checked_local_links": 2584,
+  "image_references": 100,
+  "search_records": 272,
+  "errors": []
+}

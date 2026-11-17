@@ -1,0 +1,79 @@
+[
+  {
+    "file": "01_whitebox_editor.png",
+    "width": 2940,
+    "height": 1846,
+    "bytes": 1526247,
+    "sha256": "8fe808ca3edb22f7deee811d35e8120591e7d4e9980886ae8cce3414236c4229"
+  },
+  {
+    "file": "02_quick_add_wheel.png",
+    "width": 2940,
+    "height": 1846,
+    "bytes": 1295871,
+    "sha256": "5bbcfae3802a44c6a54c61511388582df7e796dcd6389e1de5af69ae0fd2013b"
+  },
+  {
+    "file": "03_mechanism_graph.png",
+    "width": 2720,
+    "height": 1782,
+    "bytes": 302730,
+    "sha256": "08cf8479da1352f6719ca604f62eb7d26335bafe58f9f393feeca013b4498fe0"
+  },
+  {
+    "file": "04_npc_library.png",
+    "width": 2720,
+    "height": 1782,
+    "bytes": 478614,
+    "sha256": "98ee7bbfc2fa9a1d3aa6cb3505caced66c0447829b7630854463e09fc5ada395"
+  },
+  {
+    "file": "05_task_graph.png",
+    "width": 2720,
+    "height": 1782,
+    "bytes": 145742,
+    "sha256": "02f7e1ef7a6bef8af4eeb0ab1fd7c4106606b9c42b07ce4629ef6660bacbd3a3"
+  },
+  {
+    "file": "06_sky_editor.png",
+    "width": 2720,
+    "height": 1782,
+    "bytes": 279519,
+    "sha256": "fd04d2d3c5a6cd5134ca0d2ba1c981bae7d4606df37c58ec7b5851bdd5aeafef"
+  },
+  {
+    "file": "07_whitebox_play_landscape.png",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 707720,
+    "sha256": "89c615b7aceabb67507fe85bac0dc824eea077c86b858803e63b932541a17df9"
+  },
+  {
+    "file": "08_whitebox_play_square.png",
+    "width": 1440,
+    "height": 1440,
+    "bytes": 887466,
+    "sha256": "4c05a53d49e1fd5358df66b91da97305f653da70d09532d6ce4e12412b9ccf56"
+  },
+  {
+    "file": "09_player_play_portrait.png",
+    "width": 1080,
+    "height": 1350,
+    "bytes": 988484,
+    "sha256": "2a5b0fd9284e8c21da8d66a99a16fc8239c779599c3aefb6fc0e1fd603bfc924"
+  },
+  {
+    "file": "10_player_play_vertical.png",
+    "width": 1080,
+    "height": 1920,
+    "bytes": 1380196,
+    "sha256": "a4f5977113c123b542ae78e15923f8a37c2996f5b6922e5bfac15ff83cce7b12"
+  },
+  {
+    "file": "11_whitebox_play_portrait.png",
+    "width": 1080,
+    "height": 1440,
+    "bytes": 587152,
+    "sha256": "2e0cc0794a34f61d78594b21eb29eb77f8098f5ccfb9085623210a9b9f09d7bc"
+  }
+]

@@ -1,6 +1,6 @@
 # 预览与发布
 
-Wiki 使用 MkDocs 和 Material 主题。所有正文保存在项目中，运行游戏不需要安装这套文档依赖。
+Wiki 使用 MkDocs、Material 主题与 static-i18n 双语路由。所有正文保存在项目中，运行游戏不需要安装这套文档依赖。
 
 ## 本地打开
 
@@ -24,17 +24,13 @@ python3 tools/wiki/wiki.py build
 python3 tools/wiki/wiki.py check
 ```
 
-`build` 生成 `site/`；`check` 会先重新构建，再检查当前 Wiki 的页面链接、锚点、图片资源和中文搜索索引。生成网站应通过 HTTP 服务访问，直接双击 HTML 不等同于完整预览。
+`build` 生成 `site/`；`check` 会先重新构建，再检查当前 Wiki 的页面链接、锚点、图片资源和中英文搜索索引。生成网站应通过 HTTP 服务访问，直接双击 HTML 不等同于完整预览。
 
 `docs/.gdignore` 让 Godot 跳过文档资源导入；构建钩子也会在输出目录生成 `.gdignore`，避免网站中的图片副本再次触发导入。保留这些标记；它们不影响 Wiki 图片、截图写入和网站构建。文档图片不要作为游戏场景的 `load/preload` 依赖，实际游戏资源应放在 `addons/godot_level_editor/assets/` 或 `content/resources/`。
 
 ## GitHub Pages 发布
 
-V1 首次交付使用独立 `gh-pages` 分支存放生成网站，Pages 来源对应该分支根目录。它与工程 `main` 的源码、用户场景及未提交改动分开。
-
-当前 Wiki 的可编辑源文件在工程工作区中。后续更新可以继续构建并发布静态产物；希望实现推送源码后自动更新时，使用下面的 Actions 配置。
-
-### 从 main 自动更新
+当前 Pages 来源为 **GitHub Actions**，由 `main` 中的 Markdown 自动构建。早期 `gh-pages` 分支为旧站点产物，当前不再作为发布来源。
 
 项目提供 `.github/workflows/wiki.yml`：
 
@@ -42,9 +38,9 @@ V1 首次交付使用独立 `gh-pages` 分支存放生成网站，Pages 来源�
 - 推送到 `main` 的相关文档改动通过检查后，上传并发布 Pages 网站。
 - 也可在 GitHub Actions 中手动运行 **Wiki** 工作流。
 
-启用自动更新时，将仓库 **Settings → Pages → Build and deployment → Source** 改为 **GitHub Actions**。提交并推送本版的文档、配置和工作流后，发布任务才会运行。本地构建成功不代表线上网站已经更新。
+仓库 **Settings → Pages → Build and deployment → Source** 已设置为 **GitHub Actions**。提交并推送相关文档后，发布任务会运行。本地构建成功不代表线上网站已经更新。
 
-配置的目标网址为 `https://lanyi021102.github.io/GodotLevelEditor/`。只有 GitHub 的部署结果成功并返回网址后，才可将它作为已发布链接分享。
+中文网址为 `https://lanyi021102.github.io/GodotLevelEditor/`，英文在其 `/en/` 下；页面顶部可切换语言。只有 GitHub 的部署结果成功并返回网址后，才可将它作为已发布链接分享。
 
 仓库换名、托管地址变更时，更新 `mkdocs.yml` 的 `site_url`、`repo_url`，以及 `tools/wiki/hooks.py` 的源码链接基址。
 
