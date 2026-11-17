@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3 uid="uid://blq250l522v5p"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/animal_pug.scn" id="1_m5063"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd" id="2_qibtq"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/enemy_definition.gd" id="3_cyvbj"]
+
+[sub_resource type="Resource" id="Resource_1qki1"]
+script = ExtResource("2_qibtq")
+model = ExtResource("1_m5063")
+skeleton_path = NodePath("Armature/Skeleton3D")
+motions = {
+"idle": {
+"clip": "Armature|Idle",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_m5063")
+}
+}
+height = 0.45
+pose_mode = "rest"
+
+[resource]
+script = ExtResource("3_cyvbj")
+display_name = "巴哥犬"
+states = Array[Dictionary]([{
+"behavior": "idle",
+"duration": 0.0,
+"id": "patrol",
+"label": "原地待机",
+"scan_degrees": 0.0,
+"speed": 0.0
+}])
+parameters = {
+"alert_decay": 40.0,
+"alert_rate": 100.0,
+"expose_penalty": 25.0,
+"help_radius": 12.0,
+"noise_alert": 25.0,
+"waypoint_wait": 1.5
+}
+layout = {
+"nodes": {
+"patrol": Vector2(100, 100)
+},
+"scroll": Vector2(0, 0),
+"zoom": 1.0
+}
+appearance = SubResource("Resource_1qki1")
+metadata/npc_sample_v1 = {
+"animation_count": 2,
+"available_animations": ["Armature|Idle", "Armature|Jump"],
+"bone_count": 35,
+"bounds": {
+"x": 0.24611962,
+"y": 0.45,
+"z": 0.59385926
+},
+"category": "animal",
+"collision": "box",
+"definition": "res://addons/godot_level_editor/resources/enemies/samples_v1/animal_pug.tres",
+"height": 0.45,
+"id": "animal_pug",
+"license": "CC0-1.0",
+"motion_note": "Original FBX contains only Idle and Jump. No Walk or Run clip is supplied; leave walk/run unbound or retain rest pose when moving.",
+"motions": {
+"idle": "Armature|Idle"
+},
+"preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/animal_pug.png",
+"radius": 0.135,
+"scene": "res://addons/godot_level_editor/scenes/npcs/v1_animal_pug.tscn",
+"source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Pug.fbx",
+"source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+"title": "巴哥犬",
+"walk_speed": 1.2
+}

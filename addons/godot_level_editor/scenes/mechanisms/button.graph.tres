@@ -1,0 +1,21 @@
+[gd_resource type="Resource" format=3 uid="uid://dcocey1ce513j"]
+
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd" id="1_djfpu"]
+
+[resource]
+script = ExtResource("1_djfpu")
+definition_id = "wb_v1_button"
+display_name = "按钮"
+nodes = Array[Dictionary]([{
+"id": "button_component",
+"kind": "button",
+"label": "按钮组件",
+"params": {
+"object_id": "button"
+}
+}])
+positions = {
+"button_component": Vector2(40, 60)
+}
+view_offset = Vector2(-204.30618, -115.14864)
+view_zoom = 0.82644624

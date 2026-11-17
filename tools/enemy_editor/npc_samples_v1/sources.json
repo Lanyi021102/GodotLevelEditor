@@ -1,0 +1,293 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "human_ultimate",
+      "title": "Ultimate Animated Character Pack",
+      "author": "Quaternius",
+      "license": "CC0-1.0",
+      "url": "https://opengameart.org/content/animated-characters-pack"
+    },
+    {
+      "id": "human_base",
+      "title": "Universal Base Characters [Standard]",
+      "author": "Quaternius",
+      "license": "CC0-1.0 (bundled original License_Standard.txt)",
+      "url": "https://quaternius.itch.io/universal-base-characters"
+    },
+    {
+      "id": "humanoid_animations",
+      "title": "Universal Animation Library [Standard]",
+      "author": "Quaternius",
+      "license": "CC0-1.0 (existing archived license)",
+      "url": "https://quaternius.itch.io/universal-animation-library",
+      "clips": 43
+    },
+    {
+      "id": "farm_animals_2018",
+      "title": "LowPoly Animated Farm Animal Pack",
+      "author": "Quaternius",
+      "release_date": "2018-06-08",
+      "source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+      "download_url": "https://opengameart.org/sites/default/files/Farm%20Animals%20by%20%40Quaternius.zip",
+      "archive_file": "farm_animals.zip",
+      "license": "CC0-1.0",
+      "license_evidence": "animals/LICENSE.txt",
+      "archive_sha256": "9ff42b7e2445eaf259e4734c08172637db92e4b59a6145909ac56d946152c39b",
+      "archive_bytes": 6965696
+    },
+    {
+      "id": "cute_monsters_2020",
+      "title": "Textured Cute Monster Pack",
+      "author": "Quaternius",
+      "release_date": "2021-06-18",
+      "source_url": "https://opengameart.org/content/textured-cute-monster-pack",
+      "download_url": "https://opengameart.org/sites/default/files/cute_animated_monsters_-_aug_2020.zip",
+      "archive_file": "cute_monsters.zip",
+      "license": "CC0-1.0",
+      "license_evidence": "monsters/LICENSE.txt",
+      "archive_sha256": "844824c04936a9af954ee82011f98ad8c14ba291a20a0dd0b83c172764ba0eb2",
+      "archive_bytes": 10181866
+    }
+  ],
+  "samples": [
+    {
+      "id": "human_small_male",
+      "title": "小体型·哥布林男",
+      "category": "humanoid",
+      "size_category": "small",
+      "gender": "male",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/ultimate_animated_characters/Goblin_Male.fbx",
+      "source_url": "https://opengameart.org/content/animated-characters-pack",
+      "license": "CC0-1.0",
+      "source_sha256": "6a4ff766878e7a861afcb22d9287fdbf58269cadfd095d930048f9c123cb7ba4",
+      "height": 1.2,
+      "radius": 0.2,
+      "walk_speed": 1.1,
+      "motions": {
+        "idle": "CharacterArmature|Idle",
+        "walk": "CharacterArmature|Walk"
+      },
+      "preparation_note": "Prepared sample Idle fills absent right-arm rotation channels with a neutral down pose; original FBX retained."
+    },
+    {
+      "id": "human_small_female",
+      "title": "小体型·哥布林女",
+      "category": "humanoid",
+      "size_category": "small",
+      "gender": "female",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/ultimate_animated_characters/Goblin_Female.fbx",
+      "source_url": "https://opengameart.org/content/animated-characters-pack",
+      "license": "CC0-1.0",
+      "source_sha256": "31bd1a76e339ce38ad07c8f4b9bcf6841c560aaa2f57c3b9b40272019e4a883b",
+      "height": 1.2,
+      "radius": 0.2,
+      "walk_speed": 1.1,
+      "motions": {
+        "idle": "CharacterArmature|Idle",
+        "walk": "CharacterArmature|Walk"
+      },
+      "preparation_note": "Prepared sample Idle fills absent right-arm rotation channels with a neutral down pose; original FBX retained."
+    },
+    {
+      "id": "human_medium_male",
+      "title": "中体型·休闲居民男",
+      "category": "humanoid",
+      "size_category": "medium",
+      "gender": "male",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/ultimate_animated_characters/Casual_Male.fbx",
+      "source_url": "https://opengameart.org/content/animated-characters-pack",
+      "license": "CC0-1.0",
+      "source_sha256": "d3c2ada76aede1be3b37f084de952fc8686668a5627c03fa854b45070f583997",
+      "height": 1.75,
+      "radius": 0.28,
+      "walk_speed": 1.4,
+      "motions": {
+        "idle": "CharacterArmature|Idle",
+        "walk": "CharacterArmature|Walk"
+      },
+      "preparation_note": "Prepared sample Idle fills absent right-arm rotation channels with a neutral down pose; original FBX retained."
+    },
+    {
+      "id": "human_medium_female",
+      "title": "中体型·休闲居民女",
+      "category": "humanoid",
+      "size_category": "medium",
+      "gender": "female",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/ultimate_animated_characters/Casual_Female.fbx",
+      "source_url": "https://opengameart.org/content/animated-characters-pack",
+      "license": "CC0-1.0",
+      "source_sha256": "abde1b986cf3d5178e1de21efee3536b27984651b42d0e931c837615b3fcfd7a",
+      "height": 1.65,
+      "radius": 0.28,
+      "walk_speed": 1.4,
+      "motions": {
+        "idle": "CharacterArmature|Idle",
+        "walk": "CharacterArmature|Walk"
+      },
+      "preparation_note": "Prepared sample Idle fills absent right-arm rotation channels with a neutral down pose; original FBX retained."
+    },
+    {
+      "id": "human_large_male",
+      "title": "大体型·健壮人形男",
+      "category": "humanoid",
+      "size_category": "large",
+      "gender": "male",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/universal_base_characters/Superhero_Male_FullBody.gltf",
+      "source_url": "https://quaternius.itch.io/universal-base-characters",
+      "license": "CC0-1.0",
+      "source_sha256": "e7fcea214ecf8855afbf910b50de6f9c7d1decfb71ca28bad8a4481452dafeb4",
+      "height": 2.05,
+      "radius": 0.34,
+      "walk_speed": 1.4,
+      "motions": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Jog_Fwd"
+      },
+      "animation_source": "res://addons/godot_level_editor/assets/characters/quaternius_base/UAL1_Standard.glb"
+    },
+    {
+      "id": "human_large_female",
+      "title": "大体型·健壮人形女",
+      "category": "humanoid",
+      "size_category": "large",
+      "gender": "female",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/universal_base_characters/Superhero_Female_FullBody.gltf",
+      "source_url": "https://quaternius.itch.io/universal-base-characters",
+      "license": "CC0-1.0",
+      "source_sha256": "adedf28000a0716f689b009a70314506fc62f827498f77ba852acb5610f3f3f4",
+      "height": 1.95,
+      "radius": 0.34,
+      "walk_speed": 1.4,
+      "motions": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Jog_Fwd"
+      },
+      "animation_source": "res://addons/godot_level_editor/assets/characters/quaternius_base/UAL1_Standard.glb"
+    },
+    {
+      "id": "animal_cow",
+      "title": "奶牛",
+      "category": "animal",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Cow.fbx",
+      "source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+      "license": "CC0-1.0",
+      "height": 1.55,
+      "radius": 0.3,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "Armature|Idle",
+        "walk": "Armature|Walk",
+        "run": "Armature|Run"
+      },
+      "motion_note": ""
+    },
+    {
+      "id": "animal_horse",
+      "title": "马",
+      "category": "animal",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Horse.fbx",
+      "source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+      "license": "CC0-1.0",
+      "height": 1.85,
+      "radius": 0.3,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "Armature|Idle",
+        "walk": "Armature|Walk",
+        "run": "Armature|Run"
+      },
+      "motion_note": ""
+    },
+    {
+      "id": "animal_pug",
+      "title": "巴哥犬",
+      "category": "animal",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Pug.fbx",
+      "source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+      "license": "CC0-1.0",
+      "height": 0.45,
+      "radius": 0.135,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "Armature|Idle"
+      },
+      "motion_note": "Original FBX contains only Idle and Jump. No Walk or Run clip is supplied; leave walk/run unbound or retain rest pose when moving."
+    },
+    {
+      "id": "animal_sheep",
+      "title": "绵羊",
+      "category": "animal",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Sheep.fbx",
+      "source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+      "license": "CC0-1.0",
+      "height": 0.9,
+      "radius": 0.27,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "Armature|Idle"
+      },
+      "motion_note": "Original FBX contains only Idle and Jump. No Walk or Run clip is supplied; leave walk/run unbound or retain rest pose when moving."
+    },
+    {
+      "id": "monster_yeti",
+      "title": "雪怪",
+      "category": "monster",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/FBX/Yeti.fbx",
+      "source_url": "https://opengameart.org/content/textured-cute-monster-pack",
+      "license": "CC0-1.0",
+      "height": 1.6,
+      "radius": 0.3,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "MonsterArmature|Idle",
+        "walk": "MonsterArmature|Walk"
+      },
+      "motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait.",
+      "texture": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/Textures/Yeti_Texture.png"
+    },
+    {
+      "id": "monster_cactus",
+      "title": "仙人掌怪",
+      "category": "monster",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/FBX/Cactus.fbx",
+      "source_url": "https://opengameart.org/content/textured-cute-monster-pack",
+      "license": "CC0-1.0",
+      "height": 1.5,
+      "radius": 0.3,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "MonsterArmature|Idle",
+        "walk": "MonsterArmature|Walk"
+      },
+      "motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait.",
+      "texture": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/Textures/Cactus_Texture.png"
+    },
+    {
+      "id": "monster_cyclops",
+      "title": "独眼怪",
+      "category": "monster",
+      "source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/FBX/Cyclops.fbx",
+      "source_url": "https://opengameart.org/content/textured-cute-monster-pack",
+      "license": "CC0-1.0",
+      "height": 1.5,
+      "radius": 0.3,
+      "walk_speed": 1.2,
+      "collision": "box",
+      "motions": {
+        "idle": "MonsterArmature|Idle",
+        "walk": "MonsterArmature|Walk"
+      },
+      "motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait.",
+      "texture": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/Textures/Cyclops_Texture.png"
+    }
+  ]
+}

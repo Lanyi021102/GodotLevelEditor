@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_gkcra"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/animal_cow.tres" id="2_x3awr"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_ejsss"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_irisp"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_37uaw"]
+
+[sub_resource type="Resource" id="Resource_lan7e"]
+script = ExtResource("3_ejsss")
+model_id = "default"
+behavior_definition = ExtResource("2_x3awr")
+body_height = 1.55
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ybcag"]
+size = Vector3(0.44027784, 1.3175, 1.9332929)
+
+[node name="奶牛" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_gkcra")
+enemy_definition = ExtResource("2_x3awr")
+metadata/godot_level_editor_entity = SubResource("Resource_lan7e")
+metadata/npc_sample_v1 = "animal_cow"
+metadata/editor_display_name = "奶牛"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65875, 0)
+shape = SubResource("BoxShape3D_ybcag")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_irisp")
+npc_definition = ExtResource("2_x3awr")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_37uaw")

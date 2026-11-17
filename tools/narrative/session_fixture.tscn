@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://d4hxcrxj430cn"]
 
-[ext_resource type="Script" uid="uid://dmubuw6lmemjj" path="res://scripts/main.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://boculk7afqsnh" path="res://scenes/levels/continuous_world.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/humanoid_player.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://b7wbepifdx4fv" path="res://scenes/hud.tscn" id="4"]
-[ext_resource type="Script" uid="uid://b1ucc511b3u4a" path="res://scripts/camera/orbit_camera.gd" id="5"]
-[ext_resource type="Script" uid="uid://6lwk8boqdoyq" path="res://addons/godot_level_editor/runtime/actor_agent.gd" id="6"]
-[ext_resource type="PackedScene" path="res://scenes/narrative/reception.tscn" id="7_narrative"]
+[ext_resource type="Script" uid="uid://dmubuw6lmemjj" path="res://addons/godot_level_editor/scripts/main.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://boculk7afqsnh" path="res://content/scenes/levels/continuous_world.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/humanoid_player.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b7wbepifdx4fv" path="res://addons/godot_level_editor/scenes/hud.tscn" id="4"]
+[ext_resource type="Script" uid="uid://b1ucc511b3u4a" path="res://addons/godot_level_editor/scripts/camera/orbit_camera.gd" id="5"]
+[ext_resource type="Script" uid="uid://6lwk8boqdoyq" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/actor_agent.gd" id="6"]
+[ext_resource type="PackedScene" path="res://content/scenes/narrative/reception.tscn" id="7_narrative"]
 
 [node name="GodotLevelEditor" type="Node3D" unique_id=1867796458]
 script = ExtResource("1")

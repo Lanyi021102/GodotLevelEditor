@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://b23rjrwfew4y7"]
+
+[ext_resource type="Script" uid="uid://cd4d8g57080oe" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd" id="1_if2px"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/sky_presets/builtin/sunny_v2.tres" id="2_1njbp"]
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd" id="3_f2b0o"]
+[ext_resource type="Script" uid="uid://cj5k63in1sy7k" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_logic_graph.gd" id="4_k0p2e"]
+[ext_resource type="Script" uid="uid://t4nj3ytoa33i" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd" id="5_lp4h1"]
+[ext_resource type="Script" uid="uid://c4qnfrq8rh8d8" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd" id="6_bwawo"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/modules/godot_level_editor/palette_assets/ramp.tscn" id="6_if2px"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn" id="7_nyo23"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/level_editor/rooms/trigger_room.tscn" id="9_k0p2e"]
+[ext_resource type="Script" uid="uid://dgig88tw68isw" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="10_lp4h1"]
+[ext_resource type="Script" uid="uid://b7qjdgwd45pxm" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_binding.gd" id="11_bwawo"]
+
+[sub_resource type="Resource" id="Resource_v4klj"]
+script = ExtResource("3_f2b0o")
+graph_id = "level_8_topology"
+graph_kind = "topology"
+
+[sub_resource type="Resource" id="Resource_lm8bn"]
+script = ExtResource("3_f2b0o")
+graph_id = "level_8_events"
+
+[sub_resource type="Resource" id="Resource_nhdre"]
+script = ExtResource("4_k0p2e")
+graph_id = "level_8_logic"
+nodes = Array[Dictionary]([{
+"id": "n_3abff01d92dde6ec9e3abcab",
+"kind": "room_enter",
+"label": "玩家进入 Room 时",
+"params": {
+"once": false,
+"room": "room_1d5fa06d5b95b57f3fe11513"
+}
+}, {
+"id": "n_12c9b56108581caa390b7a04",
+"kind": "task_accept",
+"label": "接受任务",
+"params": {
+"task": ""
+}
+}])
+positions = {
+"n_12c9b56108581caa390b7a04": Vector2(-380, 540),
+"n_3abff01d92dde6ec9e3abcab": Vector2(-767.3313, 562.68225)
+}
+view_scroll = Vector2(-1245.5348, 568.3336)
+view_zoom = 1.2636179
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_0bb4c"]
+resource_local_to_scene = true
+dof_blur_far_distance = 33.5
+dof_blur_far_transition = 9.0
+dof_blur_near_distance = 23.5
+dof_blur_near_transition = 6.0
+dof_blur_amount = 0.085
+
+[sub_resource type="Resource" id="Resource_nyo23"]
+resource_local_to_scene = true
+script = ExtResource("10_lp4h1")
+kind = "room"
+
+[node name="LaSkdja" type="Node3D" unique_id=1420677289]
+script = ExtResource("1_if2px")
+sky_preset = ExtResource("2_1njbp")
+world_id = "level_8"
+level_id = "8"
+start_room_id = ""
+topology = SubResource("Resource_v4klj")
+events = SubResource("Resource_lm8bn")
+level_logic = SubResource("Resource_nhdre")
+
+[node name="Whitebox" type="Node3D" parent="." unique_id=1546630234]
+metadata/godot_level_editor_content_group = "whitebox"
+
+[node name="LayoutFloor" type="Node3D" parent="Whitebox" unique_id=839364292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+script = ExtResource("5_lp4h1")
+object_id = "layout_floor"
+size = Vector3(20, 3.6000001, 20)
+
+[node name="WhiteboxRamp" parent="Whitebox" unique_id=919471836 instance=ExtResource("6_if2px")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.34999996, -0.19999996)
+mesh_edit = {
+"signature": ["ramp", 6, 0.2, 0.2, 90.0, 0.25],
+"version": 1,
+"vertices": PackedVector3Array(-0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.49999997, -0.5, 0.5, -0.49999997, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.49999997, -0.5, 0.5, -0.49999997, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.49999997, 0.5, 0.5, -0.49999997, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.49999997, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.49999997)
+}
+object_id = "object_e2757221ceaadc5c857c1110"
+size = Vector3(1, 0.7, 5.6)
+tint = Color(0.8753133, 0.0014751112, 0.9827079, 1)
+
+[node name="WhiteboxRamp2" parent="Whitebox" unique_id=1932282191 instance=ExtResource("6_if2px")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.7, 0.34999996, -1.9)
+mesh_edit = {
+"signature": ["ramp", 6, 0.2, 0.2, 90.0, 0.25],
+"version": 1,
+"vertices": PackedVector3Array(-0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.49999997, -0.5, 0.5, -0.49999997, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.49999997, -0.5, 0.5, -0.49999997, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.49999997, 0.5, 0.5, -0.49999997, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.49999997, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.49999997)
+}
+object_id = "object_895988908d077527130250ce"
+size = Vector3(1, 0.7, 5.6)
+tint = Color(0.8753133, 0.0014751112, 0.9827079, 1)
+
+[node name="PlayerSpawn" type="Marker3D" parent="." unique_id=21722002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 3)
+script = ExtResource("6_bwawo")
+object_id = "player_spawn"
+
+[node name="SunlitMiniatureV2" parent="." unique_id=910127898 instance=ExtResource("7_nyo23")]
+process_mode = 3
+process_priority = 10
+runtime_camera_attributes = SubResource("CameraAttributesPractical_0bb4c")
+
+[node name="Rooms" type="Node3D" parent="." unique_id=1194937676]
+metadata/godot_level_editor_content_group = "room"
+
+[node name="Room01" parent="Rooms" unique_id=1604065061 instance=ExtResource("9_k0p2e")]
+transform = Transform3D(2.2, 0, 0, 0, 1.5, 0, 0, 0, 3.5, -4.3, 0, -4.9)
+room_id = "room_1d5fa06d5b95b57f3fe11513"
+metadata/godot_level_editor_entity = SubResource("Resource_nyo23")
+metadata/_edit_group_ = true
+
+[node name="EntityProperties" type="Node3D" parent="Rooms/Room01" unique_id=2057356325]
+process_mode = 3
+script = ExtResource("11_bwawo")

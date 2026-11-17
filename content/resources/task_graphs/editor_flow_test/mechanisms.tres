@@ -1,0 +1,162 @@
+[gd_resource type="Resource" format=3 uid="uid://c53mogfpf2o4h"]
+
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd" id="1_ik47e"]
+
+[resource]
+script = ExtResource("1_ik47e")
+dialogue_xlsx = "res://content/resources/narrative/editor_flow_test.xlsx"
+graph_id = "editor_flow_mechanisms"
+nodes = Array[Dictionary]([{
+"id": "start",
+"kind": "start",
+"params": {}
+}, {
+"id": "objective",
+"kind": "objective_start",
+"params": {
+"key": "door",
+"optional": false,
+"text": "按钮按两次，然后穿过门"
+}
+}, {
+"id": "button",
+"kind": "mechanism_interacted",
+"params": {
+"mechanism": "$world/flow_button::button",
+"once": false,
+"player_only": true
+}
+}, {
+"id": "count",
+"kind": "counter",
+"params": {
+"target": 2
+}
+}, {
+"id": "open",
+"kind": "mechanism_action",
+"params": {
+"action": "open",
+"mechanism": "$world/flow_single_door::door"
+}
+}, {
+"id": "wait",
+"kind": "wait_mechanism_state",
+"params": {
+"mechanism": "$world/flow_single_door::door",
+"scope": "",
+"state": "open",
+"timeout": 10.0
+}
+}, {
+"id": "room",
+"kind": "room_enter",
+"params": {
+"once": true,
+"room": "flow_finish"
+}
+}, {
+"id": "active",
+"kind": "room_active",
+"params": {
+"expected": true,
+"room": "flow_finish"
+}
+}, {
+"id": "branch",
+"kind": "branch",
+"params": {}
+}, {
+"id": "join",
+"kind": "wait_all",
+"params": {}
+}, {
+"id": "goal",
+"kind": "objective_complete",
+"params": {
+"key": "door"
+}
+}, {
+"id": "complete",
+"kind": "task_complete",
+"params": {
+"task": "1004002"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "wait",
+"from_port": "then",
+"id": "edge_48d6b6b7ac814bd419251323",
+"to": "join",
+"to_port": "a"
+}, {
+"from": "room",
+"from_port": "then",
+"id": "edge_2f5939c623d0507edc7014f6",
+"to": "branch",
+"to_port": "run"
+}, {
+"from": "active",
+"from_port": "value",
+"id": "edge_a258ceb567f7e2e7737b5ae2",
+"to": "branch",
+"to_port": "condition"
+}, {
+"from": "branch",
+"from_port": "yes",
+"id": "edge_6286f3f9012e0deb68bb4e72",
+"to": "join",
+"to_port": "b"
+}, {
+"from": "join",
+"from_port": "then",
+"id": "edge_6a2b879f58a9dd1b4226f9c9",
+"to": "goal",
+"to_port": "run"
+}, {
+"from": "goal",
+"from_port": "then",
+"id": "edge_6ef602cba95299e1978d4e08",
+"to": "complete",
+"to_port": "run"
+}, {
+"from": "start",
+"from_port": "then",
+"id": "edge_cd7a2f75bffe6fe80cb31e6d",
+"to": "objective",
+"to_port": "run"
+}, {
+"from": "button",
+"from_port": "then",
+"id": "edge_97b2136e80162f6acc0ad734",
+"to": "count",
+"to_port": "run"
+}, {
+"from": "count",
+"from_port": "reached",
+"id": "edge_a0530472ceb851e131bfee0a",
+"to": "open",
+"to_port": "run"
+}, {
+"from": "open",
+"from_port": "then",
+"id": "edge_2f212f82a3750230c07d54c7",
+"to": "wait",
+"to_port": "run"
+}])
+positions = {
+"active": Vector2(1380, 430),
+"branch": Vector2(60, 780),
+"button": Vector2(940, 80),
+"complete": Vector2(1380, 780),
+"count": Vector2(1380, 80),
+"goal": Vector2(940, 780),
+"join": Vector2(500, 780),
+"objective": Vector2(500, 80),
+"open": Vector2(60, 430),
+"room": Vector2(940, 430),
+"start": Vector2(60, 80),
+"wait": Vector2(500, 430)
+}
+view_scroll = Vector2(10.22654, -13.0312805)
+view_zoom = 0.83710897

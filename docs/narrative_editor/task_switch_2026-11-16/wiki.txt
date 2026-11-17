@@ -1,0 +1,32 @@
+
+ │  ⚠  Warning from the Material for MkDocs team
+ │
+ │  MkDocs 2.0, the underlying framework of Material for MkDocs,
+ │  will introduce backward-incompatible changes, including:
+ │
+ │  × All plugins will stop working – the plugin system has been removed
+ │  × All theme overrides will break – the theming system has been rewritten
+ │  × No migration path exists – existing projects cannot be upgraded
+ │  × Closed contribution model – community members can't report bugs
+ │  × Currently unlicensed – unsuitable for production use
+ │
+ │  Our full analysis:
+ │
+ │  https://squidfunk.github.io/mkdocs-material/blog/2026/02/18/mkdocs-2.0/
+
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: /Users/lanyi/branch/site
+Building prefix dict from the default dictionary ...
+Loading model from cache /var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/jieba.cache
+Loading model cost 0.455 seconds.
+Prefix dict has been built successfully.
+INFO    -  Doc file 'godot_level_editor_suite/INTERFACES.md' contains a link '../level_editor/INTERFACES.md#新增物件自动分类--2026-11-16', but the doc 'level_editor/INTERFACES.md' does not contain an anchor '#新增物件自动分类--2026-11-16'.
+INFO    -  Documentation built in 1.62 seconds
+{
+  "ok": true,
+  "wiki_pages": 13,
+  "checked_local_links": 681,
+  "image_references": 34,
+  "search_records": 86,
+  "errors": []
+}

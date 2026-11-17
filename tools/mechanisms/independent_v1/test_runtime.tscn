@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://tools/mechanisms/independent_v1/test_runtime.gd" id="1"]
+[node name="IndependentMechanisms" type="Node"]
+script = ExtResource("1")

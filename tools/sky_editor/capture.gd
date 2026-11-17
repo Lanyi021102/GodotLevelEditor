@@ -4,7 +4,7 @@ func wait_frames(count := 20) -> void:
 func _ready() -> void:
 	run.call_deferred()
 func run() -> void:
-	var game: Node = load("res://scenes/main.tscn").instantiate()
+	var game: Node = load("res://content/scenes/main.tscn").instantiate()
 	add_child(game); await wait_frames(30)
 	var world: Node3D = game.get_node("World")
 	var rig: Node3D = game.get_node("CameraRig")
@@ -15,7 +15,7 @@ func run() -> void:
 		var material := StandardMaterial3D.new(); material.albedo_color = Color(0.8, 0.82, 0.85); block.material_override = material; world.add_child(block)
 	DirAccess.make_dir_recursive_absolute("res://docs/sky_editor/validation")
 	for name in ["clear", "overcast", "sunset", "night", "morning"]:
-		world.sky_preset = load("res://resources/sky_presets/builtin/" + name + ".tres")
+		world.sky_preset = load("res://addons/godot_level_editor/resources/sky_presets/builtin/" + name + ".tres")
 		await wait_frames(40); await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png("res://docs/sky_editor/validation/" + name + ".png")
 		print("CAPTURE ", name)

@@ -1,0 +1,87 @@
+{
+	"event_id": "1003",
+	"level_id": "6",
+	"scene": "res://content/scenes/levels/dusk_mountain_house.tscn",
+	"tasks": [
+		{
+			"display_name": "清理山道第一组敌人",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_01.tres",
+			"level_id": "6",
+			"name": "dusk_stage_01",
+			"notes": "黄昏山居；第 1 / 8 步",
+			"order": 0,
+			"task_id": "1003001"
+		},
+		{
+			"display_name": "清理山道第二组敌人",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_02.tres",
+			"level_id": "6",
+			"name": "dusk_stage_02",
+			"notes": "黄昏山居；第 2 / 8 步",
+			"order": 1,
+			"task_id": "1003002"
+		},
+		{
+			"display_name": "查看堵住的院门",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_03.tres",
+			"level_id": "6",
+			"name": "dusk_stage_03",
+			"notes": "黄昏山居；第 3 / 8 步",
+			"order": 2,
+			"task_id": "1003003"
+		},
+		{
+			"display_name": "使用后院升降机入屋",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_04.tres",
+			"level_id": "6",
+			"name": "dusk_stage_04",
+			"notes": "黄昏山居；第 4 / 8 步",
+			"order": 3,
+			"task_id": "1003004"
+		},
+		{
+			"display_name": "按按钮开启一层内门",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_05.tres",
+			"level_id": "6",
+			"name": "dusk_stage_05",
+			"notes": "黄昏山居；第 5 / 8 步",
+			"order": 4,
+			"task_id": "1003005"
+		},
+		{
+			"display_name": "击败一层敌人",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_06.tres",
+			"level_id": "6",
+			"name": "dusk_stage_06",
+			"notes": "黄昏山居；第 6 / 8 步",
+			"order": 5,
+			"task_id": "1003006"
+		},
+		{
+			"display_name": "前往二层开启宝箱",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_07.tres",
+			"level_id": "6",
+			"name": "dusk_stage_07",
+			"notes": "黄昏山居；第 7 / 8 步",
+			"order": 6,
+			"task_id": "1003007"
+		},
+		{
+			"display_name": "携钥匙返回正门开门",
+			"event_id": "1003",
+			"graph_path": "res://content/resources/levels/dusk_mountain/stage_08.tres",
+			"level_id": "6",
+			"name": "dusk_stage_08",
+			"notes": "黄昏山居；第 8 / 8 步",
+			"order": 7,
+			"task_id": "1003008"
+		}
+	]
+}

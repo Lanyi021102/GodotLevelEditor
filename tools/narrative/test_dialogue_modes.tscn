@@ -1,0 +1,4 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://tools/narrative/test_dialogue_modes.gd" id="1"]
+[node name="DialogueModesTest" type="Node"]
+script = ExtResource("1")

@@ -1,0 +1,163 @@
+[gd_resource type="Resource" format=3 uid="uid://cge1b710cmfhf"]
+
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd" id="1_kd7g1"]
+
+[resource]
+script = ExtResource("1_kd7g1")
+dialogue_xlsx = "res://content/resources/narrative/editor_flow_test.xlsx"
+graph_id = "editor_flow_equipment"
+nodes = Array[Dictionary]([{
+"id": "start",
+"kind": "start",
+"params": {}
+}, {
+"id": "objective",
+"kind": "objective_start",
+"params": {
+"key": "equipment",
+"optional": false,
+"text": "检查背包与穿着"
+}
+}, {
+"id": "item",
+"kind": "change_item",
+"params": {
+"actor": "",
+"amount": 1,
+"key": "flow_uniform"
+}
+}, {
+"id": "equip",
+"kind": "equip_item",
+"params": {
+"actor": "",
+"key": "flow_uniform",
+"slot": "body"
+}
+}, {
+"id": "has_item",
+"kind": "has_item",
+"params": {
+"actor": "",
+"amount": 1,
+"key": "flow_uniform"
+}
+}, {
+"id": "has_equipped",
+"kind": "has_equipped",
+"params": {
+"actor": "",
+"key": "flow_uniform",
+"slot": "body"
+}
+}, {
+"id": "all",
+"kind": "all",
+"params": {}
+}, {
+"id": "branch",
+"kind": "branch",
+"params": {}
+}, {
+"id": "goal",
+"kind": "objective_complete",
+"params": {
+"key": "equipment"
+}
+}, {
+"id": "dialog",
+"kind": "show_dialog",
+"params": {
+"dialog_id": "flow_equipped"
+}
+}, {
+"id": "read",
+"kind": "dialog_completed",
+"params": {
+"dialog_id": "flow_equipped",
+"task": "1004001"
+}
+}, {
+"id": "complete",
+"kind": "task_complete",
+"params": {
+"task": "1004001"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "start",
+"from_port": "then",
+"id": "edge_07713a6c2093faab3a45cbfe",
+"to": "objective",
+"to_port": "run"
+}, {
+"from": "objective",
+"from_port": "then",
+"id": "edge_2642a09819b11f0ebc7be7b1",
+"to": "item",
+"to_port": "run"
+}, {
+"from": "item",
+"from_port": "then",
+"id": "edge_8cff20314562de276bb99428",
+"to": "equip",
+"to_port": "run"
+}, {
+"from": "equip",
+"from_port": "then",
+"id": "edge_eb4a0f6008b31f7b4b7a0b20",
+"to": "branch",
+"to_port": "run"
+}, {
+"from": "has_item",
+"from_port": "value",
+"id": "edge_3c324ec612dc5441d4cf5da1",
+"to": "all",
+"to_port": "a"
+}, {
+"from": "has_equipped",
+"from_port": "value",
+"id": "edge_97c3d667cca0a003b89661a7",
+"to": "all",
+"to_port": "b"
+}, {
+"from": "all",
+"from_port": "value",
+"id": "edge_b8270b158bdf95372a74797d",
+"to": "branch",
+"to_port": "condition"
+}, {
+"from": "branch",
+"from_port": "yes",
+"id": "edge_fa2d8d39e1df225766e81bf9",
+"to": "goal",
+"to_port": "run"
+}, {
+"from": "goal",
+"from_port": "then",
+"id": "edge_d6d1c95a5719264582af9d6f",
+"to": "dialog",
+"to_port": "run"
+}, {
+"from": "read",
+"from_port": "then",
+"id": "edge_b66cbb24c61ae18ec3976150",
+"to": "complete",
+"to_port": "run"
+}])
+positions = {
+"all": Vector2(940, 430),
+"branch": Vector2(1380, 430),
+"complete": Vector2(1380, 780),
+"dialog": Vector2(500, 780),
+"equip": Vector2(1380, 80),
+"goal": Vector2(60, 780),
+"has_equipped": Vector2(500, 430),
+"has_item": Vector2(60, 430),
+"item": Vector2(940, 80),
+"objective": Vector2(500, 80),
+"read": Vector2(940, 780),
+"start": Vector2(60, 80)
+}
+view_scroll = Vector2(15.494637, -6.0071487)
+view_zoom = 0.9249106

@@ -1,0 +1,37 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] acceptance fixture saves a valid task graph
+[PASS] acceptance fixture saves a valid task graph
+[PASS] acceptance fixture saves an isolated task catalog
+[PASS] permanent graph validates with task and NPC references but no task activation scope
+[PASS] only level-resident NPCs are available for permanent logic
+[PASS] pasted task-only NPC references are rejected during validation
+[PASS] deleted permanent NPC references are rejected
+[PASS] task-scoped conversation parameters cannot silently disable permanent triggers
+[PASS] permanent mechanism nodes validate actual scene component references
+[PASS] acceptance cannot silently skip earlier tasks in an event
+[PASS] task completion actions cannot leak into the permanent node palette or saved graph
+[PASS] F6-compatible world automatically attaches one permanent-logic service
+[PASS] task graph remains inactive until a task is accepted, including catalog auto-start entries
+[PASS] level start logic executes without accepting any task
+[PASS] permanent NPC conversation is enabled before task acceptance
+[PASS] real region entry executes permanent level logic before acceptance
+[PASS] future tasks cannot consume events sent before acceptance
+[PASS] real player F-interaction can trigger the permanent NPC
+[PASS] permanent NPC graph opens the same dialogue player used by task graphs
+[PASS] dialogue completion reaches Accept Task and starts the selected first task
+[PASS] acceptance activates only the first ordered task initially
+[PASS] repeated acceptance uses the failure output without restarting the active task
+[PASS] permanent variables and accepted-task progress restore together without replaying start
+[PASS] foreign level graph state is rejected before changing task progress
+[PASS] accepting the first task automatically continues to the next ordered task
+[PASS] the accepted event finishes after its final task
+[PASS] permanent region and NPC logic continue after all tasks complete
+[PASS] shared asynchronous wait nodes execute in permanent level logic
+[PASS] completed or missing tasks cannot be accepted again
+[PASS] world save bridge preserves permanent logic and accepted tasks
+[PASS] world bridge rejects foreign permanent graph state without changing either graph
+[PASS] direct F6 play runs permanent logic alongside the standard player session
+[PASS] standalone level creates one task service and one player
+[PASS] runtime logic services never rewrite the authored level
+PERMANENT LEVEL LOGIC: 34 checks, 0 failures

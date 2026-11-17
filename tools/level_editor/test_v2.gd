@@ -1,9 +1,9 @@
 extends Node
-const F := preload("res://addons/godot_level_editor/scene_factory.gd")
-const G := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const SHAPES := preload("res://addons/godot_level_editor/runtime/whitebox_shapes.gd")
-const RUNNER := preload("res://addons/godot_level_editor/runtime/event_runner.gd")
-const DEMO := preload("res://scenes/levels/logic_playground.tscn")
+const F := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const G := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const SHAPES := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_shapes.gd")
+const RUNNER := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/event_runner.gd")
+const DEMO := preload("res://content/scenes/levels/logic_playground.tscn")
 var passed := 0
 var failed := 0
 var directory := "/tmp/godot_level_editor_level_v2_" + str(OS.get_process_id())

@@ -1,17 +1,19 @@
 # 敌人状态机编辑器
 
+2026-11-16：已加入13个带骨骼的示例NPC，涵盖小／中／大体型男女、动物与怪物，并配好各自可用动作。入口、动作限制与另存步骤见 [NPC素材与动画](../wiki/guides/npc-samples.md)。
+
 2026-11-15：NPC编辑新增“模型与动画”页，支持导入角色模型、骨骼及可选动画；不选动画时显示 T Pose，特殊骨架保持绑定姿态并提示。保存后可生成关卡仓库的 NPC 场景。步骤与验证见 [模型、骨骼与动画](MODEL_IMPORT.md)。原行为图移到同页的“行为图”标签。
 
 Godot 4.7.1；按 [统一节点工具规范](../tools/BLUEPRINT_TOOLCHAIN.md) 实现。打开 **GodotLevelEditor → NPC → 我的NPC**，单击卡片查看详情，双击或“进入编辑”后进入 **NPC编辑**。新建入口位于目录卡片，保存到 `resources/enemies/`；返回目录保留当前草稿。禁用统一套件时，模块保留原来的独立入口。
 
 ## 开始使用
 
-1. 在“我的NPC”选择现有定义，或点击“新建NPC”保存四状态副本，再进入编辑。现有模板为 `res://resources/enemies/guard_default.tres`。
+1. 在“我的NPC”选择现有定义，或点击“新建NPC”保存四状态副本，再进入编辑。首批示例位于 `res://resources/enemies/samples_v1/`；旧守卫已移出素材目录。
 2. 搜索添加预制行为节点；拖动“条件转换”输出到“状态进入”输入，建立真正的运行规则。转换页编辑事件、条件、优先级及效果。条件全部满足（AND）；多条规则可表达 OR。大优先级先判断；同值按列表顺序，可上移/下移。
-3. 状态页修改显示名称、行为、移动速度、入场计时及到位张望速度；感知页修改警觉积累、衰减、噪音警觉、暴露惩罚、求援范围和路点停留。稳定 ID 不随显示名称变化。
+3. 状态页修改显示名称、行为、移动速度、入场计时及到位张望速度；感知页修改警觉积累、衰减、噪音警觉、求援范围和路点停留。旧能量惩罚字段仅保留数据兼容，不再作为可调功能显示。稳定 ID 不随显示名称变化。
 4. 保存为 `.tres`。在场景树选择守卫，点击“绑定到所选守卫”，再保存 `.tscn`。选择场景守卫会打开对应蓝图；“定位三维守卫”选中关联对象并切到三维视口，可按 F 聚焦。
 5. “创建巡逻路点”把旧坐标转成可移动的 Marker3D；展开守卫的路线节点，在三维视口移动路点。运行时读取这些世界位置。场景已有路线时直接编辑它。
-6. 打开 `res://scenes/enemy_editor/guard_blueprint_sample.tscn`，F6 运行独立样例。WASD 移动目标、N 制造噪音、Z 回溯两秒、Enter 继续。回到“敌人状态机”页，在运行实例列表观察高亮、计时、警觉和最近转换；悬停查看实际触发条件。该样例不写正式进度。
+6. 首次试用可按 [NPC 素材与动画](../wiki/guides/npc-samples.md) 选择带骨骼的示例；旧守卫调试场景仅作为 `tools/enemy_editor/fixtures/` 内部回归夹具，不再作为素材入口。
 
 画布支持平移、缩放、框选、多选、复制粘贴、删除和撤销重做。Ctrl/Cmd+C、V、Z 与 Shift+Z 在画布聚焦时生效。右键空白处打开搜索。节点位置、缩放和平移保存在独立 `layout` 字段，不决定执行顺序，也不改变三维物体位置。
 
@@ -35,7 +37,7 @@ Godot 4.7.1；按 [统一节点工具规范](../tools/BLUEPRINT_TOOLCHAIN.md) �
 
 ```sh
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path /Users/lanyi/branch res://tools/enemy_editor/test_enemy_editor.tscn
-/Applications/Godot.app/Contents/MacOS/Godot --headless --editor --path /Users/lanyi/branch res://scenes/enemy_editor/guard_blueprint_sample.tscn -- --test-enemy-canvas
+/Applications/Godot.app/Contents/MacOS/Godot --headless --editor --path /Users/lanyi/branch res://tools/enemy_editor/fixtures/guard_blueprint_sample.tscn -- --test-enemy-canvas
 /Applications/Godot.app/Contents/MacOS/Godot --headless --editor --path /Users/lanyi/branch --debug-server tcp://127.0.0.1:6017 -- --test-enemy-debugger
 ```
 

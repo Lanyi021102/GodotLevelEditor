@@ -52,9 +52,9 @@
     "native_translation_snap_enabled_at_point_one"
   ],
   "formal_save_written": false,
-  "default_scene": "res://scenes/whitebox_island.tscn",
-  "sample": "res://scenes/levels/continuous_world.tscn",
-  "interactive_sample": "res://scenes/levels/logic_playground.tscn",
+  "default_scene": "res://content/scenes/whitebox_island.tscn",
+  "sample": "res://content/scenes/levels/continuous_world.tscn",
+  "interactive_sample": "res://content/scenes/levels/logic_playground.tscn",
   "editor_capture": "face_push_pull.png",
   "pending_integration": [
     "formal_player_state_inventory_and_death_bridge",

@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-17",
+  "scope": "New level 9 and event 1004. All saved graph edges created by native mouse drags. Existing regressions are programmatic checks, separate from manual UI coverage.",
+  "graphs": [
+    {
+      "path": "scenes/levels/9_editor_flow_test.tscn",
+      "nodes": 4,
+      "edges": 2,
+      "sha256": "52702f33f95939cc9ca27cb214b32ae6bf1ecd9693146e16a9e12e51ccbeb849"
+    },
+    {
+      "path": "resources/task_graphs/editor_flow_test/child.tres",
+      "nodes": 4,
+      "edges": 3,
+      "sha256": "341ec12d20694cbdcfbab4b56d9c6585efe843e302d76dbd3e001e49abb0fdb3"
+    },
+    {
+      "path": "resources/task_graphs/editor_flow_test/equipment.tres",
+      "nodes": 12,
+      "edges": 10,
+      "sha256": "f1f0b2ff8947811dd561d50d867c1602bf30088fee6dd06577466dbabc005f55"
+    },
+    {
+      "path": "resources/task_graphs/editor_flow_test/mechanisms.tres",
+      "nodes": 12,
+      "edges": 10,
+      "sha256": "5d1522db3211842ef31cf9467bb1920ff893f4f7a77f811cef6393750f4d3546"
+    },
+    {
+      "path": "resources/task_graphs/editor_flow_test/parallel.tres",
+      "nodes": 15,
+      "edges": 16,
+      "sha256": "b62fb6b549e7a79df3b318e04ff16a312d7e3cc05c2f067acf83aa35b4669bb8"
+    }
+  ],
+  "total_nodes": 47,
+  "total_edges": 41,
+  "unique_kind_count": 33,
+  "kinds": [
+    "all",
+    "branch",
+    "change_item",
+    "checkpoint_save",
+    "compare",
+    "counter",
+    "delay",
+    "dialog_completed",
+    "equip_item",
+    "get_number",
+    "has_equipped",
+    "has_item",
+    "mechanism_action",
+    "mechanism_interacted",
+    "npc_interact",
+    "number",
+    "objective_complete",
+    "objective_start",
+    "parallel",
+    "room_active",
+    "room_enter",
+    "run_subgraph",
+    "set_actor_state",
+    "set_variable",
+    "show_dialog",
+    "start",
+    "subgraph_end",
+    "task_accept",
+    "task_complete",
+    "task_fail",
+    "timer",
+    "wait_all",
+    "wait_mechanism_state"
+  ],
+  "regressions": [
+    {
+      "log": "dialogue-runtime.log",
+      "summary": "DIALOGUE MODES: 34 checks, 0 failures"
+    },
+    {
+      "log": "doors-runtime.log",
+      "summary": "ROTATING DOORS RUNTIME: 46 checks, 0 failures"
+    },
+    {
+      "log": "mechanisms-runtime.log",
+      "summary": "INDEPENDENT MECHANISMS RUNTIME: 38 checks, 0 failures"
+    },
+    {
+      "log": "npc-runtime.log",
+      "summary": "ENEMY EDITOR: 45 passed / 0 failed"
+    },
+    {
+      "log": "rooms-runtime.log",
+      "summary": "ROOM TRIGGERS: 33 checks, 0 failures"
+    },
+    {
+      "log": "sky-runtime.log",
+      "summary": "SKY_RUNTIME_RESULT checks=32 failures=0"
+    },
+    {
+      "log": "startup.log",
+      "summary": "startup only"
+    },
+    {
+      "log": "suite-runtime.log",
+      "summary": "GODOT_LEVEL_EDITOR SUITE RUNTIME: 49 checks, 0 failures"
+    },
+    {
+      "log": "task-nodes.log",
+      "summary": "TASK NODES: 90 checks, 0 failures"
+    }
+  ],
+  "wiki_check": {
+    "exit_code": 0,
+    "ok": true,
+    "wiki_pages": 19,
+    "checked_local_links": 1262,
+    "image_references": 52,
+    "search_records": 164,
+    "errors": [],
+    "browser_review": "New tutorial text, navigation and graph table rendered successfully."
+  },
+  "additional_assets": [
+    {
+      "path": "resources/narrative/editor_flow_test.xlsx",
+      "sha256": "f1c2058f9bfaae42b94363b3f2000fd4eddcaa2a023ed47a6d07dc625a48156d"
+    },
+    {
+      "path": "配表/events.xlsx",
+      "sha256": "7a9c12ce8877393cd68501700131e955dd906f1d0800705b3a9e8998c8c48bc5"
+    },
+    {
+      "path": "配表/levels.xlsx",
+      "sha256": "dbefd1c353af9c489ce21acce0d10ae7a24a2b1b146c5f6b56902037c4c37347"
+    },
+    {
+      "path": "tools/editor_flow_test/session_recorder.gd",
+      "sha256": "7be903424da4eec9d87b73d763bbc150eda8b26e4eeb467fe890cf34c73e5833"
+    },
+    {
+      "path": "docs/qa/editor_flow_2026-11-17/manual-session.json",
+      "sha256": "3bf50c47cf3278b53988b382f4cdf28ecbf756caa30ac463fff142dc25946096"
+    }
+  ]
+}

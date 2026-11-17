@@ -9,15 +9,15 @@ func run(suite: EditorPlugin, check: Callable, capture_dir: String) -> void:
 	var mechanism: Control = suite.asset_panels["机关"]
 	var npc: Control = suite.asset_panels["敌人"]
 	var editor: Control = suite.modules.enemies.panel
-	var mechanism_path := "res://scenes/mechanisms/lever_plate_door.tscn"
-	var npc_path := "res://resources/enemies/guard_default.tres"
-	var second_npc := "res://resources/enemies/new_enemy.tres"
+	var mechanism_path := "res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn"
+	var npc_path := "res://addons/godot_level_editor/resources/enemies/samples_v1/human_medium_male.tres"
+	var second_npc := "res://addons/godot_level_editor/resources/enemies/samples_v1/human_medium_female.tres"
 	check.call(mechanism.editor_host.is_ancestor_of(suite.modules.mechanisms.panel) and npc.editor_host.is_ancestor_of(editor), "asset catalog wrappers retain the original module editor controls")
 	for title in ["机关", "敌人"]:
 		var workspace: Control = suite.asset_panels[title]
 		suite.navigation_buttons[title].pressed.emit()
 		check.call(workspace.mode_stack.current_tab == 0 and workspace.mode_bar.visible and suite._subnavigation_separator.visible and workspace.mode_buttons[0].button_pressed, title + " primary navigation opens its My Assets catalog and secondary navigation")
-	check.call(mechanism.entries.has(mechanism_path) and not mechanism.entries.has("res://scenes/mechanisms/lever.tscn") and npc.entries.has(npc_path) and npc.entries.has(second_npc), "catalogs list editable mechanism assemblies and NPC definitions without blank component graphs")
+	check.call(mechanism.entries.has(mechanism_path) and not mechanism.entries.has("res://addons/godot_level_editor/scenes/mechanisms/lever.tscn") and npc.entries.has(npc_path) and npc.entries.has(second_npc), "catalogs list editable mechanism assemblies and NPC definitions without blank component graphs")
 	npc.editing_path = ""; npc.set_mode(0); npc.mode_buttons[1].pressed.emit()
 	check.call(npc.mode_stack.current_tab == 0 and npc.mode_buttons[1].disabled, "NPC edit page cannot open before a concrete resource is opened")
 	var before_path: String = editor.file_path
@@ -54,7 +54,7 @@ func run(suite: EditorPlugin, check: Callable, capture_dir: String) -> void:
 	var known_hash: String = panel._known_hash
 	panel.dirty = true; panel._known_hash = "changed-on-disk"
 	suite.navigation_buttons["机关"].pressed.emit()
-	mechanism.select_asset("res://scenes/mechanisms/new_mechanism1.tscn"); mechanism.enter_edit()
+	mechanism.select_asset("res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn"); mechanism.enter_edit()
 	await frames(tree)
 	check.call(mechanism.mode_stack.current_tab == 0 and panel.dirty and panel.assembly.scene_file_path == mechanism_path and not mechanism.status.text.is_empty(), "mechanism save conflicts keep the original draft and block resource switching")
 	panel.dirty = false; panel._known_hash = known_hash
@@ -62,8 +62,8 @@ func run(suite: EditorPlugin, check: Callable, capture_dir: String) -> void:
 	await frames(tree)
 	suite.navigation_buttons["关卡"].pressed.emit()
 	check.call(suite.level_panel.mode_stack.current_tab == 0 and not mechanism.mode_bar.visible and not npc.mode_bar.visible, "level primary navigation also returns to My Levels with only its own secondary bar visible")
-	var new_npc := "res://resources/enemies/asset_navigation_test_%d.tres" % OS.get_process_id()
-	var new_mechanism := "res://scenes/mechanisms/asset_navigation_test_%d.tscn" % OS.get_process_id()
+	var new_npc := "res://content/resources/enemies/asset_navigation_test_%d.tres" % OS.get_process_id()
+	var new_mechanism := "res://addons/godot_level_editor/scenes/mechanisms/asset_navigation_test_%d.tscn" % OS.get_process_id()
 	npc.create_asset(new_npc)
 	await frames(tree)
 	check.call(npc.entries.has(new_npc) and editor.file_path == new_npc and npc.mode_stack.current_tab == 1, "New NPC saves a valid named resource and opens that resource in edit mode")
@@ -73,7 +73,7 @@ func run(suite: EditorPlugin, check: Callable, capture_dir: String) -> void:
 	npc.create_asset(new_npc)
 	check.call(FileAccess.get_sha256(new_npc) == new_hash and npc.status.text.contains("已存在"), "New NPC refuses to overwrite an existing resource")
 	mechanism._opening = true; mechanism.create_asset(new_mechanism); mechanism._opening = false
-	var created := preload("res://addons/godot_level_editor_mechanisms/store.gd").load_pair(new_mechanism)
+	var created := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/store.gd").load_pair(new_mechanism)
 	check.call(created != null and mechanism.entries.has(new_mechanism), "New Mechanism creates a valid scene and paired graph listed in the catalog")
 	if created != null: created.free()
 	editor.request_open(npc_path)
@@ -110,6 +110,6 @@ func run(suite: EditorPlugin, check: Callable, capture_dir: String) -> void:
 			await tree.create_timer(0.3, true).timeout
 			RenderingServer.force_draw(false)
 			suite.window.get_texture().get_image().save_png(capture_dir + "/" + workspace.kind + "编辑.png")
-	EditorInterface.open_scene_from_path("res://scenes/main.tscn")
+	EditorInterface.open_scene_from_path("res://content/scenes/main.tscn")
 	await frames(tree, 20)
 	check.call(mechanism.mode_stack.current_tab == 0 and mechanism.mode_buttons[1].disabled, "switching away from the mechanism scene returns to its catalog instead of showing an empty graph")

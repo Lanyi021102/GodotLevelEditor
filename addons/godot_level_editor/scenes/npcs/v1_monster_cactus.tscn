@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_ek56o"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/monster_cactus.tres" id="2_d428e"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_lhg8a"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_5jj2d"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_4d72x"]
+
+[sub_resource type="Resource" id="Resource_4ojud"]
+script = ExtResource("3_lhg8a")
+model_id = "default"
+behavior_definition = ExtResource("2_d428e")
+body_height = 1.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ybsri"]
+size = Vector3(1.0302217, 1.275, 0.6835875)
+
+[node name="仙人掌怪" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_ek56o")
+enemy_definition = ExtResource("2_d428e")
+metadata/godot_level_editor_entity = SubResource("Resource_4ojud")
+metadata/npc_sample_v1 = "monster_cactus"
+metadata/editor_display_name = "仙人掌怪"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6375, 0)
+shape = SubResource("BoxShape3D_ybsri")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_5jj2d")
+npc_definition = ExtResource("2_d428e")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_4d72x")

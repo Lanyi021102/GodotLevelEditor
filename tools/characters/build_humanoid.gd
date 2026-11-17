@@ -1,6 +1,6 @@
 extends SceneTree
 ## Reproducible CC0 assembly: fit the free male and retarget the free locomotion library.
-const DIR := "res://assets/characters/quaternius_base/"
+const DIR := "res://addons/godot_level_editor/assets/characters/quaternius_base/"
 const CLIPS := {
 	"Idle": "Idle", "Walking_A": "Walk", "Running_A": "Jog_Fwd",
 	"Walking_C": "Crouch_Fwd", "Crouch_Idle": "Crouch_Idle",
@@ -96,7 +96,7 @@ func _initialize() -> void:
 	own_tree(result, result)
 	var packed := PackedScene.new()
 	var err := packed.pack(result)
-	if err == OK: err = ResourceSaver.save(packed, DIR + "adapted_human.scn")
+	if err == OK: err = ResourceSaver.save(packed, DIR + "adapted_human.tscn")
 	var info := {
 		"source_bones": source_skeleton.get_bone_count(), "target_bones": target_skeleton.get_bone_count(),
 		"missing_bones": missing_bones, "pelvis_height_ratio": height_ratio,

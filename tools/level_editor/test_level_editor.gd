@@ -1,9 +1,9 @@
 extends Node
-const WORLD_SCENE := preload("res://scenes/levels/continuous_world.tscn")
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const PANEL := preload("res://addons/godot_level_editor/graph_panel.gd")
-const RUNNER := preload("res://addons/godot_level_editor/runtime/event_runner.gd")
+const WORLD_SCENE := preload("res://content/scenes/levels/continuous_world.tscn")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const PANEL := preload("res://addons/godot_level_editor/modules/godot_level_editor/graph_panel.gd")
+const RUNNER := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/event_runner.gd")
 const ACTOR := preload("res://tools/level_editor/test_actor.gd")
 var passed := 0
 var failed := 0
@@ -96,7 +96,7 @@ func _run() -> void:
 
 func _test_scene_roundtrip() -> void:
 	for id in ["atrium", "puzzle_1", "puzzle_2", "puzzle_3"]:
-		var room: Node3D = load("res://scenes/level_editor/rooms/" + id + ".tscn").instantiate()
+		var room: Node3D = load("res://content/scenes/level_editor/rooms/" + id + ".tscn").instantiate()
 		var count := room.get_child_count()
 		var block: Node3D = room.object_by_id("floor")
 		block.size.x = 21.26
@@ -109,7 +109,7 @@ func _test_scene_roundtrip() -> void:
 		if id == "puzzle_3":
 			_check(fresh.object_by_id("door").source_ids == PackedStringArray(["plate_a", "plate_b", "breaker"]), "legacy component bindings survive room reload")
 		fresh.free()
-	var graph: GodotLevelEditorLevelGraph = load("res://resources/level_editor/world_events.tres").duplicate(true)
+	var graph: GodotLevelEditorLevelGraph = load("res://content/resources/level_editor/world_events.tres").duplicate(true)
 	graph.positions["goal_1"] = Vector2(123, -67)
 	graph.view_scroll = Vector2(98, 43)
 	graph.view_zoom = 1.2
@@ -118,7 +118,7 @@ func _test_scene_roundtrip() -> void:
 	_check(fresh_graph.snapshot() == graph.snapshot(), "nodes + parameters + wires + layout + view reload exactly")
 
 func _test_graph_validation() -> void:
-	var base: GodotLevelEditorLevelGraph = load("res://resources/level_editor/world_events.tres")
+	var base: GodotLevelEditorLevelGraph = load("res://content/resources/level_editor/world_events.tres")
 	_check(base.validate().is_empty(), "sample event graph validates")
 	var bad: GodotLevelEditorLevelGraph = base.duplicate(true)
 	bad.schema_version = 999
@@ -163,7 +163,7 @@ func _test_data_types() -> void:
 func _test_canvas() -> void:
 	var panel := PANEL.new()
 	add_child(panel)
-	var graph: GodotLevelEditorLevelGraph = load("res://resources/level_editor/world_events.tres").duplicate(true)
+	var graph: GodotLevelEditorLevelGraph = load("res://content/resources/level_editor/world_events.tres").duplicate(true)
 	panel.open_graph(graph)
 	await get_tree().process_frame
 

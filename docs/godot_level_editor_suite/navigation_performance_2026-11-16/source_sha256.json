@@ -1,0 +1,10 @@
+{
+  "addons/godot_level_editor_suite/plugin.gd": "c32497ff5d9490d23b64abb9c24b15353579ad24a6833af2884ab71a32156a9b",
+  "addons/godot_level_editor_suite/asset_workspace.gd": "7435e8f92cb4dc2064585da933eb812c708d8cf35d6daac66b638d0f11ef59fb",
+  "addons/godot_level_editor_suite/level_card.gd": "240afe8587b67066a4d0a20ce9663d4fa062596f4ba26353ad9f9766b232eade",
+  "addons/godot_level_editor_suite/level_warehouse.gd": "54536c957b893c821357726e3b919a565a7d6cf41c76099e8d7570827a18534f",
+  "addons/godot_level_editor_suite/editor_style.gd": "afe3ce06a08aada9d37ec5cc1d52e714eb7f6508f8a049d010e0c287e6cd911d",
+  "addons/godot_level_editor_suite/display_adapter.gd": "c983c08efe7ce1d48911109b0709a5abe62556312e84cc897a0615bf01e1d510",
+  "addons/godot_level_editor_suite/level_preview.gd": "c58066cd9aa861b33c45c2179c1d8c4887607968c09c8fbcb694142b1e2e58f4",
+  "tools/godot_level_editor_suite/navigation_performance_test.gd": "44c11442f5ab3131387af6bbc0f2fc61ca68e448b344934fd1fdde2a8c4b802b"
+}

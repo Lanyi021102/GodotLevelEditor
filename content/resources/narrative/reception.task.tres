@@ -1,0 +1,103 @@
+[gd_resource type="Resource" format=3 uid="uid://cba60npwj1emg"]
+
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd" id="1"]
+[ext_resource type="Resource" uid="uid://bpccra5si70yl" path="res://content/resources/narrative/reception.dialogue.tres" id="2_library"]
+
+[resource]
+script = ExtResource("1")
+dialogue_library = ExtResource("2_library")
+graph_id = "reception_task_v1"
+nodes = Array[Dictionary]([{
+"id": "enter",
+"kind": "room_enter",
+"params": {
+"room": "atrium"
+}
+}, {
+"id": "begin",
+"kind": "task_start",
+"params": {
+"task": "meet_receptionist"
+}
+}, {
+"id": "hint",
+"kind": "objective",
+"params": {
+"text": "任务：找到中庭接待员，靠近后按 F 对话。"
+}
+}, {
+"id": "interact",
+"kind": "npc_interact",
+"params": {
+"npc": "receptionist",
+"task": "meet_receptionist"
+}
+}, {
+"id": "show",
+"kind": "show_dialog",
+"params": {
+"dialog_id": "reception_intro"
+}
+}, {
+"id": "finished",
+"kind": "dialog_completed",
+"params": {
+"dialog_id": "reception_intro",
+"task": "meet_receptionist"
+}
+}, {
+"id": "complete",
+"kind": "task_complete",
+"params": {
+"task": "meet_receptionist"
+}
+}, {
+"id": "done",
+"kind": "objective",
+"params": {
+"text": "✓ 任务完成：已向接待员报到。"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "enter",
+"from_port": "then",
+"id": "edge_0",
+"to": "begin",
+"to_port": "run"
+}, {
+"from": "begin",
+"from_port": "then",
+"id": "edge_1",
+"to": "hint",
+"to_port": "run"
+}, {
+"from": "interact",
+"from_port": "then",
+"id": "edge_2",
+"to": "show",
+"to_port": "run"
+}, {
+"from": "finished",
+"from_port": "then",
+"id": "edge_3",
+"to": "complete",
+"to_port": "run"
+}, {
+"from": "complete",
+"from_port": "then",
+"id": "edge_4",
+"to": "done",
+"to_port": "run"
+}])
+positions = {
+"begin": Vector2(380, 120),
+"complete": Vector2(380, 600),
+"done": Vector2(760, 600),
+"enter": Vector2(0, 120),
+"finished": Vector2(0, 600),
+"hint": Vector2(760, 120),
+"interact": Vector2(0, 360),
+"show": Vector2(380, 360)
+}
+view_scroll = Vector2(-287.376, 144.75963)
+view_zoom = 0.78460705

@@ -1,0 +1,83 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd" id="1_xeeee"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd" id="2_bauau"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd" id="3_ktkm4"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn" id="4_c24nm"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/presentation/miniature_lighting.gd" id="5_nvccd"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd" id="6_la6qr"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/mechanisms/button.tscn" id="independent_button"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn" id="independent_double_door"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/mechanisms/lift_platform.tscn" id="independent_lift_platform"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/mechanisms/pressure_plate.tscn" id="independent_pressure_plate"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn" id="independent_single_door"]
+
+[sub_resource type="Resource" id="Resource_ckrnq"]
+script = ExtResource("2_bauau")
+graph_id = "mechanism_whitebox_topology"
+graph_kind = "topology"
+
+[sub_resource type="Resource" id="Resource_i7dsm"]
+script = ExtResource("2_bauau")
+graph_id = "mechanism_whitebox_events"
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gv1xb"]
+resource_local_to_scene = true
+dof_blur_far_distance = 33.5
+dof_blur_far_transition = 9.0
+dof_blur_near_distance = 23.5
+dof_blur_near_transition = 6.0
+dof_blur_amount = 0.085
+
+[node name="MechanismWhiteboxV1" type="Node3D" unique_id=1553075137]
+script = ExtResource("1_xeeee")
+world_id = "mechanism_whitebox_v1"
+topology = SubResource("Resource_ckrnq")
+events = SubResource("Resource_i7dsm")
+
+[node name="Floor" type="Node3D" parent="." unique_id=1394512803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+script = ExtResource("3_ktkm4")
+object_id = "floor"
+size = Vector3(34, 0.6, 20)
+
+[node name="Lighting" type="Node3D" parent="." unique_id=655878841 instance=ExtResource("4_c24nm")]
+script = ExtResource("5_nvccd")
+runtime_camera_attributes = SubResource("CameraAttributesPractical_gv1xb")
+metadata/lighting_version = 2
+metadata/display_name = "晴日微缩光照 V2"
+
+[node name="PlayerSpawn" type="Marker3D" parent="." unique_id=939575408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 7)
+script = ExtResource("6_la6qr")
+object_id = "player_spawn"
+
+
+[node name="Mechanisms" type="Node3D" parent="."]
+metadata/godot_level_editor_content_group = "mechanism"
+
+[node name="double_door" parent="Mechanisms" instance=ExtResource("independent_double_door") ]
+position = Vector3(-12, 0, 0)
+instance_id = "independent_double_door"
+object_id = "double_door"
+
+[node name="single_door" parent="Mechanisms" instance=ExtResource("independent_single_door") ]
+position = Vector3(-6, 0, 0)
+instance_id = "independent_single_door"
+object_id = "single_door"
+
+[node name="pressure_plate" parent="Mechanisms" instance=ExtResource("independent_pressure_plate") ]
+position = Vector3(0, 0, 0)
+instance_id = "independent_pressure_plate"
+object_id = "pressure_plate"
+
+[node name="button" parent="Mechanisms" instance=ExtResource("independent_button") ]
+position = Vector3(6, 0, 0)
+instance_id = "independent_button"
+object_id = "button"
+
+[node name="lift_platform" parent="Mechanisms" instance=ExtResource("independent_lift_platform") ]
+position = Vector3(12, 0, 0)
+instance_id = "independent_lift_platform"
+object_id = "lift_platform"

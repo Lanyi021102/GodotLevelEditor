@@ -4,14 +4,14 @@
 
 ```text
 关卡根节点
-├─ NPC
-│  ├─ NPC
+├─ NPCs
+│  ├─ NPCs
 │  └─ NPC2
-├─ Room
+├─ Rooms
 │  └─ PermanentRoom
-├─ 机关
+├─ Mechanisms
 │  └─ Mechanism
-└─ 关卡白盒
+└─ Whitebox
    ├─ WhiteboxBox
    └─ WhiteboxRamp
 ```
@@ -62,3 +62,9 @@ Godot 4.7.1。先执行 headless 检查，再使用 macOS Metal Forward+ 实际�
 保留了其他聊天同期对面／线／点操作、天空及关卡逻辑所做的修改。检查中为 world 恢复逻辑的动态返回值补充 Dictionary 类型标注，避免当前项目解析失败，没有修改该并行逻辑的处理规则。
 
 撤销接口参考 [Godot EditorUndoRedoManager](https://docs.godotengine.org/en/stable/classes/class_editorundoredomanager.html)。
+
+## 同日英文命名更新
+
+父节点现统一为 `NPCs`、`Rooms`、`Mechanisms`、`Whitebox`。`5_adwa.tscn` 中已有的带标记“机关”容器改名为 `Mechanisms`，并同步其子节点 parent 路径；对照修改前文件，仅这些名称及路径变化，节点 unique_id、object_id、变换和配置逐字保持。业务实例名称不改。
+
+英文命名复查：分组运行与保存 10 / 10、轮盘 84 / 84、Metal 原生拖放／撤销／复制 14 / 14 均通过。记录：[运行](english_groups_runtime.log)、[轮盘](english_groups_quick_add.log)、[原生拖放](english_groups_native_drag.log)。

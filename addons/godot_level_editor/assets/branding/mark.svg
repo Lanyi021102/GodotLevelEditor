@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="8 8 112 112">
+  <title>GodotLevelEditor — Open Room</title>
+  <path d="m16 40 48 28v48L16 88Z" fill="#2563eb"/>
+  <path d="m64 68 48-28v48l-14 8V69L80 79v27l-16 10Z" fill="#1742a6"/>
+  <path fill="#60a5fa" fill-rule="evenodd" d="m16 40 48-28 48 28-48 28Zm24 0 24 14 24-14-24-14Z"/>
+  <path d="m28 81 22 13" fill="none" stroke="#93c5fd" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="28" cy="81" r="5" fill="#fff"/>
+  <circle cx="50" cy="94" r="5" fill="#fff"/>
+</svg>

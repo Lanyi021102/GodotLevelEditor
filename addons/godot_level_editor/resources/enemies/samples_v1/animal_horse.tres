@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3 uid="uid://drd4bp8raj74l"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/animal_horse.scn" id="1_jdxa3"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd" id="2_7io3c"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/enemy_definition.gd" id="3_j121x"]
+
+[sub_resource type="Resource" id="Resource_c331m"]
+script = ExtResource("2_7io3c")
+model = ExtResource("1_jdxa3")
+skeleton_path = NodePath("Armature/Skeleton3D")
+motions = {
+"idle": {
+"clip": "Armature|Idle",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_jdxa3")
+},
+"run": {
+"clip": "Armature|Run",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_jdxa3")
+},
+"walk": {
+"clip": "Armature|Walk",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_jdxa3")
+}
+}
+height = 1.85
+pose_mode = "rest"
+
+[resource]
+script = ExtResource("3_j121x")
+display_name = "马"
+states = Array[Dictionary]([{
+"behavior": "patrol",
+"duration": 0.0,
+"id": "patrol",
+"label": "平静行走",
+"scan_degrees": 0.0,
+"speed": 1.2
+}])
+parameters = {
+"alert_decay": 40.0,
+"alert_rate": 100.0,
+"expose_penalty": 25.0,
+"help_radius": 12.0,
+"noise_alert": 25.0,
+"waypoint_wait": 1.5
+}
+layout = {
+"nodes": {
+"patrol": Vector2(100, 100)
+},
+"scroll": Vector2(0, 0),
+"zoom": 1.0
+}
+appearance = SubResource("Resource_c331m")
+metadata/npc_sample_v1 = {
+"animation_count": 6,
+"available_animations": ["Armature|Death", "Armature|Idle", "Armature|Jump", "Armature|Run", "Armature|Walk", "Armature|WalkSlow"],
+"bone_count": 39,
+"bounds": {
+"x": 0.6884662,
+"y": 1.8499999,
+"z": 2.4741793
+},
+"category": "animal",
+"collision": "box",
+"definition": "res://addons/godot_level_editor/resources/enemies/samples_v1/animal_horse.tres",
+"height": 1.85,
+"id": "animal_horse",
+"license": "CC0-1.0",
+"motion_note": "",
+"motions": {
+"idle": "Armature|Idle",
+"run": "Armature|Run",
+"walk": "Armature|Walk"
+},
+"preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/animal_horse.png",
+"radius": 0.3,
+"scene": "res://addons/godot_level_editor/scenes/npcs/v1_animal_horse.tscn",
+"source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Horse.fbx",
+"source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+"title": "马",
+"walk_speed": 1.2
+}

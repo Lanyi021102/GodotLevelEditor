@@ -1,8 +1,8 @@
 extends Node
-const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const SPAWN := preload("res://addons/godot_level_editor/runtime/spawn_marker.gd")
+const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const SPAWN := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd")
 var checks := 0
 var failures := 0
 func check(ok: bool, label: String) -> void:
@@ -20,8 +20,8 @@ func _ready() -> void:
 	get_tree().create_timer(45, true).timeout.connect(func(): get_tree().quit(2))
 	_run.call_deferred()
 func _run() -> void:
-	var file_hash := FileAccess.get_sha256("res://scenes/levels/4_TestLevel.tscn")
-	var world: Node3D = load("res://scenes/levels/4_TestLevel.tscn").instantiate()
+	var file_hash := FileAccess.get_sha256("res://content/scenes/levels/4_TestLevel.tscn")
+	var world: Node3D = load("res://content/scenes/levels/4_TestLevel.tscn").instantiate()
 	await run_world(world)
 	var session := world.get_node_or_null("PlaySession")
 	check(session != null, "running 4_TestLevel directly creates a play session")
@@ -66,7 +66,7 @@ func _run() -> void:
 		if argument.begins_with("--capture="):
 			await RenderingServer.frame_post_draw
 			check(get_viewport().get_texture().get_image().save_png(argument.trim_prefix("--capture=")) == OK, "standalone authored level renders with the player")
-	check(FileAccess.get_sha256("res://scenes/levels/4_TestLevel.tscn") == file_hash and not world.has_node("World"), "playtest does not rewrite or duplicate the authored level")
+	check(FileAccess.get_sha256("res://content/scenes/levels/4_TestLevel.tscn") == file_hash and not world.has_node("World"), "playtest does not rewrite or duplicate the authored level")
 	world.queue_free()
 	await wait(3)
 	var fresh := WORLD.new(); fresh.name = "FreshLevel"; fresh.start_room_id = ""
@@ -79,7 +79,7 @@ func _run() -> void:
 	# A complete sandbox may contain several independent detection areas.
 	var entered: Array[String] = []
 	for room_id in ["courtyard", "workshop"]:
-		var room: Node3D = load("res://addons/godot_level_editor/palette_assets/room.tscn").instantiate()
+		var room: Node3D = load("res://addons/godot_level_editor/modules/godot_level_editor/palette_assets/room.tscn").instantiate()
 		room.room_id = room_id
 		room.position = Vector3(0, 0, 0) if room_id == "courtyard" else Vector3(6, 0, 0)
 		room.player_entered.connect(func(id: String, _actor: Node3D): entered.append(id))
@@ -93,7 +93,7 @@ func _run() -> void:
 	check(entered.has("courtyard") and entered.has("workshop"), "unconnected sandbox areas still detect the player during standalone play")
 	fresh.queue_free()
 	await wait(3)
-	var main: Node3D = load("res://scenes/main.tscn").instantiate()
+	var main: Node3D = load("res://content/scenes/main.tscn").instantiate()
 	get_tree().root.add_child(main); get_tree().current_scene = main
 	await wait(15)
 	check(not main.world.has_node("PlaySession") and get_tree().get_nodes_in_group("godot_level_editor_player").size() == 1, "F5 main scene keeps its existing player without a second play session")

@@ -1,7 +1,7 @@
 extends Node3D
-const BLOCK := preload("res://addons/godot_level_editor/runtime/whitebox_block.gd")
-const EDIT := preload("res://addons/godot_level_editor/face_edit.gd")
-const ELEMENTS := preload("res://addons/godot_level_editor/mesh_elements.gd")
+const BLOCK := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd")
+const EDIT := preload("res://addons/godot_level_editor/modules/godot_level_editor/face_edit.gd")
+const ELEMENTS := preload("res://addons/godot_level_editor/modules/godot_level_editor/mesh_elements.gd")
 var passed := 0
 var failed := 0
 func check(value: bool, title: String) -> void:

@@ -1,0 +1,22 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+[PASS] runtime reuses the editable HUD tracker instead of a duplicate overlay
+[PASS] event and task display names occupy separate levels
+[PASS] task is indented below its event
+[PASS] gameplay advances independently of the completion animation
+[PASS] completed task remains visible while the strike is drawn
+[PASS] dialogue pause hides the tracker and freezes its animation
+[PASS] dialogue restores tracker visibility
+[PASS] next task enters through a fade after the strike and fade-out
+[PASS] new task has clean text without the previous strike
+[PASS] finishing the event is not delayed by HUD animation
+[PASS] last task is retained until its completion animation ends
+[PASS] rapid consecutive completions drain their queue and remove the finished event
+[PASS] tracker disappears when there are no active events
+[PASS] task progress restores normally
+[PASS] restore shows the active task without replaying completion animations
+[PASS] completion animation starts again after checkpoint replay
+[PASS] restore during an animation cancels the obsolete visual queue
+[PASS] multiple active events each retain their own current task
+TASK TRACKER: 18 checks, 0 failures

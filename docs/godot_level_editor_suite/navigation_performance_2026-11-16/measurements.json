@@ -1,0 +1,178 @@
+{
+  "baseline_headless": {
+    "任务": {
+      "callback_max_ms": 2.179,
+      "callback_median_ms": 1.073,
+      "next_frame_max_ms": 78.53,
+      "next_frame_median_ms": 6.582
+    },
+    "关卡": {
+      "callback_max_ms": 14.045,
+      "callback_median_ms": 1.029,
+      "next_frame_max_ms": 47.215,
+      "next_frame_median_ms": 6.713
+    },
+    "台本": {
+      "callback_max_ms": 3.068,
+      "callback_median_ms": 1.47,
+      "next_frame_max_ms": 10.214,
+      "next_frame_median_ms": 6.44
+    },
+    "天空": {
+      "callback_max_ms": 2.022,
+      "callback_median_ms": 1.736,
+      "next_frame_max_ms": 47.144,
+      "next_frame_median_ms": 6.46
+    },
+    "工作台": {
+      "callback_max_ms": 2.698,
+      "callback_median_ms": 1.317,
+      "next_frame_max_ms": 7.615,
+      "next_frame_median_ms": 6.532
+    },
+    "敌人": {
+      "callback_max_ms": 291.981,
+      "callback_median_ms": 287.466,
+      "next_frame_max_ms": 295.952,
+      "next_frame_median_ms": 289.571
+    },
+    "机关": {
+      "callback_max_ms": 273.928,
+      "callback_median_ms": 227.912,
+      "next_frame_max_ms": 279.329,
+      "next_frame_median_ms": 229.832
+    }
+  },
+  "baseline_metal": {
+    "任务": {
+      "callback_max_ms": 2.954,
+      "callback_median_ms": 2.355,
+      "next_frame_max_ms": 84.038,
+      "next_frame_median_ms": 17.314
+    },
+    "关卡": {
+      "callback_max_ms": 11.468,
+      "callback_median_ms": 11.152,
+      "next_frame_max_ms": 17.424,
+      "next_frame_median_ms": 16.922
+    },
+    "台本": {
+      "callback_max_ms": 3.342,
+      "callback_median_ms": 2.663,
+      "next_frame_max_ms": 18.479,
+      "next_frame_median_ms": 17.098
+    },
+    "天空": {
+      "callback_max_ms": 7.246,
+      "callback_median_ms": 2.811,
+      "next_frame_max_ms": 90.428,
+      "next_frame_median_ms": 16.973
+    },
+    "工作台": {
+      "callback_max_ms": 3.112,
+      "callback_median_ms": 2.359,
+      "next_frame_max_ms": 17.681,
+      "next_frame_median_ms": 16.809
+    },
+    "敌人": {
+      "callback_max_ms": 351.074,
+      "callback_median_ms": 348.192,
+      "next_frame_max_ms": 360.64,
+      "next_frame_median_ms": 353.925
+    },
+    "机关": {
+      "callback_max_ms": 295.923,
+      "callback_median_ms": 248.296,
+      "next_frame_max_ms": 305.444,
+      "next_frame_median_ms": 254.434
+    }
+  },
+  "optimized_metal": {
+    "任务": {
+      "callback_max_ms": 1.805,
+      "callback_median_ms": 1.188,
+      "next_frame_max_ms": 162.995,
+      "next_frame_median_ms": 27.703
+    },
+    "关卡": {
+      "callback_max_ms": 24.44,
+      "callback_median_ms": 1.963,
+      "next_frame_max_ms": 48.333,
+      "next_frame_median_ms": 36.462
+    },
+    "台本": {
+      "callback_max_ms": 1.256,
+      "callback_median_ms": 1.108,
+      "next_frame_max_ms": 27.683,
+      "next_frame_median_ms": 24.65
+    },
+    "天空": {
+      "callback_max_ms": 1.506,
+      "callback_median_ms": 1.34,
+      "next_frame_max_ms": 45.194,
+      "next_frame_median_ms": 23.425
+    },
+    "工作台": {
+      "callback_max_ms": 1.121,
+      "callback_median_ms": 1.024,
+      "next_frame_max_ms": 28.714,
+      "next_frame_median_ms": 24.847
+    },
+    "敌人": {
+      "callback_max_ms": 7.513,
+      "callback_median_ms": 1.001,
+      "next_frame_max_ms": 32.706,
+      "next_frame_median_ms": 23.845
+    },
+    "机关": {
+      "callback_max_ms": 15.007,
+      "callback_median_ms": 1.107,
+      "next_frame_max_ms": 44.561,
+      "next_frame_median_ms": 23.654
+    }
+  },
+  "optimized_headless": {
+    "任务": {
+      "callback_max_ms": 1.85,
+      "callback_median_ms": 0.914,
+      "next_frame_max_ms": 95.332,
+      "next_frame_median_ms": 6.36
+    },
+    "关卡": {
+      "callback_max_ms": 2.042,
+      "callback_median_ms": 1.018,
+      "next_frame_max_ms": 7.856,
+      "next_frame_median_ms": 6.897
+    },
+    "台本": {
+      "callback_max_ms": 2.746,
+      "callback_median_ms": 1.294,
+      "next_frame_max_ms": 14.24,
+      "next_frame_median_ms": 6.44
+    },
+    "天空": {
+      "callback_max_ms": 2.252,
+      "callback_median_ms": 1.326,
+      "next_frame_max_ms": 53.479,
+      "next_frame_median_ms": 6.343
+    },
+    "工作台": {
+      "callback_max_ms": 1.676,
+      "callback_median_ms": 1.107,
+      "next_frame_max_ms": 9.363,
+      "next_frame_median_ms": 6.662
+    },
+    "敌人": {
+      "callback_max_ms": 11.675,
+      "callback_median_ms": 1.91,
+      "next_frame_max_ms": 25.259,
+      "next_frame_median_ms": 6.153
+    },
+    "机关": {
+      "callback_max_ms": 17.234,
+      "callback_median_ms": 1.784,
+      "next_frame_max_ms": 25.178,
+      "next_frame_median_ms": 6.354
+    }
+  }
+}

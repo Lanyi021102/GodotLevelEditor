@@ -1,6 +1,6 @@
 {
   "date": "2026-11-02",
-  "preset": "res://scenes/lighting/sunlit_miniature_v2.tscn",
+  "preset": "res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn",
   "unique_runtime_checks": 44,
   "failed": 0,
   "existing_source_files_compared": 190,

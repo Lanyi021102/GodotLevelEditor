@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_b8txe"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/human_medium_female.tres" id="2_lspw5"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_rvdyb"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_dtvqu"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_ubfx0"]
+
+[sub_resource type="Resource" id="Resource_jhx46"]
+script = ExtResource("3_rvdyb")
+model_id = "default"
+behavior_definition = ExtResource("2_lspw5")
+body_height = 1.65
+body_radius = 0.28
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b2kan"]
+radius = 0.28
+height = 1.65
+
+[node name="中体型·休闲居民女" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_b8txe")
+enemy_definition = ExtResource("2_lspw5")
+metadata/godot_level_editor_entity = SubResource("Resource_jhx46")
+metadata/npc_sample_v1 = "human_medium_female"
+metadata/editor_display_name = "中体型·休闲居民女"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
+shape = SubResource("CapsuleShape3D_b2kan")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_dtvqu")
+npc_definition = ExtResource("2_lspw5")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_ubfx0")

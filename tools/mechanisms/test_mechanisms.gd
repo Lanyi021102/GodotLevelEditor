@@ -1,8 +1,8 @@
 extends Node
-const Factory := preload("res://addons/godot_level_editor_mechanisms/factory.gd")
-const Store := preload("res://addons/godot_level_editor_mechanisms/store.gd")
-const Definition := preload("res://addons/godot_level_editor_mechanisms/graph/definition.gd")
-const Schema := preload("res://addons/godot_level_editor_mechanisms/graph/schema.gd")
+const Factory := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/factory.gd")
+const Store := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/store.gd")
+const Definition := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd")
+const Schema := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/schema.gd")
 var passed := 0
 var failed := 0
 var sample: Node3D
@@ -71,10 +71,9 @@ func _ready() -> void:
 	_test_roundtrip()
 	_test_numeric_object()
 	for kind in ["lever", "door"]:
-		var packed: PackedScene = load("res://scenes/mechanisms/" + kind + ".tscn")
-		var instance := packed.instantiate()
+		var instance := Factory.component(kind, "compatibility_" + str(kind))
 		add_child(instance)
-		check(instance.has_method("is_powered") and instance.has_method("tl_capture"), kind + " standalone scene loads")
+		check(instance.has_method("is_powered") and instance.has_method("tl_capture"), kind + " compatibility component fixture constructs without a library asset")
 		instance.free()
 	sample.free()
 	print("MECHANISMS: %d passed / %d failed" % [passed, failed])

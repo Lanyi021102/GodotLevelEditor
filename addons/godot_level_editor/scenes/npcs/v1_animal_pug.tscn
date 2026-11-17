@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_s5c7i"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/animal_pug.tres" id="2_408ya"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_tc6sr"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_28sgw"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_0632e"]
+
+[sub_resource type="Resource" id="Resource_uqoje"]
+script = ExtResource("3_tc6sr")
+model_id = "default"
+behavior_definition = ExtResource("2_408ya")
+body_height = 0.45
+body_radius = 0.135
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nctqk"]
+size = Vector3(0.15997775, 0.3825, 0.41570148)
+
+[node name="巴哥犬" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_s5c7i")
+enemy_definition = ExtResource("2_408ya")
+metadata/godot_level_editor_entity = SubResource("Resource_uqoje")
+metadata/npc_sample_v1 = "animal_pug"
+metadata/editor_display_name = "巴哥犬"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19125, 0)
+shape = SubResource("BoxShape3D_nctqk")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_28sgw")
+npc_definition = ExtResource("2_408ya")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_0632e")

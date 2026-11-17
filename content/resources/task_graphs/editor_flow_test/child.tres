@@ -1,0 +1,61 @@
+[gd_resource type="Resource" format=3 uid="uid://1unof1fml1mw"]
+
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd" id="1_jdjx3"]
+
+[resource]
+script = ExtResource("1_jdjx3")
+dialogue_xlsx = "res://content/resources/narrative/editor_flow_test.xlsx"
+graph_id = "editor_flow_child"
+nodes = Array[Dictionary]([{
+"id": "start",
+"kind": "start",
+"params": {}
+}, {
+"id": "delay",
+"kind": "delay",
+"params": {
+"scope": "",
+"seconds": 0.5
+}
+}, {
+"id": "end",
+"kind": "subgraph_end",
+"params": {
+"success": true
+}
+}, {
+"id": "n_1363cf1c0ce2ea7a85d990bc",
+"kind": "set_actor_state",
+"label": "设置角色状态",
+"params": {
+"actor": "",
+"enabled": true,
+"key": "flow_verified"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "start",
+"from_port": "then",
+"id": "edge_82c868a33878cc260a340de1",
+"to": "delay",
+"to_port": "run"
+}, {
+"from": "n_1363cf1c0ce2ea7a85d990bc",
+"from_port": "then",
+"id": "edge_c68d508060131c6c7e8647f2",
+"to": "end",
+"to_port": "run"
+}, {
+"from": "delay",
+"from_port": "then",
+"id": "edge_ca3dcfb69840abd8da86865b",
+"to": "n_1363cf1c0ce2ea7a85d990bc",
+"to_port": "run"
+}])
+positions = {
+"delay": Vector2(400, 80),
+"end": Vector2(1120, 80),
+"n_1363cf1c0ce2ea7a85d990bc": Vector2(740, 80),
+"start": Vector2(60, 80)
+}
+view_scroll = Vector2(20, 0)

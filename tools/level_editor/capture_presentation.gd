@@ -7,8 +7,8 @@ static func run(editor: EditorPlugin) -> bool:
 	# Running from the editor may auto-save touched resources. Keep this visual
 	# verification from rewriting any authored scene/graph files.
 	var disk_sources := {}
-	_snapshot_sources("res://scenes/level_editor", disk_sources)
-	_snapshot_sources("res://resources/level_editor", disk_sources)
+	_snapshot_sources("res://content/scenes/level_editor", disk_sources)
+	_snapshot_sources("res://content/resources/level_editor", disk_sources)
 	EditorInterface.set_main_screen_editor("关卡与世界")
 	panel.show()
 	editor.hide_bottom_panel()
@@ -19,7 +19,7 @@ static func run(editor: EditorPlugin) -> bool:
 	panel.canvas.scroll_offset = Vector2(-25, 160)
 	panel.status.text = "分类色表示职责；端口和连线颜色表示连接类型。左侧输入 → 右侧输出。"
 	await _capture(editor, "node_colors_editing.png")
-	EditorInterface.play_custom_scene("res://scenes/levels/logic_playground.tscn")
+	EditorInterface.play_custom_scene("res://content/scenes/levels/logic_playground.tscn")
 	for _i in 80:
 		if not panel._packets.is_empty(): break
 		await tree.create_timer(0.1, true).timeout
@@ -34,7 +34,7 @@ static func run(editor: EditorPlugin) -> bool:
 	await tree.create_timer(0.5, true).timeout
 	panel.graph.apply_snapshot(before)
 	panel.dirty = false
-	EditorInterface.open_scene_from_path("res://scenes/levels/continuous_world.tscn")
+	EditorInterface.open_scene_from_path("res://content/scenes/levels/continuous_world.tscn")
 	for _i in 10: await tree.process_frame
 	panel.use_current_world()
 	panel.mode.select(1)

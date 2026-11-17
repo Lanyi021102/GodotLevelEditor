@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-16",
+  "godot": "4.7.1",
+  "sample_count": 13,
+  "humanoids": 6,
+  "animals": 4,
+  "monsters": 3,
+  "runtime": {
+    "passed": 145,
+    "failed": 0
+  },
+  "visual_fit": {
+    "passed": 32,
+    "failed": 0
+  },
+  "editor_headless": {
+    "passed": 71,
+    "failed": 0
+  },
+  "editor_metal": {
+    "passed": 71,
+    "failed": 0
+  },
+  "appearance_regression": {
+    "passed": 15,
+    "failed": 0
+  },
+  "enemy_regression": {
+    "passed": 45,
+    "failed": 0
+  },
+  "rendered_thumbnails": 13,
+  "rendered_sheets": 2,
+  "browser_desktop_width": 1440,
+  "browser_mobile_width": 390,
+  "browser_horizontal_overflow": false,
+  "main_editor_parse": "no script errors",
+  "wiki_check": {
+    "status": "failed",
+    "npc_page_errors": 0,
+    "missing_targets": [
+      "doors_v2_2026-11-16/validation.md",
+      "doors_v2_2026-11-16/双开门_moving.png"
+    ],
+    "affected_links": 4
+  },
+  "original_model_hashes_verified": 13
+}

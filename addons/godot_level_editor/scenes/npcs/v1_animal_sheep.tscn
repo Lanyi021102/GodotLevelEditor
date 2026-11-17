@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_6agwo"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/animal_sheep.tres" id="2_pcbhx"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_qd7av"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_0guj5"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_jnx6u"]
+
+[sub_resource type="Resource" id="Resource_47ieg"]
+script = ExtResource("3_qd7av")
+model_id = "default"
+behavior_definition = ExtResource("2_pcbhx")
+body_height = 0.9
+body_radius = 0.27
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f47wh"]
+size = Vector3(0.29808903, 0.765, 0.8553701)
+
+[node name="绵羊" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_6agwo")
+enemy_definition = ExtResource("2_pcbhx")
+metadata/godot_level_editor_entity = SubResource("Resource_47ieg")
+metadata/npc_sample_v1 = "animal_sheep"
+metadata/editor_display_name = "绵羊"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3825, 0)
+shape = SubResource("BoxShape3D_f47wh")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_0guj5")
+npc_definition = ExtResource("2_pcbhx")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_jnx6u")

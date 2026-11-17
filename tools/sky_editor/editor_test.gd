@@ -16,20 +16,22 @@ func run(suite: EditorPlugin) -> void:
 	while EditorInterface.get_resource_filesystem().is_scanning() or EditorInterface.get_resource_filesystem().is_importing(): await tree.process_frame
 	var panel: Control = suite.sky_panel
 	var original_scene := EditorInterface.get_edited_scene_root().scene_file_path if EditorInterface.get_edited_scene_root() != null else ""
-	var source_path := "res://scenes/levels/whitebox_world.tscn"
+	var source_path := "res://content/scenes/levels/whitebox_world.tscn"
 	var original_bytes := FileAccess.get_file_as_bytes(source_path)
 	var scene_path := source_path
 	suite.open_tab("天空"); await frames(tree, 8)
-	check(suite.navigation_buttons.has("天空") and suite.tabs.get_tab_count() == 8, "sky editor integrated in unified window")
+	check(suite.navigation_buttons.has("天空") and suite.tabs.get_tab_count() >= 8, "sky editor integrated in unified window")
 	check(panel.items.item_count >= 8 and panel.fields.has("cloud_height") and not panel.fields.has("cloud_sea"), "preset library and cloud-height controls without cloud-sea feature")
-	panel.open_preset("res://resources/sky_presets/builtin/clear.tres")
-	panel.change("sun_mode", 0); panel.change("elevation", 23)
+	panel.open_preset("res://addons/godot_level_editor/resources/sky_presets/builtin/clear.tres")
+	panel.change("sun_mode", 0)
+	var previous_elevation: float = panel.draft.elevation
+	panel.change("elevation", 23)
 	check(panel.draft.elevation == 23 and panel.dirty, "parameter editing tracks dirty draft")
 	panel.open_preset(panel.selected_path)
 	check(panel.draft.elevation == 23 and panel.dirty, "reselecting current preset preserves unsaved edits")
-	panel.undo.undo(); check(panel.draft.elevation == 48, "parameter undo")
+	panel.undo.undo(); check(is_equal_approx(panel.draft.elevation, previous_elevation), "parameter undo")
 	panel.undo.redo(); check(panel.draft.elevation == 23, "parameter redo")
-	panel.open_preset("res://resources/sky_presets/builtin/night.tres")
+	panel.open_preset("res://addons/godot_level_editor/resources/sky_presets/builtin/night.tres")
 	check(panel.selected_path.ends_with("clear.tres"), "unsaved draft protected when switching")
 	panel.change("weather", 2)
 	check(panel.draft.cloud_coverage == 1.0 and panel.draft.sun_energy == 0.4, "weather shortcut updates actual parameters")
@@ -61,11 +63,11 @@ func run(suite: EditorPlugin) -> void:
 		DirAccess.make_dir_recursive_absolute("res://docs/sky_editor/validation")
 		await frames(tree, 12); RenderingServer.force_draw(false)
 		EditorInterface.get_editor_viewport_3d(0).get_texture().get_image().save_png("res://docs/sky_editor/validation/native_neutral.png")
-		panel.open_preset("res://resources/sky_presets/builtin/clear.tres"); panel.start_preview()
+		panel.open_preset("res://addons/godot_level_editor/resources/sky_presets/builtin/clear.tres"); panel.start_preview()
 		await frames(tree, 12); RenderingServer.force_draw(false)
 		EditorInterface.get_editor_viewport_3d(0).get_texture().get_image().save_png("res://docs/sky_editor/validation/native_preview.png")
 	panel.stop_preview()
-	var fixture := "res://resources/sky_presets/custom/.sky_test_" + str(OS.get_process_id()) + ".tres"
+	var fixture := "res://content/resources/sky_presets/custom/.sky_test_" + str(OS.get_process_id()) + ".tres"
 	DirAccess.make_dir_recursive_absolute(fixture.get_base_dir())
 	panel.duplicate_preset(); panel.change("display_name", "天空集成测试"); panel._save_to(fixture)
 	check(not panel.dirty and FileAccess.file_exists(fixture), "custom preset saved as native resource")
@@ -89,7 +91,7 @@ func run(suite: EditorPlugin) -> void:
 	var image := Image.create(32, 16, false, Image.FORMAT_RGBF); image.fill(Color(0.25, 0.4, 0.8))
 	var source := "user://sky_import_test.exr"; image.save_exr(source)
 	await panel.import_hdri(ProjectSettings.globalize_path(source)); await frames(tree)
-	check(panel.draft.sky_mode == 1 and panel.draft.hdri != null and panel.draft.hdri.resource_path.begins_with("res://assets/sky_hdri/"), "external EXR imported into portable project directory")
+	check(panel.draft.sky_mode == 1 and panel.draft.hdri != null and panel.draft.hdri.resource_path.begins_with("res://content/assets/sky_hdri/"), "external EXR imported into portable project directory")
 	var imported_path: String = panel.draft.hdri.resource_path
 	panel._save_to(fixture)
 	var saved_hdri: Resource = ResourceLoader.load(fixture, "", ResourceLoader.CACHE_MODE_IGNORE)

@@ -1,0 +1,1342 @@
+[gd_scene format=3 uid="uid://db0k6d75yt4op"]
+
+[ext_resource type="Script" uid="uid://cd4d8g57080oe" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd" id="1_ovumd"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/sky_presets/builtin/sunset.tres" id="2_lyy27"]
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd" id="3_ms206"]
+[ext_resource type="Script" uid="uid://cj5k63in1sy7k" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_logic_graph.gd" id="4_lyy27"]
+[ext_resource type="Script" uid="uid://t4nj3ytoa33i" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd" id="4_uxb8w"]
+[ext_resource type="Script" uid="uid://86s731dnji3n" path="res://content/scripts/levels/dusk_mountain/task_interaction.gd" id="5_d6f6u"]
+[ext_resource type="Script" uid="uid://cx88rnty8tuha" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/assembly.gd" id="6_3115f"]
+[ext_resource type="Resource" uid="uid://djvupqj6ul243" path="res://addons/godot_level_editor/scenes/mechanisms/lift_platform.graph.tres" id="7_l1cck"]
+[ext_resource type="Script" uid="uid://ysfcfw5hccvi" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/stateful_component.gd" id="8_oqt0s"]
+[ext_resource type="Resource" uid="uid://dcocey1ce513j" path="res://addons/godot_level_editor/scenes/mechanisms/button.graph.tres" id="9_3jaw7"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/narrative/npc.tscn" id="12_pxap3"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/npcs/v1_animal_cow.tscn" id="13_uxb8w"]
+[ext_resource type="Resource" uid="uid://h7wbf3idg7dh" path="res://addons/godot_level_editor/resources/enemies/samples_v1/animal_cow.tres" id="14_d6f6u"]
+[ext_resource type="Script" uid="uid://c4qnfrq8rh8d8" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd" id="14_q802k"]
+[ext_resource type="Script" uid="uid://dgig88tw68isw" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="15_3115f"]
+[ext_resource type="Script" uid="uid://cdd4rbo8rpk60" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/region.gd" id="15_ss06l"]
+[ext_resource type="Script" uid="uid://b7qjdgwd45pxm" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_binding.gd" id="16_l1cck"]
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd" id="mechanism_definition_cleanup"]
+
+[sub_resource type="Resource" id="Resource_kp4r5"]
+script = ExtResource("3_ms206")
+graph_id = "dusk_empty_topology"
+graph_kind = "topology"
+
+[sub_resource type="Resource" id="Resource_sodxs"]
+script = ExtResource("3_ms206")
+graph_id = "dusk_legacy_events"
+
+[sub_resource type="Resource" id="Resource_ms206"]
+script = ExtResource("4_lyy27")
+graph_id = "dusk_mountain_permanent"
+nodes = Array[Dictionary]([{
+"id": "start",
+"kind": "start",
+"label": "",
+"params": {}
+}, {
+"id": "hint",
+"kind": "objective",
+"label": "",
+"params": {
+"text": "黄昏山居：与出生点前方的山路守望者交谈（F）。"
+}
+}, {
+"id": "npc",
+"kind": "npc_interact",
+"label": "",
+"params": {
+"npc": "$world/mountain_guide"
+}
+}, {
+"id": "talk",
+"kind": "show_dialog",
+"label": "",
+"params": {
+"dialog_id": "dusk_intro"
+}
+}, {
+"id": "read",
+"kind": "dialog_completed",
+"label": "",
+"params": {
+"dialog_id": "dusk_intro"
+}
+}, {
+"id": "accept",
+"kind": "task_accept",
+"label": "",
+"params": {
+"task": "1003001"
+}
+}, {
+"id": "accepted_hint",
+"kind": "objective",
+"label": "",
+"params": {
+"text": ""
+}
+}, {
+"id": "finished",
+"kind": "dialog_completed",
+"label": "完成对白结束时",
+"params": {
+"dialog_id": "dusk_done"
+}
+}, {
+"id": "done",
+"kind": "objective",
+"label": "",
+"params": {
+"text": "黄昏山居 · 任务完成：已取得钥匙，正门出口已打开。"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "start",
+"from_port": "then",
+"id": "edge_000",
+"to": "hint",
+"to_port": "run"
+}, {
+"from": "npc",
+"from_port": "then",
+"id": "edge_001",
+"to": "talk",
+"to_port": "run"
+}, {
+"from": "read",
+"from_port": "then",
+"id": "edge_002",
+"to": "accept",
+"to_port": "run"
+}, {
+"from": "accept",
+"from_port": "then",
+"id": "edge_003",
+"to": "accepted_hint",
+"to_port": "run"
+}, {
+"from": "finished",
+"from_port": "then",
+"id": "edge_004",
+"to": "done",
+"to_port": "run"
+}])
+positions = {
+"accept": Vector2(0, 230),
+"accepted_hint": Vector2(390, 230),
+"done": Vector2(1170, 230),
+"finished": Vector2(780, 230),
+"hint": Vector2(390, 0),
+"npc": Vector2(780, 0),
+"read": Vector2(1560, 0),
+"start": Vector2(0, 0),
+"talk": Vector2(1170, 0)
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlkdc"]
+albedo_color = Color(0.80784315, 0.6039216, 0.25882354, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g7eu5"]
+size = Vector3(1.3, 0.8, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2te5n"]
+albedo_color = Color(0.80784315, 0.6039216, 0.25882354, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fhmst"]
+size = Vector3(1.3, 0.8, 0.8)
+
+[sub_resource type="Resource" id="InnerDoorGraph"]
+script = ExtResource("mechanism_definition_cleanup")
+definition_id = "wb_v1_sliding_door"
+display_name = "滑动门"
+nodes = Array[Dictionary]([{
+"id": "sliding_door_component",
+"kind": "sliding_door",
+"label": "滑动门组件",
+"params": {
+"object_id": "sliding_door"
+}
+}])
+positions = {
+"sliding_door_component": Vector2(40, 60)
+}
+
+[sub_resource type="Resource" id="FrontDoorGraph"]
+script = ExtResource("mechanism_definition_cleanup")
+definition_id = "wb_v1_hinged_door"
+display_name = "旋转门"
+nodes = Array[Dictionary]([{
+"id": "hinged_door_component",
+"kind": "hinged_door",
+"label": "旋转门组件",
+"params": {
+"object_id": "hinged_door"
+}
+}])
+positions = {
+"hinged_door_component": Vector2(40, 60)
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2u76"]
+albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n2eae"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vhc0f"]
+albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n2aet"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vq0ao"]
+albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5gvrk"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itk7c"]
+albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u3a4o"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w3nr5"]
+albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tnnu0"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ta5x"]
+albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u5b15"]
+radius = 0.32
+height = 1.75
+
+[sub_resource type="Resource" id="Resource_oqt0s"]
+resource_local_to_scene = true
+script = ExtResource("15_3115f")
+default_action = "walk"
+behavior_definition = ExtResource("14_d6f6u")
+body_height = 1.55
+
+[sub_resource type="Resource" id="Resource_3jaw7"]
+resource_local_to_scene = true
+script = ExtResource("15_3115f")
+behavior_definition = ExtResource("14_d6f6u")
+body_height = 1.55
+
+[node name="DuskMountainHouse" type="Node3D" unique_id=750317253]
+script = ExtResource("1_ovumd")
+sky_preset = ExtResource("2_lyy27")
+world_id = "dusk_mountain_house"
+level_id = "6"
+start_room_id = ""
+topology = SubResource("Resource_kp4r5")
+events = SubResource("Resource_sodxs")
+level_logic = SubResource("Resource_ms206")
+
+[node name="Whitebox" type="Node3D" parent="." unique_id=868381890]
+metadata/godot_level_editor_content_group = "whitebox"
+
+[node name="ValleyGround" type="Node3D" parent="Whitebox" unique_id=135949279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+script = ExtResource("4_uxb8w")
+object_id = "ValleyGround"
+size = Vector3(90, 3.6000001, 140)
+tint = Color(0.5372549, 0.54509807, 0.4745098, 1)
+
+[node name="Mountain_L_0" type="Node3D" parent="Whitebox" unique_id=517773134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26, 5, 50)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_L_0"
+shape_kind = "cone"
+size = Vector3(28, 25, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_L_1" type="Node3D" parent="Whitebox" unique_id=1080604187]
+transform = Transform3D(0.92050487, 0, 0.39073113, 0, 1, 0, -0.39073113, 0, 0.92050487, -32, 8, 27)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_L_1"
+shape_kind = "cone"
+size = Vector3(36, 34, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_L_2" type="Node3D" parent="Whitebox" unique_id=1978201606]
+transform = Transform3D(0.6946584, 0, 0.7193398, 0, 1, 0, -0.7193398, 0, 0.6946584, -26, 11, 4)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_L_2"
+shape_kind = "cone"
+size = Vector3(28, 43, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_L_3" type="Node3D" parent="Whitebox" unique_id=954790708]
+transform = Transform3D(0.35836798, 0, 0.9335804, 0, 1, 0, -0.9335804, 0, 0.35836798, -32, 5, -19)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_L_3"
+shape_kind = "cone"
+size = Vector3(36, 25, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_L_4" type="Node3D" parent="Whitebox" unique_id=586485208]
+transform = Transform3D(-0.034899462, 0, 0.99939084, 0, 1, 0, -0.99939084, 0, -0.034899462, -26, 8, -42)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_L_4"
+shape_kind = "cone"
+size = Vector3(28, 34, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_L_5" type="Node3D" parent="Whitebox" unique_id=1433265244]
+transform = Transform3D(-0.42261833, 0, 0.90630776, 0, 1, 0, -0.90630776, 0, -0.42261833, -32, 11, -65)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_L_5"
+shape_kind = "cone"
+size = Vector3(36, 43, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_R_0" type="Node3D" parent="Whitebox" unique_id=1441334627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 5, 50)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_R_0"
+shape_kind = "cone"
+size = Vector3(28, 25, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_R_1" type="Node3D" parent="Whitebox" unique_id=638195058]
+transform = Transform3D(0.92050487, 0, 0.39073113, 0, 1, 0, -0.39073113, 0, 0.92050487, 32, 8, 27)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_R_1"
+shape_kind = "cone"
+size = Vector3(36, 34, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_R_2" type="Node3D" parent="Whitebox" unique_id=941296175]
+transform = Transform3D(0.6946584, 0, 0.7193398, 0, 1, 0, -0.7193398, 0, 0.6946584, 26, 11, 4)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_R_2"
+shape_kind = "cone"
+size = Vector3(28, 43, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_R_3" type="Node3D" parent="Whitebox" unique_id=806188888]
+transform = Transform3D(0.35836798, 0, 0.9335804, 0, 1, 0, -0.9335804, 0, 0.35836798, 32, 5, -19)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_R_3"
+shape_kind = "cone"
+size = Vector3(36, 25, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_R_4" type="Node3D" parent="Whitebox" unique_id=1169274572]
+transform = Transform3D(-0.034899462, 0, 0.99939084, 0, 1, 0, -0.99939084, 0, -0.034899462, 26, 8, -42)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_R_4"
+shape_kind = "cone"
+size = Vector3(28, 34, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Mountain_R_5" type="Node3D" parent="Whitebox" unique_id=960506928]
+transform = Transform3D(-0.42261833, 0, 0.90630776, 0, 1, 0, -0.90630776, 0, -0.42261833, 32, 11, -65)
+script = ExtResource("4_uxb8w")
+object_id = "Mountain_R_5"
+shape_kind = "cone"
+size = Vector3(36, 43, 28)
+tint = Color(0.4745098, 0.49411765, 0.47058824, 1)
+
+[node name="Path_00" type="Node3D" parent="Whitebox" unique_id=2113823916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 48)
+script = ExtResource("4_uxb8w")
+object_id = "Path_00"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_01" type="Node3D" parent="Whitebox" unique_id=739694623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5143467, 0.025, 44)
+script = ExtResource("4_uxb8w")
+object_id = "Path_01"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_02" type="Node3D" parent="Whitebox" unique_id=46716652]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.96632653, 0.025, 40)
+script = ExtResource("4_uxb8w")
+object_id = "Path_02"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_03" type="Node3D" parent="Whitebox" unique_id=124381258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3011348, 0.025, 36)
+script = ExtResource("4_uxb8w")
+object_id = "Path_03"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_04" type="Node3D" parent="Whitebox" unique_id=2026295382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4781746, 0.025, 32)
+script = ExtResource("4_uxb8w")
+object_id = "Path_04"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_05" type="Node3D" parent="Whitebox" unique_id=31579555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.475979, 0.025, 28)
+script = ExtResource("4_uxb8w")
+object_id = "Path_05"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_06" type="Node3D" parent="Whitebox" unique_id=453747397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.294814, 0.025, 24)
+script = ExtResource("4_uxb8w")
+object_id = "Path_06"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_07" type="Node3D" parent="Whitebox" unique_id=422917120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95664704, 0.025, 20)
+script = ExtResource("4_uxb8w")
+object_id = "Path_07"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_08" type="Node3D" parent="Whitebox" unique_id=1738454788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.50248224, 0.025, 16)
+script = ExtResource("4_uxb8w")
+object_id = "Path_08"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_09" type="Node3D" parent="Whitebox" unique_id=838710867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.012610871, 0.025, 12)
+script = ExtResource("4_uxb8w")
+object_id = "Path_09"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_10" type="Node3D" parent="Whitebox" unique_id=1378205209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52617484, 0.025, 8)
+script = ExtResource("4_uxb8w")
+object_id = "Path_10"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_11" type="Node3D" parent="Whitebox" unique_id=1221546114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9759377, 0.025, 4)
+script = ExtResource("4_uxb8w")
+object_id = "Path_11"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_12" type="Node3D" parent="Whitebox" unique_id=1616925798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3073636, 0.025, 0)
+script = ExtResource("4_uxb8w")
+object_id = "Path_12"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_13" type="Node3D" parent="Whitebox" unique_id=1043477793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4802657, 0.025, -4)
+script = ExtResource("4_uxb8w")
+object_id = "Path_13"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_14" type="Node3D" parent="Whitebox" unique_id=1489109091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.473679, 0.025, -8)
+script = ExtResource("4_uxb8w")
+object_id = "Path_14"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_15" type="Node3D" parent="Whitebox" unique_id=496545167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4384017, 1.8249998, -12)
+script = ExtResource("4_uxb8w")
+mesh_edit = {
+"signature": ["box", 6, 0.2, 0.2, 90.0, 0.25],
+"version": 1,
+"vertices": PackedVector3Array(-0.49999994, 0.49999994, 0.5, 0.49999994, 0.053191487, 0.5, -0.49999994, -0.053191487, 0.5, 0.49999994, 0.053191487, 0.5, 0.49999994, -0.49999994, 0.5, -0.49999994, -0.053191487, 0.5, 0.49999994, 0.053191487, -0.5, -0.49999994, 0.49999994, -0.5, 0.49999994, -0.49999994, -0.5, -0.49999994, 0.49999994, -0.5, -0.49999994, -0.053191487, -0.5, 0.49999994, -0.49999994, -0.5, 0.49999994, 0.053191487, 0.5, 0.49999994, 0.053191487, -0.5, 0.49999994, -0.49999994, 0.5, 0.49999994, 0.053191487, -0.5, 0.49999994, -0.49999994, -0.5, 0.49999994, -0.49999994, 0.5, -0.49999994, 0.49999994, -0.5, -0.49999994, 0.49999994, 0.5, -0.49999994, -0.053191487, -0.5, -0.49999994, 0.49999994, 0.5, -0.49999994, -0.053191487, 0.5, -0.49999994, -0.053191487, -0.5, 0.49999994, 0.053191487, 0.5, -0.49999994, 0.49999994, 0.5, 0.49999994, 0.053191487, -0.5, -0.49999994, 0.49999994, 0.5, -0.49999994, 0.49999994, -0.5, 0.49999994, 0.053191487, -0.5, -0.49999994, -0.053191487, 0.5, 0.49999994, -0.49999994, 0.5, -0.49999994, -0.053191487, -0.5, 0.49999994, -0.49999994, 0.5, 0.49999994, -0.49999994, -0.5, -0.49999994, -0.053191487, -0.5)
+}
+object_id = "Path_15"
+size = Vector3(10.6, 4.7000003, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_16" type="Node3D" parent="Whitebox" unique_id=1933373268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.94689995, 0.025, -16)
+script = ExtResource("4_uxb8w")
+object_id = "Path_16"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_17" type="Node3D" parent="Whitebox" unique_id=1026731536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49058223, 0.025, -20)
+script = ExtResource("4_uxb8w")
+object_id = "Path_17"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="Path_18" type="Node3D" parent="Whitebox" unique_id=1177692018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02522085, 0.025, -24)
+script = ExtResource("4_uxb8w")
+object_id = "Path_18"
+size = Vector3(5.5, 0.1, 4.1)
+tint = Color(0.7607843, 0.7019608, 0.6039216, 1)
+
+[node name="HouseTerrace" type="Node3D" parent="Whitebox" unique_id=1396873931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -45.5)
+script = ExtResource("4_uxb8w")
+object_id = "HouseTerrace"
+size = Vector3(22, 3.8, 23)
+tint = Color(0.5529412, 0.5529412, 0.5137255, 1)
+
+[node name="Courtyard" type="Node3D" parent="Whitebox" unique_id=602951485]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, -38.5)
+script = ExtResource("4_uxb8w")
+object_id = "Courtyard"
+size = Vector3(22, 0.2, 9)
+tint = Color(0.70980394, 0.6784314, 0.59607846, 1)
+
+[node name="ApproachStep_00" type="Node3D" parent="Whitebox" unique_id=1606406703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -27.2)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_00"
+size = Vector3(3.2, 0.2, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_01" type="Node3D" parent="Whitebox" unique_id=196116103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -27.55)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_01"
+size = Vector3(3.2, 0.4, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_02" type="Node3D" parent="Whitebox" unique_id=1344141714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -27.9)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_02"
+size = Vector3(3.2, 0.6, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_03" type="Node3D" parent="Whitebox" unique_id=752789952]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -28.25)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_03"
+size = Vector3(3.2, 0.8, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_04" type="Node3D" parent="Whitebox" unique_id=799718695]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -28.6)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_04"
+size = Vector3(3.2, 1, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_05" type="Node3D" parent="Whitebox" unique_id=1440570306]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -28.95)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_05"
+size = Vector3(3.2, 1.2, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_06" type="Node3D" parent="Whitebox" unique_id=1732337006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, -29.3)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_06"
+size = Vector3(3.2, 1.4, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_07" type="Node3D" parent="Whitebox" unique_id=126427947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -29.65)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_07"
+size = Vector3(3.2, 1.6, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_08" type="Node3D" parent="Whitebox" unique_id=679392754]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -30)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_08"
+size = Vector3(3.2, 1.8000001, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_09" type="Node3D" parent="Whitebox" unique_id=1823545666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -30.35)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_09"
+size = Vector3(3.2, 2, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_10" type="Node3D" parent="Whitebox" unique_id=651544613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -30.7)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_10"
+size = Vector3(3.2, 2.2, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_11" type="Node3D" parent="Whitebox" unique_id=142041545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -31.05)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_11"
+size = Vector3(3.2, 2.4, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_12" type="Node3D" parent="Whitebox" unique_id=947584603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -31.4)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_12"
+size = Vector3(3.2, 2.6000001, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_13" type="Node3D" parent="Whitebox" unique_id=1929801488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, -31.75)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_13"
+size = Vector3(3.2, 2.8, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_14" type="Node3D" parent="Whitebox" unique_id=587402971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -32.1)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_14"
+size = Vector3(3.2, 3, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_15" type="Node3D" parent="Whitebox" unique_id=1361715760]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -32.45)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_15"
+size = Vector3(3.2, 3.2, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_16" type="Node3D" parent="Whitebox" unique_id=367142264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, -32.8)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_16"
+size = Vector3(3.2, 3.4, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_17" type="Node3D" parent="Whitebox" unique_id=1325170033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, -33.15)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_17"
+size = Vector3(3.2, 3.6000001, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_18" type="Node3D" parent="Whitebox" unique_id=882750303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, -33.5)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_18"
+size = Vector3(3.2, 3.8, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="ApproachStep_19" type="Node3D" parent="Whitebox" unique_id=812227452]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -33.85)
+script = ExtResource("4_uxb8w")
+object_id = "ApproachStep_19"
+size = Vector3(3.2, 4, 0.4)
+tint = Color(0.72156864, 0.7019608, 0.6431373, 1)
+solid = false
+
+[node name="CourtyardFence_-1" type="Node3D" parent="Whitebox" unique_id=316243944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 4.8, -34)
+script = ExtResource("4_uxb8w")
+object_id = "CourtyardFence_-1"
+size = Vector3(8, 1.6, 0.3)
+tint = Color(0.54901963, 0.5058824, 0.44313726, 1)
+
+[node name="TerraceSide_-1" type="Node3D" parent="Whitebox" unique_id=584416188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.8, 4.6, -44)
+script = ExtResource("4_uxb8w")
+object_id = "TerraceSide_-1"
+size = Vector3(0.2, 1.2, 20)
+tint = Color(0.54901963, 0.5058824, 0.44313726, 1)
+
+[node name="CourtyardFence_1" type="Node3D" parent="Whitebox" unique_id=305085862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 4.8, -34)
+script = ExtResource("4_uxb8w")
+object_id = "CourtyardFence_1"
+size = Vector3(8, 1.6, 0.3)
+tint = Color(0.54901963, 0.5058824, 0.44313726, 1)
+
+[node name="TerraceSide_1" type="Node3D" parent="Whitebox" unique_id=742059823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8, 4.6, -42.5)
+script = ExtResource("4_uxb8w")
+object_id = "TerraceSide_1"
+size = Vector3(0.2, 1.2, 17)
+tint = Color(0.54901963, 0.5058824, 0.44313726, 1)
+
+[node name="GateRock_0" type="Node3D" parent="Whitebox" unique_id=231635706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 4.85, -34)
+script = ExtResource("4_uxb8w")
+object_id = "GateRock_0"
+shape_kind = "sphere"
+size = Vector3(2.2, 2.1000001, 1.8000001)
+tint = Color(0.4509804, 0.46666667, 0.44313726, 1)
+
+[node name="GateRock_1" type="Node3D" parent="Whitebox" unique_id=1815048116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05, -34)
+script = ExtResource("4_uxb8w")
+object_id = "GateRock_1"
+shape_kind = "sphere"
+size = Vector3(2.2, 2.1000001, 1.8000001)
+tint = Color(0.4509804, 0.46666667, 0.44313726, 1)
+
+[node name="GateRock_2" type="Node3D" parent="Whitebox" unique_id=736940890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 4.85, -34)
+script = ExtResource("4_uxb8w")
+object_id = "GateRock_2"
+shape_kind = "sphere"
+size = Vector3(2.2, 2.1000001, 1.8000001)
+tint = Color(0.4509804, 0.46666667, 0.44313726, 1)
+
+[node name="RearTrail_0" type="Node3D" parent="Whitebox" unique_id=1099562469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 0.03, -34)
+script = ExtResource("4_uxb8w")
+object_id = "RearTrail_0"
+size = Vector3(3.8, 0.1, 4.5)
+tint = Color(0.70980394, 0.6666667, 0.5647059, 1)
+
+[node name="RearTrail_1" type="Node3D" parent="Whitebox" unique_id=1005067223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 0.03, -38.4)
+script = ExtResource("4_uxb8w")
+object_id = "RearTrail_1"
+size = Vector3(3.8, 0.1, 4.5)
+tint = Color(0.70980394, 0.6666667, 0.5647059, 1)
+
+[node name="RearTrail_2" type="Node3D" parent="Whitebox" unique_id=1690925473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 0.03, -42.8)
+script = ExtResource("4_uxb8w")
+object_id = "RearTrail_2"
+size = Vector3(3.8, 0.1, 4.5)
+tint = Color(0.70980394, 0.6666667, 0.5647059, 1)
+
+[node name="RearTrail_3" type="Node3D" parent="Whitebox" unique_id=1544894510]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 0.03, -47.2)
+script = ExtResource("4_uxb8w")
+object_id = "RearTrail_3"
+size = Vector3(3.8, 0.1, 4.5)
+tint = Color(0.70980394, 0.6666667, 0.5647059, 1)
+
+[node name="RearTrail_4" type="Node3D" parent="Whitebox" unique_id=1543883379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 0.03, -51.6)
+script = ExtResource("4_uxb8w")
+object_id = "RearTrail_4"
+size = Vector3(3.8, 0.1, 4.5)
+tint = Color(0.70980394, 0.6666667, 0.5647059, 1)
+
+[node name="LiftLanding" type="Node3D" parent="Whitebox" unique_id=1122798085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.7, 3.9, -53)
+script = ExtResource("4_uxb8w")
+object_id = "LiftLanding"
+size = Vector3(6.4, 0.2, 3.1000001)
+tint = Color(0.7058824, 0.7411765, 0.7294118, 1)
+
+[node name="HouseFloor" type="Node3D" parent="Whitebox" unique_id=1871579770]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, -49)
+script = ExtResource("4_uxb8w")
+object_id = "HouseFloor"
+size = Vector3(12, 0.2, 12)
+tint = Color(0.81960785, 0.7764706, 0.6862745, 1)
+
+[node name="BackWall" type="Node3D" parent="Whitebox" unique_id=123005923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, -55)
+script = ExtResource("4_uxb8w")
+object_id = "BackWall"
+size = Vector3(12.400001, 7.6, 0.3)
+tint = Color(0.85882354, 0.84313726, 0.79607844, 1)
+
+[node name="WestWall" type="Node3D" parent="Whitebox" unique_id=1242335048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 7.8, -49)
+script = ExtResource("4_uxb8w")
+object_id = "WestWall"
+size = Vector3(0.3, 7.6, 12)
+tint = Color(0.85882354, 0.84313726, 0.79607844, 1)
+
+[node name="EastWallFront" type="Node3D" parent="Whitebox" unique_id=169217986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 7.8, -46.5)
+script = ExtResource("4_uxb8w")
+object_id = "EastWallFront"
+size = Vector3(0.3, 7.6, 7)
+tint = Color(0.85882354, 0.84313726, 0.79607844, 1)
+
+[node name="EastWallBack" type="Node3D" parent="Whitebox" unique_id=1022474300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 7.8, -54.3)
+script = ExtResource("4_uxb8w")
+object_id = "EastWallBack"
+size = Vector3(0.3, 7.6, 1.4)
+tint = Color(0.85882354, 0.84313726, 0.79607844, 1)
+
+[node name="RearEntryLintel" type="Node3D" parent="Whitebox" unique_id=113688821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 9.4, -52)
+script = ExtResource("4_uxb8w")
+object_id = "RearEntryLintel"
+size = Vector3(0.3, 4.4, 3)
+tint = Color(0.85882354, 0.84313726, 0.79607844, 1)
+
+[node name="FrontWall_-1" type="Node3D" parent="Whitebox" unique_id=285717162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7, 7.8, -43)
+script = ExtResource("4_uxb8w")
+object_id = "FrontWall_-1"
+size = Vector3(4.6, 7.6, 0.3)
+tint = Color(0.87058824, 0.84705883, 0.7882353, 1)
+
+[node name="FrontWall_1" type="Node3D" parent="Whitebox" unique_id=244381091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7, 7.8, -43)
+script = ExtResource("4_uxb8w")
+object_id = "FrontWall_1"
+size = Vector3(4.6, 7.6, 0.3)
+tint = Color(0.87058824, 0.84705883, 0.7882353, 1)
+
+[node name="FrontLintel" type="Node3D" parent="Whitebox" unique_id=2038081289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.4, -43)
+script = ExtResource("4_uxb8w")
+object_id = "FrontLintel"
+size = Vector3(2.8, 4.4, 0.3)
+tint = Color(0.87058824, 0.84705883, 0.7882353, 1)
+
+[node name="FoyerPartition" type="Node3D" parent="Whitebox" unique_id=408085387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7, 5.4, -50)
+script = ExtResource("4_uxb8w")
+object_id = "FoyerPartition"
+size = Vector3(8.6, 2.8, 0.2)
+tint = Color(0.7921569, 0.8117647, 0.7882353, 1)
+
+[node name="FoyerPartitionEast" type="Node3D" parent="Whitebox" unique_id=535220556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7, 5.4, -50)
+script = ExtResource("4_uxb8w")
+object_id = "FoyerPartitionEast"
+size = Vector3(0.6, 2.8, 0.2)
+tint = Color(0.7921569, 0.8117647, 0.7882353, 1)
+
+[node name="UpperFloorEast" type="Node3D" parent="Whitebox" unique_id=1527419226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 7.9, -49)
+script = ExtResource("4_uxb8w")
+object_id = "UpperFloorEast"
+size = Vector3(8, 0.2, 12)
+tint = Color(0.81960785, 0.7764706, 0.6862745, 1)
+
+[node name="UpperFloorWest" type="Node3D" parent="Whitebox" unique_id=2047315816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, 7.9, -49)
+script = ExtResource("4_uxb8w")
+object_id = "UpperFloorWest"
+size = Vector3(0.8, 0.2, 12)
+tint = Color(0.81960785, 0.7764706, 0.6862745, 1)
+
+[node name="UpperFloorBack" type="Node3D" parent="Whitebox" unique_id=870672103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 7.9, -53.2)
+script = ExtResource("4_uxb8w")
+object_id = "UpperFloorBack"
+size = Vector3(3.2, 0.2, 3.6000001)
+tint = Color(0.81960785, 0.7764706, 0.6862745, 1)
+
+[node name="UpperFloorFront" type="Node3D" parent="Whitebox" unique_id=1431565818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 7.9, -43.45)
+script = ExtResource("4_uxb8w")
+object_id = "UpperFloorFront"
+size = Vector3(3.2, 0.2, 0.90000004)
+tint = Color(0.81960785, 0.7764706, 0.6862745, 1)
+
+[node name="IndoorStep_00" type="Node3D" parent="Whitebox" unique_id=669068993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.1, -44.2)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_00"
+size = Vector3(2.8, 0.2, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_01" type="Node3D" parent="Whitebox" unique_id=894807434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.2, -44.56)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_01"
+size = Vector3(2.8, 0.4, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_02" type="Node3D" parent="Whitebox" unique_id=793668351]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.3, -44.92)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_02"
+size = Vector3(2.8, 0.6, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_03" type="Node3D" parent="Whitebox" unique_id=1824677202]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.4, -45.28)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_03"
+size = Vector3(2.8, 0.8, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_04" type="Node3D" parent="Whitebox" unique_id=1988042412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.5, -45.64)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_04"
+size = Vector3(2.8, 1, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_05" type="Node3D" parent="Whitebox" unique_id=1316016476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.6, -46)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_05"
+size = Vector3(2.8, 1.2, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_06" type="Node3D" parent="Whitebox" unique_id=599933514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.7, -46.36)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_06"
+size = Vector3(2.8, 1.4, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_07" type="Node3D" parent="Whitebox" unique_id=967272525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.8, -46.72)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_07"
+size = Vector3(2.8, 1.6, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_08" type="Node3D" parent="Whitebox" unique_id=510854440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 4.9, -47.08)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_08"
+size = Vector3(2.8, 1.8000001, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_09" type="Node3D" parent="Whitebox" unique_id=1292919720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5, -47.44)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_09"
+size = Vector3(2.8, 2, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_10" type="Node3D" parent="Whitebox" unique_id=448022982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.1, -47.8)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_10"
+size = Vector3(2.8, 2.2, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_11" type="Node3D" parent="Whitebox" unique_id=1101505775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.2, -48.16)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_11"
+size = Vector3(2.8, 2.4, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_12" type="Node3D" parent="Whitebox" unique_id=14314847]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.3, -48.52)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_12"
+size = Vector3(2.8, 2.6000001, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_13" type="Node3D" parent="Whitebox" unique_id=627697916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.4, -48.88)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_13"
+size = Vector3(2.8, 2.8, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_14" type="Node3D" parent="Whitebox" unique_id=435702589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.5, -49.24)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_14"
+size = Vector3(2.8, 3, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_15" type="Node3D" parent="Whitebox" unique_id=1695177520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.6, -49.6)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_15"
+size = Vector3(2.8, 3.2, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_16" type="Node3D" parent="Whitebox" unique_id=892672011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.7, -49.96)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_16"
+size = Vector3(2.8, 3.4, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_17" type="Node3D" parent="Whitebox" unique_id=1922928328]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.8, -50.32)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_17"
+size = Vector3(2.8, 3.6000001, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_18" type="Node3D" parent="Whitebox" unique_id=230769941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 5.9, -50.68)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_18"
+size = Vector3(2.8, 3.8, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="IndoorStep_19" type="Node3D" parent="Whitebox" unique_id=968105973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 6, -51.04)
+script = ExtResource("4_uxb8w")
+object_id = "IndoorStep_19"
+size = Vector3(2.8, 4, 0.4)
+tint = Color(0.7411765, 0.72156864, 0.64705884, 1)
+solid = false
+
+[node name="Roof_-1" type="Node3D" parent="Whitebox" unique_id=764164312]
+transform = Transform3D(0.9335804, -0.35836795, 0, 0.35836795, 0.9335804, 0, 0, 0, 1, -3.15, 12.4, -49)
+script = ExtResource("4_uxb8w")
+object_id = "Roof_-1"
+size = Vector3(6.9, 0.2, 13)
+tint = Color(0.47058824, 0.48235294, 0.46666667, 1)
+
+[node name="Roof_1" type="Node3D" parent="Whitebox" unique_id=58469332]
+transform = Transform3D(0.9335804, 0.35836795, 0, -0.35836795, 0.9335804, 0, 0, 0, 1, 3.15, 12.4, -49)
+script = ExtResource("4_uxb8w")
+object_id = "Roof_1"
+size = Vector3(6.9, 0.2, 13)
+tint = Color(0.47058824, 0.48235294, 0.46666667, 1)
+
+[node name="Chimney" type="Node3D" parent="Whitebox" unique_id=846844622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 13.1, -53)
+script = ExtResource("4_uxb8w")
+object_id = "Chimney"
+size = Vector3(0.90000004, 2.9, 1)
+tint = Color(0.5921569, 0.59607846, 0.56078434, 1)
+
+[node name="ApproachWalkSlope" type="Node3D" parent="Whitebox" unique_id=1270036287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -30.5)
+visible = false
+script = ExtResource("4_uxb8w")
+object_id = "ApproachWalkSlope"
+shape_kind = "ramp"
+size = Vector3(3.2, 4, 7.4)
+
+[node name="IndoorWalkSlope" type="Node3D" parent="Whitebox" unique_id=1932479995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6, 6.1, -47.5)
+visible = false
+script = ExtResource("4_uxb8w")
+object_id = "IndoorWalkSlope"
+shape_kind = "ramp"
+size = Vector3(2.8, 4.2000003, 7.6)
+
+[node name="Rooms" type="Node3D" parent="." unique_id=465655655]
+metadata/godot_level_editor_content_group = "room"
+
+[node name="Mechanisms" type="Node3D" parent="." unique_id=474330169]
+metadata/godot_level_editor_content_group = "mechanism"
+
+[node name="key_chest" type="Node3D" parent="Mechanisms" unique_id=646881621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 8, -53)
+script = ExtResource("5_d6f6u")
+required_task = "1003007"
+object_id = "key_chest"
+display_name = "宝箱 · 山居正门钥匙"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@9" type="MeshInstance3D" parent="Mechanisms/key_chest" unique_id=970595418]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+material_override = SubResource("StandardMaterial3D_qlkdc")
+mesh = SubResource("BoxMesh_g7eu5")
+
+[node name="front_lock" type="Node3D" parent="Mechanisms" unique_id=337761113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -43.6)
+script = ExtResource("5_d6f6u")
+required_task = "1003008"
+object_id = "front_lock"
+display_name = "使用钥匙解锁正门"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@10" type="MeshInstance3D" parent="Mechanisms/front_lock" unique_id=44836192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_2te5n")
+mesh = SubResource("BoxMesh_fhmst")
+
+[node name="rear_lift" type="Node3D" parent="Mechanisms" unique_id=1034662037]
+process_physics_priority = -10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 0, -53)
+script = ExtResource("6_3115f")
+instance_id = "dusk_rear_lift"
+object_id = "rear_lift"
+primary_component = NodePath("LiftPlatform")
+definition = ExtResource("7_l1cck")
+
+[node name="LiftPlatform" type="Node3D" parent="Mechanisms/rear_lift" unique_id=169234983]
+script = ExtResource("8_oqt0s")
+component_type = "lift_platform"
+object_id = "lift_platform"
+display_name = "后院升降机 · 站上后按 F"
+interaction_enabled = false
+motion_seconds = 3.5
+travel_offset = Vector3(0, 3.78, 0)
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "lift_platform"
+
+[node name="foyer_button" type="Node3D" parent="Mechanisms" unique_id=347097371]
+process_physics_priority = -10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 4, -53.5)
+script = ExtResource("6_3115f")
+instance_id = "dusk_foyer_button"
+object_id = "foyer_button"
+primary_component = NodePath("Button")
+definition = ExtResource("9_3jaw7")
+
+[node name="Button" type="Node3D" parent="Mechanisms/foyer_button" unique_id=602473056]
+script = ExtResource("8_oqt0s")
+object_id = "button"
+display_name = "一层内门按钮"
+interaction_enabled = false
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "button"
+
+[node name="inner_door" type="Node3D" parent="Mechanisms" unique_id=1649337510]
+process_physics_priority = -10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, -50)
+script = ExtResource("6_3115f")
+instance_id = "dusk_inner_door"
+object_id = "inner_door"
+primary_component = NodePath("SlidingDoor")
+definition = SubResource("InnerDoorGraph")
+
+[node name="SlidingDoor" type="Node3D" parent="Mechanisms/inner_door" unique_id=1804913713]
+script = ExtResource("8_oqt0s")
+component_type = "sliding_door"
+object_id = "sliding_door"
+display_name = "一层内门"
+interaction_enabled = false
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "sliding_door"
+
+[node name="front_door" type="Node3D" parent="Mechanisms" unique_id=376832000]
+process_physics_priority = -10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -43)
+script = ExtResource("6_3115f")
+instance_id = "dusk_front_door"
+object_id = "front_door"
+primary_component = NodePath("HingedDoor")
+definition = SubResource("FrontDoorGraph")
+
+[node name="HingedDoor" type="Node3D" parent="Mechanisms/front_door" unique_id=387312048]
+script = ExtResource("8_oqt0s")
+component_type = "hinged_door"
+object_id = "hinged_door"
+display_name = "山居正门 · 需要钥匙"
+interaction_enabled = false
+locked = true
+custom_states = PackedStringArray()
+metadata/mechanism_kind = "hinged_door"
+
+[node name="NPCs" type="Node3D" parent="." unique_id=543689155]
+metadata/godot_level_editor_content_group = "npc"
+
+[node name="Guide" parent="NPCs" unique_id=1706019321 instance=ExtResource("12_pxap3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0, 44)
+object_id = "mountain_guide"
+display_name = "山路守望者"
+
+[node name="road_a1" type="Node3D" parent="NPCs" unique_id=799275923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0, 24)
+script = ExtResource("5_d6f6u")
+required_task = "1003001"
+object_id = "road_a1"
+display_name = "山道敌人 1 · F 击败"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@3" type="MeshInstance3D" parent="NPCs/road_a1" unique_id=271748219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+material_override = SubResource("StandardMaterial3D_v2u76")
+mesh = SubResource("CapsuleMesh_n2eae")
+
+[node name="road_a2" type="Node3D" parent="NPCs" unique_id=2127075530]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 21)
+script = ExtResource("5_d6f6u")
+required_task = "1003001"
+object_id = "road_a2"
+display_name = "山道敌人 2 · F 击败"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@4" type="MeshInstance3D" parent="NPCs/road_a2" unique_id=1979837730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+material_override = SubResource("StandardMaterial3D_vhc0f")
+mesh = SubResource("CapsuleMesh_n2aet")
+
+[node name="road_b1" type="Node3D" parent="NPCs" unique_id=383362587]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 0, -5)
+script = ExtResource("5_d6f6u")
+required_task = "1003002"
+object_id = "road_b1"
+display_name = "山道敌人 3 · F 击败"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@5" type="MeshInstance3D" parent="NPCs/road_b1" unique_id=1632006038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+material_override = SubResource("StandardMaterial3D_vq0ao")
+mesh = SubResource("CapsuleMesh_5gvrk")
+
+[node name="road_b2" type="Node3D" parent="NPCs" unique_id=1235255526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0, -8)
+script = ExtResource("5_d6f6u")
+required_task = "1003002"
+object_id = "road_b2"
+display_name = "山道敌人 4 · F 击败"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@6" type="MeshInstance3D" parent="NPCs/road_b2" unique_id=735522374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+material_override = SubResource("StandardMaterial3D_itk7c")
+mesh = SubResource("CapsuleMesh_u3a4o")
+
+[node name="house_e1" type="Node3D" parent="NPCs" unique_id=27731037]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -47.5)
+script = ExtResource("5_d6f6u")
+required_task = "1003006"
+object_id = "house_e1"
+display_name = "一层敌人 1 · F 击败"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@7" type="MeshInstance3D" parent="NPCs/house_e1" unique_id=1824852609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+material_override = SubResource("StandardMaterial3D_w3nr5")
+mesh = SubResource("CapsuleMesh_tnnu0")
+
+[node name="house_e2" type="Node3D" parent="NPCs" unique_id=1248350518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 4, -45)
+script = ExtResource("5_d6f6u")
+required_task = "1003006"
+object_id = "house_e2"
+display_name = "一层敌人 2 · F 击败"
+interaction_radius = 2.1
+
+[node name="@MeshInstance3D@8" type="MeshInstance3D" parent="NPCs/house_e2" unique_id=385826177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+material_override = SubResource("StandardMaterial3D_4ta5x")
+mesh = SubResource("CapsuleMesh_u5b15")
+
+[node name="奶牛" parent="NPCs" unique_id=214552605 instance=ExtResource("13_uxb8w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 0, -8.400001)
+enemy_instance_id = "object_0ae90d4345f28a656ff45e83"
+metadata/godot_level_editor_entity = SubResource("Resource_oqt0s")
+metadata/_edit_group_ = true
+
+[node name="EntityProperties" type="Node3D" parent="NPCs/奶牛" unique_id=235097246]
+process_mode = 3
+script = ExtResource("16_l1cck")
+
+[node name="奶牛2" parent="NPCs" unique_id=728936605 instance=ExtResource("13_uxb8w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 0, -6.6)
+enemy_instance_id = "object_91dcfd0900739113453319a2"
+metadata/godot_level_editor_entity = SubResource("Resource_3jaw7")
+metadata/_edit_group_ = true
+
+[node name="EntityProperties" type="Node3D" parent="NPCs/奶牛2" unique_id=68496497]
+process_mode = 3
+script = ExtResource("16_l1cck")
+
+[node name="Sign" type="Label3D" parent="." unique_id=1302640135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2, -33.7)
+pixel_size = 0.008
+billboard = 1
+modulate = Color(1, 0.94509804, 0.79607844, 1)
+text = "院门堵塞
+→ 右侧绕行后院升降机"
+font_size = 40
+outline_size = 8
+
+[node name="PlayerSpawn" type="Marker3D" parent="." unique_id=1327257039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 48)
+script = ExtResource("14_q802k")
+object_id = "player_spawn"
+
+[node name="@Label3D@2" type="Label3D" parent="." unique_id=445927386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 44)
+pixel_size = 0.008
+billboard = 1
+modulate = Color(1, 0.94509804, 0.79607844, 1)
+text = "黄昏山居
+与守望者交谈，寻找山上的钥匙"
+font_size = 40
+outline_size = 8
+
+[node name="blocked_gate" type="Area3D" parent="." unique_id=1833485666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, -32.8)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("15_ss06l")
+tint = Color(0.7411765, 0.64705884, 0.43529412, 1)
+object_id = "blocked_gate"
+extent = Vector3(5, 3, 3)
+
+[node name="rear_entry" type="Area3D" parent="." unique_id=591484539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 4, -52)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("15_ss06l")
+tint = Color(0.7411765, 0.64705884, 0.43529412, 1)
+object_id = "rear_entry"
+extent = Vector3(2.5, 2.8, 2.4)
+
+[node name="@Label3D@11" type="Label3D" parent="." unique_id=1861272622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1, 6.4, -53)
+pixel_size = 0.008
+billboard = 1
+modulate = Color(1, 0.94509804, 0.79607844, 1)
+text = "后院升降机 ↑
+站上平台后按 F"
+font_size = 40
+outline_size = 8
+
+[node name="@Label3D@12" type="Label3D" parent="." unique_id=2040702287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 6.5, -44.2)
+pixel_size = 0.008
+billboard = 1
+modulate = Color(1, 0.94509804, 0.79607844, 1)
+text = "二层宝箱 ↑"
+outline_size = 8
+
+[node name="@Label3D@13" type="Label3D" parent="." unique_id=1965046929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.4, -42.7)
+pixel_size = 0.008
+billboard = 1
+modulate = Color(1, 0.94509804, 0.79607844, 1)
+text = "正门 · 钥匙解锁"
+outline_size = 8

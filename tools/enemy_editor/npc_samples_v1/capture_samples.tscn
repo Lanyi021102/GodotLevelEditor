@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://tools/enemy_editor/npc_samples_v1/capture_samples.gd" id="1"]
+[node name="NPCSampleCapture" type="Node"]
+script = ExtResource("1")

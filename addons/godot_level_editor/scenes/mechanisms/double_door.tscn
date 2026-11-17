@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d1alrehaaaf8"]
+
+[ext_resource type="Script" uid="uid://cx88rnty8tuha" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/assembly.gd" id="1_qwa5p"]
+[ext_resource type="Resource" uid="uid://cckawfgi3f4vq" path="res://addons/godot_level_editor/scenes/mechanisms/double_door.graph.tres" id="2_lhkxs"]
+[ext_resource type="Script" uid="uid://cxhpgtpcvnbf8" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/rotating_door.gd" id="3_yro1v"]
+
+[sub_resource type="Curve" id="Curve_kf22m"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="DoubleDoor" type="Node3D" unique_id=950095569]
+process_physics_priority = -10
+script = ExtResource("1_qwa5p")
+instance_id = "door_v2_double_door"
+object_id = "double_door"
+primary_component = NodePath("Door")
+definition = ExtResource("2_lhkxs")
+
+[node name="Door" type="Node3D" parent="." unique_id=174137243]
+script = ExtResource("3_yro1v")
+door_type = 1
+motion_curve = SubResource("Curve_kf22m")
+metadata/mechanism_kind = "rotating_door"

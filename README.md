@@ -1,113 +1,47 @@
 # GodotLevelEditor
 
-源码仓库：[Lanyi021102/GodotLevelEditor](https://github.com/Lanyi021102/GodotLevelEditor)（公开）。
+Godot 4.7.1 编辑器插件。包含关卡轮盘、白盒与点线面辅助、机关、NPC、台本、任务、天空编辑器，以及角色、第三人称镜头、HUD 和基础试玩。地图使用 Godot 原生场景树、3D 视口、场景文件、保存和 F6 运行。
 
-第一批机关素材已提供按钮、拉杆、压力板、滑动门、旋转门、升降台和交互终端，机关／任务／常驻关卡图共用状态与动作节点。在“我的机关”选择素材；打开 `scenes/levels/mechanism_whitebox_v1.tscn` 后 F6 可试玩三个组合。说明见 [机关素材与状态节点](docs/mechanism_editor/whitebox_v1/README.md)。
+## 安装插件
 
-面向关卡新人的白盒编辑工程，项目名称为 GodotLevelEditor，使用 Godot 4.7.1。保留关卡与世界、机关、敌人状态机、台本与任务四套编辑器，以及正常比例角色、移动、跑步、跳跃、第三人称镜头和 F 交互。时间暂停、回溯／快进、录像分身、轨迹、能量及能力解锁系统已删除；后续玩法重新设计。
+在 [Releases](https://github.com/Lanyi021102/GodotLevelEditor/releases) 下载 `GodotLevelEditor-版本号.zip`，将其中的 `addons/godot_level_editor` 放入自己的 Godot 工程。等待导入后，在“项目设置 → 插件”启用 **GodotLevelEditor**。只需启用这一项；内部模块由它管理。
 
-当前入口：`scenes/main.tscn`，使用 `scenes/levels/whitebox_world.tscn`：一个 20 × 20 m 的空白工作区、角色、镜头和可编辑 HUD，没有预设机关谜题、守卫、剧情或任务。采用晴日微缩光照 V2，光照 V1 继续独立保留。旧连续世界、用户房间、机关及台本资源保留，可按需打开编辑。
+安装包包含五种独立机关、13 个示例 NPC、模型动画、光照和运行组件，不包含作者地图、个人任务／对白及开发验证资料。GitHub 自动生成的 Source code 是开发工程快照，其中可以包含作者地图；它与插件安装 ZIP 不同。
 
-默认白盒与 3C 测试物体使用 [米制网格材质](docs/whitebox_grid/README.md)：1 m 粗线、0.5 m 中线、0.1 m 细线，缩放后保持真实尺度。
+空工程首次启用会建立起始场景；直接按 F5 或点播放即可操控默认角色。已有工程主场景保留。
 
-当前房间与 3C 岛面底板向下加厚到 3.6 m，行走面保持原高度；岛外空白区域显示流动云雾。景深仅在运行游戏时启用，编辑关卡时保持清晰。已有编辑器会话若持有旧资源，保存后重新打开项目刷新。
+完整步骤见 [插件安装与更新](docs/wiki/plugin-install.md)。
 
-## 运行与编辑
+## 打开开发工程
 
-用 Godot 打开本目录，F5 运行当前项目；F6 运行选中的关卡或组件。也可双击 `启动项目.command`。
+使用 Godot 项目管理器打开根目录 `project.godot`；macOS 也可双击 `启动项目.command`。F5 运行主场景，F6 运行当前关卡。独立编辑窗口由顶部 GodotLevelEditor 或“项目 → 工具 → 打开 GodotLevelEditor”打开。
 
-大世界关卡可直接 F6 试玩：运行时自动载入现有角色、第三人称镜头和 HUD，使用该关卡的玩家出生点；编辑时只保存关卡内容。F5/F6 期间独立编辑窗口保持打开。切到编辑器会释放游戏鼠标，点击游戏画面恢复角色操作。
+```text
+addons/godot_level_editor/   插件本体、内置素材、空白模板、运行组件
+content/                    作者作品：地图、配表、任务图和个人素材
+project.godot               普通 Godot 工程设置
+icon.svg                    开发工程图标
+docs/                       Wiki、接口和验证记录
+tools/                      开发检查、自动打包及 Wiki 工具
+.github/workflows/          GitHub 自动构建与发布
+```
 
-在关卡或房间源场景的原生 3D 工具栏点击 **呼出轮盘**，或短按鼠标侧键／反引号键（Esc 下方）呼出，再按一次取消。悬停选择分类，NPC、机关、Room 点击后进入“关卡常驻／任务对象”二级菜单；选好后在地面左键放置。白盒用滚轮切换形状，“全部”可搜索素材。放置沿用编辑步长、R 旋转 15°、原生撤销重做，右键／Esc 结束。内容直接加入当前关卡，按类别组织；选择实例可在原生检查器修改模型、阵营、默认动作、任务归属或 Room 尺寸。详见 [轮盘与实例属性](docs/level_editor/quick_add_v2_2026-11-15/README.md)。
+只有 `addons/godot_level_editor/` 进入插件 ZIP。GitHub 源码与本地使用同一插件目录结构，无需发布时搬运或改写资源路径。
 
-原生 3D 工具栏还提供“选中面／选中线／选中点”；操作轴随所选元素定位，取消后恢复物体轴。右侧步长可直接填写，预设 0.1／0.5／1，同步移动与轮盘放置。详见 [选择工具与步长](docs/level_editor/selection_tools_2026-11-16/validation.md)。
+## 新建与编辑地图
 
-| 制作内容 | 编辑入口 |
-|---|---|
-| 房间与白盒摆放 | Godot 原生 3D 视口与白盒物件库 |
-| 关卡目录与常驻关卡逻辑 | 独立“GodotLevelEditor”窗口：关卡 |
-| 机关组件与节点图 | 独立窗口：机关 |
-| 敌人状态机 | 独立窗口：敌人 |
-| 台本、对话组与任务 | 独立窗口：台本 / 任务（事件与任务、任务图） |
-| HUD 布局 | `scenes/hud.tscn` 的 2D 视口 |
-| HUD 样式 | `resources/ui/hud_theme.tres` |
+在 Godot 文件系统中找到 `addons/godot_level_editor/templates/empty_level.tscn`，右键选择“新建继承场景”，使用 Godot“场景 → 另存为”保存到 `content/scenes/levels/`，或工程中其他自选目录。不要直接覆盖插件内置模板。
 
-关卡、机关和 NPC 的一级入口统一先显示“我的关卡／我的机关／我的NPC”。单击卡片查看详情，双击或点击“进入编辑”后才进入对应编辑页；编辑中可用二级页签返回目录或继续当前资源。机关目录读取可编辑的机关组合，NPC 目录读取现有状态机定义；新建入口也在目录中。
+使用原生场景树与 3D 视口编辑。工具栏“呼出轮盘”、白盒、点线面和步长继续可用。使用 Godot 原生保存、复制和 F6 试玩；独立窗口的“关卡”页只编辑当前场景的常驻逻辑，不再提供“我的关卡”卡片目录或地图删除入口。首次保存关卡时登记稳定 ID，供任务选择所属关卡。
 
-大世界关卡源位于 `scenes/levels/`，房间素材位于 `scenes/level_editor/rooms/`，机关源位于 `scenes/mechanisms/`，敌人定义位于 `resources/enemies/`。用户自建房间和机关继续保留。
+默认作品入口是 `content/scenes/main.tscn`。地图在 `content/scenes/levels/`，配表在 `content/tables/`，任务图在 `content/resources/task_graphs/`。迁移保留已有关卡、任务、对象 ID 与资源 UID。
 
-## 操作
+WASD 移动，Shift 跑步，空格跳跃，F 交互；鼠标转动镜头，右键拉近，V 换肩，中键回正。Esc 释放鼠标，点击游戏画面恢复操作。基础试玩不保存长期进度。
 
-WASD 移动；Shift 跑步；空格跳跃；F 交互。鼠标转动镜头；右键按住拉近观察，V 切换左右肩，滚轮调距离，中键回到角色背后。Esc 释放鼠标，点击场景恢复控制。掉落后自动复位。Q/E/R/T 和 HUD 时间暂停按钮已移除。
+## 发布和许可
 
-3C 测试：打开 `scenes/3cplayground.tscn` 后 F6。包括跑道、高低箱、跳台、窄梁与拉杆门。调参与基础试玩规则见 [3C Playground](docs/3cplayground/README.md)。
+推送 `plugin-vX.Y.Z` 标签后，GitHub Actions 自动打包、在空工程验证安装／更新／试玩，再创建 Release 并附上 ZIP 与 SHA-256 校验文件。普通源码推送不会创建 Release。也可在 Actions 手动试打包，仅生成构建产物。见 [插件构建与发布](docs/wiki/development/plugin-release.md)。
 
-默认白盒试玩不读写长期进度。自行接入世界／任务后可开启根节点 `persist_progress`；存档仍使用 `user://godot_level_editor_world_progress.json`，旧 abilities 字段忽略，不改用户已有存档。
+原创代码采用 [MIT](LICENSE)，第三方 Quaternius 角色与动画保留各自 CC0 许可及来源证据。详见插件内 `THIRD_PARTY.md`。
 
-## 文档
-
-- [Git 与 Mac / Windows 双机协作](docs/tools/GIT_COLLABORATION.md)
-- [工具共同规范](docs/tools/BLUEPRINT_TOOLCHAIN.md)
-- [关卡与世界](docs/level_editor/README.md)
-- [机关](docs/mechanism_editor/README.md)
-- [敌人](docs/enemy_editor/README.md)
-- [HUD](docs/hud/README.md)
-- [角色源资源](docs/character_import/README.md)
-- [白模空岛光照 V1](docs/lighting/cloud_island_v1/README.md)
-- [晴日微缩光照 V2](docs/lighting/sunlit_miniature_v2/README.md)
-- [当前游戏设计与实现边界](docs/GDD.md)
-- [时间管理局剧本建议稿](docs/narrative/TIME_BUREAU_STORY.md)
-- [潜行、社会互动与三类关卡调研](docs/research/STEALTH_SYSTEMS_2026-11-05.md)
-- [首案白盒设计建议](docs/narrative/FIRST_CASE_WHITEBOX.md)
-- [清理及验证记录](docs/cleanup/README.md)
-
-角色源资源的许可与来源信息保存在 `assets/characters/quaternius_base/`。编辑器节点的分类色表示节点职责，保留其操作含义。
-
-## 台本与任务 V1 · 2026-11-12
-
-台本和任务已移入下述统一编辑窗口，配套运行组件保留。主入口不再接入预设报到剧情。完整清理与验证见 [白盒转型记录](docs/cleanup/WHITEBOX_2026-11-12.md)。
-
-## 统一编辑窗口与 XLSX · 2026-11-12
-
-顶部“GodotLevelEditor”或“项目 → 工具 → 打开 GodotLevelEditor”打开可跨屏使用的独立窗口。台本与事件任务分别存入配表/dialogues.xlsx、配表/events.xlsx，运行时直接读取；事件有独立开始条件，内部任务依序推进，ID 分配后固定。原有资源保留。操作、接口和验证见 [套件说明](docs/godot_level_editor_suite/README.md)。
-
-## 编辑入口更新 · 2026-11-13
-
-项目、插件目录、脚本类、分组、调试通道与场景节点命名已统一为 GodotLevelEditor。独立窗口删除三维视口镜像，场景编辑继续使用 Godot 原生视口；顶部为关卡、任务、机关、台本、NPC、其他编辑器入口，矩形蓝色按钮，选中深蓝。任务表和任务图在任务分类下切换。
-
-## 大世界关卡与任务绑定 · 2026-11-13
-
-关卡入口分为“我的关卡”和“关卡编辑”；编辑中分别提供玩家出生点、Layout 白盒、常驻 Room、常驻机关、常驻 NPC 和关卡图。所有大世界关卡统一存于 `scenes/levels/`，`配表/levels.xlsx` 保存稳定数字 ID、关卡名、中文名、场景路径、备注和缩略图路径。原有白盒、连续世界与逻辑示例已经移动到该目录，保留场景 UID 及用户内容；房间与机关素材仍保留原位置。
-
-仓库素材拖入 Godot 原生 3D 视口，已放置列表可选择实例并在原生检查器修改。出生点使用玩家 Marker，主入口启动及复位读取其保存的位置与朝向。
-
-事件不绑定关卡；每个任务必须且只能绑定一个关卡，同一事件中的任务可以跨不同关卡。新建任务通过独立窗口填写任务名、中文名和可搜索的关卡选项，数字 ID 自动分配。所属关卡列显示中文名，事件行汇总其全部任务涉及的关卡。运行时只执行属于当前关卡的当前任务；切换关卡可通过执行器 `bind_world` 接入，任务顺序及进度跨关卡保留。默认空白主入口仍不预装样例任务。
-
-## 浅色专业界面与节点网格 · 2026-11-15
-
-独立编辑窗口统一为冷灰背景、白色面板与蓝色强调，缩紧导航和关卡卡片，详情栏在窄窗口中保持完整。任务、机关、关卡与 NPC 节点图均增加可见方格、主网格和画布边框。节点继续保留职责及端口类型色。此次仅修改编辑器视觉和布局，现有配表、用户资源、图数据及运行逻辑保持。详见 [界面验证与截图](docs/godot_level_editor_suite/visual_refresh_2026-11-15/validation.md)。
-
-## 箱庭关卡工作流 · 2026-11-15
-
-一个箱庭对应一个完整的大关卡 `.tscn`，地形、建筑、通路、Room 区域、机关和 NPC 都在同一个三维场景中摆放。空间素材统一由三维轮盘管理；旧房间接驳页已移除，常驻关卡图及任务接取规则见下文。新建 Room 不要求空间连线或起始房间。旧连续世界及其资源保留兼容，不迁移或覆盖用户内容。接口与验证见 [箱庭工作流验证](docs/godot_level_editor_suite/sandbox_levels_2026-11-15/validation.md)。
-
-## 天空编辑器 V1 · 2026-11-15
-
-独立窗口新增“天空”：程序天空、HDRI 导入、固定时刻／手动太阳、补光与固定曝光、云层高度与云量、距离雾、预设保存／复制、临时预览和中性检查。关卡信息可选择天空预设，绑定保存于关卡场景，F5/F6 共用。旧关卡保留现有光照，新关卡默认 V2 模板；没有新增云海功能。操作与验证见 [天空编辑器](docs/sky_editor/README.md)。
-
-
-## 通用任务节点 · 2026-11-15
-
-任务图支持通用背包与穿着检查、条件组合、变量、等待、并行／汇合、子目标、失败与检查点、可复用子图。新增节点支持中文与英文搜索。示例、接口和验证见 [通用任务节点](docs/narrative_editor/task_nodes_2026-11-15/README.md)。
-
-## 常驻关卡图与接取任务 · 2026-11-15
-
-关卡编辑现在直接显示整关常驻逻辑图，删除与三维轮盘重复的五类素材仓库。空间内容由轮盘添加和编辑。关卡图与任务图共用触发、判断、操作、等待和连线规则；关卡图不受任务是否接取影响，任务图仅在所属事件被接取／启动后按序运行。
-
-关卡图的 NPC 互动只绑定当前场景已放置的常驻 NPC，不提供任务专属 NPC。新增“接受任务”操作，在右侧“备注 · 接受任务”中搜索并选择当前关卡的事件首项任务；接取首项后，后续任务自动接续。重复接取走失败端口。对话、任务和常驻逻辑共用执行服务，F6 自动接入，不需要在场景里额外放执行器。
-
-接口、节点范围、测试和截图见 [常驻关卡图](docs/level_editor/level_logic_2026-11-15/README.md)。
-
-## 新增物件自动分组 · 2026-11-16
-
-之后通过编辑器添加的 NPC、Room、机关和关卡白盒，分别归入场景根下的空父节点 NPC、Room、机关、关卡白盒；首次自动创建，后续复用。支持轮盘、素材拖放、侧栏添加和复制，并可撤销／重做及保存重开。已有物件保留原位。详见 [自动分类验证](docs/level_editor/content_groups_2026-11-16/validation.md)。
+[在线 Wiki](https://lanyi021102.github.io/GodotLevelEditor/) · [功能地图](docs/wiki/features.md) · [迁移与验证](docs/cleanup/plugin_2026-11-17/validation.md)

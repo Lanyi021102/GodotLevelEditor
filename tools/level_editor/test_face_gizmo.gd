@@ -1,7 +1,7 @@
 @tool
 extends RefCounted
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const EDIT := preload("res://addons/godot_level_editor/face_edit.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const EDIT := preload("res://addons/godot_level_editor/modules/godot_level_editor/face_edit.gd")
 var checks := 0
 var failures := 0
 

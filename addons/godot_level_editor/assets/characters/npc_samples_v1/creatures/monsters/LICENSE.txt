@@ -1,0 +1,14 @@
+Textured Cute Monster Pack — Quaternius
+
+This selected material was obtained from the original author’s OpenGameArt release:
+https://opengameart.org/content/textured-cute-monster-pack
+Author/uploader: quaternius
+Publication date shown by release page: 2021-06-18
+License shown by the release page: CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The downloaded archive cute_animated_monsters_-_aug_2020.zip does not contain a separate license text. The source release page is preserved at source/author_release_page.html, including its CC0 license link and author identification.
+
+These are the 2020/2021 OpenGameArt CC0 release files, not a newly distributed Quaternius Asset License (QAL) bundle from the current author website.
+
+Selected original files: Yeti.fbx, Cactus.fbx, Cyclops.fbx, plus the three matching *_Texture.png images. No ownership or authorship of these works is claimed by this project.

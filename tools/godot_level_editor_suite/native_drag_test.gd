@@ -1,18 +1,18 @@
 @tool
 extends RefCounted
-const GROUPS := preload("res://addons/godot_level_editor/scene_groups.gd")
+const GROUPS := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_groups.gd")
 static func run(suite: EditorPlugin) -> void:
 	var tree := suite.get_tree()
 	tree.create_timer(60, true).timeout.connect(func(): tree.quit(2))
 	await tree.create_timer(0.5, true).timeout
 	var path := "res://tools/godot_level_editor_suite/native_drag_probe_%d.tscn" % OS.get_process_id()
-	var source: Node3D = load("res://addons/godot_level_editor/runtime/world.gd").new()
+	var source: Node3D = load("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd").new()
 	source.name = "DragProbe"
 	source.world_id = "drag_probe"; source.start_room_id = ""
-	source.topology = load("res://addons/godot_level_editor/runtime/level_graph.gd").new(); source.topology.graph_kind = "topology"
-	source.events = load("res://addons/godot_level_editor/runtime/level_graph.gd").new()
-	preload("res://addons/godot_level_editor/scene_factory.gd").block(source, "floor", Vector3(20, 0.4, 20), Vector3(0, -0.2, 0))
-	preload("res://addons/godot_level_editor/scene_factory.gd").save_scene(source, path)
+	source.topology = load("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd").new(); source.topology.graph_kind = "topology"
+	source.events = load("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd").new()
+	preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd").block(source, "floor", Vector3(20, 0.4, 20), Vector3(0, -0.2, 0))
+	preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd").save_scene(source, path)
 	source.free()
 	EditorInterface.get_resource_filesystem().update_file(path)
 	for i in 10: await tree.process_frame
@@ -40,7 +40,7 @@ static func run(suite: EditorPlugin) -> void:
 	suite.window.hide()
 	main.grab_focus()
 	await tree.create_timer(0.3, true).timeout
-	var assets := preload("res://addons/godot_level_editor/asset_catalog.gd")
+	var assets := preload("res://addons/godot_level_editor/modules/godot_level_editor/asset_catalog.gd")
 	for category in assets.CATEGORIES:
 		if EditorInterface.get_edited_scene_root() != root:
 			print("WAREHOUSE NATIVE DROP: fixture switched unexpectedly to ", EditorInterface.get_edited_scene_root().scene_file_path)
@@ -104,14 +104,15 @@ static func run(suite: EditorPlugin) -> void:
 	var npc_group := GROUPS.find_group(root, "npc")
 	var npc: Node3D = npc_group.get_child(0)
 	EditorInterface.get_selection().clear(); EditorInterface.get_selection().add_node(npc)
-	editor._duplicate_spatial()
+	await load("res://tools/level_editor/test_qa_identity_delete.gd").new().native_duplicate(editor, npc)
 	for i in 3: await tree.process_frame
 	var npc_copy: Node3D = EditorInterface.get_selection().get_selected_nodes()[0]
-	var copy_ok: bool = npc_copy != npc and npc_copy.get_parent() == npc_group and npc_copy.object_id != npc.object_id and npc_copy.get_node("EntityProperties").owner == root
+	var id_key := "object_id" if npc.get("object_id") is String else "enemy_instance_id"
+	var copy_ok: bool = npc_copy != npc and npc_copy.get_parent() == npc_group and npc_copy.get(id_key) != npc.get(id_key) and npc_copy.get_node("EntityProperties").owner == root
 	var copy_path := root.get_path_to(npc_copy)
 	var packed := PackedScene.new(); var pack_error := packed.pack(root)
 	var restored := packed.instantiate()
-	copy_ok = copy_ok and pack_error == OK and restored.has_node(copy_path) and restored.get_node(copy_path).object_id == npc_copy.object_id and restored.get_node(copy_path).has_node("EntityProperties")
+	copy_ok = copy_ok and pack_error == OK and restored.has_node(copy_path) and restored.get_node(copy_path).get(id_key) == npc_copy.get(id_key) and restored.get_node(copy_path).has_node("EntityProperties")
 	restored.free()
 	undo.undo(); copy_ok = copy_ok and not npc_copy.is_inside_tree()
 	undo.redo(); copy_ok = copy_ok and npc_copy.is_inside_tree() and npc_copy.get_parent() == npc_group
@@ -131,7 +132,7 @@ static func run(suite: EditorPlugin) -> void:
 		main.get_texture().get_image().save_png(directory + "/自动分组_原生编辑器.png")
 	editor.radial_tool.recent = recent_before
 	EditorInterface.get_editor_settings().set_project_metadata(editor.radial_tool.METADATA, "recent", recent_before)
-	EditorInterface.open_scene_from_path("res://scenes/main.tscn")
+	EditorInterface.open_scene_from_path("res://content/scenes/main.tscn")
 	for i in 10: await tree.process_frame
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	print("WAREHOUSE NATIVE DROP: ", checks, " checks, ", failures, " failures")

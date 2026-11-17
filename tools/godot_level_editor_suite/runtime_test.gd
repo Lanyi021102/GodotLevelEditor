@@ -1,8 +1,8 @@
 extends Node
-const XLSX := preload("res://addons/godot_level_editor_suite/runtime/xlsx.gd")
-const LIB := preload("res://addons/godot_level_editor_narrative/runtime/dialogue_library.gd")
-const CATALOG := preload("res://addons/godot_level_editor_suite/runtime/event_catalog.gd")
-const TASK := preload("res://addons/godot_level_editor_narrative/runtime/task_definition.gd")
+const XLSX := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/xlsx.gd")
+const LIB := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/dialogue_library.gd")
+const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
+const TASK := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd")
 var checks := 0
 var failed := 0
 var paths: Array[String] = []
@@ -31,7 +31,7 @@ func graph(task: Dictionary, held := false) -> void:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().create_timer(35, true).timeout.connect(func(): get_tree().quit(2))
-	var source := LIB.read_xlsx("res://配表/dialogues.xlsx")
+	var source := LIB.read_xlsx("res://content/tables/dialogues.xlsx")
 	check(source.errors.is_empty(), "migrated dialogue XLSX reads all five sheets")
 	if not source.errors.is_empty(): print(source.errors); get_tree().quit(1); return
 	check(not source.library.comment_by_id("reception_intro").is_empty(), "migration preserves existing dialogue and comment IDs")
@@ -139,7 +139,7 @@ func _ready() -> void:
 	director.publish_event("finish_" + str(away_task.task_id))
 	await physics(3)
 	check(director.event_states.get(cross_event.event_id) == "active", "signals from the wrong level cannot advance the task")
-	var other_world: Node = load("res://scenes/levels/whitebox_world.tscn").instantiate()
+	var other_world: Node = load("res://content/scenes/levels/whitebox_world.tscn").instantiate()
 	session.add_child(other_world)
 	await physics(2)
 	check(director.bind_world(other_world), "director can attach to a newly entered level")
@@ -186,9 +186,14 @@ func _ready() -> void:
 	interact.action = "interact"
 	interact.pressed = true
 	Input.parse_input_event(interact)
+	# Physics steps can share a render frame. Keep the press immutable until input
+	# dispatch has run, and send a distinct release event rather than mutating it.
+	await frames(2)
 	await physics(2)
-	interact.pressed = false
-	Input.parse_input_event(interact)
+	var release_interact := InputEventAction.new()
+	release_interact.action = "interact"
+	release_interact.pressed = false
+	Input.parse_input_event(release_interact)
 	await frames(3)
 	check(authored_director.dialogue.is_active(), "player interaction input reaches ShowDialog through the authored task graph")
 	check(not authored_director.objective_label.visible and not npc.prompt.visible, "dialogue hides task and NPC overlays while displaying subtitles")

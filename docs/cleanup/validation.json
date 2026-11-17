@@ -1,7 +1,7 @@
 {
   "date": "2026-11-02",
   "engine": "Godot 4.7.1",
-  "main_scene": "res://scenes/main.tscn",
+  "main_scene": "res://content/scenes/main.tscn",
   "backup": "/Users/lanyi/branch_cleanup_backups/branch_before_cleanup_2026-11-02_134233.zip",
   "removed_source_files": 289,
   "pruned_generated_cache_files": 88,

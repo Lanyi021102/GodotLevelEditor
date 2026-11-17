@@ -1,0 +1,193 @@
+[gd_resource type="Resource" script_class="GodotLevelEditorLevelGraph" format=3 uid="uid://c71wqb2q5xovc"]
+
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd" id="1_1bbok"]
+
+[resource]
+script = ExtResource("1_1bbok")
+graph_id = "demo_events"
+nodes = Array[Dictionary]([{
+"id": "begin",
+"kind": "start",
+"label": "游戏开始时",
+"params": {}
+}, {
+"id": "send",
+"kind": "emit_event",
+"label": "发送事件",
+"params": {
+"key": "教学开始"
+}
+}, {
+"id": "received",
+"kind": "event_received",
+"label": "收到事件时",
+"params": {
+"key": "教学开始",
+"once": true
+}
+}, {
+"id": "intro",
+"kind": "objective",
+"label": "更新玩家目标",
+"params": {
+"text": "示例会检查玩家是否持有样例钥匙。进入蓝框 Room 触发判断；红区触发击杀。"
+}
+}, {
+"id": "enter",
+"kind": "room_enter",
+"label": "玩家进入房间时",
+"params": {
+"once": false,
+"room": "demo_room"
+}
+}, {
+"id": "key",
+"kind": "has_item",
+"label": "玩家是否解锁道具",
+"params": {
+"key": "sample_key"
+}
+}, {
+"id": "if_key",
+"kind": "branch",
+"label": "如果条件成立",
+"params": {}
+}, {
+"id": "open_switch",
+"kind": "set_switch",
+"label": "打开／关闭开关",
+"params": {
+"enabled": true,
+"object": "demo_room/switch"
+}
+}, {
+"id": "patrol",
+"kind": "enemy_patrol",
+"label": "敌人开始巡逻",
+"params": {
+"object": "demo_room/guard"
+}
+}, {
+"id": "success",
+"kind": "objective",
+"label": "更新玩家目标",
+"params": {
+"text": "有钥匙：开关已开启，敌人开始巡逻，门会升起。红区可以测试击杀与玩家状态。"
+}
+}, {
+"id": "no_key",
+"kind": "objective",
+"label": "更新玩家目标",
+"params": {
+"text": "没有样例钥匙，开关保持关闭。"
+}
+}, {
+"id": "danger",
+"kind": "region_enter",
+"label": "玩家进入触发区域时",
+"params": {
+"object": "demo_room/danger",
+"once": false
+}
+}, {
+"id": "kill",
+"kind": "kill_player",
+"label": "击杀玩家",
+"params": {
+"reason": "进入危险触发区"
+}
+}, {
+"id": "dead",
+"kind": "objective",
+"label": "更新玩家目标",
+"params": {
+"text": "玩家已被击杀。按 R 重新开始；编辑器可查看节点执行原因。"
+}
+}, {
+"id": "alive",
+"kind": "player_state",
+"label": "检测玩家当前状态",
+"params": {
+"state": "alive"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "begin",
+"from_port": "then",
+"id": "edge_begin_send",
+"to": "send",
+"to_port": "run"
+}, {
+"from": "received",
+"from_port": "then",
+"id": "edge_received_intro",
+"to": "intro",
+"to_port": "run"
+}, {
+"from": "enter",
+"from_port": "then",
+"id": "edge_enter_if_key",
+"to": "if_key",
+"to_port": "run"
+}, {
+"from": "key",
+"from_port": "value",
+"id": "edge_key_if_key",
+"to": "if_key",
+"to_port": "condition"
+}, {
+"from": "if_key",
+"from_port": "yes",
+"id": "edge_if_key_open_switch",
+"to": "open_switch",
+"to_port": "run"
+}, {
+"from": "if_key",
+"from_port": "no",
+"id": "edge_if_key_no_key",
+"to": "no_key",
+"to_port": "run"
+}, {
+"from": "open_switch",
+"from_port": "then",
+"id": "edge_open_switch_patrol",
+"to": "patrol",
+"to_port": "run"
+}, {
+"from": "patrol",
+"from_port": "then",
+"id": "edge_patrol_success",
+"to": "success",
+"to_port": "run"
+}, {
+"from": "danger",
+"from_port": "then",
+"id": "edge_danger_kill",
+"to": "kill",
+"to_port": "run"
+}, {
+"from": "kill",
+"from_port": "then",
+"id": "edge_kill_dead",
+"to": "dead",
+"to_port": "run"
+}])
+positions = {
+"alive": Vector2(20, 2440),
+"begin": Vector2(20, 20),
+"danger": Vector2(20, 2080),
+"dead": Vector2(1060, 2080),
+"enter": Vector2(20, 840),
+"if_key": Vector2(520, 840),
+"intro": Vector2(520, 1680),
+"key": Vector2(20, 1240),
+"kill": Vector2(520, 2080),
+"no_key": Vector2(1060, 880),
+"open_switch": Vector2(1060, 1280),
+"patrol": Vector2(1560, 1280),
+"received": Vector2(20, 420),
+"send": Vector2(520, 1260),
+"success": Vector2(2060, 1280)
+}
+view_scroll = Vector2(-25, 160)
+view_zoom = 0.7

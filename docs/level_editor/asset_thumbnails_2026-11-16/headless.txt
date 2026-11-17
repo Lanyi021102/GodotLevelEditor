@@ -1,0 +1,152 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started 正在注册全局类…… (10 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   9% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  45% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  54% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | 正在重新打开场景……[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | 正在加载中央编辑器布局……[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | 正在加载插件窗口布局……[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | 编辑器布局就绪。[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+QUICK ADD viewport: (528, 461) container=SubViewportContainer size=(528.0, 461.0)
+[PASS] shared catalog exposes all sixteen existing whitebox shapes
+[PASS] Room catalog contains a trigger-box preset without complete room scenes
+[PASS] authored mechanism and NPC scenes are included
+[PASS] NPC assets resolve the same saved thumbnail paths as the NPC editor
+[PASS] mechanism assets resolve the same saved thumbnail paths as the mechanism editor
+[PASS] leaving the editor window cancels the wheel
+[PASS] wheel opens over the native viewport with six fixed categories
+[PASS] wheel clamps away from the viewport edges
+[PASS] clicking Layout opens an eight-shape wheel with two pages
+[PASS] scrolling replaces all eight shapes with the next page
+[PASS] scrolling wraps through the complete shape catalog
+[PASS] each radial thumbnail selects its own shape on page 1 slot 1
+[PASS] each radial thumbnail selects its own shape on page 1 slot 2
+[PASS] each radial thumbnail selects its own shape on page 1 slot 3
+[PASS] each radial thumbnail selects its own shape on page 1 slot 4
+[PASS] each radial thumbnail selects its own shape on page 1 slot 5
+[PASS] each radial thumbnail selects its own shape on page 1 slot 6
+[PASS] each radial thumbnail selects its own shape on page 1 slot 7
+[PASS] each radial thumbnail selects its own shape on page 1 slot 8
+[PASS] each radial thumbnail selects its own shape on page 2 slot 1
+[PASS] each radial thumbnail selects its own shape on page 2 slot 2
+[PASS] each radial thumbnail selects its own shape on page 2 slot 3
+[PASS] each radial thumbnail selects its own shape on page 2 slot 4
+[PASS] each radial thumbnail selects its own shape on page 2 slot 5
+[PASS] each radial thumbnail selects its own shape on page 2 slot 6
+[PASS] each radial thumbnail selects its own shape on page 2 slot 7
+[PASS] each radial thumbnail selects its own shape on page 2 slot 8
+[PASS] clicking the transparent center never selects or places an asset
+[PASS] the center contains no preview, background control or return button
+[PASS] the existing-assets sector opens the NPC library without a footer button
+[PASS] all-assets panel filters the same catalog by name
+CATALOG LAYOUT grid=[P: (0.0, 0.0), S: (472.0, 580.0)] child_count=13 first=[P: (0.0, 0.0), S: (140.0, 108.0)] visible=true
+[PASS] reopening all-assets resets filtering and lays out visible cards
+[PASS] NPC library buttons immediately display the editor's cached preview textures
+[PASS] browsing and cancelling the wheel creates no objects or undo actions
+[PASS] real mouse hover selects sector 0 independently of the last used tool
+[PASS] real mouse hover selects sector 1 independently of the last used tool
+[PASS] real mouse hover selects sector 2 independently of the last used tool
+[PASS] real mouse hover selects sector 3 independently of the last used tool
+[PASS] real mouse hover selects sector 4 independently of the last used tool
+[PASS] real mouse hover selects sector 5 independently of the last used tool
+[PASS] hot reload rebuilds stale wheel controls while preserving the open level
+[PASS] real mouse hover highlights wheel sector 玩家出生点
+[PASS] real mouse hover highlights wheel sector Layout 白盒
+[PASS] real mouse hover highlights wheel sector 常驻 Room
+[PASS] real mouse hover highlights wheel sector 常驻机关
+[PASS] real mouse hover highlights wheel sector 常驻 NPC
+[PASS] real mouse hover highlights wheel sector 最近使用
+[PASS] real viewport mouse-wheel input changes the eight-shape page
+[PASS] pressing the wheel button also switches to the next shape page
+[PASS] real mouse click selects the hovered asset and enters placement
+[PASS] the menu selection press cannot also place an object through the viewport
+[PASS] short side-button press opens the wheel
+[PASS] releasing the side button keeps the wheel open without selecting
+[PASS] side-key wheel hover survives native GUI interception for 玩家出生点
+[PASS] side-key wheel hover survives native GUI interception for Layout 白盒
+[PASS] side-key wheel hover survives native GUI interception for 常驻 Room
+[PASS] side-key wheel hover survives native GUI interception for 常驻机关
+[PASS] side-key wheel hover survives native GUI interception for 常驻 NPC
+[PASS] side-key wheel hover survives native GUI interception for 最近使用
+[PASS] the unnecessary placement-parent selector is removed
+[PASS] the next short side-button press starts the closing animation
+[PASS] closing animation finishes and releases the viewport
+[PASS] NPC sector opens the persistent versus task secondary wheel
+[PASS] secondary wheel keeps scope and existing-assets sectors after animation
+[PASS] hover animation finishes on the task sector without changing scene data
+[PASS] task NPC selection enters model placement with task scope
+[PASS] prefab preview leaves the editor environment and active camera intact
+[PASS] confirmation creates a passive ghost outside the authored scene
+[PASS] surface picking rests a unit box on the existing floor
+[PASS] placement uses the existing 0.1 metre grid
+[PASS] wheel placement follows editing step 0.5
+[PASS] wheel placement follows editing step 1.0
+[PASS] wheel placement follows editing step 0.25
+[PASS] placement creates an owned instance under the whitebox management node
+[PASS] whitebox placement remains active for continuous adding
+[PASS] one native undo removes the first instance and newly created group
+[PASS] native redo restores the exact instance and transform
+[PASS] repeated additions reuse one category group and get unique stable object IDs
+[PASS] recent assets contain successful placements without duplicates
+[PASS] Room wheel offers trigger scopes without a complete-scene library
+[PASS] new Room is a one-metre translucent trigger cube
+[PASS] grouped permanent Room remains visible to world detection and uses the original scope
+[PASS] permanent detection Room does not acquire a topology starting-room binding
+[PASS] new whitebox placement uses its level group even when a Room was previously selected
+[PASS] the first topology Room establishes the starting-room binding
+[PASS] undo restores both the Room and its starting-room binding atomically
+[PASS] player-spawn placement moves the existing marker without adding another
+[PASS] spawn placement ends and disposes the temporary preview
+[PASS] undo restores the existing spawn position and orientation
+[PASS] mechanism addition replaces instance scope and preserves local graph bindings
+[PASS] right click cancels preview without authoring a node
+[PASS] idle wheel leaves native viewport navigation available
+NATIVE PLACE before=5 after=6 point=(477.0, 341.5) valid=true
+[PASS] real native viewport click commits the preview into the level
+[PASS] new NPC uses its imported model with a persisted instance adapter
+[PASS] default placement keeps the authored model without a primitive overlay
+[PASS] native Inspector exposes model ID, faction and default action fields
+[PASS] Inspector faction change updates instance configuration
+[PASS] native undo restores Inspector properties
+[PASS] native redo restores Inspector properties
+[PASS] NPC model picker offers original and custom models without legacy primitives
+[PASS] custom model scene keeps default action configuration
+[PASS] Room Inspector exposes volume dimensions, material and activation rule rather than a model scene
+[PASS] Room dimensions change through native scene undo history
+[PASS] mechanism placeholder exposes the shared Inspector and a real component scene slot
+[PASS] mechanism scene selection preserves the existing reusable component contract
+[PASS] task NPC retains its task-binding slot and reports a missing task selection
+[PASS] recent assets preserve task versus persistent scope
+[PASS] packing the level excludes the ghost and keeps only authored objects
+[PASS] native save and disk reload preserve placements, instance adapters and stable IDs
+[PASS] Inspector model and behavior attributes survive native save and reload
+[PASS] starting F5/F6 disposes the wheel and ghost before game launch
+[PASS] changing scenes cleans up all wheel and preview state
+[PASS] all existing source Room, mechanism, NPC and palette files remain byte-identical
+QUICK ADD: 113 checks, 0 failures
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

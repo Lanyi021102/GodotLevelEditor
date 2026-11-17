@@ -53,7 +53,7 @@ func run(suite: EditorPlugin) -> void:
 	await tree.create_timer(1.0).timeout
 	suite.show_window()
 	check(suite.window.visible, "manual entry reopens the same workspace after stopping play")
-	var path := "res://scenes/levels/4_TestLevel.tscn"
+	var path := "res://content/scenes/levels/4_TestLevel.tscn"
 	var before := FileAccess.get_sha256(path)
 	EditorInterface.open_scene_from_path(path)
 	for i in 60:

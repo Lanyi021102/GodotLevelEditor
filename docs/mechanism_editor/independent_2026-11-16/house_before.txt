@@ -1,0 +1,3 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+BEFORE_CLEANUP_HOUSE_ERRORS=["对象 ID 无效：$world/CourtyardFence_-1", "对象 ID 无效：$world/TerraceSide_-1", "对象 ID 无效：$world/FrontWall_-1", "对象 ID 无效：$world/Roof_-1"]

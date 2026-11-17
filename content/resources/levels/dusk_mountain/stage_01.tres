@@ -1,0 +1,111 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd" id="1_035cp"]
+
+[resource]
+script = ExtResource("1_035cp")
+graph_id = "dusk_mountain_1"
+nodes = Array[Dictionary]([{
+"id": "start",
+"kind": "start",
+"label": "",
+"params": {}
+}, {
+"id": "objective",
+"kind": "objective",
+"label": "",
+"params": {
+"text": "沿山道清理第一组敌人：靠近按 F，共 2 名。"
+}
+}, {
+"id": "complete",
+"kind": "task_complete",
+"label": "",
+"params": {
+"task": "1003001"
+}
+}, {
+"id": "both_defeated",
+"kind": "wait_all",
+"label": "两名敌人均被击败",
+"params": {}
+}, {
+"id": "road_a1",
+"kind": "object_interacted",
+"label": "交互击败：road_a1",
+"params": {
+"object": "$world/road_a1",
+"once": true
+}
+}, {
+"id": "hide_road_a1",
+"kind": "set_visibility",
+"label": "移除已击败敌人",
+"params": {
+"enabled": false,
+"object": "$world/road_a1"
+}
+}, {
+"id": "road_a2",
+"kind": "object_interacted",
+"label": "交互击败：road_a2",
+"params": {
+"object": "$world/road_a2",
+"once": true
+}
+}, {
+"id": "hide_road_a2",
+"kind": "set_visibility",
+"label": "移除已击败敌人",
+"params": {
+"enabled": false,
+"object": "$world/road_a2"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "start",
+"from_port": "then",
+"id": "edge_000",
+"to": "objective",
+"to_port": "run"
+}, {
+"from": "road_a1",
+"from_port": "then",
+"id": "edge_001",
+"to": "hide_road_a1",
+"to_port": "run"
+}, {
+"from": "hide_road_a1",
+"from_port": "then",
+"id": "edge_002",
+"to": "both_defeated",
+"to_port": "a"
+}, {
+"from": "road_a2",
+"from_port": "then",
+"id": "edge_003",
+"to": "hide_road_a2",
+"to_port": "run"
+}, {
+"from": "hide_road_a2",
+"from_port": "then",
+"id": "edge_004",
+"to": "both_defeated",
+"to_port": "b"
+}, {
+"from": "both_defeated",
+"from_port": "then",
+"id": "edge_005",
+"to": "complete",
+"to_port": "run"
+}])
+positions = {
+"both_defeated": Vector2(1170, 0),
+"complete": Vector2(780, 0),
+"hide_road_a1": Vector2(0, 260),
+"hide_road_a2": Vector2(780, 260),
+"objective": Vector2(390, 0),
+"road_a1": Vector2(1560, 0),
+"road_a2": Vector2(390, 260),
+"start": Vector2(0, 0)
+}

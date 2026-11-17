@@ -1,0 +1,56 @@
+2026-11-17 / native accessibility invocation of level-logic save and save-reload. Files saved and manual play passed. Root cause not confirmed.
+
+ERROR: Do not use progress dialog (task) while flushing the message queue or using call_deferred()!
+   at: add_task (editor/gui/progress_dialog.cpp:196)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+ERROR: Condition "!tasks.has(p_task)" is true.
+   at: end_task (editor/gui/progress_dialog.cpp:254)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+ERROR: Do not use progress dialog (task) while flushing the message queue or using call_deferred()!
+   at: add_task (editor/gui/progress_dialog.cpp:196)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+       [1] save_reload (res://addons/godot_level_editor/level_logic_panel.gd:113)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+       [1] save_reload (res://addons/godot_level_editor/level_logic_panel.gd:113)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+       [1] save_reload (res://addons/godot_level_editor/level_logic_panel.gd:113)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+       [1] save_reload (res://addons/godot_level_editor/level_logic_panel.gd:113)
+ERROR: Condition "!tasks.has(p_task)" is true. Returning: canceled
+   at: task_step (editor/gui/progress_dialog.cpp:231)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+       [1] save_reload (res://addons/godot_level_editor/level_logic_panel.gd:113)
+ERROR: Condition "!tasks.has(p_task)" is true.
+   at: end_task (editor/gui/progress_dialog.cpp:254)
+   GDScript backtrace (most recent call first):
+       [0] save_graph (res://addons/godot_level_editor/level_logic_panel.gd:95)
+       [1] save_reload (res://addons/godot_level_editor/level_logic_panel.gd:113)

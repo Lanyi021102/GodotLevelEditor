@@ -1,0 +1,27 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+[PASS] catalog offers the two new doors with direct names
+[PASS] door graph exposes fixed frame and rotating leaf as separate nodes
+[PASS] three named states are visible directly on graph cards
+[PASS] rotation node embeds an editable animation curve
+[PASS] close state is highlighted before starting preview
+[PASS] selecting the animation node retains selection when its shared physical door reports selection
+[PASS] editing a curve point through its real input handler updates the paired component and dirty status
+[PASS] curve editing supports scene undo
+[PASS] curve editing supports scene redo
+[PASS] all seven door nodes fit without overlap before preview
+[PASS] preview shows moving while the leaves are rotating
+[PASS] animation card shows the live state, angle and curve playhead
+[PASS] runtime values and curve controls do not overlap neighboring state cards
+[PASS] preview highlights open only when both leaves reach ninety degrees
+[PASS] animation parameters expose duration, curve presets and direct open/close preview controls
+[PASS] paired save/reopen preserves the actual editable curve and all state/structure nodes
+[PASS] new door choices default to the two requested specifications
+[PASS] existing authored legacy door nodes remain searchable and editable
+[PASS] single-door catalog entry opens with the distinct one-leaf two-by-three geometry
+[PASS] adding either door specification creates a complete wired seven-node blueprint automatically
+[PASS] adding the full door blueprint undoes as one scene action
+ROTATING DOORS EDITOR: 21 checks, 0 failures
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

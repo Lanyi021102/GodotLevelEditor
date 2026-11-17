@@ -1,12 +1,12 @@
 extends Node
-const PROFILE := preload("res://addons/godot_level_editor/runtime/entity_profile.gd")
-const BINDING := preload("res://addons/godot_level_editor/runtime/entity_binding.gd")
-const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const CATALOG := preload("res://addons/godot_level_editor_suite/runtime/event_catalog.gd")
-const TASK := preload("res://addons/godot_level_editor_narrative/runtime/task_definition.gd")
-const DIRECTOR := preload("res://addons/godot_level_editor_suite/runtime/event_director.gd")
+const PROFILE := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd")
+const BINDING := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_binding.gd")
+const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
+const TASK := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd")
+const DIRECTOR := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_director.gd")
 var checks := 0
 var failures := 0
 var paths: Array[String] = []
@@ -27,7 +27,7 @@ func attach(node: Node3D, kind: String, lifetime: String, task_id := "") -> Reso
 	return profile
 
 func npc(id: String, lifetime: String, task_id := "") -> Node3D:
-	var node: Node3D = preload("res://scenes/narrative/npc.tscn").instantiate(); node.name = id; node.object_id = id
+	var node: Node3D = preload("res://addons/godot_level_editor/scenes/narrative/npc.tscn").instantiate(); node.name = id; node.object_id = id
 	var body := StaticBody3D.new(); body.name = "Body"; body.collision_layer = 1; body.collision_mask = 2
 	var collision := CollisionShape3D.new(); var shape := CapsuleShape3D.new(); shape.radius = 0.3; shape.height = 1.7
 	collision.shape = shape; collision.position.y = 0.85; body.add_child(collision); node.add_child(body)
@@ -60,7 +60,7 @@ func _ready() -> void:
 	var room := FACTORY.ROOM.new(); room.name = "TaskRoom"; room.room_id = "task_room"; room.uses_topology = false
 	attach(room, "room", "task", first.task_id); world.add_child(room)
 	var mechanism := FACTORY.PLACE.new(); mechanism.name = "TaskMechanism"; mechanism.object_id = "task_mechanism"; mechanism.component_kind = "placeholder"; mechanism.placeholder_contract = ""
-	mechanism.component_scene = preload("res://scenes/mechanisms/lever.tscn")
+	mechanism.component_scene = preload("res://addons/godot_level_editor/scenes/mechanisms/button.tscn")
 	attach(mechanism, "mechanism", "task", first.task_id); world.add_child(mechanism)
 	add_child(world)
 	await physics(3)

@@ -1,6 +1,6 @@
 extends Node
-const Template := preload("res://addons/enemy_editor/runtime/guard_template.gd")
-const Store := preload("res://addons/enemy_editor/definition_store.gd")
+const Template := preload("res://addons/godot_level_editor/modules/enemy_editor/runtime/guard_template.gd")
+const Store := preload("res://addons/godot_level_editor/modules/enemy_editor/definition_store.gd")
 const TEMP := "res://tools/enemy_editor/.roundtrip.tres"
 var passed := 0
 var failed := 0
@@ -114,7 +114,7 @@ func _test_storage() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEMP))
 
 func _test_guard() -> void:
-	var scene := load("res://scenes/guard.tscn") as PackedScene
+	var scene := load("res://addons/godot_level_editor/modules/enemy_editor/runtime/npc_actor.tscn") as PackedScene
 	var a := scene.instantiate() as GuardAI
 	var b := scene.instantiate() as GuardAI
 	a.name = "TemplateGuard"
@@ -162,14 +162,14 @@ func _test_guard() -> void:
 	a.tl_restore(baseline)
 	check(a.state == GuardAI.State.PATROL and a.alert_level == 0.0, "编辑器快照恢复运行器状态")
 	var packet := a.enemy_runtime_state()
-	check(packet.definition.ends_with("guard_default.tres") and packet.state_id == "patrol", "调试包对应当前定义与回溯状态")
+	check(packet.definition.ends_with("legacy_guard.tres") and packet.state_id == "patrol", "调试包对应当前定义与回溯状态")
 	a.queue_free()
 	b.queue_free()
 	await get_tree().physics_frame
 
 
 func _test_route() -> void:
-	var scene := load("res://scenes/enemy_editor/guard_blueprint_sample.tscn") as PackedScene
+	var scene := load("res://tools/enemy_editor/fixtures/guard_blueprint_sample.tscn") as PackedScene
 	var sample := scene.instantiate()
 	add_child(sample)
 	var guard := sample.get_node("Guard") as GuardAI

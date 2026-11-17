@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_2u4iq"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/human_large_male.tres" id="2_cxivu"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_e7cwu"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_d0iul"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_gi8ny"]
+
+[sub_resource type="Resource" id="Resource_wc2wb"]
+script = ExtResource("3_e7cwu")
+model_id = "default"
+behavior_definition = ExtResource("2_cxivu")
+body_height = 2.05
+body_radius = 0.34
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4db0a"]
+radius = 0.34
+height = 2.05
+
+[node name="大体型·健壮人形男" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_2u4iq")
+enemy_definition = ExtResource("2_cxivu")
+metadata/godot_level_editor_entity = SubResource("Resource_wc2wb")
+metadata/npc_sample_v1 = "human_large_male"
+metadata/editor_display_name = "大体型·健壮人形男"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.025, 0)
+shape = SubResource("CapsuleShape3D_4db0a")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_d0iul")
+npc_definition = ExtResource("2_cxivu")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_gi8ny")

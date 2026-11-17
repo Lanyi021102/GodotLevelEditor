@@ -1,10 +1,10 @@
 @tool
 extends RefCounted
-const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const LOGIC := preload("res://addons/godot_level_editor/runtime/level_logic_graph.gd")
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const PROFILE := preload("res://addons/godot_level_editor/runtime/entity_profile.gd")
+const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const LOGIC := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_logic_graph.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const PROFILE := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd")
 var checks := 0
 var failures := 0
 
@@ -31,7 +31,7 @@ func run(suite: EditorPlugin) -> void:
 	source.events = GRAPH.new(); source.events.graph_id = "editor_events"
 	source.level_logic = LOGIC.new(); source.level_logic.graph_id = "editor_level_logic"
 	for id in ["guide", "task_only"]:
-		var npc: Node3D = load("res://scenes/narrative/npc.tscn").instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+		var npc: Node3D = load("res://addons/godot_level_editor/scenes/narrative/npc.tscn").instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
 		npc.name = id; npc.object_id = id; npc.display_name = "关卡接待员" if id == "guide" else "任务专属角色"
 		if id == "task_only":
 			var profile := PROFILE.new(); profile.lifetime = "task"; profile.task_id = "1001001"; npc.set_meta(PROFILE.META, profile)

@@ -1,6 +1,6 @@
 @tool
 extends RefCounted
-const CATALOG := preload("res://addons/godot_level_editor_suite/runtime/event_catalog.gd")
+const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, label: String) -> void:
@@ -10,6 +10,9 @@ func check(value: bool, label: String) -> void:
 func frames(tree: SceneTree, count := 5) -> void:
 	for i in count: await tree.process_frame
 func run(suite: EditorPlugin) -> void:
+	if OS.get_cmdline_user_args().has("--task-switch"):
+		await load("res://tools/narrative/task_switch_editor_test.gd").new().run(suite)
+		return
 	if OS.get_cmdline_user_args().has("--level-logic"):
 		await load("res://tools/level_editor/level_logic_editor_test.gd").new().run(suite)
 		return
@@ -27,7 +30,7 @@ func run(suite: EditorPlugin) -> void:
 	await frames(tree, 10)
 	check(EditorInterface.get_editor_viewport_3d(0).get_parent().is_visible_in_tree(), "opening the tool window keeps the native Godot 3D editor available")
 	check(suite.window.force_native and not suite.window.transient, "workspace is a nonmodal native system window")
-	check(suite.tabs.get_tab_count() == 8 and is_instance_valid(suite.sky_panel), "workspace retains the graph, table and new sky editor pages")
+	check(suite.tabs.get_tab_count() == 9 and is_instance_valid(suite.sky_panel) and is_instance_valid(suite.home_panel), "workspace retains all editors and adds preferences in the workbench")
 	check(suite.modules.size() == 4, "existing editor backends are retained behind the unified workspace")
 	var canvases: Array[Node] = suite.tabs.find_children("*", "GraphEdit", true, false)
 	var grids_visible: bool = canvases.size() == 4
@@ -143,10 +146,9 @@ func run(suite: EditorPlugin) -> void:
 	suite.task_graph._filter_choices()
 	check(suite.task_graph.choices.item_count == 1, "task graph offers explicit event completion node")
 	check(ProjectSettings.get_setting("application/config/name") == "GodotLevelEditor" and suite.window.title == "GodotLevelEditor", "project and native window use the new product name")
-	check(not suite.tabs.tabs_visible and suite.navigation_buttons.size() == 7 and suite.navigation_buttons.has("天空"), "custom primary navigation includes the new sky editor")
-	var level_dock: Control = suite.modules.level.dock_scroll
-	check(level_dock.get_window() != suite.window and level_dock.is_inside_tree(), "whitebox palette remains attached to the native Godot editor")
-	check(not FileAccess.file_exists("res://addons/godot_level_editor_suite/level_workspace.gd"), "external viewport implementation is removed")
+	check(not suite.tabs.tabs_visible and suite.navigation_buttons.size() == 8 and suite.navigation_buttons.has("天空") and suite.navigation_buttons.has("工作台"), "custom primary navigation includes the new sky editor")
+	check(EditorInterface.get_base_control().find_children("关卡摆放", "", true, false).is_empty() and suite.modules.level.spatial_tools.is_inside_tree(), "legacy placement dock is removed while the native 3D tools remain")
+	check(not FileAccess.file_exists("res://addons/godot_level_editor/modules/godot_level_editor_suite/level_workspace.gd"), "external viewport implementation is removed")
 	suite.navigation_buttons["关卡"].pressed.emit()
 	check(suite.tabs.get_tab_title(suite.tabs.current_tab) == "关卡" and suite.navigation_buttons["关卡"].button_pressed, "level navigation opens the complete sandbox level workspace")
 	await tree.create_timer(0.26, true).timeout
@@ -156,7 +158,7 @@ func run(suite: EditorPlugin) -> void:
 	check(selected_style.bg_color.is_equal_approx(Color("2563eb")) and is_zero_approx(normal_style.bg_color.a) and is_zero_approx(secondary_style.bg_color.a) and secondary_style.border_width_bottom == 2, "primary navigation uses a solid blue active state and secondary navigation uses an underline")
 	suite.open_tab("任务图"); suite.open_tab("台本"); suite.open_tab("关卡")
 	await tree.create_timer(0.28, true).timeout
-	check(suite.navigation_buttons["关卡"].button_pressed and (suite.navigation_buttons["关卡"].get_theme_font("font") as SystemFont).font_weight == 700 and (suite.navigation_buttons["台本"].get_theme_font("font") as SystemFont).font_weight == 400 and selected_style.shadow_size == 0 and selected_style.bg_color.is_equal_approx(Color("2563eb")), "rapid section changes leave only the final menu bold and fully settled")
+	check(suite.navigation_buttons["关卡"].button_pressed and suite.navigation_buttons["关卡"].get_theme_font("font").get_font_weight() == 700 and suite.navigation_buttons["台本"].get_theme_font("font").get_font_weight() == 400 and selected_style.shadow_size == 0 and selected_style.bg_color.is_equal_approx(Color("2563eb")), "rapid section changes leave only the final menu bold and fully settled")
 	suite.navigation_buttons["台本"].pressed.emit()
 	check(suite.navigation_buttons["台本"].button_pressed and not suite.navigation_buttons["关卡"].button_pressed and not suite.task_navigation.visible, "navigation keeps exactly one active section")
 	suite.open_tab("任务图")
@@ -227,10 +229,10 @@ func run(suite: EditorPlugin) -> void:
 	var level_path := str(created.get("level", {}).get("scene_path", ""))
 	if not level_path.is_empty():
 		var level: Node3D = load(level_path).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
-		check(level.level_id == created.level.level_id and level.validate().is_empty() and level.has_node("关卡白盒/LayoutFloor"), "new level has a stable ID, valid world data and a grouped initial whitebox floor")
+		check(level.level_id == created.level.level_id and level.validate().is_empty() and level.has_node("Whitebox/LayoutFloor"), "new level has a stable ID, valid world data and a grouped initial whitebox floor")
 		var spawn: Node3D = level.get_node("PlayerSpawn")
 		spawn.position = Vector3(2, 0.1, 4)
-		preload("res://addons/godot_level_editor/scene_factory.gd").save_scene(level, level_path)
+		preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd").save_scene(level, level_path)
 		level.free()
 		var reloaded: Node3D = ResourceLoader.load(level_path, "", ResourceLoader.CACHE_MODE_IGNORE).instantiate()
 		check(reloaded.get_node("PlayerSpawn").position == Vector3(2, 0.1, 4), "player spawn edits persist when saving and reopening a level")
@@ -249,10 +251,10 @@ func run(suite: EditorPlugin) -> void:
 		panel.dirty = false
 		panel._refresh()
 		suite.task_graph.bound_task_id = "1001001"
-		suite.task_graph.open_graph(load("res://resources/task_graphs/1001001.tres"))
+		suite.task_graph.open_graph(load("res://content/resources/task_graphs/1001001.tres"))
 		for tab in ["关卡", "台本", "事件与任务", "任务图", "机关", "敌人"]:
 			if tab == "机关":
-				EditorInterface.open_scene_from_path("res://scenes/mechanisms/lever_plate_door.tscn")
+				EditorInterface.open_scene_from_path("res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn")
 				await frames(tree, 20)
 			suite.open_tab(tab)
 			suite.window.size = Vector2i(1504, 1000)
@@ -296,7 +298,7 @@ func run(suite: EditorPlugin) -> void:
 	panel.undo.clear_history()
 	panel._refresh()
 	suite.task_graph.dirty = false
-	EditorInterface.open_scene_from_path("res://scenes/main.tscn")
+	EditorInterface.open_scene_from_path("res://content/scenes/main.tscn")
 	await frames(tree, 5)
 	for target in [task_path, "user://suite_dialogue_editor_test.xlsx", "user://suite_events_editor_test.xlsx"]:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(target))

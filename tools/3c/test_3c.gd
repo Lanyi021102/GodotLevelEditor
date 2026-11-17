@@ -12,7 +12,7 @@ func wait(count: int) -> void:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().create_timer(60, true).timeout.connect(func(): get_tree().quit(2))
-	var session: Node3D = load("res://scenes/3cplayground.tscn").instantiate()
+	var session: Node3D = load("res://content/scenes/3cplayground.tscn").instantiate()
 	add_child(session)
 	await wait(12)
 	var player: CharacterBody3D = session.player
@@ -75,19 +75,19 @@ func _ready() -> void:
 			check(get_viewport().get_texture().get_image().save_png(argument.trim_prefix("--capture=")) == OK, "actual rendered whitebox captured")
 	session.queue_free()
 	await wait(3)
-	session = load("res://scenes/main.tscn").instantiate()
+	session = load("res://content/scenes/main.tscn").instantiate()
 	session.persist_progress = false
 	add_child(session)
 	await wait(12)
 	check(session.world.runtime_valid, "default world still validates and assembles")
 	check(session.world.events.nodes.is_empty() and session.world.topology.edges.is_empty() and not session.has_node("Narrative") and get_tree().get_nodes_in_group("guard").is_empty(), "default whitebox has no preset puzzle, enemy, story or task")
-	var old_path := SaveSystem.storage_path
-	SaveSystem.storage_path = "user://whitebox_test_progress.json"
-	var disk: Dictionary = SaveSystem.save_game()
+	var old_path := GLESaveSystem.storage_path
+	GLESaveSystem.storage_path = "user://whitebox_test_progress.json"
+	var disk: Dictionary = GLESaveSystem.save_game()
 	check(disk.has("progress") and not disk.has("abilities"), "isolated save contains editable progress without removed abilities")
-	check(not SaveSystem.load_game().is_empty(), "editable world progress reloads")
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(SaveSystem.storage_path))
-	SaveSystem.storage_path = old_path
+	check(not GLESaveSystem.load_game().is_empty(), "editable world progress reloads")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(GLESaveSystem.storage_path))
+	GLESaveSystem.storage_path = old_path
 	session.queue_free()
 	await wait(3)
 	print("WHITEBOX: %d checks, %d failed" % [checks, failures])

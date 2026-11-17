@@ -18,4 +18,4 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo: return
 	match event.physical_keycode:
 		KEY_N:
-			NoiseBus.emit_pulse($Target.global_position, 12.0, $Target)
+			GLENoiseBus.emit_pulse($Target.global_position, 12.0, $Target)

@@ -1,0 +1,23 @@
+{
+  "source": "/Users/lanyi/branch",
+  "opened_resources": [
+    "res://docs/3cplayground/README.md",
+    "res://content/scenes/levels/8_LASkdja.tscn",
+    "res://content/scenes/levels/dusk_mountain_house.tscn",
+    "res://addons/godot_level_editor/scenes/npcs/README.md",
+    "res://addons/godot_level_editor/scripts/main.gd",
+    "res://tools/godot_level_editor_suite/native_drag_probe_76531.tscn"
+  ],
+  "validation_project_copies": [],
+  "document_import_sidecars": [],
+  "temporary_scenes": [
+    {
+      "path": "tools/godot_level_editor_suite/native_drag_probe_76531.tscn",
+      "bytes": 1048,
+      "opened": true,
+      "literal_referrers": []
+    }
+  ],
+  "missing_required_literal_paths": [],
+  "limits": "A missing literal is not proof of a missing runtime dependency, and no incoming literal is not proof an authored asset is unused. Dynamic paths, XLSX records and binary resources require separate checks. No deletion is performed."
+}

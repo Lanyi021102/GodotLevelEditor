@@ -1,0 +1,126 @@
+{
+	"all_passed": true,
+	"checkpoint_restores": 0,
+	"checks": {
+		"checkpoint_saved": true,
+		"child_actor_state": true,
+		"door_open": true,
+		"equipment": true,
+		"equipment_task_completed": true,
+		"event_completed": true,
+		"inventory": true,
+		"mechanism_task_completed": true,
+		"numeric_variable": true,
+		"parallel_task_completed": true,
+		"room_active": true,
+		"two_button_interactions": true
+	},
+	"history": [
+		{
+			"kind": "session_ready",
+			"msec": 1688,
+			"value": "9"
+		},
+		{
+			"kind": "task_started",
+			"msec": 5588,
+			"value": "1004001"
+		},
+		{
+			"kind": "task_completed",
+			"msec": 7004,
+			"value": "1004001"
+		},
+		{
+			"kind": "task_started",
+			"msec": 7004,
+			"value": "1004002"
+		},
+		{
+			"kind": "button",
+			"msec": 9703,
+			"value": "1"
+		},
+		{
+			"kind": "button",
+			"msec": 10272,
+			"value": "2"
+		},
+		{
+			"kind": "task_completed",
+			"msec": 12151,
+			"value": "1004002"
+		},
+		{
+			"kind": "task_started",
+			"msec": 12151,
+			"value": "1004003"
+		},
+		{
+			"kind": "checkpoint_saved",
+			"msec": 12173,
+			"value": ""
+		},
+		{
+			"kind": "task_completed",
+			"msec": 14725,
+			"value": "1004003"
+		}
+	],
+	"mode": "manual",
+	"progress": {
+		"active": {},
+		"dialogues": {
+			"flow_accept": true,
+			"flow_equipped": true,
+			"flow_line_1": true,
+			"flow_line_2": true
+		},
+		"events": {
+			"1004": "completed"
+		},
+		"failure_text": "",
+		"level_logic": {
+			"graph_id": "level_9_logic",
+			"objective": "",
+			"runner": {
+				"cancelled": {},
+				"children": {},
+				"completed": false,
+				"counts": {
+					"accept": 1,
+					"interact": 1,
+					"intro": 1,
+					"read": 1
+				},
+				"flow": {},
+				"frame": 778,
+				"incoming": [],
+				"local": {},
+				"pending": [],
+				"persistent": {},
+				"reason": {
+					"accept": "已接受任务：检查背包与穿着",
+					"interact": "NPC 互动：$world/flow_tester",
+					"intro": "已显示对话",
+					"read": "台本完成：flow_accept"
+				},
+				"started": true,
+				"succeeded": true,
+				"waits": {}
+			},
+			"variables": {},
+			"world_id": "level_9"
+		},
+		"tasks": {
+			"1004001": "completed",
+			"1004002": "completed",
+			"1004003": "completed"
+		},
+		"variables": {
+			"flow_count": 2.0
+		},
+		"version": 1,
+		"workbook": "res://content/tables/events.xlsx"
+	}
+}

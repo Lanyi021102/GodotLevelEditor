@@ -1,0 +1,109 @@
+site_name: GodotLevelEditor Wiki
+site_description: 从第一个白盒关卡开始，学习场景摆放、机关连线与基础试玩。
+site_url: https://lanyi021102.github.io/GodotLevelEditor/
+repo_url: https://github.com/Lanyi021102/GodotLevelEditor
+repo_name: GodotLevelEditor
+edit_uri: edit/main/docs/
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+strict: true
+
+theme:
+  name: material
+  custom_dir: tools/wiki/overrides
+  language: zh
+  font: false
+  logo: wiki/assets/logo.svg
+  favicon: wiki/assets/logo.svg
+  palette:
+    scheme: default
+    primary: custom
+    accent: blue
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - 首页: index.md
+  - 开始使用:
+      - 安装和更新插件: wiki/plugin-install.md
+      - 快速开始: wiki/getting-started.md
+      - 编辑器功能地图: wiki/features.md
+      - 关卡与轮盘操作: wiki/guides/levels.md
+      - 工作台与偏好设置: wiki/guides/workbench.md
+      - NPC 素材与动画: wiki/guides/npc-samples.md
+      - 自由对话与站桩对话: wiki/guides/dialogues.md
+      - 天空与关卡环境: wiki/guides/sky.md
+  - 动手制作:
+      - 使用独立机关: wiki/tutorials/button-door.md
+      - 查看和调整旋转门: wiki/tutorials/rotating-door.md
+      - 试玩编辑器流程测试: wiki/tutorials/editor-flow-test.md
+  - 查阅手册:
+      - 机关与节点速查: wiki/reference/mechanisms.md
+      - 术语与快捷键: wiki/reference/glossary.md
+      - 常见问题: wiki/faq.md
+  - 开发与维护:
+      - 开发维护索引: wiki/development/index.md
+      - 更新 Wiki: wiki/development/documentation.md
+      - 构建和发布插件: wiki/development/plugin-release.md
+      - 预览与发布: wiki/development/publishing.md
+      - 版本记录: wiki/changelog.md
+
+plugins:
+  - search:
+      # 中文由 jieba 在构建期分词；前端按索引分段，避免加载 Node 专用的 zh tokenizer。
+      lang: en
+      pipeline: []
+      separator: '[\s\u200b\-，。！？、：；（）【】「」]+'
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+
+extra_css:
+  - wiki/stylesheets/extra.css
+
+hooks:
+  - tools/wiki/hooks.py
+
+# 原有专项资料仍可按链接阅读；操作入口和全文搜索集中于 Wiki。
+# 旧验证记录包含未入库日志或已迁移路径，独立 Wiki 链接检查仍严格检查新页。
+exclude_docs: |
+  **/*.import
+  **/*.log
+  **/*.json
+  **/*.csv
+  **/*.xlsx
+  **/.DS_Store
+not_in_nav: |
+  **
+  !index.md
+  !wiki/**
+validation:
+  nav:
+    omitted_files: ignore
+  links:
+    not_found: info
+    unrecognized_links: info
+    anchors: info
+
+extra:
+  generator: false
+
+copyright: GodotLevelEditor · Wiki V1 · 内容核对于 2026-11-16

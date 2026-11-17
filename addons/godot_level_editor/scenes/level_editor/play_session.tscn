@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/humanoid_player.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/hud.tscn" id="3"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/camera/orbit_camera.gd" id="4"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/actor_agent.gd" id="5"]
+
+[node name="PlaySession" type="Node3D"]
+script = ExtResource("1")
+persist_progress = false
+world_path = NodePath("..")
+
+[node name="Player" parent="." instance=ExtResource("2")]
+
+[node name="LevelAgent" type="Node" parent="Player"]
+script = ExtResource("5")
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("4")
+target_path = NodePath("../Player")
+
+[node name="Arm" type="SpringArm3D" parent="CameraRig"]
+spring_length = 3.8
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Arm"]
+current = true
+fov = 65.0
+near = 0.08
+
+[node name="HUD" parent="." instance=ExtResource("3")]

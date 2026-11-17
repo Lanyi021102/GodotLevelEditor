@@ -1,7 +1,0 @@
-[gd_scene format=3]
-
-[ext_resource type="Script" path="res://addons/godot_level_editor_mechanisms/runtime/door.gd" id="1_d2jnl"]
-
-[node name="Door_door" type="StaticBody3D" unique_id=1372795739]
-script = ExtResource("1_d2jnl")
-metadata/mechanism_kind = "door"

@@ -1,0 +1,69 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] 关卡及常驻图完整校验
+[PASS] F6 自动创建唯一任务服务
+[PASS] 正式角色在远端出生点生成
+[PASS] 关卡绑定 17:00 黄昏天空
+[PASS] 任务图校验：清理山道第一组敌人
+[PASS] 任务图校验：清理山道第二组敌人
+[PASS] 任务图校验：查看堵住的院门
+[PASS] 任务图校验：使用后院升降机入屋
+[PASS] 任务图校验：按按钮开启一层内门
+[PASS] 任务图校验：击败一层敌人
+[PASS] 任务图校验：前往二层开启宝箱
+[PASS] 任务图校验：携钥匙返回正门开门
+[PASS] 接任务前不可提前拿钥匙
+[PASS] 正门初始锁定
+[PASS] 发现院门前升降机未激活
+WALK_POSITION (0.000007, 3.30549, -32.84546) input=true
+[PASS] 正式玩家无需跳跃即可走上院门石阶
+[PASS] 实际玩家交互：mountain_guide
+[PASS] NPC 真实交互播放委托对白
+[PASS] 对白结束自动接取首项任务
+[PASS] 不能提前击败后续阶段敌人
+[PASS] 实际玩家交互：road_a1
+[PASS] 第一名敌人消失但不会提前推进
+[PASS] 击败后不能重复计数
+[PASS] 实际玩家交互：road_a2
+[PASS] 第一组清空后激活第二组
+[PASS] 实际玩家交互：road_b2
+[PASS] 实际玩家交互：road_b1
+[PASS] 第二组支持任意击败顺序
+[PASS] 真实 Area3D 接近院门触发堵塞发现对白
+[PASS] 转为后院升降机目标
+[PASS] 玩家站在升降台上发出移动指令
+[PASS] 升降机确实移动到 3.78 m 终点
+[PASS] 真实升降机碰撞载着正式玩家上升
+[PASS] 升降机到位仍需玩家实际进入房屋
+WALK_POSITION (4.720856, 4.001251, -53.0) input=true
+[PASS] 实际穿过后门感应区域完成入屋
+[PASS] 实际按下玄关按钮
+[PASS] 内门运动中不提前完成
+[PASS] 内门完全打开后激活一层战斗
+[PASS] 实际玩家交互：house_e2
+[PASS] 实际玩家交互：house_e1
+[PASS] 清空一层后激活二层宝箱
+WALK_POSITION (-3.600003, 8.00001, -54.57952) input=true
+[PASS] 正式玩家无需跳跃即可沿楼梯到二层平台
+[PASS] 实际玩家交互：key_chest
+[PASS] 宝箱真实授予一把钥匙
+[PASS] 拿钥匙后转入返回正门目标
+[PASS] 暂时移除钥匙以验证锁门分支
+[PASS] 实际玩家交互：front_lock
+[PASS] 没有钥匙不能解锁或完成任务
+[PASS] 恢复测试钥匙
+[PASS] 实际玩家交互：front_lock
+[PASS] 正门动作未完成时事件不结束
+[PASS] 带钥匙真实解锁并打开正门
+[PASS] 全部八阶段完成后结束事件
+[PASS] 事件结束后 HUD 保留清晰的任务完成提示
+[PASS] 任务已完成：清理山道第一组敌人
+[PASS] 任务已完成：清理山道第二组敌人
+[PASS] 任务已完成：查看堵住的院门
+[PASS] 任务已完成：使用后院升降机入屋
+[PASS] 任务已完成：按按钮开启一层内门
+[PASS] 任务已完成：击败一层敌人
+[PASS] 任务已完成：前往二层开启宝箱
+[PASS] 任务已完成：携钥匙返回正门开门
+[PASS] 宝箱不可重复领取钥匙
+DUSK_TEST checks=63 failures=0

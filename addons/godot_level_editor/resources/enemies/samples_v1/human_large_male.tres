@@ -1,0 +1,89 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3 uid="uid://da00gnkdvthn4"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/quaternius_base/UAL1_Standard.glb" id="1_a85mc"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/human_large_male.scn" id="2_ax37g"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd" id="3_4kuem"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/enemy_definition.gd" id="4_6agde"]
+
+[sub_resource type="Resource" id="Resource_arubj"]
+script = ExtResource("3_4kuem")
+model = ExtResource("2_ax37g")
+skeleton_path = NodePath("Armature/Skeleton3D")
+animation_sources = Array[PackedScene]([ExtResource("1_a85mc")])
+motions = {
+"idle": {
+"clip": "Idle",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_a85mc")
+},
+"run": {
+"clip": "Jog_Fwd",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_a85mc")
+},
+"walk": {
+"clip": "Walk",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_a85mc")
+}
+}
+height = 2.05
+
+[resource]
+script = ExtResource("4_6agde")
+display_name = "大体型·健壮人形男"
+states = Array[Dictionary]([{
+"behavior": "patrol",
+"duration": 0.0,
+"id": "patrol",
+"label": "平静行走",
+"scan_degrees": 0.0,
+"speed": 1.4
+}])
+parameters = {
+"alert_decay": 40.0,
+"alert_rate": 100.0,
+"expose_penalty": 25.0,
+"help_radius": 12.0,
+"noise_alert": 25.0,
+"waypoint_wait": 1.5
+}
+layout = {
+"nodes": {
+"patrol": Vector2(100, 100)
+},
+"scroll": Vector2(0, 0),
+"zoom": 1.0
+}
+appearance = SubResource("Resource_arubj")
+metadata/npc_sample_v1 = {
+"animation_count": 43,
+"animation_source": "res://addons/godot_level_editor/assets/characters/quaternius_base/UAL1_Standard.glb",
+"available_animations": ["A_TPose", "Crouch_Fwd", "Crouch_Idle", "Dance", "Death01", "Driving", "Fixing_Kneeling", "Hit_Chest", "Hit_Head", "Idle", "Idle_Talking", "Idle_Torch", "Interact", "Jog_Fwd", "Jump", "Jump_Land", "Jump_Start", "PickUp_Table", "Pistol_Aim_Down", "Pistol_Aim_Neutral", "Pistol_Aim_Up", "Pistol_Idle", "Pistol_Reload", "Pistol_Shoot", "Punch_Cross", "Punch_Jab", "Push", "Roll", "Sitting_Enter", "Sitting_Exit", "Sitting_Idle", "Sitting_Talking", "Spell_Simple_Enter", "Spell_Simple_Exit", "Spell_Simple_Idle", "Spell_Simple_Shoot", "Sprint", "Swim_Fwd", "Swim_Idle", "Sword_Attack", "Sword_Idle", "Walk", "Walk_Formal"],
+"bone_count": 65,
+"bounds": {
+"x": 2.0957026,
+"y": 2.05,
+"z": 0.32839924
+},
+"category": "humanoid",
+"definition": "res://addons/godot_level_editor/resources/enemies/samples_v1/human_large_male.tres",
+"gender": "male",
+"height": 2.05,
+"id": "human_large_male",
+"license": "CC0-1.0",
+"motions": {
+"idle": "Idle",
+"run": "Jog_Fwd",
+"walk": "Walk"
+},
+"preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/human_large_male.png",
+"radius": 0.34,
+"scene": "res://addons/godot_level_editor/scenes/npcs/v1_human_large_male.tscn",
+"size_category": "large",
+"source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/universal_base_characters/Superhero_Male_FullBody.gltf",
+"source_sha256": "e7fcea214ecf8855afbf910b50de6f9c7d1decfb71ca28bad8a4481452dafeb4",
+"source_url": "https://quaternius.itch.io/universal-base-characters",
+"title": "大体型·健壮人形男",
+"walk_speed": 1.4
+}

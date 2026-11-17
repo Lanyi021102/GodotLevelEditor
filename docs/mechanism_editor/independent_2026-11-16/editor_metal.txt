@@ -1,0 +1,22 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+[PASS] My Mechanisms lists exactly five standalone assets
+[PASS] lever cannot be created through node search
+[PASS] terminal cannot be created through node search
+[PASS] sliding_door cannot be created through node search
+[PASS] hinged_door cannot be created through node search
+[PASS] toggle_switch cannot be created through node search
+[PASS] single door opens independently from the catalog
+[PASS] set_property selection remains on the requested graph node
+[PASS] perform_action selection remains on the requested graph node
+[PASS] state_is selection remains on the requested graph node
+[PASS] state_changed selection remains on the requested graph node
+[PASS] removed component type is rejected by the add-node entry point
+[PASS] self interaction opens only the preview copy of the independent door
+[PASS] New Mechanism creates an empty editable graph instead of a coupled preset
+[PASS] removing the isolated test asset restores the five-item catalog
+[PASS] save and reopen retains the standalone component and its own graph
+INDEPENDENT MECHANISMS EDITOR: 16 checks, 0 failures
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

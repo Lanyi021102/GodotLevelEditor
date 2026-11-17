@@ -1,7 +1,7 @@
 @tool
 extends RefCounted
-const TASK := preload("res://addons/godot_level_editor_narrative/runtime/task_definition.gd")
-const SPEC := preload("res://addons/godot_level_editor_narrative/runtime/task_nodes.gd")
+const TASK := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd")
+const SPEC := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_nodes.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, label: String) -> void:
@@ -25,7 +25,7 @@ func run(suite: EditorPlugin) -> void:
 	graph.graph_id = "all_task_nodes_editor_test"
 	for kind in SPEC.DEFINITIONS:
 		var p := SPEC.defaults(kind)
-		if kind == "run_subgraph": p.graph_path = "res://resources/narrative/reception.task.tres"
+		if kind == "run_subgraph": p.graph_path = "res://content/resources/narrative/reception.task.tres"
 		if kind == "task_fail": p.task = "1001001"
 		graph.nodes.append({"id": "node_" + str(kind), "kind": kind, "params": p})
 		graph.positions["node_" + str(kind)] = Vector2((graph.nodes.size() % 6) * 330, floori(graph.nodes.size() / 6.0) * 270)
@@ -66,7 +66,7 @@ func run(suite: EditorPlugin) -> void:
 	check(graph.node_by_id("node_timer").params.seconds == 30.0, "parameter editing supports undo")
 	# A complete small graph exercises native persistence and actual viewport layout.
 	panel.dirty = false
-	var example: Resource = load("res://resources/narrative/examples/generic_access.task.tres").duplicate(true)
+	var example: Resource = load("res://content/resources/narrative/examples/generic_access.task.tres").duplicate(true)
 	panel.open_graph(example)
 	panel.bound_task_id = ""
 	await frames(tree)

@@ -1,0 +1,629 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[   0% ] first_scan_filesystem | Started 项目初始化 (5 steps)
+[   0% ] first_scan_filesystem | 正在扫描文件结构……
+[  16% ] first_scan_filesystem | 正在加载全局类名……
+[  33% ] first_scan_filesystem | 正在校验 GDExtension……
+[  50% ] first_scan_filesystem | 正在创建自动加载脚本……
+[  66% ] first_scan_filesystem | 正在初始化插件……
+[  83% ] first_scan_filesystem | 正在启动文件扫描……
+[ DONE ] first_scan_filesystem
+
+[   0% ] _update_scan_actions | Started 正在扫描动作…… (162 steps)
+[   0% ] _update_scan_actions | reception.dialogue.csv
+[   0% ] _update_scan_actions | 3cplayground_shoulder.png
+[   1% ] _update_scan_actions | main_focus.png
+[   1% ] _update_scan_actions | main_left_shoulder.png
+[   2% ] _update_scan_actions | main_shoulder.png
+[   3% ] _update_scan_actions | preview.png
+[   3% ] _update_scan_actions | favicon.png
+[   4% ] _update_scan_actions | main.png
+[   4% ] _update_scan_actions | current_world.png
+[   5% ] _update_scan_actions | 模型与骨骼.png
+[   6% ] _update_scan_actions | 窄窗口.png
+[   6% ] _update_scan_actions | NPC编辑.png
+[   7% ] _update_scan_actions | 我的NPC.png
+[   7% ] _update_scan_actions | 我的NPC_窄窗口.png
+[   8% ] _update_scan_actions | 我的机关.png
+[   9% ] _update_scan_actions | 我的机关_窄窗口.png
+[   9% ] _update_scan_actions | 机关编辑.png
+[  10% ] _update_scan_actions | 事件与任务.png
+[  11% ] _update_scan_actions | 仓库_Layout 白盒.png
+[  11% ] _update_scan_actions | 仓库_常驻 NPC.png
+[  12% ] _update_scan_actions | 仓库_常驻 Room.png
+[  12% ] _update_scan_actions | 仓库_常驻机关.png
+[  13% ] _update_scan_actions | 仓库_玩家出生点.png
+[  14% ] _update_scan_actions | 任务图.png
+[  14% ] _update_scan_actions | 关卡.png
+[  15% ] _update_scan_actions | 关卡编辑.png
+[  15% ] _update_scan_actions | 台本.png
+[  16% ] _update_scan_actions | 我的关卡.png
+[  17% ] _update_scan_actions | 我的关卡_窄窗口.png
+[  17% ] _update_scan_actions | 敌人.png
+[  18% ] _update_scan_actions | 新建任务.png
+[  19% ] _update_scan_actions | 机关.png
+[  19% ] _update_scan_actions | 事件与任务.png
+[  20% ] _update_scan_actions | 仓库_Layout 白盒.png
+[  20% ] _update_scan_actions | 仓库_常驻 NPC.png
+[  21% ] _update_scan_actions | 仓库_常驻 Room.png
+[  22% ] _update_scan_actions | 仓库_常驻机关.png
+[  22% ] _update_scan_actions | 仓库_玩家出生点.png
+[  23% ] _update_scan_actions | 任务图.png
+[  23% ] _update_scan_actions | 关卡.png
+[  24% ] _update_scan_actions | 关卡编辑.png
+[  25% ] _update_scan_actions | 台本.png
+[  25% ] _update_scan_actions | 我的关卡.png
+[  26% ] _update_scan_actions | 我的关卡_窄窗口.png
+[  26% ] _update_scan_actions | 敌人.png
+[  27% ] _update_scan_actions | 新建任务.png
+[  28% ] _update_scan_actions | 机关.png
+[  28% ] _update_scan_actions | 事件与任务.png
+[  29% ] _update_scan_actions | 仓库_Layout 白盒.png
+[  30% ] _update_scan_actions | 仓库_常驻 NPC.png
+[  30% ] _update_scan_actions | 仓库_常驻 Room.png
+[  31% ] _update_scan_actions | 仓库_常驻机关.png
+[  31% ] _update_scan_actions | 仓库_玩家出生点.png
+[  32% ] _update_scan_actions | 任务图.png
+[  33% ] _update_scan_actions | 关卡.png
+[  33% ] _update_scan_actions | 关卡编辑.png
+[  34% ] _update_scan_actions | 台本.png
+[  34% ] _update_scan_actions | 我的关卡.png
+[  35% ] _update_scan_actions | 我的关卡_窄窗口.png
+[  36% ] _update_scan_actions | 敌人.png
+[  36% ] _update_scan_actions | 新建任务.png
+[  37% ] _update_scan_actions | 机关.png
+[  38% ] _update_scan_actions | 事件与任务.png
+[  38% ] _update_scan_actions | 仓库_Layout 白盒.png
+[  39% ] _update_scan_actions | 仓库_常驻 NPC.png
+[  39% ] _update_scan_actions | 仓库_常驻 Room.png
+[  40% ] _update_scan_actions | 仓库_常驻机关.png
+[  41% ] _update_scan_actions | 仓库_玩家出生点.png
+[  41% ] _update_scan_actions | 任务图.png
+[  42% ] _update_scan_actions | 关卡.png
+[  42% ] _update_scan_actions | 关卡编辑.png
+[  43% ] _update_scan_actions | 台本.png
+[  44% ] _update_scan_actions | 我的关卡.png
+[  44% ] _update_scan_actions | 我的关卡_窄窗口.png
+[  45% ] _update_scan_actions | 敌人.png
+[  46% ] _update_scan_actions | 新建任务.png
+[  46% ] _update_scan_actions | 机关.png
+[  47% ] _update_scan_actions | 事件与任务.png
+[  47% ] _update_scan_actions | 仓库_Layout 白盒.png
+[  48% ] _update_scan_actions | 仓库_关卡.png
+[  49% ] _update_scan_actions | 仓库_常驻 NPC.png
+[  49% ] _update_scan_actions | 仓库_常驻 Room.png
+[  50% ] _update_scan_actions | 仓库_常驻机关.png
+[  50% ] _update_scan_actions | 仓库_玩家出生点.png
+[  51% ] _update_scan_actions | 任务图.png
+[  52% ] _update_scan_actions | 关卡.png
+[  52% ] _update_scan_actions | 关卡编辑.png
+[  53% ] _update_scan_actions | 台本.png
+[  53% ] _update_scan_actions | 我的关卡.png
+[  54% ] _update_scan_actions | 敌人.png
+[  55% ] _update_scan_actions | 新建任务.png
+[  55% ] _update_scan_actions | 机关.png
+[  56% ] _update_scan_actions | 01_spawn.png
+[  57% ] _update_scan_actions | 02_overview.png
+[  57% ] _update_scan_actions | 03_house.png
+[  58% ] _update_scan_actions | 04_interior.png
+[  58% ] _update_scan_actions | 自动分组_原生编辑器.png
+[  59% ] _update_scan_actions | deselected.png
+[  60% ] _update_scan_actions | selected.png
+[  60% ] _update_scan_actions | 关卡图_常驻NPC.png
+[  61% ] _update_scan_actions | 关卡图_接受任务.png
+[  61% ] _update_scan_actions | catalog.png
+[  62% ] _update_scan_actions | placement.png
+[  63% ] _update_scan_actions | wheel.png
+[  63% ] _update_scan_actions | mechanism_inspector.png
+[  64% ] _update_scan_actions | npc_inspector.png
+[  65% ] _update_scan_actions | npc_submenu.png
+[  65% ] _update_scan_actions | room_inspector.png
+[  66% ] _update_scan_actions | wheel.png
+[  66% ] _update_scan_actions | object_axes.png
+[  67% ] _update_scan_actions | selected_edge.png
+[  68% ] _update_scan_actions | selected_face.png
+[  68% ] _update_scan_actions | selected_point.png
+[  69% ] _update_scan_actions | editor_v2.png
+[  69% ] _update_scan_actions | face_push_pull.png
+[  70% ] _update_scan_actions | node_colors_editing.png
+[  71% ] _update_scan_actions | node_colors_running.png
+[  71% ] _update_scan_actions | node_colors_states.png
+[  72% ] _update_scan_actions | node_colors_topology.png
+[  73% ] _update_scan_actions | current_world.png
+[  73% ] _update_scan_actions | reference.png
+[  74% ] _update_scan_actions | before.png
+[  74% ] _update_scan_actions | close.png
+[  75% ] _update_scan_actions | cloud_edges.png
+[  76% ] _update_scan_actions | cloud_edges_close.png
+[  76% ] _update_scan_actions | cloud_edges_playground.png
+[  77% ] _update_scan_actions | mechanisms.png
+[  77% ] _update_scan_actions | playground.png
+[  78% ] _update_scan_actions | preview.png
+[  79% ] _update_scan_actions | 设置机关属性选中.png
+[  79% ] _update_scan_actions | 任务等待机关状态.png
+[  80% ] _update_scan_actions | 我的机关.png
+[  80% ] _update_scan_actions | 按钮开门编辑.png
+[  81% ] _update_scan_actions | 组件状态配置.png
+[  82% ] _update_scan_actions | 试玩初始.png
+[  82% ] _update_scan_actions | 试玩目标完成.png
+[  83% ] _update_scan_actions | editor_preview.png
+[  84% ] _update_scan_actions | node_colors_preview.png
+[  84% ] _update_scan_actions | 任务节点.png
+[  85% ] _update_scan_actions | dialogue_preview.png
+[  85% ] _update_scan_actions | editor_dialogue.png
+[  86% ] _update_scan_actions | editor_tasks.png
+[  87% ] _update_scan_actions | clear.png
+[  87% ] _update_scan_actions | editor.png
+[  88% ] _update_scan_actions | editor_narrow.png
+[  88% ] _update_scan_actions | morning.png
+[  89% ] _update_scan_actions | native_neutral.png
+[  90% ] _update_scan_actions | native_preview.png
+[  90% ] _update_scan_actions | night.png
+[  91% ] _update_scan_actions | overcast.png
+[  92% ] _update_scan_actions | sunset.png
+[  92% ] _update_scan_actions | calibration_floor.png
+[  93% ] _update_scan_actions | calibration_rotated_wall.png
+[  93% ] _update_scan_actions | calibration_slope.png
+[  94% ] _update_scan_actions | current_world.png
+[  95% ] _update_scan_actions | playground_detail.png
+[  95% ] _update_scan_actions | playground_overview.png
+[  96% ] _update_scan_actions | shapes.png
+[  96% ] _update_scan_actions | logo.svg
+[  97% ] _update_scan_actions | wiki-home-desktop.png
+[  98% ] _update_scan_actions | wiki-home-mobile.png
+[  98% ] _update_scan_actions | wiki-search-desktop.png
+[ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started 正在导入或重新导入资产 (161 steps)
+[   0% ] reimport | 正在准备重新导入文件……
+[   0% ] reimport | 正在准备重新导入文件……
+[   1% ] reimport | 正在准备重新导入文件……
+[   1% ] reimport | 正在准备重新导入文件……
+[   2% ] reimport | 正在准备重新导入文件……
+[   3% ] reimport | 正在准备重新导入文件……
+[   3% ] reimport | 正在准备重新导入文件……
+[   4% ] reimport | 正在准备重新导入文件……
+[   4% ] reimport | 正在准备重新导入文件……
+[   5% ] reimport | 正在准备重新导入文件……
+[   6% ] reimport | 正在准备重新导入文件……
+[   6% ] reimport | 正在准备重新导入文件……
+[   7% ] reimport | 正在准备重新导入文件……
+[   8% ] reimport | 正在准备重新导入文件……
+[   8% ] reimport | 正在准备重新导入文件……
+[   9% ] reimport | 正在准备重新导入文件……
+[   9% ] reimport | 正在准备重新导入文件……
+[  10% ] reimport | 正在准备重新导入文件……
+[  11% ] reimport | 正在准备重新导入文件……
+[  11% ] reimport | 正在准备重新导入文件……
+[  12% ] reimport | 正在准备重新导入文件……
+[  12% ] reimport | 正在准备重新导入文件……
+[  13% ] reimport | 正在准备重新导入文件……
+[  14% ] reimport | 正在准备重新导入文件……
+[  14% ] reimport | 正在准备重新导入文件……
+[  15% ] reimport | 正在准备重新导入文件……
+[  16% ] reimport | 正在准备重新导入文件……
+[  16% ] reimport | 正在准备重新导入文件……
+[  17% ] reimport | 正在准备重新导入文件……
+[  17% ] reimport | 正在准备重新导入文件……
+[  18% ] reimport | 正在准备重新导入文件……
+[  19% ] reimport | 正在准备重新导入文件……
+[  19% ] reimport | 正在准备重新导入文件……
+[  20% ] reimport | 正在准备重新导入文件……
+[  20% ] reimport | 正在准备重新导入文件……
+[  21% ] reimport | 正在准备重新导入文件……
+[  22% ] reimport | 正在准备重新导入文件……
+[  22% ] reimport | 正在准备重新导入文件……
+[  23% ] reimport | 正在准备重新导入文件……
+[  24% ] reimport | 正在准备重新导入文件……
+[  24% ] reimport | 正在准备重新导入文件……
+[  25% ] reimport | 正在准备重新导入文件……
+[  25% ] reimport | 正在准备重新导入文件……
+[  26% ] reimport | 正在准备重新导入文件……
+[  27% ] reimport | 正在准备重新导入文件……
+[  27% ] reimport | 正在准备重新导入文件……
+[  28% ] reimport | 正在准备重新导入文件……
+[  29% ] reimport | 正在准备重新导入文件……
+[  29% ] reimport | 正在准备重新导入文件……
+[  30% ] reimport | 正在准备重新导入文件……
+[  30% ] reimport | 正在准备重新导入文件……
+[  31% ] reimport | 正在准备重新导入文件……
+[  32% ] reimport | 正在准备重新导入文件……
+[  32% ] reimport | 正在准备重新导入文件……
+[  33% ] reimport | 正在准备重新导入文件……
+[  33% ] reimport | 正在准备重新导入文件……
+[  34% ] reimport | 正在准备重新导入文件……
+[  35% ] reimport | 正在准备重新导入文件……
+[  35% ] reimport | 正在准备重新导入文件……
+[  36% ] reimport | 正在准备重新导入文件……
+[  37% ] reimport | 正在准备重新导入文件……
+[  37% ] reimport | 正在准备重新导入文件……
+[  38% ] reimport | 正在准备重新导入文件……
+[  38% ] reimport | 正在准备重新导入文件……
+[  39% ] reimport | 正在准备重新导入文件……
+[  40% ] reimport | 正在准备重新导入文件……
+[  40% ] reimport | 正在准备重新导入文件……
+[  41% ] reimport | 正在准备重新导入文件……
+[  41% ] reimport | 正在准备重新导入文件……
+[  42% ] reimport | 正在准备重新导入文件……
+[  43% ] reimport | 正在准备重新导入文件……
+[  43% ] reimport | 正在准备重新导入文件……
+[  44% ] reimport | 正在准备重新导入文件……
+[  45% ] reimport | 正在准备重新导入文件……
+[  45% ] reimport | 正在准备重新导入文件……
+[  46% ] reimport | 正在准备重新导入文件……
+[  46% ] reimport | 正在准备重新导入文件……
+[  47% ] reimport | 正在准备重新导入文件……
+[  48% ] reimport | 正在准备重新导入文件……
+[  48% ] reimport | 正在准备重新导入文件……
+[  49% ] reimport | 正在准备重新导入文件……
+[  50% ] reimport | 正在准备重新导入文件……
+[  50% ] reimport | 正在准备重新导入文件……
+[  51% ] reimport | 正在准备重新导入文件……
+[  51% ] reimport | 正在准备重新导入文件……
+[  52% ] reimport | 正在准备重新导入文件……
+[  53% ] reimport | 正在准备重新导入文件……
+[  53% ] reimport | 正在准备重新导入文件……
+[  54% ] reimport | 正在准备重新导入文件……
+[  54% ] reimport | 正在准备重新导入文件……
+[  55% ] reimport | 正在准备重新导入文件……
+[  56% ] reimport | 正在准备重新导入文件……
+[  56% ] reimport | 正在准备重新导入文件……
+[  57% ] reimport | 正在准备重新导入文件……
+[  58% ] reimport | 正在准备重新导入文件……
+[  58% ] reimport | 正在准备重新导入文件……
+[  59% ] reimport | 正在准备重新导入文件……
+[  59% ] reimport | 正在准备重新导入文件……
+[  60% ] reimport | 正在准备重新导入文件……
+[  61% ] reimport | 正在准备重新导入文件……
+[  61% ] reimport | 正在准备重新导入文件……
+[  62% ] reimport | 正在准备重新导入文件……
+[  62% ] reimport | 正在准备重新导入文件……
+[  63% ] reimport | 正在准备重新导入文件……
+[  64% ] reimport | 正在准备重新导入文件……
+[  64% ] reimport | 正在准备重新导入文件……
+[  65% ] reimport | 正在准备重新导入文件……
+[  66% ] reimport | 正在准备重新导入文件……
+[  66% ] reimport | 正在准备重新导入文件……
+[  67% ] reimport | 正在准备重新导入文件……
+[  67% ] reimport | 正在准备重新导入文件……
+[  68% ] reimport | 正在准备重新导入文件……
+[  69% ] reimport | 正在准备重新导入文件……
+[  69% ] reimport | 正在准备重新导入文件……
+[  70% ] reimport | 正在准备重新导入文件……
+[  70% ] reimport | 正在准备重新导入文件……
+[  71% ] reimport | 正在准备重新导入文件……
+[  72% ] reimport | 正在准备重新导入文件……
+[  72% ] reimport | 正在准备重新导入文件……
+[  73% ] reimport | 正在准备重新导入文件……
+[  74% ] reimport | 正在准备重新导入文件……
+[  74% ] reimport | 正在准备重新导入文件……
+[  75% ] reimport | 正在准备重新导入文件……
+[  75% ] reimport | 正在准备重新导入文件……
+[  76% ] reimport | 正在准备重新导入文件……
+[  77% ] reimport | 正在准备重新导入文件……
+[  77% ] reimport | 正在准备重新导入文件……
+[  78% ] reimport | 正在准备重新导入文件……
+[  79% ] reimport | 正在准备重新导入文件……
+[  79% ] reimport | 正在准备重新导入文件……
+[  80% ] reimport | 正在准备重新导入文件……
+[  80% ] reimport | 正在准备重新导入文件……
+[  81% ] reimport | 正在准备重新导入文件……
+[  82% ] reimport | 正在准备重新导入文件……
+[  82% ] reimport | 正在准备重新导入文件……
+[  83% ] reimport | 正在准备重新导入文件……
+[  83% ] reimport | 正在准备重新导入文件……
+[  84% ] reimport | 正在准备重新导入文件……
+[  85% ] reimport | 正在准备重新导入文件……
+[  85% ] reimport | 正在准备重新导入文件……
+[  86% ] reimport | 正在准备重新导入文件……
+[  87% ] reimport | 正在准备重新导入文件……
+[  87% ] reimport | 正在准备重新导入文件……
+[  88% ] reimport | 正在准备重新导入文件……
+[  88% ] reimport | 正在准备重新导入文件……
+[  89% ] reimport | 正在准备重新导入文件……
+[  90% ] reimport | 正在准备重新导入文件……
+[  90% ] reimport | 正在准备重新导入文件……
+[  91% ] reimport | 正在准备重新导入文件……
+[  91% ] reimport | 正在准备重新导入文件……
+[  92% ] reimport | 正在准备重新导入文件……
+[  93% ] reimport | 正在准备重新导入文件……
+[  93% ] reimport | 正在准备重新导入文件……
+[  94% ] reimport | 正在准备重新导入文件……
+[  95% ] reimport | 正在准备重新导入文件……
+[  95% ] reimport | 正在准备重新导入文件……
+[  96% ] reimport | 正在准备重新导入文件……
+[  96% ] reimport | 正在准备重新导入文件……
+[  97% ] reimport | 正在准备重新导入文件……
+[  98% ] reimport | 正在准备重新导入文件……
+[  98% ] reimport | 正在准备重新导入文件……
+[   0% ] reimport | 正在执行重新导入的前置操作……
+[   0% ] reimport | placement.png
+[   0% ] reimport | placement.png
+[   0% ] reimport | placement.png
+[   0% ] reimport | placement.png
+[   0% ] reimport | placement.png
+[   0% ] reimport | wheel.png
+[   1% ] reimport | mechanism_inspector.png
+[   1% ] reimport | npc_inspector.png
+[   2% ] reimport | npc_submenu.png
+[   3% ] reimport | room_inspector.png
+[   3% ] reimport | wheel.png
+[   3% ] reimport | wheel.png
+[   4% ] reimport | object_axes.png
+[   4% ] reimport | selected_edge.png
+[   4% ] reimport | selected_edge.png
+[   4% ] reimport | selected_edge.png
+[   4% ] reimport | selected_edge.png
+[   5% ] reimport | selected_face.png
+[   6% ] reimport | selected_point.png
+[   6% ] reimport | editor_v2.png
+[   7% ] reimport | face_push_pull.png
+[   8% ] reimport | node_colors_editing.png
+[   8% ] reimport | node_colors_running.png
+[   9% ] reimport | node_colors_states.png
+[   9% ] reimport | node_colors_topology.png
+[  10% ] reimport | current_world.png
+[  11% ] reimport | reference.png
+[  11% ] reimport | before.png
+[  12% ] reimport | 仓库_常驻机关.png
+[  12% ] reimport | 仓库_玩家出生点.png
+[  13% ] reimport | 任务图.png
+[  14% ] reimport | 关卡.png
+[  14% ] reimport | 关卡编辑.png
+[  15% ] reimport | 台本.png
+[  16% ] reimport | 我的关卡.png
+[  16% ] reimport | 敌人.png
+[  17% ] reimport | 新建任务.png
+[  17% ] reimport | 机关.png
+[  18% ] reimport | 01_spawn.png
+[  19% ] reimport | 02_overview.png
+[  19% ] reimport | 03_house.png
+[  20% ] reimport | 04_interior.png
+[  20% ] reimport | 自动分组_原生编辑器.png
+[  21% ] reimport | deselected.png
+[  22% ] reimport | selected.png
+[  22% ] reimport | 关卡图_常驻NPC.png
+[  23% ] reimport | 关卡图_接受任务.png
+[  24% ] reimport | catalog.png
+[  24% ] reimport | clear.png
+[  25% ] reimport | editor.png
+[  25% ] reimport | editor_narrow.png
+[  26% ] reimport | morning.png
+[  27% ] reimport | native_neutral.png
+[  27% ] reimport | native_preview.png
+[  28% ] reimport | night.png
+[  29% ] reimport | overcast.png
+[  29% ] reimport | sunset.png
+[  30% ] reimport | calibration_floor.png
+[  30% ] reimport | calibration_rotated_wall.png
+[  31% ] reimport | calibration_slope.png
+[  32% ] reimport | current_world.png
+[  32% ] reimport | playground_detail.png
+[  33% ] reimport | playground_overview.png
+[  33% ] reimport | shapes.png
+[  34% ] reimport | logo.svg
+[  35% ] reimport | wiki-home-desktop.png
+[  35% ] reimport | wiki-home-mobile.png
+[  36% ] reimport | wiki-search-desktop.png
+[  37% ] reimport | close.png
+[  37% ] reimport | cloud_edges.png
+[  38% ] reimport | cloud_edges_close.png
+[  38% ] reimport | cloud_edges_playground.png
+[  39% ] reimport | mechanisms.png
+[  40% ] reimport | playground.png
+[  40% ] reimport | preview.png
+[  41% ] reimport | 设置机关属性选中.png
+[  41% ] reimport | 任务等待机关状态.png
+[  42% ] reimport | 我的机关.png
+[  43% ] reimport | 按钮开门编辑.png
+[  43% ] reimport | 组件状态配置.png
+[  44% ] reimport | 试玩初始.png
+[  45% ] reimport | 试玩目标完成.png
+[  45% ] reimport | editor_preview.png
+[  46% ] reimport | node_colors_preview.png
+[  46% ] reimport | 任务节点.png
+[  47% ] reimport | dialogue_preview.png
+[  48% ] reimport | editor_dialogue.png
+[  48% ] reimport | editor_tasks.png
+[  49% ] reimport | 仓库_常驻机关.png
+[  50% ] reimport | 仓库_玩家出生点.png
+[  50% ] reimport | 任务图.png
+[  51% ] reimport | 关卡.png
+[  51% ] reimport | 关卡编辑.png
+[  52% ] reimport | 台本.png
+[  53% ] reimport | 我的关卡.png
+[  53% ] reimport | 我的关卡_窄窗口.png
+[  54% ] reimport | 敌人.png
+[  54% ] reimport | 新建任务.png
+[  55% ] reimport | 机关.png
+[  56% ] reimport | 事件与任务.png
+[  56% ] reimport | 仓库_Layout 白盒.png
+[  57% ] reimport | 仓库_常驻 NPC.png
+[  58% ] reimport | 仓库_常驻 Room.png
+[  58% ] reimport | 仓库_常驻机关.png
+[  59% ] reimport | 仓库_玩家出生点.png
+[  59% ] reimport | 任务图.png
+[  60% ] reimport | 关卡.png
+[  61% ] reimport | 关卡编辑.png
+[  61% ] reimport | 3cplayground_shoulder.png
+[  62% ] reimport | main_focus.png
+[  62% ] reimport | main_left_shoulder.png
+[  63% ] reimport | main_shoulder.png
+[  64% ] reimport | preview.png
+[  64% ] reimport | favicon.png
+[  65% ] reimport | main.png
+[  66% ] reimport | current_world.png
+[  66% ] reimport | 模型与骨骼.png
+[  67% ] reimport | 窄窗口.png
+[  67% ] reimport | NPC编辑.png
+[  68% ] reimport | 我的NPC.png
+[  69% ] reimport | 我的NPC_窄窗口.png
+[  69% ] reimport | 我的机关.png
+[  70% ] reimport | 我的机关_窄窗口.png
+[  70% ] reimport | 机关编辑.png
+[  71% ] reimport | 事件与任务.png
+[  72% ] reimport | 仓库_Layout 白盒.png
+[  72% ] reimport | 仓库_常驻 NPC.png
+[  73% ] reimport | 仓库_常驻 Room.png
+[  74% ] reimport | 事件与任务.png
+[  74% ] reimport | 仓库_Layout 白盒.png
+[  75% ] reimport | 仓库_常驻 NPC.png
+[  75% ] reimport | 仓库_常驻 Room.png
+[  76% ] reimport | 仓库_常驻机关.png
+[  77% ] reimport | 仓库_玩家出生点.png
+[  77% ] reimport | 任务图.png
+[  78% ] reimport | 关卡.png
+[  79% ] reimport | 关卡编辑.png
+[  79% ] reimport | 台本.png
+[  80% ] reimport | 我的关卡.png
+[  80% ] reimport | 我的关卡_窄窗口.png
+[  81% ] reimport | 敌人.png
+[  82% ] reimport | 新建任务.png
+[  82% ] reimport | 机关.png
+[  83% ] reimport | 事件与任务.png
+[  83% ] reimport | 仓库_Layout 白盒.png
+[  84% ] reimport | 仓库_关卡.png
+[  85% ] reimport | 仓库_常驻 NPC.png
+[  85% ] reimport | 仓库_常驻 Room.png
+[  86% ] reimport | 台本.png
+[  87% ] reimport | 我的关卡.png
+[  87% ] reimport | 我的关卡_窄窗口.png
+[  88% ] reimport | 敌人.png
+[  88% ] reimport | 新建任务.png
+[  89% ] reimport | 机关.png
+[  90% ] reimport | 事件与任务.png
+[  90% ] reimport | 仓库_Layout 白盒.png
+[  91% ] reimport | 仓库_常驻 NPC.png
+[  91% ] reimport | 仓库_常驻 Room.png
+[  92% ] reimport | 仓库_常驻机关.png
+[  93% ] reimport | 仓库_玩家出生点.png
+[  93% ] reimport | 任务图.png
+[  94% ] reimport | 关卡.png
+[  95% ] reimport | 关卡编辑.png
+[  95% ] reimport | 台本.png
+[  96% ] reimport | 我的关卡.png
+[  96% ] reimport | 我的关卡_窄窗口.png
+[  97% ] reimport | 敌人.png
+[  98% ] reimport | 新建任务.png
+[  98% ] reimport | 机关.png
+[  99% ] reimport | 正在结束资产导入……
+[ DONE ] reimport
+
+[   0% ] reimport | Started 正在导入或重新导入资产 (161 steps)
+[   0% ] reimport | 正在执行重新导入的后置操作……
+[ DONE ] reimport
+
+[   0% ] loading_editor_layout | Started 正在加载编辑器 (5 steps)
+[   0% ] loading_editor_layout | 正在加载编辑器布局……
+[  16% ] loading_editor_layout | 正在加载停靠面板……
+[  33% ] loading_editor_layout | 正在重新打开场景……
+[  50% ] loading_editor_layout | 正在加载中央编辑器布局……
+[  66% ] loading_editor_layout | 正在加载插件窗口布局……
+[  83% ] loading_editor_layout | 编辑器布局就绪。
+[ DONE ] loading_editor_layout
+
+[PASS] named typed ports render: mechanism_state_changed
+[PASS] all authoring parameters are editable: mechanism_state_changed
+[PASS] named typed ports render: mechanism_interacted
+[PASS] all authoring parameters are editable: mechanism_interacted
+[PASS] named typed ports render: mechanism_action_finished
+[PASS] all authoring parameters are editable: mechanism_action_finished
+[PASS] named typed ports render: mechanism_region_enter
+[PASS] all authoring parameters are editable: mechanism_region_enter
+[PASS] named typed ports render: mechanism_region_exit
+[PASS] all authoring parameters are editable: mechanism_region_exit
+[PASS] named typed ports render: mechanism_state
+[PASS] all authoring parameters are editable: mechanism_state
+[PASS] named typed ports render: wait_mechanism_state
+[PASS] all authoring parameters are editable: wait_mechanism_state
+[PASS] named typed ports render: mechanism_request_state
+[PASS] all authoring parameters are editable: mechanism_request_state
+[PASS] named typed ports render: mechanism_action
+[PASS] all authoring parameters are editable: mechanism_action
+[PASS] named typed ports render: mechanism_set_interaction
+[PASS] all authoring parameters are editable: mechanism_set_interaction
+[PASS] named typed ports render: mechanism_set_property
+[PASS] all authoring parameters are editable: mechanism_set_property
+[PASS] named typed ports render: region_exit
+[PASS] all authoring parameters are editable: region_exit
+[PASS] named typed ports render: object_interacted
+[PASS] all authoring parameters are editable: object_interacted
+[PASS] named typed ports render: state_changed
+[PASS] all authoring parameters are editable: state_changed
+[PASS] named typed ports render: has_equipped
+[PASS] all authoring parameters are editable: has_equipped
+[PASS] named typed ports render: actor_state
+[PASS] all authoring parameters are editable: actor_state
+[PASS] named typed ports render: any
+[PASS] all authoring parameters are editable: any
+[PASS] named typed ports render: not
+[PASS] all authoring parameters are editable: not
+[PASS] named typed ports render: compare
+[PASS] all authoring parameters are editable: compare
+[PASS] named typed ports render: get_variable
+[PASS] all authoring parameters are editable: get_variable
+[PASS] named typed ports render: get_number
+[PASS] all authoring parameters are editable: get_number
+[PASS] named typed ports render: set_variable
+[PASS] all authoring parameters are editable: set_variable
+[PASS] named typed ports render: change_item
+[PASS] all authoring parameters are editable: change_item
+[PASS] named typed ports render: equip_item
+[PASS] all authoring parameters are editable: equip_item
+[PASS] named typed ports render: set_actor_state
+[PASS] all authoring parameters are editable: set_actor_state
+[PASS] named typed ports render: delay
+[PASS] all authoring parameters are editable: delay
+[PASS] named typed ports render: timer
+[PASS] all authoring parameters are editable: timer
+[PASS] named typed ports render: wait_until
+[PASS] all authoring parameters are editable: wait_until
+[PASS] named typed ports render: wait_event
+[PASS] all authoring parameters are editable: wait_event
+[PASS] named typed ports render: parallel
+[PASS] all authoring parameters are editable: parallel
+[PASS] named typed ports render: wait_all
+[PASS] all authoring parameters are editable: wait_all
+[PASS] named typed ports render: wait_any
+[PASS] all authoring parameters are editable: wait_any
+[PASS] named typed ports render: counter
+[PASS] all authoring parameters are editable: counter
+[PASS] named typed ports render: gate
+[PASS] all authoring parameters are editable: gate
+[PASS] named typed ports render: cancel_branch
+[PASS] all authoring parameters are editable: cancel_branch
+[PASS] named typed ports render: objective_start
+[PASS] all authoring parameters are editable: objective_start
+[PASS] named typed ports render: objective_complete
+[PASS] all authoring parameters are editable: objective_complete
+[PASS] named typed ports render: objective_fail
+[PASS] all authoring parameters are editable: objective_fail
+[PASS] named typed ports render: objective_state
+[PASS] all authoring parameters are editable: objective_state
+[PASS] named typed ports render: task_fail
+[PASS] all authoring parameters are editable: task_fail
+[PASS] named typed ports render: checkpoint_save
+[PASS] all authoring parameters are editable: checkpoint_save
+[PASS] named typed ports render: checkpoint_restore
+[PASS] all authoring parameters are editable: checkpoint_restore
+[PASS] named typed ports render: run_subgraph
+[PASS] all authoring parameters are editable: run_subgraph
+[PASS] named typed ports render: subgraph_end
+[PASS] all authoring parameters are editable: subgraph_end
+[PASS] node search accepts English names
+[PASS] reused inventory query is searchable by its English name
+[PASS] node search accepts Chinese names
+[PASS] palette creates a configured flow node
+[PASS] new node creation supports undo
+[PASS] new node creation supports redo
+[PASS] flow parameters apply from the inspector
+[PASS] parameter editing supports undo
+[PASS] delivered generic access example validates
+[PASS] new nodes save in native graph resources
+[PASS] save/reopen preserves all node parameters and named edges
+[PASS] editor validation preserves the user's original graph
+TASK NODES EDITOR: 100 checks, 0 failures
+ERROR: Plugin is not attached to debugger.
+   at: is_active (editor/debugger/editor_debugger_plugin.cpp:102)
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

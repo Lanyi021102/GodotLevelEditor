@@ -7,7 +7,7 @@ func _ready() -> void:
 	_run.call_deferred()
 
 func _run() -> void:
-	var scene_path := "res://scenes/main.tscn"
+	var scene_path := "res://content/scenes/main.tscn"
 	var lighting_path := ""
 	var output := "/tmp/godot_level_editor_sunlight_v2/before"
 	for argument in OS.get_cmdline_user_args():

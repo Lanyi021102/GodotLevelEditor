@@ -1,7 +1,7 @@
 extends Node
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const PANEL := preload("res://addons/godot_level_editor/graph_panel.gd")
-const PRESENTATION := preload("res://addons/godot_level_editor/node_presentation.gd")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const PANEL := preload("res://addons/godot_level_editor/modules/godot_level_editor/graph_panel.gd")
+const PRESENTATION := preload("res://addons/godot_level_editor/modules/godot_level_editor/node_presentation.gd")
 var passed := 0
 var failed := 0
 func check(value: bool, title: String) -> void:
@@ -14,7 +14,7 @@ func _ready() -> void:
 	var graph := GRAPH.new()
 	graph.graph_id = "presentation_only"
 	for kind in GRAPH.PORTS:
-		graph.nodes.append({"id": kind, "kind": kind, "label": GRAPH.LABELS[kind], "params": {}})
+		graph.nodes.append({"id": kind, "kind": kind, "label": GRAPH.display_label({"kind": kind}), "params": {}})
 	var original := graph.snapshot()
 	panel.open_graph(graph)
 	await get_tree().process_frame

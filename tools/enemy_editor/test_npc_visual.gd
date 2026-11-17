@@ -1,9 +1,9 @@
 extends Node
-const DATA := preload("res://addons/enemy_editor/appearance_data.gd")
-const VISUAL := preload("res://addons/enemy_editor/npc_visual.gd")
-const STORE := preload("res://addons/enemy_editor/definition_store.gd")
-const TEMPLATE := preload("res://addons/enemy_editor/runtime/guard_template.gd")
-const MODEL := "res://assets/characters/quaternius_base/adapted_human.scn"
+const DATA := preload("res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd")
+const VISUAL := preload("res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd")
+const STORE := preload("res://addons/godot_level_editor/modules/enemy_editor/definition_store.gd")
+const TEMPLATE := preload("res://addons/godot_level_editor/modules/enemy_editor/runtime/guard_template.gd")
+const MODEL := "res://addons/godot_level_editor/assets/characters/quaternius_base/adapted_human.tscn"
 var passed := 0
 var failed := 0
 
@@ -37,7 +37,7 @@ func _ready() -> void:
 	check(animated.errors.is_empty() and animated.play("Walking_A") and animated.anim.current_animation == "walk", "选中的走路动作可以实际播放")
 	animated.anim.advance(0.2)
 	check(not animated.play("Idle") and animated.pose_status == "T Pose" and not animated.anim.is_playing(), "未配置待机时从走路恢复 T Pose")
-	var external := load("res://assets/characters/quaternius_base/UAL1_Standard.glb") as PackedScene
+	var external := load("res://addons/godot_level_editor/assets/characters/quaternius_base/UAL1_Standard.glb") as PackedScene
 	for motion in VISUAL.animation_catalog(external):
 		if motion.clip == "Walk": data.motions.walk = motion
 	var retargeted := VISUAL.new(); retargeted.appearance = data; add_child(retargeted)
@@ -58,12 +58,12 @@ func _ready() -> void:
 	var loaded := STORE.load_definition(path)
 	check(loaded != null and loaded.appearance.signature() == data.signature(), "关闭重读后外观配置完整保留")
 	var dependencies := ResourceLoader.get_dependencies(path)
-	check(str(dependencies).contains("adapted_human.scn") and str(dependencies).contains("UAL1_Standard.glb"), "模型和动画作为资源依赖保存，可随游戏导出")
-	var guard := load("res://scenes/guard.tscn").instantiate() as GuardAI
+	check(str(dependencies).contains("adapted_human.tscn") and str(dependencies).contains("UAL1_Standard.glb"), "模型和动画作为资源依赖保存，可随游戏导出")
+	var guard := load("res://addons/godot_level_editor/modules/enemy_editor/runtime/npc_actor.tscn").instantiate() as GuardAI
 	definition.appearance.motions = {}; guard.enemy_definition = definition; add_child(guard); guard.set_physics_process(false)
 	check(guard._model.get_script() == VISUAL and guard._model.pose_status == "T Pose", "关卡运行使用 NPC 编辑器设置的模型与 T Pose")
-	var old_guard := load("res://scenes/guard.tscn").instantiate() as GuardAI; add_child(old_guard); old_guard.set_physics_process(false)
-	check(old_guard._model.get_script() == load("res://scripts/actors/character_model.gd"), "旧 NPC 未配置外观时保留原角色组件")
+	var old_guard := load("res://addons/godot_level_editor/modules/enemy_editor/runtime/npc_actor.tscn").instantiate() as GuardAI; add_child(old_guard); old_guard.set_physics_process(false)
+	check(old_guard._model.get_script() == load("res://addons/godot_level_editor/scripts/actors/character_model.gd"), "旧 NPC 未配置外观时保留原角色组件")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	print("NPC VISUAL: %d passed / %d failed" % [passed, failed])
 	get_tree().quit(1 if failed else 0)

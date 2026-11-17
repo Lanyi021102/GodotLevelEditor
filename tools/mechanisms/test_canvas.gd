@@ -10,8 +10,12 @@ func frames(panel: Control, count := 5) -> void:
 	for _i in count: await panel.get_tree().process_frame
 func run(panel: Control, plugin: EditorPlugin) -> void:
 	var test_path := "res://tools/mechanisms/.canvas_test_%s.tscn" % Time.get_ticks_usec()
+	var fixture_path := "res://tools/mechanisms/.canvas_fixture_%s.tscn" % OS.get_process_id()
+	var fixture: Node3D = panel.Factory.sample()
+	check(panel.Store.save_pair(fixture, fixture_path).ok, "create isolated compatibility graph fixture")
+	fixture.free()
 	await frames(panel, 30)
-	EditorInterface.open_scene_from_path("res://scenes/mechanisms/lever_plate_door.tscn")
+	EditorInterface.open_scene_from_path(fixture_path)
 	await frames(panel, 25)
 	(panel.get_tree().get_first_node_in_group("godot_level_editor_editor_suite").open_tab("机关") if panel.get_tree().get_first_node_in_group("godot_level_editor_editor_suite") != null else EditorInterface.set_main_screen_editor("机关蓝图"))
 	await frames(panel, 10)
@@ -119,7 +123,7 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 	check(panel.graph.get_node("door_target").get_meta("runtime_active", false) and panel.runtime_label.text.contains("42"), "actual-instance debug packet highlights graph state")
 	panel.clear_session(1)
 	check(panel.runtime_packets.is_empty(), "ending debug session clears runtime instances")
-	EditorInterface.play_custom_scene("res://scenes/mechanisms/lever_plate_door.tscn")
+	EditorInterface.play_custom_scene(fixture_path)
 	await panel.get_tree().create_timer(3.0).timeout
 	check(not panel.runtime_packets.is_empty(), "running scene sends actual EngineDebugger state packets")
 	EditorInterface.stop_playing_scene()

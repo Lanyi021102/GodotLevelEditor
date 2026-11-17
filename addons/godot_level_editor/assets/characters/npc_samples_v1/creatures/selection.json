@@ -1,0 +1,497 @@
+{
+  "obtained_date": "2026-11-16",
+  "packs": [
+    {
+      "id": "farm_animals_2018",
+      "title": "LowPoly Animated Farm Animal Pack",
+      "author": "Quaternius",
+      "release_date": "2018-06-08",
+      "source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+      "download_url": "https://opengameart.org/sites/default/files/Farm%20Animals%20by%20%40Quaternius.zip",
+      "archive_file": "farm_animals.zip",
+      "license": "CC0-1.0",
+      "license_evidence": "animals/LICENSE.txt",
+      "archive_sha256": "9ff42b7e2445eaf259e4734c08172637db92e4b59a6145909ac56d946152c39b",
+      "archive_bytes": 6965696
+    },
+    {
+      "id": "cute_monsters_2020",
+      "title": "Textured Cute Monster Pack",
+      "author": "Quaternius",
+      "release_date": "2021-06-18",
+      "source_url": "https://opengameart.org/content/textured-cute-monster-pack",
+      "download_url": "https://opengameart.org/sites/default/files/cute_animated_monsters_-_aug_2020.zip",
+      "archive_file": "cute_monsters.zip",
+      "license": "CC0-1.0",
+      "license_evidence": "monsters/LICENSE.txt",
+      "archive_sha256": "844824c04936a9af954ee82011f98ad8c14ba291a20a0dd0b83c172764ba0eb2",
+      "archive_bytes": 10181866
+    }
+  ],
+  "assets": [
+    {
+      "id": "cow",
+      "display_name": "奶牛",
+      "category": "animals",
+      "pack": "farm_animals_2018",
+      "source_fbx": "animals/source/FBX/Cow.fbx",
+      "sha256": "0202789cad8c1debb8ae5b4a47d1a5d2e5f93a0875878bc0b05a80e42ae37e8d",
+      "bytes": 1044076,
+      "skeleton_path": "Armature/Skeleton3D",
+      "bone_count": 39,
+      "animations": [
+        {
+          "length": 1.25,
+          "name": "Armature|Death",
+          "player": "AnimationPlayer",
+          "tracks": 32
+        },
+        {
+          "length": 6.25,
+          "name": "Armature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 17
+        },
+        {
+          "length": 1.70833333333333,
+          "name": "Armature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        },
+        {
+          "length": 1.41666666666667,
+          "name": "Armature|Run",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        },
+        {
+          "length": 3.33333333333333,
+          "name": "Armature|Walk",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        },
+        {
+          "length": 2.08333333333333,
+          "name": "Armature|WalkSlow",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        }
+      ],
+      "recommended_motions": {
+        "idle": "Armature|Idle",
+        "walk": "Armature|Walk",
+        "run": "Armature|Run"
+      },
+      "recommended_height_m": 1.55,
+      "raw_loaded_bounds_size": [
+        2.24956703186035,
+        5.14774894714355,
+        9.17244720458984
+      ]
+    },
+    {
+      "id": "horse",
+      "display_name": "马",
+      "category": "animals",
+      "pack": "farm_animals_2018",
+      "source_fbx": "animals/source/FBX/Horse.fbx",
+      "sha256": "6db270ddc7591e9a013f96eab445031381fa6d5d68d2feba567f964e0fe68d90",
+      "bytes": 1023564,
+      "skeleton_path": "Armature/Skeleton3D",
+      "bone_count": 39,
+      "animations": [
+        {
+          "length": 1.08333333333333,
+          "name": "Armature|Death",
+          "player": "AnimationPlayer",
+          "tracks": 32
+        },
+        {
+          "length": 6.25,
+          "name": "Armature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 17
+        },
+        {
+          "length": 1.5,
+          "name": "Armature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 33
+        },
+        {
+          "length": 0.833333333333333,
+          "name": "Armature|Run",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        },
+        {
+          "length": 2.66666666666667,
+          "name": "Armature|Walk",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        },
+        {
+          "length": 2.0,
+          "name": "Armature|WalkSlow",
+          "player": "AnimationPlayer",
+          "tracks": 34
+        }
+      ],
+      "recommended_motions": {
+        "idle": "Armature|Idle",
+        "walk": "Armature|Walk",
+        "run": "Armature|Run"
+      },
+      "recommended_height_m": 1.85,
+      "raw_loaded_bounds_size": [
+        2.56977367401123,
+        6.90532302856445,
+        9.23513793945312
+      ]
+    },
+    {
+      "id": "pug",
+      "display_name": "巴哥犬",
+      "category": "animals",
+      "pack": "farm_animals_2018",
+      "source_fbx": "animals/source/FBX/Pug.fbx",
+      "sha256": "c05e127a5b10edd059478113f542f691717635b47d7a57317d07e7310a764ff0",
+      "bytes": 361020,
+      "skeleton_path": "Armature/Skeleton3D",
+      "bone_count": 35,
+      "animations": [
+        {
+          "length": 6.25,
+          "name": "Armature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 16
+        },
+        {
+          "length": 1.5,
+          "name": "Armature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 33
+        }
+      ],
+      "recommended_motions": {
+        "idle": "Armature|Idle",
+        "walk": null,
+        "run": null
+      },
+      "recommended_height_m": 0.45,
+      "raw_loaded_bounds_size": [
+        0.575167417526245,
+        1.05161941051483,
+        1.38781237602234
+      ],
+      "motion_note": "Original FBX contains only Idle and Jump. No Walk or Run clip is supplied; leave walk/run unbound or retain rest pose when moving."
+    },
+    {
+      "id": "sheep",
+      "display_name": "绵羊",
+      "category": "animals",
+      "pack": "farm_animals_2018",
+      "source_fbx": "animals/source/FBX/Sheep.fbx",
+      "sha256": "4a3fc559cc9f37e3e3f216af1dab30cb411ec9b268eb98676f1d5c18a430d33e",
+      "bytes": 356796,
+      "skeleton_path": "Armature/Skeleton3D",
+      "bone_count": 35,
+      "animations": [
+        {
+          "length": 6.25,
+          "name": "Armature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 14
+        },
+        {
+          "length": 1.125,
+          "name": "Armature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 33
+        }
+      ],
+      "recommended_motions": {
+        "idle": "Armature|Idle",
+        "walk": null,
+        "run": null
+      },
+      "recommended_height_m": 0.9,
+      "raw_loaded_bounds_size": [
+        3.39367508888245,
+        9.0427188873291,
+        6.66029167175293
+      ],
+      "motion_note": "Original FBX contains only Idle and Jump. No Walk or Run clip is supplied; leave walk/run unbound or retain rest pose when moving."
+    },
+    {
+      "id": "yeti",
+      "display_name": "雪怪",
+      "category": "monsters",
+      "pack": "cute_monsters_2020",
+      "source_fbx": "monsters/source/FBX/Yeti.fbx",
+      "sha256": "40a8c9a9ff34c8ed65e863b700d1fc9d4c71bb2b2090ca2b877078f4d14c3d5e",
+      "bytes": 483436,
+      "skeleton_path": "MonsterArmature/Skeleton3D",
+      "bone_count": 11,
+      "animations": [
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|Bite_Front",
+          "player": "AnimationPlayer",
+          "tracks": 6
+        },
+        {
+          "length": 0.666666666666667,
+          "name": "MonsterArmature|Bite_InPlace",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.833333333333333,
+          "name": "MonsterArmature|Dance",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.458333333333333,
+          "name": "MonsterArmature|Death",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.375,
+          "name": "MonsterArmature|HitRecieve",
+          "player": "AnimationPlayer",
+          "tracks": 7
+        },
+        {
+          "length": 2.5,
+          "name": "MonsterArmature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 7
+        },
+        {
+          "length": 0.541666666666667,
+          "name": "MonsterArmature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|No",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.541666666666667,
+          "name": "MonsterArmature|Walk",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|Yes",
+          "player": "AnimationPlayer",
+          "tracks": 7
+        }
+      ],
+      "recommended_motions": {
+        "idle": "MonsterArmature|Idle",
+        "walk": "MonsterArmature|Walk",
+        "run": null
+      },
+      "recommended_height_m": 1.6,
+      "raw_loaded_bounds_size": [
+        1.68427002429962,
+        1.6668313741684,
+        1.44085836410522
+      ],
+      "albedo_texture": "monsters/source/Textures/Yeti_Texture.png",
+      "albedo_texture_sha256": "036b5fee553202759c0690cf87e24dfcea1a66fe9a03a8d7aaf624d07b1af6f5",
+      "texture_binding_note": "FBXDocument does not populate the albedo texture automatically for this old export. Assign the supplied matching PNG to every StandardMaterial3D albedo_texture on the model mesh before saving the imported scene. Existing UVs are present.",
+      "motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait."
+    },
+    {
+      "id": "cactus",
+      "display_name": "仙人掌怪",
+      "category": "monsters",
+      "pack": "cute_monsters_2020",
+      "source_fbx": "monsters/source/FBX/Cactus.fbx",
+      "sha256": "58bd6f4bfdd99f619602a2d7d05401836b1f478f6a983d2694645f21c40b804c",
+      "bytes": 484380,
+      "skeleton_path": "MonsterArmature/Skeleton3D",
+      "bone_count": 11,
+      "animations": [
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|Bite_Front",
+          "player": "AnimationPlayer",
+          "tracks": 8
+        },
+        {
+          "length": 0.666666666666667,
+          "name": "MonsterArmature|Bite_InPlace",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.833333333333333,
+          "name": "MonsterArmature|Dance",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.458333333333333,
+          "name": "MonsterArmature|Death",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 0.375,
+          "name": "MonsterArmature|HitRecieve",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 2.5,
+          "name": "MonsterArmature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 7
+        },
+        {
+          "length": 0.541666666666667,
+          "name": "MonsterArmature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|No",
+          "player": "AnimationPlayer",
+          "tracks": 8
+        },
+        {
+          "length": 0.541666666666667,
+          "name": "MonsterArmature|Walk",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|Yes",
+          "player": "AnimationPlayer",
+          "tracks": 8
+        }
+      ],
+      "recommended_motions": {
+        "idle": "MonsterArmature|Idle",
+        "walk": "MonsterArmature|Walk",
+        "run": null
+      },
+      "recommended_height_m": 1.5,
+      "raw_loaded_bounds_size": [
+        2.78333640098572,
+        2.61559462547302,
+        1.71492266654968
+      ],
+      "albedo_texture": "monsters/source/Textures/Cactus_Texture.png",
+      "albedo_texture_sha256": "25216e5ccbe726e3bb2678fad8b78abf4712d4c7d73b1807f7206ac795e26b0f",
+      "texture_binding_note": "FBXDocument does not populate the albedo texture automatically for this old export. Assign the supplied matching PNG to every StandardMaterial3D albedo_texture on the model mesh before saving the imported scene. Existing UVs are present.",
+      "motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait."
+    },
+    {
+      "id": "cyclops",
+      "display_name": "独眼怪",
+      "category": "monsters",
+      "pack": "cute_monsters_2020",
+      "source_fbx": "monsters/source/FBX/Cyclops.fbx",
+      "sha256": "cd1512ea6f92f3f8ec596a38512ddee471dbaf7805a57975e64c398979dc11d3",
+      "bytes": 470764,
+      "skeleton_path": "MonsterArmature/Skeleton3D",
+      "bone_count": 11,
+      "animations": [
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|Bite_Front",
+          "player": "AnimationPlayer",
+          "tracks": 8
+        },
+        {
+          "length": 0.666666666666667,
+          "name": "MonsterArmature|Bite_InPlace",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.833333333333333,
+          "name": "MonsterArmature|Dance",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 0.458333333333333,
+          "name": "MonsterArmature|Death",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 0.375,
+          "name": "MonsterArmature|HitRecieve",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 2.5,
+          "name": "MonsterArmature|Idle",
+          "player": "AnimationPlayer",
+          "tracks": 7
+        },
+        {
+          "length": 0.541666666666667,
+          "name": "MonsterArmature|Jump",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|No",
+          "player": "AnimationPlayer",
+          "tracks": 9
+        },
+        {
+          "length": 0.541666666666667,
+          "name": "MonsterArmature|Walk",
+          "player": "AnimationPlayer",
+          "tracks": 10
+        },
+        {
+          "length": 0.5,
+          "name": "MonsterArmature|Yes",
+          "player": "AnimationPlayer",
+          "tracks": 8
+        }
+      ],
+      "recommended_motions": {
+        "idle": "MonsterArmature|Idle",
+        "walk": "MonsterArmature|Walk",
+        "run": null
+      },
+      "recommended_height_m": 1.5,
+      "raw_loaded_bounds_size": [
+        1.63667440414429,
+        1.66736090183258,
+        1.47268152236938
+      ],
+      "albedo_texture": "monsters/source/Textures/Cyclops_Texture.png",
+      "albedo_texture_sha256": "16a0476cb2596c4838069269238b44f00debe082597a416a0598209c5d243e05",
+      "texture_binding_note": "FBXDocument does not populate the albedo texture automatically for this old export. Assign the supplied matching PNG to every StandardMaterial3D albedo_texture on the model mesh before saving the imported scene. Existing UVs are present.",
+      "motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait."
+    }
+  ],
+  "selection_notes": [
+    "Only selected original FBX and necessary textures are retained; complete archives stay under /tmp for research and their hashes are recorded.",
+    "Source folders are excluded from automatic Godot importing via .gdignore; root integration will create curated renderable scene resources.",
+    "The current Quaternius website uses QAL v1.0 (2026-08-28); selected assets here are independently published original-author CC0 releases on OpenGameArt."
+  ],
+  "current_author_license_url": "https://quaternius.com/license.html"
+}

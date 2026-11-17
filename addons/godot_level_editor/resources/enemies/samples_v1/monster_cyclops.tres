@@ -1,0 +1,81 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3 uid="uid://jop6kla8vity"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/monster_cyclops.scn" id="1_bfuok"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd" id="2_eec6b"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/enemy_definition.gd" id="3_s7uvi"]
+
+[sub_resource type="Resource" id="Resource_dxxg1"]
+script = ExtResource("2_eec6b")
+model = ExtResource("1_bfuok")
+skeleton_path = NodePath("MonsterArmature/Skeleton3D")
+motions = {
+"idle": {
+"clip": "MonsterArmature|Idle",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_bfuok")
+},
+"walk": {
+"clip": "MonsterArmature|Walk",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_bfuok")
+}
+}
+height = 1.5
+pose_mode = "rest"
+
+[resource]
+script = ExtResource("3_s7uvi")
+display_name = "独眼怪"
+states = Array[Dictionary]([{
+"behavior": "patrol",
+"duration": 0.0,
+"id": "patrol",
+"label": "平静行走",
+"scan_degrees": 0.0,
+"speed": 1.2
+}])
+parameters = {
+"alert_decay": 40.0,
+"alert_rate": 100.0,
+"expose_penalty": 25.0,
+"help_radius": 12.0,
+"noise_alert": 25.0,
+"waypoint_wait": 1.5
+}
+layout = {
+"nodes": {
+"patrol": Vector2(100, 100)
+},
+"scroll": Vector2(0, 0),
+"zoom": 1.0
+}
+appearance = SubResource("Resource_dxxg1")
+metadata/npc_sample_v1 = {
+"animation_count": 10,
+"available_animations": ["MonsterArmature|Bite_Front", "MonsterArmature|Bite_InPlace", "MonsterArmature|Dance", "MonsterArmature|Death", "MonsterArmature|HitRecieve", "MonsterArmature|Idle", "MonsterArmature|Jump", "MonsterArmature|No", "MonsterArmature|Walk", "MonsterArmature|Yes"],
+"bone_count": 11,
+"bounds": {
+"x": 1.44806,
+"y": 1.5,
+"z": 1.3029656
+},
+"category": "monster",
+"collision": "box",
+"definition": "res://addons/godot_level_editor/resources/enemies/samples_v1/monster_cyclops.tres",
+"height": 1.5,
+"id": "monster_cyclops",
+"license": "CC0-1.0",
+"motion_note": "Original FBX has Idle and Walk but no Run. Preserve root Body vertical animation if removing horizontal root motion; its hop/bob is part of the creature gait.",
+"motions": {
+"idle": "MonsterArmature|Idle",
+"walk": "MonsterArmature|Walk"
+},
+"preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/monster_cyclops.png",
+"radius": 0.3,
+"scene": "res://addons/godot_level_editor/scenes/npcs/v1_monster_cyclops.tscn",
+"source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/FBX/Cyclops.fbx",
+"source_url": "https://opengameart.org/content/textured-cute-monster-pack",
+"texture": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/monsters/source/Textures/Cyclops_Texture.png",
+"title": "独眼怪",
+"walk_speed": 1.2
+}

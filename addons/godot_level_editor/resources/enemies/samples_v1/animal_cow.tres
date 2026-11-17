@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3 uid="uid://h7wbf3idg7dh"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/animal_cow.scn" id="1_swj6n"]
+[ext_resource type="Script" uid="uid://b1twsctkx0tvs" path="res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd" id="2_snxjj"]
+[ext_resource type="Script" uid="uid://blu5425jheggo" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/enemy_definition.gd" id="3_lnwrt"]
+
+[sub_resource type="Resource" id="Resource_ylmtk"]
+script = ExtResource("2_snxjj")
+model = ExtResource("1_swj6n")
+skeleton_path = NodePath("Armature/Skeleton3D")
+motions = {
+"idle": {
+"clip": "Armature|Idle",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_swj6n")
+},
+"run": {
+"clip": "Armature|Run",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_swj6n")
+},
+"walk": {
+"clip": "Armature|Walk",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_swj6n")
+}
+}
+height = 1.55
+pose_mode = "rest"
+
+[resource]
+script = ExtResource("3_lnwrt")
+display_name = "奶牛"
+states = Array[Dictionary]([{
+"behavior": "patrol",
+"duration": 0.0,
+"id": "patrol",
+"label": "平静行走",
+"scan_degrees": 0.0,
+"speed": 1.2
+}])
+parameters = {
+"alert_decay": 40.0,
+"alert_rate": 100.0,
+"expose_penalty": 25.0,
+"help_radius": 12.0,
+"noise_alert": 25.0,
+"waypoint_wait": 1.5
+}
+layout = {
+"nodes": {
+"patrol": Vector2(100, 100)
+},
+"scroll": Vector2(0, 0),
+"zoom": 1.0
+}
+appearance = SubResource("Resource_ylmtk")
+metadata/npc_sample_v1 = {
+"animation_count": 6,
+"available_animations": ["Armature|Death", "Armature|Idle", "Armature|Jump", "Armature|Run", "Armature|Walk", "Armature|WalkSlow"],
+"bone_count": 39,
+"bounds": {
+"x": 0.6773505,
+"y": 1.55,
+"z": 2.761847
+},
+"category": "animal",
+"collision": "box",
+"definition": "res://addons/godot_level_editor/resources/enemies/samples_v1/animal_cow.tres",
+"height": 1.55,
+"id": "animal_cow",
+"license": "CC0-1.0",
+"motion_note": "",
+"motions": {
+"idle": "Armature|Idle",
+"run": "Armature|Run",
+"walk": "Armature|Walk"
+},
+"preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/animal_cow.png",
+"radius": 0.3,
+"scene": "res://addons/godot_level_editor/scenes/npcs/v1_animal_cow.tscn",
+"source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/creatures/animals/source/FBX/Cow.fbx",
+"source_url": "https://opengameart.org/content/lowpoly-animated-farm-animal-pack",
+"title": "奶牛",
+"walk_speed": 1.2
+}

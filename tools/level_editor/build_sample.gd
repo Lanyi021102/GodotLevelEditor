@@ -1,7 +1,7 @@
 extends Node
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
 
 func _ready() -> void:
 	_build.call_deferred()
@@ -40,8 +40,8 @@ func _build() -> void:
 				FACTORY.placement(room, "plate_b", "kinetic", Vector3(5, 0.02, 3))
 				door.source_ids.append("plate_b")
 				var guard: Node3D = FACTORY.placement(room, "guard", "guard", Vector3(0, 0.1, -1.3))
-				if ResourceLoader.exists("res://resources/enemies/guard_default.tres"):
-					guard.component_definition = load("res://resources/enemies/guard_default.tres")
+				if ResourceLoader.exists("res://addons/godot_level_editor/modules/enemy_editor/runtime/legacy_guard.tres"):
+					guard.component_definition = load("res://addons/godot_level_editor/modules/enemy_editor/runtime/legacy_guard.tres")
 				FACTORY.block(room, "cover_a", Vector3(2.6, 1.2, 1), Vector3(-5, 0.6, -1))
 				FACTORY.block(room, "cover_b", Vector3(2.6, 1.2, 1), Vector3(5, 0.6, -1))
 			if i == 3:
@@ -54,7 +54,7 @@ func _build() -> void:
 			region.object_id = "goal_region"
 			region.position = Vector3(0, 0, -7.3)
 			FACTORY.add_owned(room, region, room)
-		_assert_ok(FACTORY.save_scene(room, "res://scenes/level_editor/rooms/%s.tscn" % info[0]))
+		_assert_ok(FACTORY.save_scene(room, "res://content/scenes/level_editor/rooms/%s.tscn" % info[0]))
 		room.free()
 	var topology := GRAPH.new()
 	topology.graph_id = "godot_level_editor_topology_v1"
@@ -81,15 +81,15 @@ func _build() -> void:
 		_edge(events, "goal_" + suffix, "completed", "checkpoint_" + suffix, "run")
 	_node(events, "objective_final", "objective", {"text": "捷径已开启，返回中庭"}, Vector2(930, 700))
 	_edge(events, "goal_3", "completed", "objective_final", "run")
-	_assert_ok(ResourceSaver.save(topology, "res://resources/level_editor/world_topology.tres"))
-	_assert_ok(ResourceSaver.save(events, "res://resources/level_editor/world_events.tres"))
+	_assert_ok(ResourceSaver.save(topology, "res://content/resources/level_editor/world_topology.tres"))
+	_assert_ok(ResourceSaver.save(events, "res://content/resources/level_editor/world_events.tres"))
 	var world := WORLD.new()
 	world.name = "GodotLevelEditorWorld"
-	world.topology = load("res://resources/level_editor/world_topology.tres")
-	world.events = load("res://resources/level_editor/world_events.tres")
+	world.topology = load("res://content/resources/level_editor/world_topology.tres")
+	world.events = load("res://content/resources/level_editor/world_events.tres")
 	var positions := [Vector3.ZERO, Vector3(20, 0, 0), Vector3(20, 0, -20), Vector3(0, 0, -20)]
 	for i in definitions.size():
-		var instance: Node3D = load("res://scenes/level_editor/rooms/%s.tscn" % definitions[i][0]).instantiate()
+		var instance: Node3D = load("res://content/scenes/level_editor/rooms/%s.tscn" % definitions[i][0]).instantiate()
 		instance.position = positions[i]
 		FACTORY.add_owned(world, instance, world)
 	var camera := Camera3D.new()
@@ -100,7 +100,7 @@ func _build() -> void:
 	camera.size = 66
 	camera.current = true
 	FACTORY.add_owned(world, camera, world)
-	var lighting := preload("res://scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
+	var lighting := preload("res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
 	lighting.name = "Lighting"
 	FACTORY.add_owned(world, lighting, world)
 	var errors := world.validate()
@@ -109,7 +109,7 @@ func _build() -> void:
 		get_tree().quit(1)
 		world.free()
 		return
-	_assert_ok(FACTORY.save_scene(world, "res://scenes/levels/continuous_world.tscn"))
+	_assert_ok(FACTORY.save_scene(world, "res://content/scenes/levels/continuous_world.tscn"))
 	world.free()
 	print("LEVEL SAMPLE: 4 room scenes + 2 graphs + continuous world saved")
 	get_tree().quit()

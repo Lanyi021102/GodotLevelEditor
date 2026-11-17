@@ -1,6 +1,6 @@
 extends Node
-const PRESET := preload("res://addons/godot_level_editor_sky/preset.gd")
-const LIBRARY := preload("res://addons/godot_level_editor_sky/library.gd")
+const PRESET := preload("res://addons/godot_level_editor/modules/godot_level_editor_sky/preset.gd")
+const LIBRARY := preload("res://addons/godot_level_editor/modules/godot_level_editor_sky/library.gd")
 var checks := 0
 var failures := 0
 func check(value: bool, label: String) -> void:
@@ -28,7 +28,7 @@ func run() -> void:
 	check(not profile.validate().is_empty(), "invalid fog interval rejected")
 	profile.fog_end = 120; profile.version = 9; check(not profile.validate().is_empty(), "unsupported resource version rejected")
 	profile.version = 1
-	var world: Node3D = load("res://scenes/levels/whitebox_world.tscn").instantiate()
+	var world: Node3D = load("res://content/scenes/levels/whitebox_world.tscn").instantiate()
 	world.sky_preset = null
 	add_child(world); await frames()
 	var original_env: Environment = world.get_world_3d().environment
@@ -67,8 +67,8 @@ func run() -> void:
 	check(world.get_world_3d().environment == original_env, "unbinding restores legacy lighting")
 	world.free(); await frames()
 	# Exercise a saved sky reference through the real standalone (F6) session path.
-	world = load("res://scenes/levels/whitebox_world.tscn").instantiate()
-	world.sky_preset = load("res://resources/sky_presets/builtin/overcast.tres")
+	world = load("res://content/scenes/levels/whitebox_world.tscn").instantiate()
+	world.sky_preset = load("res://addons/godot_level_editor/resources/sky_presets/builtin/overcast.tres")
 	packed = PackedScene.new(); packed.pack(world); ResourceSaver.save(packed, "user://sky_standalone_test.tscn"); world.free()
 	world = load("user://sky_standalone_test.tscn").instantiate()
 	get_tree().root.add_child(world); get_tree().current_scene = world

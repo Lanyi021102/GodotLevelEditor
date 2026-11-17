@@ -1,4 +1,41 @@
+## 插件目录与原生场景合同 · 2026-11-17
+
+插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
+
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+
+主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
+
 # XLSX 与统一窗口覆盖说明 · 2026-11-12
+
+## 人工连线流程样例 · 2026-11-17
+
+关卡 `scenes/levels/9_editor_flow_test.tscn` 登记为 level 9；事件 1004 的任务 1004001～1004003 分别引用 `resources/task_graphs/editor_flow_test/equipment.tres`、`mechanisms.tres`、`parallel.tres`，后者调用同目录 `child.tres`。常驻关卡图接取事件首项任务，三个任务沿用现有顺序推进合同；图与对白数据格式、稳定 ID 和运行 API 无变化。台本使用独立 `resources/narrative/editor_flow_test.xlsx`。
+
+测试场景的 `SessionRecorder` 仅观察运行信号和最终状态，写入 `docs/qa/editor_flow_2026-11-17/manual-session.json` 与完成截图，不驱动交互或任务推进。其绿色“流程测试完成”提示需事件结束后 12 项检查全通过；再次试玩会覆盖同名记录。`tools/editor_flow_test/prepare.gd` 仅保留首次准备无连线素材的过程，现有图已存在时禁止重跑。当前操作见 [流程测试指南](../wiki/tutorials/editor-flow-test.md)，真实鼠标连线、回归结果及未覆盖项见 [验证记录](../qa/editor_flow_2026-11-17/validation.md)。
+
+## 单句对话类型 · 2026-11-16
+
+对白行新增可选 `dialogue_mode`：`free`（自由对话，默认）或 `stationary`（站桩对话）。XLSX“对白”页在 text 之前写入 dialogue_mode，原 schema version=2 与必需表头保持；旧 XLSX、TRES、CSV 迁移缺省按 free，非法值拒绝载入。原 type 字段仍为引导／对白／提示分类，ID 和顺序不变。export_signature 包含新类型，类型修改参与相同 UndoRedo 事务；表格内容列前提供原生下拉编辑，详情中也可修改。
+
+dialogue_player 不再暂停整个 SceneTree。free 按 playback_duration 自动逐句播放；duration=0 使用字符／词组与标点估算，正数继续作为明确时长覆盖。stationary 忽略计时，仅接受交互、ui_accept 或鼠标左键的非重复按下。每次换句重置开句帧，结束仍逐句及逐 comment 发出原完成信号，不跨 comment 自动播放。外部暂停不由对话解除。
+
+新增 current_mode() 和 blocks_player_input()。越肩相机按 blocks_player_input 只锁站桩操作，停止水平惯性并释放鼠标；恢复时尊重对话前的输入状态与窗口失焦。关闭句的交互输入保留一个物理帧隔离，避免同一次 F 同时触发旁边机关。没有该新方法的旧对话适配器继续按 is_active 锁定，保持旧宿主兼容。
+
+自动时长默认 0.8 秒起读时间 + 非拉丁字符数／5 + 拉丁词组数／3 + 标点停顿；逗号等 0.18 秒，句末与换行 0.35 秒；范围 2.5～3600 秒。它是可解释的阅读估算，不表示已有录音时长。操作与验证见 [当前指南](../wiki/guides/dialogues.md) 和 [验证记录](dialogue_modes_2026-11-16/validation.md)。
+
+2026-11-16 姓名可读性：台本“NPC 姓名”按完整姓名自动分配蓝、青、紫色系实色标签，同名保持一致。深底配白字、浅底配深灰字，比较相对亮度对比度后自动选择；选中行也保持标签对应字色。标签通过只读单元格自定义绘制回调显示，沿用原生文字绘制及滚动裁切；切换单元格绘制模式后恢复原姓名，字体、字号和字重保持。不会写 `library.speakers`，不修改配表角色颜色或运行时对话表现。检查见 [实色标签验证](../godot_level_editor_suite/filled_labels_2026-11-16/validation.md)，字体解析见 [宋体与字形验证](../godot_level_editor_suite/songti_colors_2026-11-16/validation.md)。
+
+2026-11-16 台本显示：`dialogue_panel` 按字体测量 ID／姓名列宽、保留省略行的全文 tooltip，并提供选中对白的换行阅读区。`dialogue_table_layout` 标记紧凑行样式；字体／窗口变化重新测量，不截断作者数据。搜索无匹配时禁用预览区编辑。布局变化、选中和预览不置脏、不改变 XLSX；原表格／右键编辑、搜索、稳定 ID 与撤销继续沿用。检查见 [显示验证](../godot_level_editor_suite/display_refresh_2026-11-16/validation.md)。
+
+## QA 台本文件与任务绑定合同 · 2026-11-16
+
+- QA-03 / QA-04：新台本 `xlsx_path` 为空时，首次“保存对白”选择路径后调用与导出一致的 XLSX 写入入口。只有写入成功才同时更新 `xlsx_path/source_path`、清除 `dirty/export_dirty`；失败保留当前库、目标前的路径和草稿。
+- “打开对白”按扩展名分派：XLSX 走 `read_xlsx`，旧 `.tres` 走资源加载与合法旧结构迁移。候选库先完成版本、结构和内容校验，成功后才替换当前库及撤销历史；无效输入或当前未保存时显示原因，不用空库覆盖。旧 `.tres` 迁移后的第一次保存须选择 XLSX 目标，不继承并覆盖默认工作簿。
+- QA-06：`runtime/task_bindings.gd.validate` 由任务保存与套件运行入口复用。在可确认的任务所属世界内检查 NPC / Room 引用及可复用子图，拒绝引用另一任务专属对象；合法当前任务对象不因隐藏而被拒绝。外关卡任务保留既有暂停／续接，不能用不相干的当前场景证明目标已删除。
+- 缺失引用的错误在校验保存或运行启动处可定位，不创建一个永远等待缺失 NPC 的有效 runner。模块专项、合法隐藏对象／跨关卡兼容及总控独立整合结果见 [本轮 QA 记录](../qa/bugfix_2026-11-16/validation.md)。
+
+2026-11-16 对象引用拖放：任务节点的 object／room／npc／actor／mechanism 在卡片底部及参数区提供场景树拖放框，放下即绑定并进入同一次图撤销事务。复用关卡公共适配器，维持任务 NPC 裸 object_id 与世界对象 scoped ref 的既有语义；下拉选择和已有引用保持。切换编辑场景后刷新候选及显示，不修改图。详见 [公共合同](../level_editor/INTERFACES.md) 和 [验证](../level_editor/scene_reference_2026-11-16/validation.md)。
 
 2026-11-16 机关桥：任务节点注册机关状态变化／交互／动作完成／感应触发、状态判断、等待到位、状态／动作请求和交互／属性设置。task_runner 复用现有等待、超时、取消和恢复；task_actions 转发到独立机关模块。event_director._connect_world 绑定机制桥，并通过现有 _broadcast 同时服务常驻关卡图与当前任务。引用格式与接口见 [机关合同](../mechanism_editor/INTERFACES.md)，素材与验证见 [首批机关](../mechanism_editor/whitebox_v1/README.md)。
 
@@ -77,4 +114,24 @@ task_definition.allowed_kinds() 提供可覆盖的节点白名单，level_logic_
 
 ## 轮盘实例与任务存在性 · 2026-11-16
 
+Room 现为箱体触发区域。任务图与常驻关卡图共用 `room_active`（room:String、expected:bool，value:bool 输出）和 `room_exit`（room:String、once:bool，then:event 输出），继续支持原 `room_enter` kind。参数使用既有 Room 引用下拉／拖放，校验同任务独占范围。激活先于进入事件更新；任务启用检测与玩家进入激活分开，结束或失败清除激活状态。接口及实测见 [Room 合同](../level_editor/INTERFACES.md) 和 [本轮验证](../level_editor/room_triggers_2026-11-16/validation.md)。
+
 轮盘新建 NPC 的模型、阵营、默认动作与行为引用存于关卡实例 metadata 的 `entity_profile.gd`，不改 NPC 源场景。模型动画按已有同名片段播放；巡逻与行为定义保留为后续行为接入字段。`EntityProperties` 按同世界事件执行器的 active 任务状态控制任务 NPC 的显示、处理与碰撞，任务完成／失败后关闭；常驻 NPC 不依赖任务激活。此规则同样适用于任务 Room 与机关。完整字段和持久化合同见 [轮盘 V2](../level_editor/quick_add_v2_2026-11-15/README.md)。
+
+
+## 任务图连续切换 · 2026-11-16
+
+套件 edit_task 在未保存图与目标不同路径时调用 task_panel.confirm_graph_switch(continuation)，并显示任务图页的保存／放弃／取消弹窗；保存失败保留当前图及错误，成功后才打开目标。重复打开相同路径不重新加载资源、不清空撤销历史。文件打开使用 CACHE_MODE_IGNORE，遵循同一保护；成功后按事件表中唯一匹配的 graph_path 恢复 bound_task_id，未登记／多重归属时清除旧绑定。目标资源类型检查通过后才更新任务绑定；配表、图资源格式及运行接口不变。验证见 [切换修复验证](task_switch_2026-11-16/validation.md)。
+
+## 旧 NPC 素材清理 · 2026-11-16
+
+存量 `scenes/narrative/npc.tscn` 的脚本使用首批中体型男性的 NPCVisual 替代 CapsuleMesh，保持 object_id、display_name、interaction_radius、can_interact/interact 和 interacted 信号。已有对话场景和任务绑定无需重建。 验证见 [清理记录](../enemy_editor/legacy_cleanup_2026-11-16/validation.md)。
+
+
+## 任务归属同步与操作分类 · 2026-11-16
+
+task_definition.LOCAL_TASK_KINDS 定义当前任务内的 task_start/task_complete/task_fail/npc_interact/dialog_completed。task_panel 在重建（含打开、粘贴、撤销／重做）及保存前将这些节点的 params.task 同步为 bound_task_id，修改标记 dirty，不自动写盘，不更改节点 ID。独立文件仅在事件表 graph_path 唯一匹配时恢复绑定，不猜测未登记／多重归属图。缺少任务时 validate 显示节点名称、ID 和任务表编辑入口；task_accept 等跨任务接取节点不参与此同步。
+
+任务图顶部仅显示五个常用按钮，其他操作沿用原回调并归入文件／编辑／绑定／试玩菜单。共享 node_picker 提供常驻分类筛选、分组结果与角色色，_can_offer_node(kind) 在分组前按任务或常驻图白名单过滤。node_category 保留隐藏的程序化索引接口；全部列表的标题行 metadata 为空且不可选择，不能当作节点添加。图数据、类型化端口及运行接口保持。
+
+实际验证与截图见 [任务图工具与绑定验证](task_toolbar_2026-11-16/validation.md)。

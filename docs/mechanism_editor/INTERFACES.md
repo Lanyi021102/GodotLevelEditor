@@ -1,4 +1,55 @@
+## 插件目录与原生场景合同 · 2026-11-17
+
+插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
+
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+
+主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
+
 # 机关专项接口（v1，2026-10-30）
+
+2026-11-16 连线复核：自动检查和窗口鼠标检查分开记录，不能用直接发送连接信号的测试代替鼠标操作。关卡与机关的完整窗口复测 55 项通过，覆盖布尔／事件／数值／对象引用拖线、必填输入与错类型校验、改参、撤销重做、保存重开及切回图；参数滚动区、校验规则与图格式保持。见 [本轮证据及边界](../narrative_editor/task_toolbar_2026-11-16/validation.md)。
+
+## 当前素材范围：五种独立机关 · 2026-11-16
+
+用户确认库中只保留双开门、单开门、压力板、按钮、升降台，源位于 `scenes/mechanisms/{double_door,single_door,pressure_plate,button,lift_platform}.tscn` 及同名图。组合、拉杆、终端、旧门、重复默认样例及其预览/演示任务已移除。下方首批七种、预连线组合和可搜索旧创建类型的描述是阶段历史，以本节为准。
+
+每种素材只绑定自身一个物理组件。按钮按下和复位不会改变其他机关；门使用自己的交互→旋转动画；压力板只输出占位状态；升降台自己的交互执行往返。升降台距离检查和文字提示跟随移动平台，乘客到顶后可再次交互返回。
+
+`Schema.COMPONENT_KINDS` 为五种创建类型；`COMPATIBILITY_KINDS` 只供旧关卡数据加载，不能通过搜索或 `add_kind` 新增。通用状态、事件、逻辑与任务接口保留。`Factory.blank()` 是新建入口，得到空白图；`Factory.standalone(kind)` 创建独立组件；`Factory.sample()` 仅作为工具兼容测试的内存夹具，不再生成用户库预设。
+
+清理前先校验工程外备份。旧展示区改为五种独立素材；TestLevel 保留原组合的父变换并改为三个独立实例；黄昏山居的两份旧门读取图内嵌到关卡，保留对象、组件 ID 和任务引用。剧情交互点移到 `scenes/narrative/interaction_point.tscn`，不属于机关素材库。
+
+操作见 [独立机关](../wiki/tutorials/button-door.md)，删除清单、依赖迁移和实际检查见 [本轮记录](independent_2026-11-16/validation.md)。
+
+## 双规格旋转门与可视节点 · 2026-11-16
+
+新建门使用 `single_door`（外框 2×3 m）/ `double_door`（外框 4×3 m），组件为 `runtime/rotating_door.gd`，素材为 `scenes/mechanisms/{single_door,double_door}.tscn` 及同名外部图。固定门框与铰链上的 `AnimatableBody3D` 门扇分离；单扇 +90°，双扇分别 +90° / −90°。默认米制网格；既有门和用户图不自动转换或删除。
+
+状态严格为 `close / moving / open`，只允许请求稳定目标 `close / open`；动作 `open / close / toggle`。物理帧推进归一化时间，`motion_curve:Curve` 映射到 0°～90°；反向从当前进度沿同一曲线返回，到位后才完成。曲线固定起终点 (0,0)/(1,1)，缺失或无效曲线拒绝保存。`motion_seconds` 是完整单程时长。
+
+组件继续提供公共命名状态、交互、动作、属性、完成信号与静默快照接口。主动交互产生输入事件，由图的交互→动画线执行旋转；任务直接调用 `request_state/perform_action`。锁定阻止主动交互和打开，允许关闭。`motion_info()` 提供 state/progress/angle/target/seconds/leaves，供隔离预览与调试包读取。
+
+新增 `single_door/double_door` 门框对象节点、`door_leaf`、`door_animation`、`door_state`。金色 OBJECT 线固定表达同一对象的门框→门扇→动画→状态，错接其他门或其他节点类型拒绝保存。动画有事件输入及已接受/失败/实际到位输出；三状态卡分别输出当前 BOOL 和一次 entered EVENT。新端口仍使用稳定具名 ID 与图格式 1。
+
+`door_blueprint.gd` 是七节点模板的共同来源；素材生成与面板添加复用同一构建器。通过 + 节点添加单/双开门时同时创建组件与完整图，分配新 ID，置于原图右侧，一次原生撤销可以整体移除。
+
+`door_curve.gd` 在图节点内编辑真实组件 Curve；点编辑、时长与预设使用原生场景撤销；起终点锁定。曲线存于组件场景，图只存对象绑定、动作、状态与排版，多个节点不复制一份曲线。`door_nodes.gd` 展示门框/门扇参数、状态、角度及播放位置；对象值高亮先检查类型，避免将 OBJECT 字符串与 BOOL 直接比较。
+
+操作、实际截图与验证见 [旋转门教程](../wiki/tutorials/rotating-door.md) 和 [专项验证](doors_v2_2026-11-16/validation.md)。这次门规格工作独立于上一节四项 QA 的冻结验收。
+
+## QA 保存、剪贴板与自定义动作合同 · 2026-11-16
+
+本轮合同对应 QA-01、QA-05、QA-07、QA-08；模块专项与总控独立整合检查已通过，具体来源、早期失败记录和源码快照见 [本轮 QA 记录](../qa/bugfix_2026-11-16/validation.md)。
+
+- `native_save_guard.gd` 在插件启用时注册为优先 `ResourceFormatSaver`，与 `Store.save_pair` 共用场景／图的冲突保护。原生保存也先校验图、组件与配对磁盘变化，成功后更新外部图引用与跟踪散列；拒绝时保留文件、草稿和未保存状态。
+- 文件系统扫描可能重建 saver 注册顺序；自动注册后延迟恢复 guard 优先级，`_apply_changes()` 在原生保存前同步再次确保顺序。该钩子用于安排 saver 顺序，不承担否决写入；实际拒绝仍由 guard 处理。
+- Godot 保存回调不能直接否决后续 saver；拒绝写盘的分支会以已处理返回，避免内置 saver 继续覆盖。调用方不能仅凭 `EditorInterface.save_scene()` 返回 OK 判断成功，需要查看机关面板状态、`dirty` 与实际配对文件。`.tscn` 是机关成对保存的场景格式。
+- 剪贴板存复制时的节点参数、内部边、位置及绑定对象的 PackedScene 快照，粘贴不再回读源节点 ID。粘贴为新节点与局部对象 ID，同一次粘贴中共享的原绑定映射到同一新组件；原件后续修改或删除不使快照失效，图内引用与空间对象一同撤销重做。
+- 纯自定义动作只有匹配当前 `from`（或 `*`）的规则才执行；没有匹配且不是组件内置动作时返回 `{ok:false, reason}`，不得落入内置字典、误报成功或发出完成事件。内置动作的现有语义保留。
+- 按钮进入 `pressed` 的正常状态转换统一设置 `reset_after` 计时，包括自定义 `interact`；离开时清除计时。`tl_restore` 直接恢复保存的剩余计时与状态，不调用正常转换入口，不重放交互、状态或动作事件。
+
+2026-11-16 选择联动修复：原生三维选择通知可能在 `_syncing` 释放后到达；若当前图节点已经绑定到该对象，`scene_selection_changed` 保留当前节点及参数面板。多个状态／动作节点引用同一组件时不再跳到第一个组件节点；三维选择不同组件仍按原逻辑定位。资源格式、绑定与图数据不变。验证见 [选择联动回归](selection_fix_2026-11-16/validation.md)。
 
 ## 命名状态与首批素材 · 2026-11-16
 

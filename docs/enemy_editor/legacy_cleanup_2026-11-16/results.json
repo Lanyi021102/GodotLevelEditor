@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-16",
+  "engine": "Godot 4.7.1",
+  "results": [
+    {
+      "check": "13 个示例、替换外观与旧对话交互",
+      "passed": 150,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-samples.log"
+    },
+    {
+      "check": "守卫运行兼容与内部夹具",
+      "passed": 45,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-fsm.log"
+    },
+    {
+      "check": "任务与对话节点",
+      "passed": 90,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-narrative.log"
+    },
+    {
+      "check": "模型导入、撤销与生成场景",
+      "passed": 19,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-appearance.log"
+    },
+    {
+      "check": "无界面轮盘放置与存盘",
+      "passed": 110,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-quick-headless.log"
+    },
+    {
+      "check": "无界面素材目录",
+      "passed": 72,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-catalog-headless.log"
+    },
+    {
+      "check": "Metal 素材目录及实际编辑器",
+      "passed": 72,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-catalog-metal.log"
+    },
+    {
+      "check": "Metal 放置、人物拾取与存盘",
+      "passed": 112,
+      "failed": 0,
+      "log": "/tmp/branch-npc-cleanup-quick-final.log"
+    }
+  ],
+  "backup": "/Users/lanyi/branch_cleanup_backups/npc_legacy_20261116_155615",
+  "wiki": {
+    "ok": true,
+    "wiki_pages": 17,
+    "checked_local_links": 1108,
+    "image_references": 49,
+    "search_records": 150,
+    "errors": []
+  },
+  "final_headless_import": {
+    "exit_code": 0,
+    "script_errors": 0,
+    "log": "/tmp/branch-npc-cleanup-import-final.log"
+  }
+}

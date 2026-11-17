@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/ui/task_tracker_line.gd" id="1"]
+[node name="Line" type="Control"]
+custom_minimum_size = Vector2(0, 32)
+mouse_filter = 2
+script = ExtResource("1")
+[node name="Text" type="Label" parent="."]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 0.0
+offset_bottom = 32.0
+anchor_right = 1.0
+offset_right = 0.0
+mouse_filter = 2
+autowrap_mode = 3

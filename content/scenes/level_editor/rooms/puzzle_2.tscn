@@ -1,0 +1,125 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/room.gd" id="1_73efn"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd" id="2_jtp5r"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/connection.gd" id="3_fb73j"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/placement.gd" id="4_ucg1r"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/legacy_guard.tres" id="5_ulgxq"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/region.gd" id="6_kwh2r"]
+
+[node name="Puzzle2" type="Node3D" unique_id=21004814]
+script = ExtResource("1_73efn")
+room_id = "puzzle_2"
+display_name = "并行回声"
+
+[node name="Floor" type="Node3D" parent="." unique_id=1102911724]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+script = ExtResource("2_jtp5r")
+object_id = "floor"
+size = Vector3(20, 3.6, 20)
+
+[node name="WallNorth" type="Node3D" parent="." unique_id=130646783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, -9.85)
+script = ExtResource("2_jtp5r")
+object_id = "wall_north"
+size = Vector3(20, 1.3, 0.3)
+
+[node name="WallSouthA" type="Node3D" parent="." unique_id=1236280820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.65, 9.85)
+script = ExtResource("2_jtp5r")
+object_id = "wall_south_a"
+size = Vector3(8, 1.3, 0.3)
+
+[node name="WallSouthB" type="Node3D" parent="." unique_id=993646666]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.65, 9.85)
+script = ExtResource("2_jtp5r")
+object_id = "wall_south_b"
+size = Vector3(8, 1.3, 0.3)
+
+[node name="WallEast" type="Node3D" parent="." unique_id=896140462]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.85, 0.65, 0)
+script = ExtResource("2_jtp5r")
+object_id = "wall_east"
+size = Vector3(0.3, 1.3, 20)
+
+[node name="WallWestA" type="Node3D" parent="." unique_id=1567452601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 0.65, -6)
+script = ExtResource("2_jtp5r")
+object_id = "wall_west_a"
+size = Vector3(0.3, 1.3, 8)
+
+[node name="WallWestB" type="Node3D" parent="." unique_id=1237583288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.85, 0.65, 6)
+script = ExtResource("2_jtp5r")
+object_id = "wall_west_b"
+size = Vector3(0.3, 1.3, 8)
+
+[node name="South" type="Node3D" parent="." unique_id=511228578]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 10)
+script = ExtResource("3_fb73j")
+object_id = "south"
+
+[node name="West" type="Node3D" parent="." unique_id=2065465770]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -10, 0, 0)
+script = ExtResource("3_fb73j")
+object_id = "west"
+
+[node name="PlateA" type="Node3D" parent="." unique_id=1664244890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.02, 4)
+script = ExtResource("4_ucg1r")
+object_id = "plate_a"
+source_ids = PackedStringArray()
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="Door" type="Node3D" parent="." unique_id=233173339]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -4)
+script = ExtResource("4_ucg1r")
+object_id = "door"
+component_kind = "door"
+source_ids = PackedStringArray("plate_a", "plate_b")
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="PlateB" type="Node3D" parent="." unique_id=1207398826]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.02, 3)
+script = ExtResource("4_ucg1r")
+object_id = "plate_b"
+component_kind = "kinetic"
+source_ids = PackedStringArray()
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="Guard" type="Node3D" parent="." unique_id=612983480]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -1.3)
+script = ExtResource("4_ucg1r")
+object_id = "guard"
+component_kind = "guard"
+component_definition = ExtResource("5_ulgxq")
+source_ids = PackedStringArray()
+patrol_local = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+
+[node name="CoverA" type="Node3D" parent="." unique_id=1918530146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.6, -1)
+script = ExtResource("2_jtp5r")
+object_id = "cover_a"
+size = Vector3(2.6, 1.2, 1)
+
+[node name="CoverB" type="Node3D" parent="." unique_id=1535018280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.6, -1)
+script = ExtResource("2_jtp5r")
+object_id = "cover_b"
+size = Vector3(2.6, 1.2, 1)
+
+[node name="PartitionA" type="Node3D" parent="." unique_id=1547280772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9, 1.3, -4)
+script = ExtResource("2_jtp5r")
+object_id = "partition_a"
+size = Vector3(8.2, 2.6, 0.4)
+
+[node name="PartitionB" type="Node3D" parent="." unique_id=408604481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9, 1.3, -4)
+script = ExtResource("2_jtp5r")
+object_id = "partition_b"
+size = Vector3(8.2, 2.6, 0.4)
+
+[node name="GoalRegion" type="Area3D" parent="." unique_id=1642362060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.3)
+script = ExtResource("6_kwh2r")

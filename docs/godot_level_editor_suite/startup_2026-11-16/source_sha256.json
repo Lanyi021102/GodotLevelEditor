@@ -1,0 +1,7 @@
+{
+  "addons/godot_level_editor_suite/plugin.gd": "c97754b3948dd6c472077dd935499e6882b96dcde0b9a2761dd32ed2d016ab21",
+  "addons/godot_level_editor_suite/asset_workspace.gd": "c7d219893ef55750ead16f46978d7f8a667fd6a55554ddf9e5ecddc50115705f",
+  "addons/godot_level_editor_sky/panel.gd": "d12cc58a70005e283834b89ae0c7ebd524fb0ec69d0455e9b1b562fcc1787bd0",
+  "tools/godot_level_editor_suite/startup_test.gd": "7353f78b248a31023aa54b88d5d4d59126f159fb884f3d3975930e5dba561e6f",
+  "tools/godot_level_editor_suite/run_startup_profile.py": "6eb44e8d5671c32b7e5889d9a9659767ef03c6acedfcad80ca75753c12955e76"
+}

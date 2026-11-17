@@ -12,6 +12,8 @@ __pycache__/
 /builds/
 /exports/
 /dist/
+/.venv-wiki/
+/site/
 *.log
 *.tmp
 *.bak
@@ -25,4 +27,8 @@ __pycache__/
 
 # Temporary files produced by editor tests
 /tools/mechanisms/.canvas_test_*
+/tools/mechanisms/.canvas_fixture_*
 /tools/enemy_editor/.roundtrip.tres*
+/tools/godot_level_editor_suite/native_drag_probe_*.tscn
+/tools/level_editor/.reference_fixture_*.tscn
+/tools/level_editor/quick_add_probe_*.tscn

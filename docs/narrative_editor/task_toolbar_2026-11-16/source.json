@@ -1,0 +1,15 @@
+{
+  "addons/godot_level_editor/node_picker.gd": "993c7099b16ba5fab837d1926558942b611d8f7b619d7a09e429e74e50ecb8dd",
+  "addons/godot_level_editor/graph_panel.gd": "163b3f30bddfad8a06a74658a6e649b0a262f3a013f23e5fa35a9fcfec8ddb8c",
+  "addons/godot_level_editor/level_logic_panel.gd": "90a215c8b9f6788bb24d127bc86c893a07263b67f928d398835dcdbd1a617ecb",
+  "addons/godot_level_editor_narrative/task_panel.gd": "c9e1a8601ce3182eef273ff9afc21429400e6525e4678011dc4c2381f36eed6a",
+  "addons/godot_level_editor_narrative/runtime/task_definition.gd": "324fac44707065bacb0e1fc000429b8563d6b0df4b0788a4bfbd5c88a5c12fa5",
+  "tools/narrative/task_owner_editor_test.gd": "e78ed347515141985013af4c4e1f43e9479de2af507bca106545ab847f7e8d47",
+  "tools/narrative/live_wiring_editor_test.gd": "dbb40ca740651436c56d03d99a8649cd40843d874d1d15bec68b7cb3036a2801",
+  "tools/narrative/npc_mouse_editor_test.gd": "ebc7ec8e7913ece2d993d64c234c5dd2058dbdd38290f6e508910018575d86bb",
+  "tools/narrative/run_mouse_editor_checks.py": "dcf44c8fa1d6a915f371e1e70b9aa7fa282191d601cebb9e29bc3b6be5fac39c",
+  "tools/enemy_editor/test_canvas.gd": "901d2d82617387130c53fff5f800279f85aa717aa0b01ba874c497c2245a7883",
+  "addons/enemy_editor/editor_panel.gd": "f01288a7e6fbc2bd95c2eed52db7520536ebeb0fe047d06e447283c8bddfa65e",
+  "addons/godot_level_editor_mechanisms/editor_panel.gd": "ef476f6c4d89580b4795f5170f1da50fddfb0d8119a4637a5870c2e722ac046b",
+  "addons/godot_level_editor_mechanisms/graph/definition.gd": "8750fffba637b4e9917c69afd05abad33647a7e0bbbba3fa56eb579499581c0c"
+}

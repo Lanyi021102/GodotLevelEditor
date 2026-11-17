@@ -1,0 +1,89 @@
+name: Plugin package
+
+on:
+  push:
+    tags: ['plugin-v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '试打包版本号（X.Y.Z 或 X.Y.Z-preview）；不会创建 Release'
+        required: true
+        default: '0.1.0'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: plugin-package-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: '4.7.1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select package version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/plugin-v* ]]; then
+            VERSION="${GITHUB_REF_NAME#plugin-v}"
+          else
+            VERSION="$INPUT_VERSION"
+          fi
+          echo "PACKAGE_VERSION=$VERSION" >> "$GITHUB_ENV"
+      - name: Install Godot
+        run: |
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/godot.zip" "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          chmod +x "$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64"
+          echo "GODOT_BIN=$RUNNER_TEMP/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64" >> "$GITHUB_ENV"
+      - name: Build addon without maps
+        run: python tools/release/build.py --version "$PACKAGE_VERSION" --godot "$GODOT_BIN"
+      - name: Check clean installation and update
+        run: python tools/release/verify.py "dist/GodotLevelEditor-${PACKAGE_VERSION}.zip" --godot "$GODOT_BIN"
+      - name: Upload installation package
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-installation
+          path: |
+            dist/*.zip
+            dist/*.zip.sha256
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload validation logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-validation
+          path: |
+            dist/logs/
+            dist/verification/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/plugin-v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: plugin-installation
+          path: dist
+      - name: Publish installation files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.zip dist/*.zip.sha256 --verify-tag --title "GodotLevelEditor ${GITHUB_REF_NAME#plugin-v}" --notes-file tools/release/NOTES.md

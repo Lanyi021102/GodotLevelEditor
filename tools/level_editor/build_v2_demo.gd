@@ -1,8 +1,8 @@
 extends Node
-const F := preload("res://addons/godot_level_editor/scene_factory.gd")
-const G := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
+const F := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const G := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
 func _ready() -> void:
-	var world := preload("res://addons/godot_level_editor/runtime/world.gd").new()
+	var world := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd").new()
 	world.name = "关卡节点示例"
 	world.world_id = "level_nodes_demo"
 	world.start_room_id = "demo_room"
@@ -24,7 +24,7 @@ func _ready() -> void:
 	var guard := F.placement(room, "guard", "guard", Vector3(2.5, 0.05, -1))
 	guard.initially_active = false
 	guard.patrol_local = PackedVector3Array([Vector3(-1.5, 0, 0), Vector3(1.5, 0, 0)])
-	guard.component_definition = load("res://resources/enemies/guard_default.tres")
+	guard.component_definition = load("res://addons/godot_level_editor/modules/enemy_editor/runtime/legacy_guard.tres")
 	guard.name = "敌人"
 	guard.owner = world
 	var region := F.REGION.new()
@@ -64,10 +64,10 @@ func _ready() -> void:
 	_edge(graph, "patrol", "then", "success", "run")
 	_edge(graph, "danger", "then", "kill", "run")
 	_edge(graph, "kill", "then", "dead", "run")
-	ResourceSaver.save(topology, "res://resources/level_editor/demo_topology.tres")
-	ResourceSaver.save(graph, "res://resources/level_editor/demo_events.tres")
-	world.topology = load("res://resources/level_editor/demo_topology.tres")
-	world.events = load("res://resources/level_editor/demo_events.tres")
+	ResourceSaver.save(topology, "res://content/resources/level_editor/demo_topology.tres")
+	ResourceSaver.save(graph, "res://content/resources/level_editor/demo_events.tres")
+	world.topology = load("res://content/resources/level_editor/demo_topology.tres")
+	world.events = load("res://content/resources/level_editor/demo_events.tres")
 	var actor := CharacterBody3D.new()
 	actor.name = "预览玩家"
 	actor.set_script(preload("res://tools/level_editor/demo_actor.gd"))
@@ -92,7 +92,7 @@ func _ready() -> void:
 	material.albedo_color = Color("70d7e9")
 	visual.material_override = material
 	F.add_owned(actor, visual, world)
-	var agent := preload("res://addons/godot_level_editor/runtime/actor_agent.gd").new()
+	var agent := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/actor_agent.gd").new()
 	agent.name = "LevelAgent"
 	agent.unlocked_items = PackedStringArray(["sample_key"])
 	F.add_owned(actor, agent, world)
@@ -119,7 +119,7 @@ func _ready() -> void:
 	F.add_owned(world, hud, world)
 	var errors := world.validate()
 	if not errors.is_empty(): push_error(str(errors)); world.free(); get_tree().quit(1); return
-	var result := F.save_scene(world, "res://scenes/levels/logic_playground.tscn")
+	var result := F.save_scene(world, "res://content/scenes/levels/logic_playground.tscn")
 	world.free()
 	print("V2 DEMO: ", error_string(result))
 	get_tree().quit(0 if result == OK else 1)

@@ -1,0 +1,1484 @@
+{
+  "baseline_headless": [
+    {
+      "run": 1,
+      "exit_code": 0,
+      "wall_ms": 11166.690707999998,
+      "events": {
+        "plugins_begin_ms": 3903.0744580000005,
+        "plugins_end_ms": 5273.702541000001,
+        "ready_ms": 10535.960957999998
+      },
+      "scopes": [
+        {
+          "at_ms": 227,
+          "ms": 40.107,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 4014,
+          "ms": 12.085,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4059,
+          "ms": 62.136,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4060,
+          "ms": 62.972,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 4272,
+          "ms": 33.985,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4272,
+          "ms": 34.445,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 4768,
+          "ms": 8.296,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4808,
+          "ms": 48.284,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 4942,
+          "ms": 25.847,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4951,
+          "ms": 8.591,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4984,
+          "ms": 41.464,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4984,
+          "ms": 68.813,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 5213,
+          "ms": 0.044,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 5247,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 5253,
+          "ms": 7.681,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 5253,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 5260,
+          "ms": 0.649,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 6550,
+          "ms": 487.329,
+          "scope": "godot_level_editor_suite/event_panel.gd:_ready"
+        },
+        {
+          "at_ms": 7447,
+          "ms": 7.908,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 7792,
+          "ms": 334.342,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 7792,
+          "ms": 433.14,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 7897,
+          "ms": 61.234,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 7897,
+          "ms": 104.562,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 9148,
+          "ms": 569.628,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 9148,
+          "ms": 578.606,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 9676,
+          "ms": 5.826,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 10126,
+          "ms": 55.047,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 10127,
+          "ms": 512.599,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        },
+        {
+          "at_ms": 10138,
+          "ms": 4893.391,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        },
+        {
+          "at_ms": 10265,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "exit_code": 0,
+      "wall_ms": 9027.773166999998,
+      "events": {
+        "plugins_begin_ms": 1816.8380419999987,
+        "plugins_end_ms": 2808.4339589999986,
+        "ready_ms": 8323.714375
+      },
+      "scopes": [
+        {
+          "at_ms": 77,
+          "ms": 10.415,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 1914,
+          "ms": 9.002,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1943,
+          "ms": 41.763,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1944,
+          "ms": 42.321,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2074,
+          "ms": 18.533,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2074,
+          "ms": 18.75,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2407,
+          "ms": 8.341,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2442,
+          "ms": 43.728,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2548,
+          "ms": 23.605,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2556,
+          "ms": 7.182,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2586,
+          "ms": 37.052,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2586,
+          "ms": 61.795,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2786,
+          "ms": 0.034,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2805,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2810,
+          "ms": 5.934,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 2810,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2815,
+          "ms": 0.484,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3847,
+          "ms": 413.81,
+          "scope": "godot_level_editor_suite/event_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4667,
+          "ms": 5.459,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 5038,
+          "ms": 361.801,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 5038,
+          "ms": 446.133,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 5153,
+          "ms": 65.031,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 5153,
+          "ms": 114.142,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 6653,
+          "ms": 662.391,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 6653,
+          "ms": 673.892,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 7564,
+          "ms": 5.399,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 7980,
+          "ms": 48.007,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 7980,
+          "ms": 482.255,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        },
+        {
+          "at_ms": 7992,
+          "ms": 5187.668,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        },
+        {
+          "at_ms": 8114,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        }
+      ]
+    }
+  ],
+  "baseline_metal": [
+    {
+      "run": 1,
+      "exit_code": 0,
+      "wall_ms": 8463.541917,
+      "events": {
+        "ready_ms": 7759.329333
+      },
+      "scopes": [
+        {
+          "at_ms": 379,
+          "ms": 12.733,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2149,
+          "ms": 25.569,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2174,
+          "ms": 53.389,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2174,
+          "ms": 53.906,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2288,
+          "ms": 13.237,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2288,
+          "ms": 13.431,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2529,
+          "ms": 4.349,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2587,
+          "ms": 62.202,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2658,
+          "ms": 14.5,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2662,
+          "ms": 3.93,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2677,
+          "ms": 18.49,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2677,
+          "ms": 34.051,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2824,
+          "ms": 0.098,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2849,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2856,
+          "ms": 8.329,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 2857,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2863,
+          "ms": 0.362,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3861,
+          "ms": 399.706,
+          "scope": "godot_level_editor_suite/event_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4623,
+          "ms": 12.136,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 4623,
+          "ms": 762.21,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 4706,
+          "ms": 5.383,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4713,
+          "ms": 7.198,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5030,
+          "ms": 315.361,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 5030,
+          "ms": 406.709,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 5129,
+          "ms": 59.88,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 5129,
+          "ms": 98.803,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 5413,
+          "ms": 13.148,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5413,
+          "ms": 283.411,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5413,
+          "ms": 382.713,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 5822,
+          "ms": 9.773,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5822,
+          "ms": 409.412,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 6503,
+          "ms": 671.4,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 6503,
+          "ms": 680.395,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 7026,
+          "ms": 20.598,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 7026,
+          "ms": 522.981,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 7026,
+          "ms": 1203.817,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 7094,
+          "ms": 6.138,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 7463,
+          "ms": 45.842,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 7464,
+          "ms": 437.14,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        },
+        {
+          "at_ms": 7475,
+          "ms": 4627.686,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        }
+      ]
+    }
+  ],
+  "optimized_headless": [
+    {
+      "run": 1,
+      "exit_code": 0,
+      "wall_ms": 6733.406916,
+      "events": {
+        "plugins_begin_ms": 1162.8522079999998,
+        "plugins_end_ms": 1768.884541,
+        "ready_ms": 2001.203625,
+        "workspace_open": {
+          "ms": 559.913
+        },
+        "page_visits": [
+          {
+            "ms": 809.66,
+            "page": "关卡"
+          },
+          {
+            "ms": 286.821,
+            "page": "机关"
+          },
+          {
+            "ms": 1104.159,
+            "page": "敌人"
+          },
+          {
+            "ms": 55.469,
+            "page": "任务图"
+          },
+          {
+            "ms": 211.623,
+            "page": "台本"
+          },
+          {
+            "ms": 399.391,
+            "page": "天空"
+          }
+        ]
+      },
+      "scopes": [
+        {
+          "at_ms": 60,
+          "ms": 9.343,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 1234,
+          "ms": 5.283,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1253,
+          "ms": 26.953,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1254,
+          "ms": 27.398,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1342,
+          "ms": 12.848,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1342,
+          "ms": 13.126,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1548,
+          "ms": 4.009,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1565,
+          "ms": 21.671,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1625,
+          "ms": 11.892,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1629,
+          "ms": 3.694,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1642,
+          "ms": 16.849,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1642,
+          "ms": 29.568,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1754,
+          "ms": 0.027,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1854,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 1988,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 1996,
+          "ms": 8.774,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 1996,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2004,
+          "ms": 0.425,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2546,
+          "ms": 558.942,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        },
+        {
+          "at_ms": 3065,
+          "ms": 409.911,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 3081,
+          "ms": 5.861,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 3324,
+          "ms": 242.369,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 3324,
+          "ms": 777.653,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 3440,
+          "ms": 36.641,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 3440,
+          "ms": 62.678,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 3652,
+          "ms": 8.002,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 3652,
+          "ms": 211.652,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 3652,
+          "ms": 274.587,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 4219,
+          "ms": 529.334,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 4219,
+          "ms": 537.474,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 4784,
+          "ms": 15.001,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 4784,
+          "ms": 565.428,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 4785,
+          "ms": 1103.187,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 4871,
+          "ms": 7.465,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 4871,
+          "ms": 54.756,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5099,
+          "ms": 6.083,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5099,
+          "ms": 209.772,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5163,
+          "ms": 3.461,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 5512,
+          "ms": 37.627,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 5512,
+          "ms": 395.105,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "exit_code": 0,
+      "wall_ms": 7848.592374999999,
+      "events": {
+        "plugins_begin_ms": 1979.066833000001,
+        "plugins_end_ms": 3135.2450830000007,
+        "ready_ms": 3375.5685829999998,
+        "workspace_open": {
+          "ms": 656.527
+        },
+        "page_visits": [
+          {
+            "ms": 1067.853,
+            "page": "关卡"
+          },
+          {
+            "ms": 558.888,
+            "page": "机关"
+          },
+          {
+            "ms": 666.822,
+            "page": "敌人"
+          },
+          {
+            "ms": 62.618,
+            "page": "任务图"
+          },
+          {
+            "ms": 229.739,
+            "page": "台本"
+          },
+          {
+            "ms": 326.341,
+            "page": "天空"
+          }
+        ]
+      },
+      "scopes": [
+        {
+          "at_ms": 78,
+          "ms": 10.127,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2095,
+          "ms": 8.554,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2125,
+          "ms": 42.46,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2126,
+          "ms": 43.026,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2317,
+          "ms": 24.561,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2317,
+          "ms": 24.893,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2821,
+          "ms": 7.335,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2850,
+          "ms": 37.347,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2944,
+          "ms": 18.471,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2950,
+          "ms": 5.455,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2969,
+          "ms": 24.179,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2969,
+          "ms": 43.753,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 3116,
+          "ms": 0.033,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 3204,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3358,
+          "ms": 0.001,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3361,
+          "ms": 4.41,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 3362,
+          "ms": 0.001,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3365,
+          "ms": 0.333,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 4012,
+          "ms": 655.443,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        },
+        {
+          "at_ms": 4650,
+          "ms": 494.199,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 4675,
+          "ms": 9.506,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5039,
+          "ms": 363.716,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 5040,
+          "ms": 1026.202,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 5191,
+          "ms": 81.536,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 5596,
+          "ms": 26.557,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5596,
+          "ms": 405.296,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5597,
+          "ms": 487.427,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 5907,
+          "ms": 205.827,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 6367,
+          "ms": 17.635,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 6367,
+          "ms": 459.631,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 6367,
+          "ms": 665.801,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 6463,
+          "ms": 8.627,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 6463,
+          "ms": 61.838,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 6710,
+          "ms": 6.967,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 6710,
+          "ms": 227.973,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 6772,
+          "ms": 3.465,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 7050,
+          "ms": 19.389,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 7051,
+          "ms": 324.607,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        }
+      ]
+    }
+  ],
+  "optimized_metal": [
+    {
+      "run": 1,
+      "exit_code": 0,
+      "wall_ms": 7435.753375000001,
+      "events": {
+        "ready_ms": 2615.8431250000003,
+        "workspace_open": {
+          "ms": 536.475
+        },
+        "page_visits": [
+          {
+            "ms": 650.884,
+            "page": "关卡"
+          },
+          {
+            "ms": 309.834,
+            "page": "机关"
+          },
+          {
+            "ms": 898.488,
+            "page": "敌人"
+          },
+          {
+            "ms": 32.956,
+            "page": "任务图"
+          },
+          {
+            "ms": 217.061,
+            "page": "台本"
+          },
+          {
+            "ms": 312.873,
+            "page": "天空"
+          }
+        ]
+      },
+      "scopes": [
+        {
+          "at_ms": 298,
+          "ms": 7.63,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 1779,
+          "ms": 13.856,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1801,
+          "ms": 38.702,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1801,
+          "ms": 39.124,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1904,
+          "ms": 11.564,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1904,
+          "ms": 11.742,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2117,
+          "ms": 3.954,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2162,
+          "ms": 49.376,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2215,
+          "ms": 10.895,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2219,
+          "ms": 3.186,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2230,
+          "ms": 14.489,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2230,
+          "ms": 26.054,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2339,
+          "ms": 0.085,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2526,
+          "ms": 0.004,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2531,
+          "ms": 6.693,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 2532,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2536,
+          "ms": 0.341,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3052,
+          "ms": 527.111,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        },
+        {
+          "at_ms": 3485,
+          "ms": 302.845,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 3497,
+          "ms": 4.642,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 3702,
+          "ms": 204.647,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 3702,
+          "ms": 641.017,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 3923,
+          "ms": 44.613,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 3923,
+          "ms": 77.543,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 4143,
+          "ms": 8.001,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 4144,
+          "ms": 220.147,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 4144,
+          "ms": 297.932,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 4216,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 5088,
+          "ms": 515.433,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:reload_catalog"
+        },
+        {
+          "at_ms": 5088,
+          "ms": 526.239,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 5459,
+          "ms": 13.487,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5459,
+          "ms": 371.152,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5459,
+          "ms": 897.636,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 5834,
+          "ms": 7.553,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5834,
+          "ms": 27.178,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 6170,
+          "ms": 5.912,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 6170,
+          "ms": 214.549,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 6270,
+          "ms": 3.792,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 6548,
+          "ms": 17.611,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 6549,
+          "ms": 310.091,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "exit_code": 0,
+      "wall_ms": 6980.438583,
+      "events": {
+        "ready_ms": 2753.6101659999995,
+        "workspace_open": {
+          "ms": 504.552
+        },
+        "page_visits": [
+          {
+            "ms": 747.757,
+            "page": "关卡"
+          },
+          {
+            "ms": 366.185,
+            "page": "机关"
+          },
+          {
+            "ms": 546.317,
+            "page": "敌人"
+          },
+          {
+            "ms": 35.748,
+            "page": "任务图"
+          },
+          {
+            "ms": 209.405,
+            "page": "台本"
+          },
+          {
+            "ms": 323.22,
+            "page": "天空"
+          }
+        ]
+      },
+      "scopes": [
+        {
+          "at_ms": 275,
+          "ms": 7.689,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 1598,
+          "ms": 11.616,
+          "scope": "enemy_editor/appearance_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1617,
+          "ms": 32.803,
+          "scope": "enemy_editor/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1617,
+          "ms": 33.173,
+          "scope": "enemy_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1701,
+          "ms": 12.565,
+          "scope": "godot_level_editor_mechanisms/editor_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1701,
+          "ms": 12.737,
+          "scope": "godot_level_editor_mechanisms/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 1902,
+          "ms": 3.965,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 1965,
+          "ms": 67.484,
+          "scope": "godot_level_editor/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2021,
+          "ms": 10.818,
+          "scope": "godot_level_editor_narrative/dialogue_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2024,
+          "ms": 3.133,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2036,
+          "ms": 14.866,
+          "scope": "godot_level_editor_narrative/task_panel.gd:_ready"
+        },
+        {
+          "at_ms": 2036,
+          "ms": 26.276,
+          "scope": "godot_level_editor_narrative/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2139,
+          "ms": 0.078,
+          "scope": "godot_level_editor_suite/plugin.gd:_enter_tree"
+        },
+        {
+          "at_ms": 2306,
+          "ms": 0.003,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2643,
+          "ms": 0.002,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2646,
+          "ms": 3.699,
+          "scope": "godot_level_editor_suite/editor_style.gd:theme"
+        },
+        {
+          "at_ms": 2647,
+          "ms": 0.0,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 2650,
+          "ms": 0.28,
+          "scope": "ui/songti_font.gd:_source"
+        },
+        {
+          "at_ms": 3137,
+          "ms": 494.669,
+          "scope": "godot_level_editor_suite/plugin.gd:_build_workspace"
+        },
+        {
+          "at_ms": 3578,
+          "ms": 313.058,
+          "scope": "godot_level_editor/graph_panel.gd:_ready"
+        },
+        {
+          "at_ms": 3591,
+          "ms": 4.799,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 3798,
+          "ms": 206.273,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:reload_catalog"
+        },
+        {
+          "at_ms": 3886,
+          "ms": 738.504,
+          "scope": "godot_level_editor_suite/level_warehouse.gd:_ready"
+        },
+        {
+          "at_ms": 4108,
+          "ms": 105.697,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 4356,
+          "ms": 8.352,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 4356,
+          "ms": 247.915,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 4356,
+          "ms": 353.937,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 4739,
+          "ms": 160.171,
+          "scope": "godot_level_editor_suite/asset_workspace.gd:_ready"
+        },
+        {
+          "at_ms": 5118,
+          "ms": 14.506,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5118,
+          "ms": 378.973,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5118,
+          "ms": 539.458,
+          "scope": "godot_level_editor_suite/plugin.gd:_asset_workspace"
+        },
+        {
+          "at_ms": 5324,
+          "ms": 8.454,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5324,
+          "ms": 34.1,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5603,
+          "ms": 6.07,
+          "scope": "godot_level_editor_suite/editor_style.gd:workspace"
+        },
+        {
+          "at_ms": 5603,
+          "ms": 206.587,
+          "scope": "godot_level_editor_suite/plugin.gd:_adopt"
+        },
+        {
+          "at_ms": 5704,
+          "ms": 3.699,
+          "scope": "godot_level_editor_sky/panel.gd:reload_library"
+        },
+        {
+          "at_ms": 5986,
+          "ms": 17.382,
+          "scope": "godot_level_editor_sky/panel.gd:_update_references"
+        },
+        {
+          "at_ms": 5988,
+          "ms": 320.278,
+          "scope": "godot_level_editor_sky/panel.gd:_ready"
+        }
+      ]
+    }
+  ]
+}

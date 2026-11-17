@@ -1,7 +1,7 @@
 extends Node
-const TASK := preload("res://addons/godot_level_editor_narrative/runtime/task_definition.gd")
-const SPEC := preload("res://addons/godot_level_editor_narrative/runtime/task_nodes.gd")
-const RUNNER := preload("res://addons/godot_level_editor_narrative/runtime/task_runner.gd")
+const TASK := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd")
+const SPEC := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_nodes.gd")
+const RUNNER := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_runner.gd")
 var checks := 0
 var failures := 0
 var actions: Array = []
@@ -150,7 +150,7 @@ func integration() -> void:
 	add_child(session)
 	await ticks(15)
 	var director: Node = session.get_node("Narrative/Tasks")
-	var catalog := preload("res://addons/godot_level_editor_suite/runtime/event_catalog.gd").new()
+	var catalog := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd").new()
 	var event := catalog.add_event()
 	var task := catalog.add_task(event.event_id, "2")
 	var authored := graph([node("start", "start"), node("goal", "objective_start", {"key": "get_key", "text": "取得物件并穿戴"}), node("save", "checkpoint_save"), node("wait", "delay", {"seconds": 100.0}), node("interact", "object_interacted", {"object": "$world/test_interaction"}), node("give", "change_item", {"key": "uniform"}), node("wear", "equip_item", {"key": "uniform"}), node("done", "objective_complete", {"key": "get_key"}), node("fail", "event_received", {"key": "fail"}), node("failure", "task_fail", {"task": task.task_id, "reason": "测试失败"})], [edge("start", "goal"), edge("goal", "save"), edge("save", "wait"), edge("interact", "give"), edge("give", "wear"), edge("wear", "done"), edge("fail", "failure")])
@@ -159,17 +159,17 @@ func integration() -> void:
 	task.graph_path = "user://task_nodes_integration_%d.tres" % OS.get_process_id()
 	temporary.append(task.graph_path)
 	check(authored.validate().is_empty() and ResourceSaver.save(authored, task.graph_path) == OK, "integration graph saves as a native resource")
-	var point: Node3D = load("res://scenes/mechanisms/interaction_point.tscn").instantiate()
+	var point: Node3D = load("res://addons/godot_level_editor/scenes/narrative/interaction_point.tscn").instantiate()
 	point.object_id = "test_interaction"
 	session.world.add_child(point)
 	point.global_position = session.player.global_position
-	var region: Node3D = preload("res://addons/godot_level_editor/runtime/region.gd").new()
+	var region: Node3D = preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/region.gd").new()
 	region.object_id = "test_region"
 	session.world.add_child(region)
 	region.global_position = session.player.global_position + Vector3(20, 0, 0)
-	var npc: Node3D = load("res://scenes/narrative/npc.tscn").instantiate()
+	var npc: Node3D = load("res://addons/godot_level_editor/scenes/narrative/npc.tscn").instantiate()
 	npc.object_id = "test_npc"
-	var npc_agent: Node = preload("res://addons/godot_level_editor/runtime/actor_agent.gd").new()
+	var npc_agent: Node = preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/actor_agent.gd").new()
 	npc_agent.inventory = {"uniform": 2}
 	npc.add_child(npc_agent)
 	session.world.add_child(npc)
@@ -187,7 +187,7 @@ func integration() -> void:
 	check(agent.level_inventory_count("uniform") == 1, "object interaction changes the real actor inventory")
 	check(agent.level_has_equipped("body", "uniform"), "equipment action changes the real actor slot")
 	check(director.active[event.event_id].objectives.get_key.state == "completed", "interaction chain completes its subobjective")
-	var helper := preload("res://addons/godot_level_editor_narrative/runtime/task_actions.gd").new()
+	var helper := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_actions.gd").new()
 	helper.world = session.world
 	check(helper.condition(node("item", "has_item", {"key": "uniform", "amount": 1})), "inventory condition reads actual item quantities")
 	check(not helper.condition(node("item", "has_item", {"key": "uniform", "amount": 2})), "inventory condition rejects an insufficient quantity")

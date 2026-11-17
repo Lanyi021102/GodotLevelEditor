@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd" id="world"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd" id="graph"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_logic_graph.gd" id="logic"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/modules/godot_level_editor/palette_assets/box.tscn" id="box"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/modules/godot_level_editor/palette_assets/spawn.tscn" id="spawn"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/sky_presets/builtin/sunny_v2.tres" id="sky"]
+
+[sub_resource type="Resource" id="Topology"]
+resource_local_to_scene = true
+script = ExtResource("graph")
+graph_kind = "topology"
+
+[sub_resource type="Resource" id="Events"]
+resource_local_to_scene = true
+script = ExtResource("graph")
+
+[sub_resource type="Resource" id="Logic"]
+resource_local_to_scene = true
+script = ExtResource("logic")
+
+[node name="Level" type="Node3D"]
+script = ExtResource("world")
+start_room_id = ""
+topology = SubResource("Topology")
+events = SubResource("Events")
+level_logic = SubResource("Logic")
+sky_preset = ExtResource("sky")
+
+[node name="Whitebox" type="Node3D" parent="."]
+metadata/godot_level_editor_content_group = "whitebox"
+
+[node name="Floor" parent="Whitebox" instance=ExtResource("box")]
+position = Vector3(0, -1.8, 0)
+object_id = "floor"
+size = Vector3(20, 3.6, 20)
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("spawn")]
+position = Vector3(0, 0.1, 3)
+object_id = "player_spawn"

@@ -1,0 +1,77 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] button is a valid paired editable assembly with initialized named state
+[PASS] button has visible whitebox geometry and real collision/sensor shapes
+[PASS] toggle_switch is a valid paired editable assembly with initialized named state
+[PASS] toggle_switch has visible whitebox geometry and real collision/sensor shapes
+[PASS] pressure_plate is a valid paired editable assembly with initialized named state
+[PASS] pressure_plate has visible whitebox geometry and real collision/sensor shapes
+[PASS] sliding_door is a valid paired editable assembly with initialized named state
+[PASS] sliding_door has visible whitebox geometry and real collision/sensor shapes
+[PASS] hinged_door is a valid paired editable assembly with initialized named state
+[PASS] hinged_door has visible whitebox geometry and real collision/sensor shapes
+[PASS] lift_platform is a valid paired editable assembly with initialized named state
+[PASS] lift_platform has visible whitebox geometry and real collision/sensor shapes
+[PASS] terminal is a valid paired editable assembly with initialized named state
+[PASS] terminal has visible whitebox geometry and real collision/sensor shapes
+[PASS] button rejects interaction outside its configured radius
+[PASS] successful player interaction changes idle to pressed exactly once
+[PASS] repeated pressing while held does not duplicate state-change events
+[PASS] button automatically releases after its configured delay
+[PASS] one-shot button remains used after its visible cap resets
+[PASS] disabling player interaction still allows explicit graph control
+[PASS] property bridge rejects unknown fields and invalid numeric values
+[PASS] new lever toggles off/on through the shared interaction interface
+[PASS] sliding_door accepts a request without pretending the physical action has completed
+[PASS] sliding_door stays in a transition state at half travel
+[PASS] sliding_door restores silently without replaying task triggers
+[PASS] sliding_door emits success only after geometry and collision reach the endpoint
+[PASS] sliding_door honors the locked property while allowing a return/close command
+[PASS] hinged_door accepts a request without pretending the physical action has completed
+[PASS] hinged_door stays in a transition state at half travel
+[PASS] hinged_door restores silently without replaying task triggers
+[PASS] hinged_door emits success only after geometry and collision reach the endpoint
+[PASS] hinged_door honors the locked property while allowing a return/close command
+[PASS] lift_platform accepts a request without pretending the physical action has completed
+[PASS] lift_platform stays in a transition state at half travel
+[PASS] lift_platform restores silently without replaying task triggers
+[PASS] lift_platform emits success only after geometry and collision reach the endpoint
+[PASS] lift_platform honors the locked property while allowing a return/close command
+[PASS] reversing a moving door cancels the original action and reports the actual completed direction
+[PASS] action-completion events retain the exact requested toggle action name
+[PASS] stopping a lift reports the canceled travel and completed stop separately
+[PASS] custom named states and authored transition rules work without writing a component script
+[PASS] custom transitions cannot jump backward without an allowed rule
+[PASS] duplicate transition rules fail validation
+[PASS] button-door sample accepts a real player interaction
+[PASS] button entered-state event executes the connected open action
+[PASS] button-door sample completes the actual opening
+[PASS] one pressure plate alone cannot open the paired door
+[PASS] both plate outputs pass through AND and request opening
+[PASS] leaving either plate requests closure without retaining an old open command
+[PASS] activating the terminal starts the connected lift
+[PASS] terminal-lift sample reaches the physical endpoint
+[PASS] two instances of the same source have distinct stable target references
+[PASS] task schema accepts request-state and wait-for-state nodes
+[PASS] accepted request starts waiting, leaves other instances untouched and does not complete the task early
+[PASS] task completes after the requested door actually reaches open
+[PASS] waiting immediately passes when the target was opened before the task began
+[PASS] wait nodes time out without pretending the target state was reached
+[PASS] checkpoint-style runner restore preserves an active mechanism wait without completing it
+[PASS] task state-change triggers reject events from another instance
+[PASS] task does not treat opening as open
+[PASS] bridge publishes real endpoint and action-completion events to task graphs
+[PASS] component restore emits no duplicate state, action or task completion events
+[PASS] editor target descriptions provide instance names and real state choices
+[PASS] a target removed during a wait takes the failure output instead of waiting forever
+[PASS] integration fixture writes an isolated event workbook and real numeric task graph
+[PASS] permanent level logic can control mechanism actions before a task is accepted
+[PASS] real event director accepts the isolated numeric task
+[PASS] real task director routes mechanism requests and waits without premature completion
+[PASS] actual endpoint advances the event director and completes its bound task
+[PASS] real player overlap activates the new pressure plate
+[PASS] real exit releases the plate after its configured delay
+[PASS] the configured physics layer lets a movable weight hold a plate
+[PASS] player can stand on the lift's real moving collision body
+[PASS] AnimatableBody lift carries a standing character to its actual endpoint
+MECHANISM WHITEBOX V1: 74 checks, 0 failures

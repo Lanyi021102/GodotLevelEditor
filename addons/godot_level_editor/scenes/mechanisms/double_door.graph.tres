@@ -1,0 +1,104 @@
+[gd_resource type="Resource" format=3 uid="uid://cckawfgi3f4vq"]
+
+[ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd" id="1_p82pt"]
+
+[resource]
+script = ExtResource("1_p82pt")
+definition_id = "door_v2_double_door"
+display_name = "4×3 双开门"
+nodes = Array[Dictionary]([{
+"id": "frame",
+"kind": "double_door",
+"label": "门框",
+"params": {
+"object_id": "door"
+}
+}, {
+"id": "leaf",
+"kind": "door_leaf",
+"label": "旋转门扇",
+"params": {
+"object_id": "door"
+}
+}, {
+"id": "interact",
+"kind": "interacted",
+"label": "玩家交互 · 切换门状态",
+"params": {
+"object_id": "door"
+}
+}, {
+"id": "rotate",
+"kind": "door_animation",
+"label": "旋转动画 · 0° ↔ 90°",
+"params": {
+"action": "toggle",
+"object_id": "door"
+}
+}, {
+"id": "close",
+"kind": "door_state",
+"label": "close",
+"params": {
+"object_id": "door",
+"state": "close"
+}
+}, {
+"id": "moving",
+"kind": "door_state",
+"label": "moving",
+"params": {
+"object_id": "door",
+"state": "moving"
+}
+}, {
+"id": "open",
+"kind": "door_state",
+"label": "open",
+"params": {
+"object_id": "door",
+"state": "open"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "frame",
+"in": "frame",
+"out": "value",
+"to": "leaf"
+}, {
+"from": "leaf",
+"in": "leaf",
+"out": "value",
+"to": "rotate"
+}, {
+"from": "interact",
+"in": "trigger",
+"out": "fired",
+"to": "rotate"
+}, {
+"from": "rotate",
+"in": "target",
+"out": "value",
+"to": "close"
+}, {
+"from": "rotate",
+"in": "target",
+"out": "value",
+"to": "moving"
+}, {
+"from": "rotate",
+"in": "target",
+"out": "value",
+"to": "open"
+}])
+positions = {
+"close": Vector2(40, 460),
+"frame": Vector2(40, 20),
+"interact": Vector2(350, 300),
+"leaf": Vector2(350, 20),
+"moving": Vector2(360, 460),
+"open": Vector2(680, 460),
+"rotate": Vector2(660, 20)
+}
+view_offset = Vector2(-26.538462, -75.76923)
+view_zoom = 0.46153846

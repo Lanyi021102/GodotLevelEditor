@@ -1,0 +1,70 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | 正在重新打开场景……[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | 正在加载中央编辑器布局……[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | 正在加载插件窗口布局……[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | 编辑器布局就绪。[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+[PASS] viewport toolbar exposes the wheel and all three selection modes
+[PASS] editable step controls sit immediately to the right of the selection modes
+[PASS] step preset 0.1 updates native translation snapping
+[PASS] step preset 0.5 updates native translation snapping
+[PASS] step preset 1.0 updates native translation snapping
+[PASS] custom typed step updates the actual native snapping value
+[PASS] invalid zero input restores the last valid step
+[PASS] first click selects a face without starting a geometry drag
+[PASS] native transform gizmo selects the face subgizmo instead of the object pivot
+[PASS] axes are centered on the selected face
+[PASS] face selection changes neither mesh nor undo history
+[PASS] custom step 0.25 changes real face displacement rather than just its label
+[PASS] custom step 0.05 changes real face displacement rather than just its label
+[PASS] native translation callback edits the selected surface
+[PASS] repeated previews do not accumulate displacement from recentering
+[PASS] one completed face drag creates one native undo action
+[PASS] undo restores geometry and keeps the face selected
+[PASS] redo restores the translated face exactly
+[PASS] rotation ring callback tilts the face around its center
+[PASS] face rotation is undoable independently of translation
+[PASS] face rotation redo restores exact saved vertices
+[PASS] native drag cancellation restores the mesh without history
+[PASS] Escape deselects only the face, restoring the original object manipulator
+[PASS] clicking empty space restores object axes and keeps the object selected
+[PASS] one face click can switch directly to another block
+[PASS] save and reload preserve translated and rotated face geometry
+[PASS] edge mode is active exclusively through its toolbar button
+[PASS] screen picking resolves the requested edge on the visible whitebox surface
+[PASS] edge manipulator uses the element center instead of the object center
+[PASS] native edge translation moves only its welded vertices
+[PASS] edge undo restores all geometry and the anchored transform
+[PASS] edge redo restores the exact edited vertices
+[PASS] edge rotation changes both endpoints around the midpoint and is undoable
+[PASS] clearing edge selection restores the original object axes
+[PASS] point mode is active exclusively through its toolbar button
+[PASS] screen picking resolves the requested point on the visible whitebox surface
+[PASS] point manipulator uses the element center instead of the object center
+[PASS] native point translation moves only its welded vertices
+[PASS] point undo restores all geometry and the anchored transform
+[PASS] point redo restores the exact edited vertices
+[PASS] rotating a single point around itself changes neither geometry nor history
+[PASS] clearing point selection restores the original object axes
+[PASS] real native viewport click selects a face and leaves it ready for axis editing
+[PASS] real native arrow drag changes only the face and commits on mouse release
+[PASS] restored original axes move the whole object while face mode remains enabled
+[PASS] real native viewport click selects a visible edge
+[PASS] real native viewport click selects a visible point
+FACE GIZMO: 47 checks, 0 failures
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

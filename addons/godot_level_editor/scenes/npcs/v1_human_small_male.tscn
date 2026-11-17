@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/guard_ai.gd" id="1_4egsb"]
+[ext_resource type="Resource" path="res://addons/godot_level_editor/resources/enemies/samples_v1/human_small_male.tres" id="2_bev13"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="3_td24r"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd" id="4_42ils"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/scripts/stealth/vision_cone.gd" id="5_tplr4"]
+
+[sub_resource type="Resource" id="Resource_1bkov"]
+script = ExtResource("3_td24r")
+model_id = "default"
+behavior_definition = ExtResource("2_bev13")
+body_height = 1.2
+body_radius = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4yam1"]
+radius = 0.2
+height = 1.2
+
+[node name="小体型·哥布林男" type="CharacterBody3D" unique_id=214552605]
+script = ExtResource("1_4egsb")
+enemy_definition = ExtResource("2_bev13")
+metadata/godot_level_editor_entity = SubResource("Resource_1bkov")
+metadata/npc_sample_v1 = "human_small_male"
+metadata/editor_display_name = "小体型·哥布林男"
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=422746884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CapsuleShape3D_4yam1")
+
+[node name="ModelRoot" type="Node3D" parent="." unique_id=1482211031]
+script = ExtResource("4_42ils")
+npc_definition = ExtResource("2_bev13")
+loop_hints = PackedStringArray("Idle", "Walking", "Running")
+
+[node name="VisionCone" type="Node3D" parent="." unique_id=1367867234]
+script = ExtResource("5_tplr4")

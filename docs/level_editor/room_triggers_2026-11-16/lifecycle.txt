@@ -1,0 +1,25 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] entity fixture uses a valid real task graph
+[PASS] entity fixture uses a valid real task graph
+[PASS] entity fixture uses a valid real task graph
+[PASS] isolated workbook stores both task IDs and their current level
+[PASS] fixture world passes the same runtime graph validation as authored levels
+[PASS] permanent NPC is active without any task director
+[PASS] task NPCs are hidden and non-colliding before their task starts
+[PASS] task Room disables its detection area before activation
+[PASS] task mechanism execution is disabled before activation
+[PASS] real event director starts the first task
+[PASS] cross-level event can wait for its task's own level
+[PASS] only the NPC belonging to the active task appears with restored collision
+[PASS] an active task waiting for another level does not spawn entities in this level
+[PASS] Room and mechanism follow the same active-task lifecycle
+[PASS] permanent entity adapter preserves explicit gameplay visibility changes
+[PASS] completing the real task removes its NPC and collision
+[PASS] completion also disables the task Room and mechanism
+[PASS] next task NPC appears while the permanent NPC remains
+[PASS] finishing the event removes only its task entities
+[PASS] real task progress can restore an earlier active task
+[PASS] restoring progress reactivates the matching task entities
+[PASS] task failure also removes its entities
+PLACED ENTITIES: 22 checks, 0 failures

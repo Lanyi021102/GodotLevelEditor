@@ -1,0 +1,215 @@
+[gd_resource type="Resource" format=3 uid="uid://1l5eq53xvuy5"]
+
+[ext_resource type="Script" uid="uid://bw4cinngeqexw" path="res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd" id="1_jcchv"]
+
+[resource]
+script = ExtResource("1_jcchv")
+dialogue_xlsx = "res://content/resources/narrative/editor_flow_test.xlsx"
+graph_id = "editor_flow_parallel"
+nodes = Array[Dictionary]([{
+"id": "start",
+"kind": "start",
+"params": {}
+}, {
+"id": "checkpoint",
+"kind": "checkpoint_save",
+"params": {}
+}, {
+"id": "parallel",
+"kind": "parallel",
+"params": {
+"scope": ""
+}
+}, {
+"id": "delay",
+"kind": "delay",
+"params": {
+"scope": "",
+"seconds": 1.0
+}
+}, {
+"id": "timer",
+"kind": "timer",
+"params": {
+"scope": "",
+"seconds": 2.0
+}
+}, {
+"id": "variable",
+"kind": "set_variable",
+"params": {
+"bool_value": true,
+"key": "flow_count",
+"number_value": 2.0,
+"type": "number"
+}
+}, {
+"id": "join",
+"kind": "wait_all",
+"params": {}
+}, {
+"id": "number",
+"kind": "get_number",
+"params": {
+"fallback": 0.0,
+"key": "flow_count"
+}
+}, {
+"id": "two",
+"kind": "number",
+"params": {
+"value": 2.0
+}
+}, {
+"id": "compare",
+"kind": "compare",
+"params": {
+"operator": "=="
+}
+}, {
+"id": "branch",
+"kind": "branch",
+"params": {}
+}, {
+"id": "child",
+"kind": "run_subgraph",
+"params": {
+"graph_path": "res://content/resources/task_graphs/editor_flow_test/child.tres",
+"scope": ""
+}
+}, {
+"id": "dialog",
+"kind": "show_dialog",
+"params": {
+"dialog_id": "flow_done"
+}
+}, {
+"id": "complete",
+"kind": "task_complete",
+"params": {
+"task": "1004003"
+}
+}, {
+"id": "fail",
+"kind": "task_fail",
+"params": {
+"reason": "并行变量检查失败",
+"task": "1004003"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "delay",
+"from_port": "then",
+"id": "edge_76bb5f0985aceb6ab580d345",
+"to": "join",
+"to_port": "a"
+}, {
+"from": "timer",
+"from_port": "then",
+"id": "edge_06e171553a4efaa8467835dc",
+"to": "variable",
+"to_port": "run"
+}, {
+"from": "variable",
+"from_port": "then",
+"id": "edge_f47ad2750d450c90ceef4512",
+"to": "join",
+"to_port": "b"
+}, {
+"from": "join",
+"from_port": "then",
+"id": "edge_108f36be07d8572862dc12d3",
+"to": "branch",
+"to_port": "run"
+}, {
+"from": "number",
+"from_port": "value",
+"id": "edge_c7ab77d2501fa8bfb6eb79a9",
+"to": "compare",
+"to_port": "a"
+}, {
+"from": "two",
+"from_port": "value",
+"id": "edge_d04c7fea86fac458a366e838",
+"to": "compare",
+"to_port": "b"
+}, {
+"from": "compare",
+"from_port": "value",
+"id": "edge_0ed51f30fed03f3b16d57e15",
+"to": "branch",
+"to_port": "condition"
+}, {
+"from": "branch",
+"from_port": "yes",
+"id": "edge_166173bee609b1fd90fe859c",
+"to": "child",
+"to_port": "run"
+}, {
+"from": "branch",
+"from_port": "no",
+"id": "edge_d5bd881fe2c491288a0d1387",
+"to": "fail",
+"to_port": "run"
+}, {
+"from": "child",
+"from_port": "then",
+"id": "edge_6bfe9c55fdb08a64835a1795",
+"to": "dialog",
+"to_port": "run"
+}, {
+"from": "dialog",
+"from_port": "then",
+"id": "edge_7f139ed9ac3b9b9bb3d76634",
+"to": "complete",
+"to_port": "run"
+}, {
+"from": "child",
+"from_port": "failed",
+"id": "edge_ca49b73b99eb481b0e4f3bc6",
+"to": "fail",
+"to_port": "run"
+}, {
+"from": "start",
+"from_port": "then",
+"id": "edge_d06f838565be56dd86cc3db9",
+"to": "checkpoint",
+"to_port": "run"
+}, {
+"from": "checkpoint",
+"from_port": "then",
+"id": "edge_b88bd2ce7fc60d181a2250f0",
+"to": "parallel",
+"to_port": "run"
+}, {
+"from": "parallel",
+"from_port": "a",
+"id": "edge_79d416b47f3341bfb5a87184",
+"to": "delay",
+"to_port": "run"
+}, {
+"from": "parallel",
+"from_port": "b",
+"id": "edge_7ccd8aec29f48e45c558510f",
+"to": "timer",
+"to_port": "run"
+}])
+positions = {
+"branch": Vector2(940, 780),
+"checkpoint": Vector2(500, 80),
+"child": Vector2(1380, 780),
+"compare": Vector2(500, 780),
+"complete": Vector2(500, 1130),
+"delay": Vector2(1380, 80),
+"dialog": Vector2(60, 1130),
+"fail": Vector2(940, 1130),
+"join": Vector2(940, 430),
+"number": Vector2(1380, 430),
+"parallel": Vector2(940, 80),
+"start": Vector2(60, 80),
+"timer": Vector2(60, 430),
+"two": Vector2(60, 780),
+"variable": Vector2(500, 430)
+}
+view_scroll = Vector2(-0.87394714, -27.831932)
+view_zoom = 0.65210086

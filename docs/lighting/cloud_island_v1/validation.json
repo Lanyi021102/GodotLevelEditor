@@ -1,6 +1,6 @@
 {
   "date": "2026-11-02",
-  "preset": "res://scenes/lighting/cloud_island_v1.tscn",
+  "preset": "res://addons/godot_level_editor/scenes/lighting/cloud_island_v1.tscn",
   "checks": [
     {
       "name": "import",

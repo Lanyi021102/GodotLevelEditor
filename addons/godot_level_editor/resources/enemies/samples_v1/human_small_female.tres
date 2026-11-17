@@ -1,0 +1,81 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3 uid="uid://db8hrcnlhc0gg"]
+
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/human_small_female.scn" id="1_jtaj1"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/appearance_data.gd" id="2_t01ma"]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/enemy_editor/runtime/enemy_definition.gd" id="3_jck06"]
+
+[sub_resource type="Resource" id="Resource_1g35n"]
+script = ExtResource("2_t01ma")
+model = ExtResource("1_jtaj1")
+skeleton_path = NodePath("CharacterArmature/Skeleton3D")
+motions = {
+"idle": {
+"clip": "CharacterArmature|Idle",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_jtaj1")
+},
+"walk": {
+"clip": "CharacterArmature|Walk",
+"player": NodePath("AnimationPlayer"),
+"source": ExtResource("1_jtaj1")
+}
+}
+height = 1.2
+
+[resource]
+script = ExtResource("3_jck06")
+display_name = "小体型·哥布林女"
+states = Array[Dictionary]([{
+"behavior": "patrol",
+"duration": 0.0,
+"id": "patrol",
+"label": "平静行走",
+"scan_degrees": 0.0,
+"speed": 1.1
+}])
+parameters = {
+"alert_decay": 40.0,
+"alert_rate": 100.0,
+"expose_penalty": 25.0,
+"help_radius": 12.0,
+"noise_alert": 25.0,
+"waypoint_wait": 1.5
+}
+layout = {
+"nodes": {
+"patrol": Vector2(100, 100)
+},
+"scroll": Vector2(0, 0),
+"zoom": 1.0
+}
+appearance = SubResource("Resource_1g35n")
+metadata/npc_sample_v1 = {
+"animation_count": 11,
+"available_animations": ["CharacterArmature|Defeat", "CharacterArmature|Idle", "CharacterArmature|PickUp", "CharacterArmature|Punch", "CharacterArmature|RecieveHit", "CharacterArmature|Shoot_OneHanded", "CharacterArmature|SitDown", "CharacterArmature|StandUp", "CharacterArmature|Victory", "CharacterArmature|Walk", "CharacterArmature|Walk_Carry"],
+"bone_count": 32,
+"bounds": {
+"x": 1.2111883,
+"y": 1.1999999,
+"z": 0.5328583
+},
+"category": "humanoid",
+"definition": "res://addons/godot_level_editor/resources/enemies/samples_v1/human_small_female.tres",
+"gender": "female",
+"height": 1.2,
+"id": "human_small_female",
+"license": "CC0-1.0",
+"motions": {
+"idle": "CharacterArmature|Idle",
+"walk": "CharacterArmature|Walk"
+},
+"preparation_note": "Prepared sample Idle fills absent right-arm rotation channels with a neutral down pose; original FBX retained.",
+"preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/human_small_female.png",
+"radius": 0.2,
+"scene": "res://addons/godot_level_editor/scenes/npcs/v1_human_small_female.tscn",
+"size_category": "small",
+"source": "res://addons/godot_level_editor/assets/characters/npc_samples_v1/humans/source/ultimate_animated_characters/Goblin_Female.fbx",
+"source_sha256": "31bd1a76e339ce38ad07c8f4b9bcf6841c560aaa2f57c3b9b40272019e4a883b",
+"source_url": "https://opengameart.org/content/animated-characters-pack",
+"title": "小体型·哥布林女",
+"walk_speed": 1.1
+}

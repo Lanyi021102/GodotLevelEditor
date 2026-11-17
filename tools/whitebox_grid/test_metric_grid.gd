@@ -1,7 +1,7 @@
 extends Node3D
-const BLOCK := preload("res://addons/godot_level_editor/runtime/whitebox_block.gd")
-const SHAPES := preload("res://addons/godot_level_editor/runtime/whitebox_shapes.gd")
-const GRID := preload("res://scripts/tools/metric_grid.gd")
+const BLOCK := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd")
+const SHAPES := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_shapes.gd")
+const GRID := preload("res://addons/godot_level_editor/scripts/tools/metric_grid.gd")
 var failures := 0
 var checks := 0
 var render_checks := false
@@ -45,7 +45,7 @@ func _ready() -> void:
 	check(second.get_child(0).get_child(0).material_override is StandardMaterial3D, "authored replacement art retains its own material")
 	first.free()
 	second.free()
-	var playground := load("res://scenes/3cplayground.tscn").instantiate() as Node3D
+	var playground := load("res://content/scenes/3cplayground.tscn").instantiate() as Node3D
 	add_child(playground)
 	await frames(8)
 	var all_grid := true
@@ -154,14 +154,14 @@ func brightness_at(img: Image, camera: Camera3D, point: Vector3) -> float:
 			result = maxf(result, (color.r + color.g + color.b) / 3.0)
 	return result
 func capture_world() -> void:
-	var current := load("res://scenes/main.tscn").instantiate() as Node3D
+	var current := load("res://content/scenes/main.tscn").instantiate() as Node3D
 	add_child(current)
 	await screenshot("res://docs/whitebox_grid/current_world.png")
 	current.free()
 func capture_shapes() -> void:
 	var stage := Node3D.new()
 	add_child(stage)
-	stage.add_child(load("res://scenes/lighting/cloud_island_v1.tscn").instantiate())
+	stage.add_child(load("res://addons/godot_level_editor/scenes/lighting/cloud_island_v1.tscn").instantiate())
 	var floor_block := BLOCK.new()
 	floor_block.size = Vector3(14, 0.4, 14)
 	floor_block.position.y = -0.2

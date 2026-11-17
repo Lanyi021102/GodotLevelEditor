@@ -1,0 +1,219 @@
+[gd_resource type="Resource" script_class="GodotLevelEditorLevelGraph" format=3 uid="uid://c1faqi76cv52d"]
+
+[ext_resource type="Script" uid="uid://bqp833x26oom1" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd" id="1_xr376"]
+
+[resource]
+script = ExtResource("1_xr376")
+graph_id = "godot_level_editor_events_v1"
+nodes = Array[Dictionary]([{
+"id": "source_1",
+"kind": "source",
+"label": "读取机关布尔状态",
+"params": {
+"object": "puzzle_1/door",
+"query": "open"
+}
+}, {
+"id": "goal_1",
+"kind": "goal",
+"label": "区域目标完成事件",
+"params": {
+"object": "puzzle_1/goal_region",
+"persistent": true
+}
+}, {
+"id": "latch_1",
+"kind": "latch",
+"label": "事件 → 持续布尔",
+"params": {
+"persistent": true
+}
+}, {
+"id": "unlock_1",
+"kind": "unlock",
+"label": "解锁空间连接",
+"params": {
+"link": "link_1"
+}
+}, {
+"id": "checkpoint_1",
+"kind": "checkpoint",
+"label": "请求保存进度",
+"params": {}
+}, {
+"id": "source_2",
+"kind": "source",
+"label": "读取机关布尔状态",
+"params": {
+"object": "puzzle_2/door",
+"query": "open"
+}
+}, {
+"id": "goal_2",
+"kind": "goal",
+"label": "区域目标完成事件",
+"params": {
+"object": "puzzle_2/goal_region",
+"persistent": true
+}
+}, {
+"id": "latch_2",
+"kind": "latch",
+"label": "事件 → 持续布尔",
+"params": {
+"persistent": true
+}
+}, {
+"id": "unlock_2",
+"kind": "unlock",
+"label": "解锁空间连接",
+"params": {
+"link": "link_2"
+}
+}, {
+"id": "checkpoint_2",
+"kind": "checkpoint",
+"label": "请求保存进度",
+"params": {}
+}, {
+"id": "source_3",
+"kind": "source",
+"label": "读取机关布尔状态",
+"params": {
+"object": "puzzle_3/door",
+"query": "open"
+}
+}, {
+"id": "goal_3",
+"kind": "goal",
+"label": "区域目标完成事件",
+"params": {
+"object": "puzzle_3/goal_region",
+"persistent": true
+}
+}, {
+"id": "latch_3",
+"kind": "latch",
+"label": "事件 → 持续布尔",
+"params": {
+"persistent": true
+}
+}, {
+"id": "unlock_3",
+"kind": "unlock",
+"label": "解锁空间连接",
+"params": {
+"link": "link_3"
+}
+}, {
+"id": "checkpoint_3",
+"kind": "checkpoint",
+"label": "请求保存进度",
+"params": {}
+}, {
+"id": "objective_final",
+"kind": "objective",
+"label": "更新目标",
+"params": {
+"text": "捷径已开启，返回中庭"
+}
+}])
+edges = Array[Dictionary]([{
+"from": "source_1",
+"from_port": "value",
+"id": "edge_source_1_goal_1",
+"to": "goal_1",
+"to_port": "condition"
+}, {
+"from": "goal_1",
+"from_port": "completed",
+"id": "edge_goal_1_latch_1",
+"to": "latch_1",
+"to_port": "set"
+}, {
+"from": "latch_1",
+"from_port": "value",
+"id": "edge_latch_1_unlock_1",
+"to": "unlock_1",
+"to_port": "enabled"
+}, {
+"from": "goal_1",
+"from_port": "completed",
+"id": "edge_goal_1_checkpoint_1",
+"to": "checkpoint_1",
+"to_port": "run"
+}, {
+"from": "source_2",
+"from_port": "value",
+"id": "edge_source_2_goal_2",
+"to": "goal_2",
+"to_port": "condition"
+}, {
+"from": "goal_2",
+"from_port": "completed",
+"id": "edge_goal_2_latch_2",
+"to": "latch_2",
+"to_port": "set"
+}, {
+"from": "latch_2",
+"from_port": "value",
+"id": "edge_latch_2_unlock_2",
+"to": "unlock_2",
+"to_port": "enabled"
+}, {
+"from": "goal_2",
+"from_port": "completed",
+"id": "edge_goal_2_checkpoint_2",
+"to": "checkpoint_2",
+"to_port": "run"
+}, {
+"from": "source_3",
+"from_port": "value",
+"id": "edge_source_3_goal_3",
+"to": "goal_3",
+"to_port": "condition"
+}, {
+"from": "goal_3",
+"from_port": "completed",
+"id": "edge_goal_3_latch_3",
+"to": "latch_3",
+"to_port": "set"
+}, {
+"from": "latch_3",
+"from_port": "value",
+"id": "edge_latch_3_unlock_3",
+"to": "unlock_3",
+"to_port": "enabled"
+}, {
+"from": "goal_3",
+"from_port": "completed",
+"id": "edge_goal_3_checkpoint_3",
+"to": "checkpoint_3",
+"to_port": "run"
+}, {
+"from": "goal_3",
+"from_port": "completed",
+"id": "edge_goal_3_objective_final",
+"to": "objective_final",
+"to_port": "run"
+}])
+positions = {
+"checkpoint_1": Vector2(1060, 40),
+"checkpoint_2": Vector2(1060, 680),
+"checkpoint_3": Vector2(1060, 1320),
+"goal_1": Vector2(540, 40),
+"goal_2": Vector2(540, 360),
+"goal_3": Vector2(540, 1320),
+"latch_1": Vector2(1060, 1000),
+"latch_2": Vector2(1060, 360),
+"latch_3": Vector2(1060, 1640),
+"objective_final": Vector2(1060, 1960),
+"source_1": Vector2(40, 40),
+"source_2": Vector2(40, 360),
+"source_3": Vector2(40, 1320),
+"unlock_1": Vector2(1620, 1960),
+"unlock_2": Vector2(1620, 360),
+"unlock_3": Vector2(1620, 1640)
+}
+view_scroll = Vector2(-105.39667, 272.50735)
+view_zoom = 0.51315796

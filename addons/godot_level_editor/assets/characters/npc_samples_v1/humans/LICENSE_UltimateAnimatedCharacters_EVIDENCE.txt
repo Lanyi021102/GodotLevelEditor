@@ -1,0 +1,12 @@
+Ultimate Animated Character Pack by Quaternius
+Author-published release: https://opengameart.org/content/animated-characters-pack
+Published: 2021-06-18
+License(s): CC0
+CC0 1.0 Universal Public Domain Dedication
+https://creativecommons.org/publicdomain/zero/1.0/
+Legal instrument: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+The original 2019 ZIP contains no separate license file. This note records author release evidence; it is not a fabricated package license.
+The release HTML is retained in source/license_evidence/.
+Official pack page: https://quaternius.com/packs/ultimatedanimatedcharacter.html
+Downloaded file: https://opengameart.org/sites/default/files/ultimate_animated_character_pack_by_quaternius.zip
+Archive SHA256: 0295062cbc72da52ee804f39ac38694901a40458011f9b2638fc7ef13ed509da

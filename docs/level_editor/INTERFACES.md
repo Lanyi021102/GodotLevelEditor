@@ -1,12 +1,76 @@
+## 插件目录与原生场景合同 · 2026-11-17
+
+插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
+
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+
+主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
+
 > 当前关卡接口（2026-11-16）：关卡编辑使用整关常驻逻辑图，素材添加由三维轮盘负责；“接受任务”接取首项后自动串行后续任务。此前阶段移除的是旧房间接驳图。详见文末常驻逻辑合同与验证。
 
-2026-11-16 选择工具与步长：工具栏统一为“呼出轮盘／选中面／选中线／选中点”，三个选择模式共享 `push_pull_tool` 的单元素 subgizmo 事务，通过 `selection_id()` 和 `element_frame()` 向原生操作轴提供元素中心。`mesh_elements.gd` 按共用位置焊接顶点，合并三角形边并排除共面内部对角线；线／点按屏幕距离拾取，过滤背面及近处白盒遮挡。变换仍调用 `face_edit.transformed_state`，保留 `mesh_edit.version=1`、对象 ID、碰撞更新与原生撤销；单点绕自身旋转返回未改动状态。Esc／空白取消子选择后恢复物体轴；选择模式内隐藏旧尺寸手柄，退出模式后恢复。`plugin.edit_step` 来自工具栏可填写输入和 0.1／0.5／1 预设，同步原生平移、元素移动及轮盘放置，只写项目 EditorSettings metadata，不重写现有场景。详细接口及验证见 [选择工具与步长](selection_tools_2026-11-16/validation.md)。
+2026-11-16 节点搜索：共用 `node_picker.gd` 的常驻分类按钮、分组结果及职责色。关卡 `level_logic_panel._can_offer_node(kind)` 在分组前按 `allowed_kinds()` 筛选，仍不提供任务完成／失败等任务专属节点；标题行不可添加。图格式与端口保持。实际鼠标拖线、保存重开及任务所属标识回归见 [操作验证](../narrative_editor/task_toolbar_2026-11-16/validation.md)。
+
+## 旧说明清理 · 2026-11-16
+
+新建占位对象的 `placeholder_contract` 默认说明只要求宿主创建／绑定玩家并加入 `godot_level_editor_player` 组，不再把已移除分身玩法的 `is_clone()` 写成必需接口。字段名、已保存资源值、稳定 ID 和运行行为保持；旧图的 clone 条件及旧场景适配检查仍作兼容读取保留。验证与资源保护清单见 [本轮工程清理](../cleanup/project_hygiene_2026-11-16/validation.md)。
+
+## 移除旧关卡摆放侧栏 · 2026-11-16
+
+`plugin.gd` 不再创建或注册“关卡摆放”Dock。移除专用字段、旧示例入口、新建／实例化文件对话框、卡片库、宽高深面板、隐藏兼容调色板及自定义添加／复制／保存重载按钮与实现。新建关卡归属套件目录，摆放归属轮盘／原生资源拖放，复制与保存使用原生入口。现有场景、图及用户资源不删除或改写。
+
+原生工具栏保留轮盘、点线面、步长；`_add_nodes_undoable`、`_undo_added_nodes`、自动分组、`_normalize_new_identity` 和全部运行／调试组件继续保留。`show_message(text, notify=true)` 使用 EditorToaster 去重显示必要提示，不再引用旧侧栏 Label，步长同步成功只更新工具栏提示。
+
+`radial_thumbnail.gd` 独立为 Control，承接原卡片中仍被轮盘使用的白盒几何投影；旧 `palette_item.gd/.uid` 删除，轮盘预览不再继承旧卡片或其拖放逻辑。脚本热重载后 `_retire_legacy_dock` 移除旧版本残留 Dock 并清理其按钮引用，不重建当前工具栏或丢弃场景草稿。
+
+旧 smoke 入口转向当前轮盘专项；原生拖放测试的复制操作改走 SceneTreeDock Duplicate。检查与真实原生界面见 [侧栏移除验证](placement_dock_removed_2026-11-16/validation.md)。本节覆盖下文历史的原生侧栏／物件库操作。
+
+2026-11-16 选择工具与步长：工具栏统一为“呼出轮盘／选中面／选中线／选中点”，三个选择模式共享 `push_pull_tool` 的单元素 subgizmo 事务，通过 `selection_id()` 和 `element_frame()` 向原生操作轴提供元素中心。`mesh_elements.gd` 按共用位置焊接顶点，合并三角形边并排除共面内部对角线；线／点按屏幕距离拾取，过滤背面及近处白盒遮挡。变换仍调用 `face_edit.transformed_state`，保留 `mesh_edit.version=1`、对象 ID、碰撞更新与原生撤销；单点绕自身旋转返回未改动状态。Esc／空白取消子选择后恢复物体轴。`plugin.edit_step` 来自工具栏可填写输入和 0.1／0.5／1 预设，同步原生平移、元素移动及轮盘放置，只写项目 EditorSettings metadata，不重写现有场景。详细接口及验证见 [选择工具与步长](selection_tools_2026-11-16/validation.md)。
 
 # 关卡专项接口 v1 · 2026-10-30
 
+## 轮盘素材缩略图当前合同 · 2026-11-16
+
+`asset_catalog.preview_path(asset)` 读取 NPC 场景根 `enemy_definition/definition` 资源中的 `npc_sample_v1.preview_path`，机关采用套件目录同样的 `resources/mechanisms/whitebox_v1/previews/<场景名>.png`。`radial_menu`（UI revision 6）在库卡片和最近使用扇区调用套件 `level_card.preview_texture`，共用文件内容哈希缓存；存在保存图片时不发起可覆盖它的异步资源预览。没有保存图片时保留原生预览与类型图标回退。白盒继续复用编辑器的几何投影。素材源文件、ID、模型与运行逻辑不改写。实测见 [缩略图验证](asset_thumbnails_2026-11-16/validation.md)。
+
+## Room 触发区域当前合同 · 2026-11-16
+
+当前新建 Room 是空箱体区域，不从完整房间素材列表置入。轮盘 Room 仅常驻／任务两项，引用 `scenes/level_editor/rooms/trigger_room.tscn`，初始 `uses_topology=false`、`bounds_size=Vector3.ONE`；旧侧栏拖放与新建入口已移除。原有房间场景及隐式默认尺寸保留，旧 `scene_factory.room` 生成器只供旧资源／测试兼容，不再用作当前新建 Room。
+
+`room.gd` 使用 Area3D 和 BoxShape3D 检测玩家（层 2 与玩家组），不产生实体阻挡。玩家进入时先更新 `is_active()->bool`，再发 `player_entered(room_id, actor)`；离开时发 `player_exited`，最后一个玩家离开后默认恢复未激活。`keep_active_on_exit` 可保留已激活状态；停用检测会清除玩家集合及状态，`activation_changed(active)` 仅在值改变时发出。任务适配器同时切换检测与既有碰撞／处理，任务未开始、完成、失败时不会残留激活状态，重启时可检测已在箱内的玩家。
+
+编辑器按存在范围生成半透明材质：常驻深绿、任务浅绿；`volume_material` 可覆盖，清空恢复默认。新 Room 的预览网格不保存、不参与放置表面拾取，运行时不生成可见几何。检查器显示宽／高／深、区域材质及保留激活规则，不提供模型场景或旧拓扑选项。原生拾取可点击透明箱面选择根对象。
+
+任务及常驻关卡图共享 `room_active`（bool 输出，参数 room／expected）和 `room_exit`（then:event，room／once），原 `room_enter` kind 与端口保持，显示名统一“玩家进入 Room 时”。`EventDirector` 广播真实 Room 进入和离开事件；状态从同世界 Room 实例读取，不复制进度状态。引用沿用稳定 room_id，支持场景树拖放；校验缺失引用以及另一任务的独占 Room。操作见 [Wiki](../wiki/guides/levels.md#room-triggers)，实测见 [验证记录](room_triggers_2026-11-16/validation.md)。
+
+## 透明轮盘与分页当前合同 · 2026-11-16
+
+`radial_menu.gd` UI revision 5：一级六分类，中央透明，不创建中央预览、返回按钮或下方操作框。Layout 白盒点击进入 `page=assets`，固定八扇区；`page_index` 与 `PAGE_SIZE=8` 对应当前目录中的连续八项，滚轮翻整页并循环，中键切下一页。`radial_thumbnail.gd` 复用现有白盒三角形投影，只绘制体块，不绘制素材卡片。当前 16 个形状对应两页，空扇区不选择资源，点击透明圆心不执行操作。最近使用也按八项分页，保留原存在范围描述。
+
+Room 的 page=scope 仅常驻／任务两项；NPC／机关点击进入 `page=scope` 的三个扇区：关卡常驻、任务、已有素材。前两项直接进入占位放置；已有素材打开原可搜索列表，默认常驻，之后可在实例检查器改为任务对象。右键返回上一级，侧键／呼出键或 Esc 关闭；原生覆盖层输入和动画坐标转换继续保留。素材、配置、稳定 ID、分类容器和运行生命周期合同不变。
+
+`block_gizmo.gd` 不再注册 `stretch` 手柄及其尺寸拖动回调，因此不显示橙色白边圆点。对象碰撞拾取、范围线框及面／线／点 subgizmo 接口保留；调整尺寸使用原生缩放或检查器参数。此条覆盖下文历史的“退出模式恢复尺寸手柄”。操作见 [Wiki 关卡指南](../wiki/guides/levels.md)，检查与命名核对见 [本轮验证](radial_pages_2026-11-16/validation.md)。
+
+## QA 关卡原生复制与引用解析合同 · 2026-11-16
+
+对应 QA-02。`_normalize_new_identity` 对当前场景中新加入且由场景拥有的对象，在其实际作用域内分别检查对象、组合及 NPC 实例标识。新机关组合的根 `object_id` 和 `instance_id` 均需独立，Room 使用 `room_id`；组合内部组件局部 ID 保留，不改原件及其已有图引用。
+
+`world._object_index()` 为同一 scoped ref 建立唯一映射并报告无效／重复 object_id。歧义引用从可解析对象表中移除，不按遍历顺序覆盖为最后一份对象；`world.validate()` 纳入该错误。存量冲突显式报告，不静默迁移用户资源。
+
+真实原生 Duplicate、撤销重做、保存重开与目录删除保护已在模块最终 headless 56 项、Metal 57 项检查中通过；总控共享关卡与套件整合结果另列，见 [本轮 QA 记录](../qa/bugfix_2026-11-16/validation.md)。关卡目录删除的事件依赖保护归套件合同。
+
+## 从场景树拖放对象引用 · 2026-11-16
+
+任务图与常驻关卡图共用 `scene_reference.gd`（候选与 ID 解析）和 `reference_drop.gd`（拖放框）。节点底部以及参数区的 object／room／npc／actor／mechanism 提供独立拖放位置，接受原生 `{type: "nodes", nodes: [NodePath]}` 单选数据；路径仅供编辑时解析，资源继续保存原来的稳定 ID。原下拉菜单保留，世界缺失时也保留已有引用值。
+
+仅接受当前编辑场景绑定世界内、该字段候选集合中的对象；模型子节点向上识别所属实体。管理容器、多选、资源文件、其他世界和错误类型拒绝。机制根节点有唯一组件或指定输出组件时自动解析，否则需拖入具体组件或用菜单选择。task NPC 继续使用原 npc.object_id，常驻 NPC 使用 scoped ref 且仅允许 permanent_npcs。
+
+拖入后立即提交图的 UndoRedo，并选中接收节点、刷新参数区；无需再点“应用参数”，仍需正常保存图。`scene_reference_drag.gd` 为主窗口与独立窗口提供屏幕坐标转换及输入桥；只在有效引用框内的鼠标松手事件提交并结束原拖动，避免原生窗口处于不同 GUI drag section 时丢失目标。其他拖动仍交还原生流程，不重写场景树拖动源。切换图后的延迟回调不生效。替换机关时不兼容的状态／动作字段清空，并与引用绑定一起撤销。端口、连线、节点位置和图格式不变。
+
+操作与回归结果见 [拖放绑定验证](scene_reference_2026-11-16/validation.md)。
+
 ## 新增物件自动分类 · 2026-11-16
 
-- `scene_groups.gd` 集中管理空 Node3D 父节点：`NPC`、`Room`、`机关`、`关卡白盒`。首次确认放置时创建，同类后续复用；取消预览不创建分组。只处理新增内容，既有根节点物件不自动迁移。
+- `scene_groups.gd` 集中管理空 Node3D 父节点：`NPCs`、`Rooms`、`Mechanisms`、`Whitebox`。首次确认放置时创建，同类后续复用；取消预览不创建分组。只处理新增内容，既有根节点物件不自动迁移。
 - 容器使用 `godot_level_editor_content_group` metadata 标记职责，重命名显示名称后仍可复用；同名的业务节点不被改造或覆盖，必要时使用唯一容器名称。管理节点无脚本、不含游戏逻辑。
 - `plugin._add_nodes_undoable(parent, nodes, root, title, additional_owned=[])` 将分组创建、实例加入、owner 和旧拓扑首 Room 绑定合并到同一次原生撤销操作。批量混合素材按类别分别入组，保持一次撤销；已有分组不随撤销其他新增物件被删除。
 - 轮盘、工具栏添加、实例化 Room、复制与标准素材拖放共用新增事务。`asset_drop_tool.gd`／`asset_drop_surface.gd` 仅在原生视口拖放目录素材期间接收拖放，其他时间鼠标过滤为 IGNORE；使用原有轮盘的被动预览和落点计算，不增加三维视口。普通文件仍走原生流程。
@@ -125,3 +189,7 @@ GodotLevelEditorLevelGraph 新增 npc_interact/dialog_completed/show_dialog/task
 world.level_logic 是独立的 level_logic_graph 资源，默认内嵌于关卡 .tscn；不覆盖既有 events/topology 资源。关卡编辑托管 level_logic_panel，仅显示逻辑画布和参数；删除五类素材仓库与列表，空间制作由轮盘负责。NPC 使用 world.objects() 中稳定的作用域引用，并在编辑与运行校验中排除 lifetime=task 的对象及其后代。新增 task_accept 的 run:event 输入与 then/failed:event 输出，参数 task 在备注中通过工作簿选择。
 
 event_director 同时维护常驻 level_runner 与各已接取事件的当前任务 runner，按既有预算和异步规则执行；触发广播到常驻图和当前有效任务图。首次直接运行关卡时自动创建唯一服务，automatic_starts=false，避免配表自动条件绕过新工作流的接取。旧显式事件执行器继续兼容原启动条件。完整边界与验证见 [常驻关卡图](level_logic_2026-11-15/README.md)。
+
+## 旧 NPC 素材清理 · 2026-11-16
+
+`asset_catalog.assets("常驻 NPC")` 只扫描 `scenes/npcs/`，移除旧中立 NPC／守卫条目。`template` 默认引用 `v1_human_medium_male.tscn`；NPC 模型下拉只保留 default/custom，机关仍可选 box。`entity_profile.model_id` 默认 default；旧 ID 的运行兼容保留，不写回用户场景。碰撞胶囊保留。 验证见 [清理记录](../enemy_editor/legacy_cleanup_2026-11-16/validation.md)。

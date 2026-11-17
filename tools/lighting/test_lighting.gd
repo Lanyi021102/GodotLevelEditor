@@ -17,10 +17,10 @@ func in_focus(camera: Camera3D, attributes: CameraAttributesPractical, point: Ve
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	var authored: Node = load("res://scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
+	var authored: Node = load("res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
 	check(authored.get_node("WorldEnvironment").camera_attributes == null, "authored scene has no editor depth of field resource")
 	authored.free()
-	var game: Node3D = load("res://scenes/main.tscn").instantiate()
+	var game: Node3D = load("res://content/scenes/main.tscn").instantiate()
 	game.persist_progress = false
 	add_child(game)
 	await wait(15)
@@ -32,7 +32,7 @@ func _ready() -> void:
 	check(camera.projection == Camera3D.PROJECTION_PERSPECTIVE, "third-person perspective camera is retained by lighting")
 	check(camera.attributes == null and attributes != null, "V2 owns post-processing without overwriting camera resources")
 	check(not attributes.dof_blur_near_enabled and not attributes.dof_blur_far_enabled, "third-person gameplay keeps distant clues sharp")
-	var unchanged_editor: Node = load("res://scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
+	var unchanged_editor: Node = load("res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
 	check(unchanged_editor.get_node("WorldEnvironment").camera_attributes == null, "running the game does not attach blur to the authored editor scene")
 	unchanged_editor.free()
 	for room in game.world.rooms():
@@ -53,10 +53,10 @@ func _ready() -> void:
 	rig._apply()
 	await wait(3)
 	check(in_focus(camera, attributes, game.player.global_position + Vector3.UP), "focus updates for a distant whitebox view")
-	var other: Node = load("res://scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
+	var other: Node = load("res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
 	check(attributes != other.runtime_camera_attributes, "separate V2 instances have independent focus resources")
 	other.free()
-	var v1: Node = load("res://scenes/lighting/cloud_island_v1.tscn").instantiate()
+	var v1: Node = load("res://addons/godot_level_editor/scenes/lighting/cloud_island_v1.tscn").instantiate()
 	check(v1.get_meta("lighting_version") == 1 and v1.get_node("WorldEnvironment").camera_attributes == null, "V1 baseline remains independently usable")
 	v1.free()
 	game.queue_free()

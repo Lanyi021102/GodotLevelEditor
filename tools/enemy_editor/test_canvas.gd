@@ -8,17 +8,27 @@ func check(ok: bool, label: String) -> void:
 	print("[PASS] " if ok else "[FAIL] ", label)
 func run(panel: Control, plugin: EditorPlugin) -> void:
 	for _i in 12: await panel.get_tree().process_frame
+	# Scene binding assertions require their own fixture, not whichever scene
+	# happened to be open in the last editor session.
+	var fixture_scene_path := "res://tools/enemy_editor/fixtures/guard_blueprint_sample.tscn"
+	EditorInterface.open_scene_from_path(fixture_scene_path)
+	for attempt in 100:
+		var root := EditorInterface.get_edited_scene_root()
+		if root != null and root.scene_file_path == fixture_scene_path: break
+		if attempt % 20 == 19: EditorInterface.open_scene_from_path(fixture_scene_path)
+		await panel.get_tree().create_timer(0.05).timeout
 	var suite := panel.get_tree().get_first_node_in_group("godot_level_editor_editor_suite")
 	if suite != null:
 		suite.open_tab("敌人")
 		var workspace: Control = suite.asset_panels["敌人"]
-		workspace.select_asset(panel.TEMPLATE_PATH)
+		workspace.select_asset("res://addons/godot_level_editor/resources/enemies/samples_v1/human_medium_male.tres")
 		workspace.enter_edit()
 	else: panel.show()
+	panel._load(panel.TEMPLATE_PATH)
 	panel.workspaces.current_tab = 1
 	for _i in 2: await panel.get_tree().process_frame
 	check(panel.graph.get_connection_list().size() == 9, "画布显示实际转换端点")
-	var presentation = load("res://addons/enemy_editor/graph/node_presentation.gd")
+	var presentation = load("res://addons/godot_level_editor/modules/enemy_editor/graph/node_presentation.gd")
 	var expected_colors := {"condition": "976b36", "trigger": "2b6535", "state": "2b7278", "action": "244568", "data": "747c86", "flow": "a56637"}
 	var palette_ok := true
 	for key in expected_colors:
@@ -109,14 +119,14 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 		selection.add_node(guard)
 		await panel.get_tree().process_frame
 		await panel.get_tree().process_frame
-		check(plugin.scene_guard == guard and panel.file_path.ends_with("guard_default.tres"), "场景对象选择定位对应蓝图")
+		check(plugin.scene_guard == guard and panel.file_path.ends_with("legacy_guard.tres"), "场景对象选择定位对应蓝图")
 		panel._load("res://tools/enemy_editor/.canvas_roundtrip.tres")
 		plugin._bind_guard()
 		check(guard.get("enemy_definition").resource_path == panel.file_path, "蓝图资源绑定到真实三维守卫")
 		var history_id := plugin.get_undo_redo().get_object_history_id(guard)
 		var scene_history := plugin.get_undo_redo().get_history_undo_redo(history_id)
 		scene_history.undo()
-		check(guard.get("enemy_definition").resource_path.ends_with("guard_default.tres"), "场景绑定支持编辑器撤销")
+		check(guard.get("enemy_definition").resource_path.ends_with("legacy_guard.tres"), "场景绑定支持编辑器撤销")
 		scene_history.redo()
 		check(guard.get("enemy_definition").resource_path == panel.file_path, "场景绑定支持编辑器重做")
 		var old_path: NodePath = guard.get("patrol_route")

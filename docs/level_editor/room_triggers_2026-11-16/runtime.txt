@@ -1,0 +1,36 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] permanent graph accepts Room activation and exit nodes
+[PASS] task graph accepts the same Room state nodes
+[PASS] isolated task graph saves
+[PASS] isolated workbook binds the test task to this level
+[PASS] both new Room scopes default to a 1x1x1 cube
+[PASS] the detection shape uses the same dimensions
+[PASS] Room is a player sensor rather than a solid collision wall
+[PASS] runtime Room has no architecture or visible trigger mesh
+[PASS] empty Rooms start inactive
+[PASS] real director runs the permanent Room graph
+[PASS] task Room detection is disabled before its task starts
+[PASS] non-player bodies do not activate a Room
+[PASS] real player entry activates the Room
+[PASS] entry triggers a real effect in the permanent graph
+[PASS] permanent graph reads the live activation state
+[PASS] Room stays active while another player remains inside
+[PASS] leaving with the final player restores inactive state
+[PASS] exit triggers its own permanent graph effect
+[PASS] the graph state resets after exit
+[PASS] the optional keep-active rule retains activation after exit
+[PASS] disabling detection also clears a latched activation
+[PASS] an unstarted task Room ignores players already inside
+[PASS] the real task starts successfully
+[PASS] task activation detects a player already standing inside
+[PASS] task Room entry triggers the current task graph effect
+[PASS] task graph reads activation through the same condition node
+[PASS] task Room exit updates state and task effects
+[PASS] task Room can activate again on re-entry
+[PASS] task completion clears an occupied Room activation and disables detection
+[PASS] missing Room state references fail validation
+[PASS] Room state nodes reject another task's exclusive Room
+[PASS] legacy implicit scene dimensions retain their original default
+[PASS] existing authored room files remain unchanged
+ROOM TRIGGERS: 33 checks, 0 failures

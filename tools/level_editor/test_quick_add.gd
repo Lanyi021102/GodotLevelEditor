@@ -1,11 +1,12 @@
 @tool
 extends RefCounted
-const CATALOG := preload("res://addons/godot_level_editor/asset_catalog.gd")
-const FACTORY := preload("res://addons/godot_level_editor/scene_factory.gd")
-const GROUPS := preload("res://addons/godot_level_editor/scene_groups.gd")
-const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
-const SPAWN := preload("res://addons/godot_level_editor/runtime/spawn_marker.gd")
-const PROFILE := preload("res://addons/godot_level_editor/runtime/entity_profile.gd")
+const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor/asset_catalog.gd")
+const FACTORY := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_factory.gd")
+const GROUPS := preload("res://addons/godot_level_editor/modules/godot_level_editor/scene_groups.gd")
+const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
+const SPAWN := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd")
+const PROFILE := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd")
+const CARD := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/level_card.gd")
 var checks := 0
 var failures := 0
 
@@ -23,7 +24,21 @@ func run(editor: EditorPlugin) -> void:
 	await tree.create_timer(0.5, true).timeout
 	var suite := tree.get_first_node_in_group("godot_level_editor_editor_suite")
 	if suite != null: suite.window.hide()
+	check(EditorInterface.get_base_control().find_children("关卡摆放", "", true, false).is_empty(), "retired placement dock is not registered in the native editor")
+	var old_controls := ["打开触发／操作／判断示例", "打开首版连续世界", "新建房间 .tscn", "实例化房间到世界", "添加所选物件", "复制所选（新对象 ID）", "保存场景并重载校验"]
+	check(EditorInterface.get_base_control().find_children("*", "Button", true, false).all(func(button: Button): return button.text not in old_controls), "legacy sidebar actions are removed instead of hidden")
+	check(editor.spatial_tools.is_inside_tree() and editor.selection_buttons.keys().size() == 3 and is_instance_valid(editor.step_input), "wheel, face/edge/point controls and step input stay in the native toolbar")
+	check(not FileAccess.file_exists("res://addons/godot_level_editor/modules/godot_level_editor/palette_item.gd") and not editor.has_method("_add_spatial") and not editor.has_method("_choose_file") and not editor.has_method("_save_scene"), "legacy card and dock-only authoring paths are deleted")
+	var stale_dock := ScrollContainer.new(); stale_dock.name = "关卡摆放"; editor.add_control_to_dock(EditorPlugin.DOCK_SLOT_RIGHT_UL, stale_dock)
+	var stale_button := Button.new(); stale_dock.add_child(stale_button); editor.push_buttons.append(stale_button); editor.selection_buttons.face.append(stale_button)
+	editor._retire_legacy_dock()
+	await frames(tree, 2)
+	check(not is_instance_valid(stale_dock) and editor.push_buttons.all(func(button: Button): return is_instance_valid(button)) and editor.selection_buttons.face.size() == 1, "hot reload removes an old dock and stale button references without rebuilding the active toolbar")
 	var tool: RefCounted = editor.radial_tool
+	# A user shortcut such as CapsLock may be synthesized when native windows
+	# gain focus. Keep the test's keyboard input independent of that preference.
+	var original_shortcut: InputEventKey = tool.shortcut.duplicate()
+	tool.shortcut = InputEventKey.new(); tool.shortcut.keycode = KEY_QUOTELEFT
 	var original_step: float = editor.edit_step
 	editor._set_edit_step(0.1)
 	var original_recent: PackedStringArray = tool.recent.duplicate()
@@ -56,25 +71,52 @@ func run(editor: EditorPlugin) -> void:
 	var camera := view.get_camera_3d()
 	print("QUICK ADD viewport: ", view.size, " container=", view.get_parent().get_class(), " size=", view.get_parent().size)
 	check(CATALOG.assets("Layout 白盒").size() == 16, "shared catalog exposes all sixteen existing whitebox shapes")
-	check(CATALOG.assets("常驻 Room")[0].path.ends_with("permanent_room.tscn"), "permanent detection Room remains the first Room asset")
+	check(CATALOG.assets("常驻 Room").size() == 1 and CATALOG.assets("常驻 Room")[0].path.ends_with("trigger_room.tscn"), "Room catalog contains a trigger-box preset without complete room scenes")
 	check(not CATALOG.assets("常驻机关").is_empty() and CATALOG.assets("常驻 NPC").size() >= 2, "authored mechanism and NPC scenes are included")
+	check(CATALOG.assets("常驻 NPC").all(func(asset: Dictionary): return not CATALOG.preview_path(asset).is_empty()), "NPC assets resolve the same saved thumbnail paths as the NPC editor")
+	check(CATALOG.assets("常驻机关").all(func(asset: Dictionary): return not CATALOG.preview_path(asset).is_empty()), "mechanism assets resolve the same saved thumbnail paths as the mechanism editor")
 	var manager := editor.get_undo_redo()
 	var history := manager.get_history_undo_redo(manager.get_object_history_id(root))
 	var before_version := history.get_version()
 	var before_count := root.get_child_count()
 	tool.open_wheel(camera, Vector2(2, 2))
+	var window := EditorInterface.get_base_control().get_window()
+	window.focus_exited.emit()
+	check(not tool.menu.visible, "leaving the editor window cancels the wheel")
+	# Other editor regression processes may open native windows concurrently.
+	# Test cancellation above, then isolate the remaining input assertions.
+	window.focus_exited.disconnect(tool.cancel)
+	tool.open_wheel(camera, Vector2(2, 2))
 	check(tool.menu.visible and tool.menu.categories.size() == 6, "wheel opens over the native viewport with six fixed categories")
 	check(tool.menu.wheel_center.x >= tool.menu.radius and tool.menu.wheel_center.y >= tool.menu.radius, "wheel clamps away from the viewport edges")
 	tool.menu.hover_at(tool.menu.wheel_center + Vector2.RIGHT * tool.menu.radius * 0.8)
 	tool.menu.select_category(1)
+	tool.menu.confirm_selection()
+	check(tool.menu.page == "assets" and tool.menu.sector_count() == 8 and tool.menu.sector_thumbnails.size() == 8 and tool.menu.page_count() == 2, "clicking Layout opens an eight-shape wheel with two pages")
+	var first_page: Array = tool.menu.entries.slice(0, 8).map(func(asset: Dictionary): return asset.path)
 	var old_path: String = tool.menu.current_asset().path
 	tool.menu.cycle(1)
-	check(tool.menu.current_asset().path != old_path, "wheel scrolling changes the actual selected asset")
-	tool.menu.show_catalog(); tool.menu.search.text = "不存在的素材"; tool.menu.search.text_changed.emit(tool.menu.search.text)
+	check(tool.menu.page_index == 1 and tool.menu.sector_thumbnails.size() == 8 and not first_page.has(tool.menu.current_asset().path), "scrolling replaces all eight shapes with the next page")
+	tool.menu.cycle(1)
+	check(tool.menu.page_index == 0 and tool.menu.current_asset().path == old_path, "scrolling wraps through the complete shape catalog")
+	for shape_page in 2:
+		for slot in 8:
+			tool.menu.hover_at(tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + slot * TAU / 8) * tool.menu.radius * 0.75)
+			check(tool.menu.current_asset().path == tool.menu.entries[shape_page * 8 + slot].path, "each radial thumbnail selects its own shape on page %d slot %d" % [shape_page + 1, slot + 1])
+		tool.menu.cycle(1)
+	tool.menu._click_at(tool.menu.wheel_center)
+	check(tool.active_asset.is_empty() and tool.menu.page == "assets", "clicking the transparent center never selects or places an asset")
+	check(tool.menu.get_children().all(func(child: Control): return not child.is_visible_in_tree() or not child.get_rect().has_point(tool.menu.wheel_center)), "the center contains no preview, background control or return button")
+	tool.menu.go_back(); tool.menu.select_category(4); tool.menu.confirm_selection()
+	tool.menu.hover_at(tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + 2 * TAU / 3) * tool.menu.radius * 0.75)
+	tool.menu.confirm_selection()
+	check(tool.menu.chooser.visible, "the existing-assets sector opens the NPC library without a footer button")
+	tool.menu.search.text = "不存在的素材"; tool.menu.search.text_changed.emit(tool.menu.search.text)
 	check(tool.menu.chooser.visible and tool.menu.grid.get_children().all(func(child: Control): return not child.visible), "all-assets panel filters the same catalog by name")
 	tool.menu.show_catalog(); await frames(tree, 5)
 	print("CATALOG LAYOUT grid=", tool.menu.grid.get_rect(), " child_count=", tool.menu.grid.get_child_count(), " first=", tool.menu.grid.get_child(0).get_rect(), " visible=", tool.menu.grid.get_child(0).is_visible_in_tree())
 	check(tool.menu.grid.size.y > 0 and tool.menu.grid.get_child(0).is_visible_in_tree(), "reopening all-assets resets filtering and lays out visible cards")
+	check(tool.menu.grid.get_children().all(func(card: Button): return card.icon == CARD.preview_texture(str(card.get_meta("editor_preview_path", "")))), "NPC library buttons immediately display the editor's cached preview textures")
 	tool.cancel()
 	check(root.get_child_count() == before_count and history.get_version() == before_version, "browsing and cancelling the wheel creates no objects or undo actions")
 	tool.open_wheel(camera)
@@ -90,30 +132,32 @@ func run(editor: EditorPlugin) -> void:
 	tool.open_wheel(camera)
 	tool.menu.select_category(1)
 	await frames(tree, 3)
-	var window := EditorInterface.get_base_control().get_window()
-	if DisplayServer.get_name() != "headless":
-		window.grab_focus()
-		await tree.create_timer(0.3, true).timeout
+	await tree.create_timer(0.3, true).timeout
 	# Hover every sector through real window input, including non-whitebox previews.
-	# Keep the native pointer and injected motion aligned, so a later native
-	# hover refresh cannot replace the test point with the old physical cursor.
+	# After each injected motion, hold input steady while checking its animation.
+	# This avoids unrelated physical pointer motion from concurrent editor tests.
 	for index in 6:
 		var hover_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + index * TAU / 6) * tool.menu.radius * 0.76)
 		var hover_motion := InputEventMouseMotion.new(); hover_motion.position = hover_point; hover_motion.global_position = hover_point
-		if DisplayServer.get_name() != "headless": window.warp_mouse(hover_point)
 		window.push_input(hover_motion, true)
+		tool.menu.interaction_enabled = false
 		await tree.create_timer(0.16, true).timeout
 		await frames(tree, 2)
 		if tool.menu.category != index or tool.menu._weights[index] <= 0.95:
 			print("HOVER DIAGNOSTIC expected=", index, " actual=", tool.menu.category, " weight=", tool.menu._weights[index], " hovered=", tool.menu.hovered, " open=", tool.menu.is_open(), " focus=", window.has_focus(), " tween=", tool.menu._hover_tween.is_running() if is_instance_valid(tool.menu._hover_tween) else false)
 		check(tool.menu.category == index and tool.menu._weights[index] > 0.95, "real mouse hover highlights wheel sector %s" % tool.menu.categories[index])
-	tool.menu.select_category(1)
-	var wheel_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI / 6) * tool.menu.radius * 0.75)
+		tool.menu.interaction_enabled = true
+	tool.menu.select_category(1); tool.menu.confirm_selection()
+	var wheel_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.UP * tool.menu.radius * 0.75)
 	var wheel_event := InputEventMouseButton.new(); wheel_event.button_index = MOUSE_BUTTON_WHEEL_DOWN; wheel_event.pressed = true; wheel_event.position = wheel_point; wheel_event.global_position = wheel_point
 	old_path = tool.menu.current_asset().path
 	window.push_input(wheel_event, true)
 	await frames(tree, 2)
-	check(tool.menu.current_asset().path != old_path, "real viewport mouse-wheel input reaches the radial menu")
+	check(tool.menu.page_index == 1 and tool.menu.current_asset().path != old_path, "real viewport mouse-wheel input changes the eight-shape page")
+	wheel_event.button_index = MOUSE_BUTTON_MIDDLE; window.push_input(wheel_event, true)
+	check(tool.menu.page_index == 0, "pressing the wheel button also switches to the next shape page")
+	wheel_event.pressed = false; window.push_input(wheel_event, true)
+	wheel_event.button_index = MOUSE_BUTTON_WHEEL_DOWN; wheel_event.pressed = true; window.push_input(wheel_event, true)
 	var selection_click := InputEventMouseButton.new(); selection_click.button_index = MOUSE_BUTTON_LEFT; selection_click.pressed = true; selection_click.position = wheel_point; selection_click.global_position = wheel_point
 	window.push_input(selection_click, true)
 	await frames(tree, 2)
@@ -134,13 +178,14 @@ func run(editor: EditorPlugin) -> void:
 	for index in 6:
 		var hover_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + index * TAU / 6) * tool.menu.radius * 0.76)
 		var hover_motion := InputEventMouseMotion.new(); hover_motion.position = hover_point; hover_motion.global_position = hover_point
-		if DisplayServer.get_name() != "headless": window.warp_mouse(hover_point)
 		window.push_input(hover_motion, true)
+		tool.menu.interaction_enabled = false
 		await tree.create_timer(0.16, true).timeout
 		await frames(tree, 2)
 		if tool.menu.category != index or tool.menu._weights[index] <= 0.95:
 			print("OVERLAY HOVER DIAGNOSTIC expected=", index, " actual=", tool.menu.category, " weight=", tool.menu._weights[index], " hovered=", tool.menu.hovered, " open=", tool.menu.is_open(), " focus=", window.has_focus(), " tween=", tool.menu._hover_tween.is_running() if is_instance_valid(tool.menu._hover_tween) else false)
 		check(tool.menu.category == index and tool.menu._weights[index] > 0.95, "side-key wheel hover survives native GUI interception for %s" % tool.menu.categories[index])
+		tool.menu.interaction_enabled = true
 	tool.menu.mouse_filter = Control.MOUSE_FILTER_STOP
 	check(tool.menu.find_children("*", "OptionButton", true, false).is_empty(), "the unnecessary placement-parent selector is removed")
 	side.pressed = true; window.push_input(side, true)
@@ -151,13 +196,13 @@ func run(editor: EditorPlugin) -> void:
 	tool.open_wheel(camera); tool.menu.select_category(4); tool.menu.confirm_selection()
 	check(tool.menu.page == "scope" and tool.menu.current_asset().lifetime == "level", "NPC sector opens the persistent versus task secondary wheel")
 	await tree.create_timer(0.25, true).timeout
-	check(tool.menu.page == "scope" and tool.menu._weights.size() == 2 and (tool.menu.is_open() or not window.has_focus()), "secondary wheel keeps its two choices after animation and handles editor focus loss")
+	check(tool.menu.page == "scope" and tool.menu._weights.size() == 3 and (tool.menu.is_open() or not window.has_focus()), "secondary wheel keeps scope and existing-assets sectors after animation")
 	if not tool.menu.is_open(): tool.open_wheel(camera); tool.menu.select_category(4); tool.menu.open_submenu()
-	tool.menu.hover_at(tool.menu.wheel_center + Vector2.DOWN * tool.menu.radius * 0.75)
+	tool.menu.hover_at(tool.menu.wheel_center + Vector2.from_angle(PI / 6) * tool.menu.radius * 0.75)
 	await tree.create_timer(0.15, true).timeout
 	check(tool.menu._weights[1] > 0.95 and tool.menu.current_asset().lifetime == "task", "hover animation finishes on the task sector without changing scene data")
 	tool.menu.lifetime_index = 1; tool.menu.confirm_selection()
-	check(tool.active_asset.lifetime == "task" and tool.ghost.get_meta(PROFILE.META).kind == "npc", "task NPC selection enters capsule placement with task scope")
+	check(tool.active_asset.lifetime == "task" and tool.ghost.get_meta(PROFILE.META).kind == "npc", "task NPC selection enters model placement with task scope")
 	tool.cancel()
 	var environment_path := "res://tools/level_editor/.quick_add_environment_%d.tscn" % OS.get_process_id()
 	var environment_source := FACTORY.ROOM.new(); environment_source.name = "EnvironmentProbe"
@@ -172,6 +217,7 @@ func run(editor: EditorPlugin) -> void:
 	tool.open_wheel(camera)
 	var box: Dictionary = CATALOG.assets("Layout 白盒")[0]
 	tool.menu.select_category(1)
+	tool.menu.confirm_selection()
 	tool.menu.indices[1] = 0
 	tool.menu.confirm_selection()
 	check(tool.active_asset.path == box.path and is_instance_valid(tool.ghost) and not root.is_ancestor_of(tool.ghost) and tool.ghost.owner == null, "confirmation creates a passive ghost outside the authored scene")
@@ -186,7 +232,7 @@ func run(editor: EditorPlugin) -> void:
 	editor._set_edit_step(0.1)
 	tool.update_preview(camera, point)
 	var first: Node3D = tool.place()
-	check(first != null and first.owner == root and first.scene_file_path == box.path and GROUPS.is_group(first.get_parent()) and first.get_parent().get_parent() == root and first.get_parent().name == "关卡白盒", "placement creates an owned instance under the whitebox management node")
+	check(first != null and first.owner == root and first.scene_file_path == box.path and GROUPS.is_group(first.get_parent()) and first.get_parent().get_parent() == root and first.get_parent().name == "Whitebox", "placement creates an owned instance under the whitebox management node")
 	var first_transform: Transform3D = first.global_transform
 	check(not tool.active_asset.is_empty(), "whitebox placement remains active for continuous adding")
 	history.undo()
@@ -199,9 +245,12 @@ func run(editor: EditorPlugin) -> void:
 	check(tool.recent[0] == box.path and tool.recent.count(box.path) == 1, "recent assets contain successful placements without duplicates")
 	tool.cancel()
 	tool.open_wheel(camera)
+	tool.menu.select_category(2); tool.menu.confirm_selection()
+	check(tool.menu.sector_count() == 2, "Room wheel offers trigger scopes without a complete-scene library")
 	tool.begin_asset(CATALOG.assets("常驻 Room")[0])
 	tool.update_preview(camera, camera.unproject_position(Vector3(4, 0, -3)))
 	var room: Node3D = tool.place()
+	check(room.bounds_size == Vector3.ONE and room.get_node("RoomPreview").mesh is BoxMesh and room.get_node("RoomPreview").material_override.albedo_color == room.preview_color(), "new Room is a one-metre translucent trigger cube")
 	check(room != null and not room.uses_topology and room.owner == root and room.get_parent() == GROUPS.find_group(root, "room") and root.rooms().has(room), "grouped permanent Room remains visible to world detection and uses the original scope")
 	await frames(tree, 2)
 	check(root.start_room_id.is_empty(), "permanent detection Room does not acquire a topology starting-room binding")
@@ -213,7 +262,7 @@ func run(editor: EditorPlugin) -> void:
 	var nested: Node3D = tool.place()
 	check(nested.get_parent() == GROUPS.find_group(root, "whitebox") and nested.owner == root and nested.global_transform.is_equal_approx(expected), "new whitebox placement uses its level group even when a Room was previously selected")
 	tool.cancel()
-	tool.open_wheel(camera); tool.begin_asset(CATALOG.find_asset("res://scenes/level_editor/rooms/new_room.tscn"))
+	tool.open_wheel(camera); tool.begin_asset({"path": "res://content/scenes/level_editor/rooms/new_room.tscn", "category": "常驻 Room", "title": "旧房间兼容检查", "kind": ""})
 	tool.update_preview(camera, camera.unproject_position(Vector3(7, 0, -5)))
 	var linked_room: Node3D = tool.place()
 	check(linked_room != null and root.start_room_id == linked_room.room_id, "the first topology Room establishes the starting-room binding")
@@ -232,10 +281,10 @@ func run(editor: EditorPlugin) -> void:
 	check(original_spawn.global_transform.is_equal_approx(spawn_transform), "undo restores the existing spawn position and orientation")
 	history.redo()
 	tool.open_wheel(camera)
-	var mechanism: Dictionary = CATALOG.find_asset("res://scenes/mechanisms/lever_plate_door.tscn")
+	var mechanism: Dictionary = CATALOG.find_asset("res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn")
 	tool.begin_asset(mechanism); tool.update_preview(camera, camera.unproject_position(Vector3(-5, 0, -3)))
 	var assembly: Node3D = tool.place()
-	check(assembly != null and not str(assembly.instance_id).is_empty() and assembly.get_children().any(func(child: Node): return child.get("object_id") == "lever"), "mechanism addition replaces instance scope and preserves local graph bindings")
+	check(assembly != null and not str(assembly.instance_id).is_empty() and assembly.get_children().any(func(child: Node): return child.get("object_id") == "door"), "mechanism addition replaces instance scope and preserves local graph bindings")
 	tool.cancel()
 	var node_count := root.get_child_count()
 	tool.open_wheel(camera); tool.begin_asset(CATALOG.template("常驻 NPC", "level"))
@@ -256,8 +305,8 @@ func run(editor: EditorPlugin) -> void:
 	check(root.get_child_count() == node_count + 1, "real native viewport click commits the preview into the level")
 	tool.cancel()
 	var npc: Node3D = EditorInterface.get_selection().get_selected_nodes()[0]
-	check(npc.get_meta(PROFILE.META).model_id == "capsule" and npc.get_node("EntityProperties").owner == root, "new NPC is a configured capsule with a persisted instance adapter")
-	check(npc.get_node("EntityProperties").visual.get_parent() == npc and npc.get_node("EntityProperties").visual.owner == null, "derived capsule geometry belongs to the entity for native viewport selection and stays outside saved content")
+	check(npc.get_meta(PROFILE.META).model_id == "default" and npc.get_node("EntityProperties").owner == root, "new NPC uses its imported model with a persisted instance adapter")
+	check(npc.get_node("ModelRoot").get_script() == preload("res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd") and npc.get_node("EntityProperties").visual == null, "default placement keeps the authored model without a primitive overlay")
 	EditorInterface.edit_node(npc); await frames(tree, 12)
 	var inspector := EditorInterface.get_inspector().find_child("LevelEntityInspector", true, false)
 	check(inspector != null and inspector.fields.has("model_id") and inspector.fields.has("faction") and inspector.fields.has("default_action"), "native Inspector exposes model ID, faction and default action fields")
@@ -266,12 +315,15 @@ func run(editor: EditorPlugin) -> void:
 		check(npc.get_meta(PROFILE.META).faction == "hostile", "Inspector faction change updates instance configuration")
 		history.undo(); check(npc.get_meta(PROFILE.META).faction == "friendly", "native undo restores Inspector properties")
 		history.redo(); check(npc.get_meta(PROFILE.META).faction == "hostile", "native redo restores Inspector properties")
-		inspector._commit("default_action", "walk"); inspector._commit("model_id", "humanoid_base")
-		check(npc.get_meta(PROFILE.META).default_action == "walk" and not npc.get_node("EntityProperties").visual.find_children("*", "MeshInstance3D", true, false).is_empty(), "model ID selects the existing human visual and keeps default action configuration")
-		history.undo()
+		check(inspector.fields.model_id.item_count == 2 and inspector.fields.model_id.get_item_metadata(0) == "default" and inspector.fields.model_id.get_item_metadata(1) == "custom", "NPC model picker offers original and custom models without legacy primitives")
+		inspector._commit("default_action", "walk")
+		inspector._commit("model_scene", load("res://addons/godot_level_editor/assets/characters/npc_samples_v1/imported/human_medium_female.scn"))
+		inspector._commit("model_id", "custom")
+		check(npc.get_meta(PROFILE.META).default_action == "walk" and npc.get_node("EntityProperties").visual != null, "custom model scene keeps default action configuration")
+		history.undo(); history.undo()
 	EditorInterface.edit_node(room); await frames(tree, 8)
 	inspector = EditorInterface.get_inspector().find_child("LevelEntityInspector", true, false)
-	check(inspector != null and inspector.fields.has("bounds_0"), "Room uses the same Inspector with editable detection dimensions")
+	check(inspector != null and inspector.fields.has("bounds_0") and inspector.fields.has("volume_material") and inspector.fields.has("keep_active_on_exit") and not inspector.fields.has("model_id"), "Room Inspector exposes volume dimensions, material and activation rule rather than a model scene")
 	if inspector != null: inspector._commit_property("bounds_size", Vector3(8, 3, 5))
 	check(room.bounds_size == Vector3(8, 3, 5), "Room dimensions change through native scene undo history")
 	tool.open_wheel(camera); tool.begin_asset(CATALOG.template("常驻机关", "level")); tool.update_preview(camera, camera.unproject_position(Vector3(-4, 0, 4)))
@@ -279,7 +331,7 @@ func run(editor: EditorPlugin) -> void:
 	EditorInterface.edit_node(placeholder); await frames(tree, 8)
 	inspector = EditorInterface.get_inspector().find_child("LevelEntityInspector", true, false)
 	check(inspector != null and inspector.fields.has("component_scene"), "mechanism placeholder exposes the shared Inspector and a real component scene slot")
-	if inspector != null: inspector._component_changed(load("res://scenes/mechanisms/lever.tscn"))
+	if inspector != null: inspector._component_changed(load("res://addons/godot_level_editor/scenes/mechanisms/button.tscn"))
 	check(placeholder.component_scene != null and placeholder.get_meta(PROFILE.META).model_id == "default", "mechanism scene selection preserves the existing reusable component contract")
 	tool.open_wheel(camera); tool.begin_asset(CATALOG.template("常驻 NPC", "task")); tool.update_preview(camera, Vector2(view.size) * 0.5)
 	var task_npc: Node3D = tool.place(); tool.cancel()
@@ -301,8 +353,43 @@ func run(editor: EditorPlugin) -> void:
 	tool.open_wheel(camera); tool.begin_asset(box)
 	editor._build()
 	check(not is_instance_valid(tool.ghost) and not tool.menu.visible, "starting F5/F6 disposes the wheel and ghost before game launch")
+	if OS.get_cmdline_user_args().has("--capture-trigger-rooms"):
+		var capture_dir := "res://docs/level_editor/room_triggers_2026-11-16"
+		DirAccess.make_dir_recursive_absolute(capture_dir)
+		for content in GROUPS.contents(root):
+			if content is Node3D and content != root.get_node("Floor") and content != room: content.hide()
+		room.position = Vector3(-0.8, 0, 0); room.rotation = Vector3.ZERO; room.bounds_size = Vector3.ONE; room.refresh_volume(); room.show()
+		tool.open_wheel(camera); tool.begin_asset(CATALOG.template("常驻 Room", "task"))
+		tool.placement_transform = Transform3D(Basis.IDENTITY, Vector3(0.8, 0, 0)); tool.placement_valid = true
+		var task_volume: Node3D = tool.place(); tool.cancel()
+		check(task_volume.preview_color().g > room.preview_color().g and task_volume.get_node("RoomPreview").material_override.albedo_color.a < 0.5, "task Room has a translucent light-green material distinct from the level Room")
+		EditorInterface.get_selection().clear(); EditorInterface.get_selection().add_node(room); EditorInterface.get_selection().add_node(task_volume)
+		await frames(tree, 8); _frame_selection(view, window); await tree.create_timer(0.3, true).timeout
+		tool.cancel()
+		EditorInterface.get_selection().clear(); EditorInterface.get_selection().add_node(room); EditorInterface.edit_node(room)
+		if editor.has_method("hide_bottom_panel"): editor.call("hide_bottom_panel")
+		await frames(tree, 8)
+		var room_pick: Vector2 = view.get_parent().get_global_transform() * camera.unproject_position(room.global_position + Vector3.UP * 0.5)
+		EditorInterface.get_selection().clear()
+		var room_motion := InputEventMouseMotion.new(); room_motion.position = room_pick; room_motion.global_position = room_pick; window.push_input(room_motion, true)
+		var room_click := InputEventMouseButton.new(); room_click.button_index = MOUSE_BUTTON_LEFT; room_click.pressed = true; room_click.position = room_pick; room_click.global_position = room_pick
+		window.push_input(room_click, true); room_click.pressed = false; window.push_input(room_click, true)
+		await frames(tree, 5)
+		print("ROOM PICK selected=", EditorInterface.get_selection().get_selected_nodes().map(func(node: Node): return str(node.name)), " at=", room_pick, " wheel=", tool.menu.visible, " shortcut=", tool.shortcut.as_text())
+		check(EditorInterface.get_selection().get_selected_nodes().has(room), "clicking a translucent Room face selects its authored trigger and Inspector")
+		RenderingServer.force_draw(false)
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + "/room_volumes.png")
+	if OS.get_cmdline_user_args().has("--capture-library-thumbnails"):
+		var capture_dir := "res://docs/level_editor/asset_thumbnails_2026-11-16"
+		DirAccess.make_dir_recursive_absolute(capture_dir)
+		for category in [4, 3]:
+			tool.open_wheel(camera); tool.menu.interaction_enabled = false; tool.menu.select_category(category); tool.menu.open_submenu(); tool.menu.show_catalog()
+			await tree.create_timer(0.4, true).timeout; await frames(tree, 5); RenderingServer.force_draw(false)
+			check(tool.menu.grid.get_children().all(func(card: Button): return card.icon != null and card.icon == CARD.preview_texture(str(card.get_meta("editor_preview_path", "")))), "rendered library uses saved editor images for category %d" % category)
+			EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + ("/npc_library.png" if category == 4 else "/mechanism_library.png"))
+			tool.cancel()
 	if OS.get_cmdline_user_args().has("--capture-quick-add"):
-		var capture_dir := "res://docs/level_editor/quick_add_v2_2026-11-15"
+		var capture_dir := "res://docs/level_editor/radial_pages_2026-11-16"
 		DirAccess.make_dir_recursive_absolute(capture_dir)
 		var ignore := FileAccess.open(capture_dir + "/.gdignore", FileAccess.WRITE); ignore.close()
 		for node in GROUPS.contents(root):
@@ -311,22 +398,38 @@ func run(editor: EditorPlugin) -> void:
 		await frames(tree, 8)
 		_frame_selection(view, window)
 		await tree.create_timer(0.3, true).timeout
+		var cleanup_dir := "res://docs/enemy_editor/legacy_cleanup_2026-11-16"
+		DirAccess.make_dir_recursive_absolute(cleanup_dir)
+		RenderingServer.force_draw(false)
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(cleanup_dir + "/default_npc.png")
 		EditorInterface.get_selection().clear(); await frames(tree, 3)
 		var pick_at: Vector2 = view.get_parent().get_global_transform() * camera.unproject_position(npc.global_position + Vector3.UP * 0.85)
 		var pick_motion := InputEventMouseMotion.new(); pick_motion.position = pick_at; pick_motion.global_position = pick_at; window.push_input(pick_motion, true)
 		var pick_click := InputEventMouseButton.new(); pick_click.button_index = MOUSE_BUTTON_LEFT; pick_click.pressed = true; pick_click.position = pick_at; pick_click.global_position = pick_at; window.push_input(pick_click, true)
 		pick_click.pressed = false; window.push_input(pick_click, true); await frames(tree, 5)
-		print("CAPSULE PICK selected=", EditorInterface.get_selection().get_selected_nodes().map(func(node: Node): return str(node.name)), " pixel=", pick_at, " camera=", camera.global_position)
-		check(EditorInterface.get_selection().get_selected_nodes().has(npc), "clicking the visible capsule selects its authored NPC and Inspector rather than its adapter")
+		print("NPC PICK selected=", EditorInterface.get_selection().get_selected_nodes().map(func(node: Node): return str(node.name)), " pixel=", pick_at, " camera=", camera.global_position)
+		check(EditorInterface.get_selection().get_selected_nodes().has(npc), "clicking the visible model selects its authored NPC and Inspector")
 		if editor.has_method("hide_bottom_panel"): editor.call("hide_bottom_panel")
 		tool.open_wheel(camera); tool.menu.interaction_enabled = false; tool.menu.select_category(1)
 		await tree.create_timer(0.3, true).timeout; RenderingServer.force_draw(false)
 		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + "/wheel.png")
+		tool.menu.confirm_selection(); await tree.create_timer(0.3, true).timeout; RenderingServer.force_draw(false)
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + "/whitebox_page_1.png")
+		tool.menu.cycle(1); await tree.create_timer(0.3, true).timeout; RenderingServer.force_draw(false)
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + "/whitebox_page_2.png")
 		tool.menu.select_category(4); tool.menu.open_submenu(); await tree.create_timer(0.3, true).timeout; RenderingServer.force_draw(false)
 		print("CAPTURE SUBMENU page=", tool.menu.page, " sectors=", tool.menu._weights.size(), " alpha=", tool.menu.modulate.a)
-		check(tool.menu.page == "scope" and tool.menu._weights.size() == 2, "rendered secondary menu has two scope choices")
+		check(tool.menu.page == "scope" and tool.menu._weights.size() == 3, "rendered NPC wheel contains scope and existing-assets sectors")
 		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + "/npc_submenu.png")
 		tool.cancel()
+		for content in GROUPS.contents(root):
+			if content is Node3D: content.hide()
+		first.show(); first.position = Vector3.ZERO
+		EditorInterface.get_selection().clear(); EditorInterface.get_selection().add_node(first); EditorInterface.edit_node(first)
+		await frames(tree, 8); _frame_selection(view, window)
+		await tree.create_timer(0.3, true).timeout; RenderingServer.force_draw(false)
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(capture_dir + "/whitebox_selection.png")
+		first.hide(); root.get_node("Floor").show()
 		for pair in [[npc, "npc_inspector"], [room, "room_inspector"], [placeholder, "mechanism_inspector"]]:
 			npc.hide(); room.hide(); placeholder.hide(); pair[0].show(); pair[0].position = Vector3.ZERO
 			EditorInterface.get_selection().clear(); EditorInterface.get_selection().add_node(pair[0]); EditorInterface.edit_node(pair[0])
@@ -340,12 +443,18 @@ func run(editor: EditorPlugin) -> void:
 	EditorInterface.save_scene_as(path, false)
 	EditorInterface.close_scene()
 	await frames(tree, 5)
-	EditorInterface.open_scene_from_path("res://scenes/main.tscn")
+	EditorInterface.open_scene_from_path("res://content/scenes/main.tscn")
 	await frames(tree, 10)
 	check(not is_instance_valid(tool.ghost) and not tool.menu.visible, "changing scenes cleans up all wheel and preview state")
 	check(source_hashes.keys().all(func(asset_path: String): return FileAccess.get_sha256(asset_path) == source_hashes[asset_path]), "all existing source Room, mechanism, NPC and palette files remain byte-identical")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	window.focus_exited.connect(tool.cancel)
+	tool.shortcut = original_shortcut
 	print("QUICK ADD: ", checks, " checks, ", failures, " failures")
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--qa-native-capture=") and DisplayServer.get_name() != "headless":
+			RenderingServer.force_draw(false)
+			EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(argument.trim_prefix("--qa-native-capture="))
 	tree.quit(0 if failures == 0 else 1)
 
 func _frame_selection(view: SubViewport, window: Window) -> void:

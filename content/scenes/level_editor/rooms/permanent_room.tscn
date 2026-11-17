@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/room.gd" id="1"]
+[node name="PermanentRoom" type="Node3D"]
+script = ExtResource("1")
+room_id = ""
+display_name = "常驻 Room"
+uses_topology = false

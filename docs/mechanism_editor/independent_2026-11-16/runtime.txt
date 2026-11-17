@@ -1,0 +1,42 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] mechanism directory contains exactly the five requested assets
+[PASS] double_door scene and graph load as a valid pair
+[PASS] double_door contains one independent physical component
+[PASS] double_door graph references only its own component
+[PASS] single_door scene and graph load as a valid pair
+[PASS] single_door contains one independent physical component
+[PASS] single_door graph references only its own component
+[PASS] pressure_plate scene and graph load as a valid pair
+[PASS] pressure_plate contains one independent physical component
+[PASS] pressure_plate graph references only its own component
+[PASS] button scene and graph load as a valid pair
+[PASS] button contains one independent physical component
+[PASS] button graph references only its own component
+[PASS] lift_platform scene and graph load as a valid pair
+[PASS] lift_platform contains one independent physical component
+[PASS] lift_platform graph references only its own component
+[PASS] button presses independently without a door binding
+[PASS] pressing the button changes neither door nor lift
+[PASS] button resets independently
+[PASS] single_door accepts its own interaction
+[PASS] single_door starts its own internal curve animation
+[PASS] single_door completes opening without a button asset
+[PASS] double_door accepts its own interaction
+[PASS] double_door starts its own internal curve animation
+[PASS] double_door completes opening without a button asset
+[PASS] lift starts from its own interaction without a terminal
+[PASS] independent lift reaches its endpoint
+[PASS] lift accepts its own return interaction
+[PASS] independent lift returns to its start
+[PASS] independent pressure plate detects actual player occupancy
+[PASS] pressure plate releases without controlling any other mechanism
+[PASS] 4_TestLevel.tscn retains loadable dependencies after asset deletion
+[PASS] 4_TestLevel.tscn preserves valid authored level structure
+[PASS] mechanism_whitebox_v1.tscn retains loadable dependencies after asset deletion
+[PASS] mechanism_whitebox_v1.tscn preserves valid authored level structure
+[PASS] dusk_mountain_house.tscn retains loadable dependencies after asset deletion
+LEVEL_VALIDATION res://scenes/levels/dusk_mountain_house.tscn ["对象 ID 无效：$world/CourtyardFence_-1", "对象 ID 无效：$world/TerraceSide_-1", "对象 ID 无效：$world/FrontWall_-1", "对象 ID 无效：$world/Roof_-1"]
+[PASS] authored house has exactly its independently verified pre-cleanup findings, with no new dependency errors
+[PASS] authored house keeps private door data and stable task component IDs
+INDEPENDENT MECHANISMS RUNTIME: 38 checks, 0 failures

@@ -161,7 +161,7 @@ func integration() -> void:
 	session.queue_free()
 	await frames(3)
 
-	session = load("res://scenes/main.tscn").instantiate()
+	session = load("res://content/scenes/main.tscn").instantiate()
 	session.persist_progress = false
 	add_child(session)
 	await frames(10)
@@ -173,7 +173,7 @@ func integration() -> void:
 func capture_scenes() -> void:
 	DirAccess.make_dir_recursive_absolute(capture_dir)
 	for scene in ["main", "3cplayground"]:
-		session = load("res://scenes/" + scene + ".tscn").instantiate()
+		session = load("res://content/scenes/" + scene + ".tscn").instantiate()
 		if "persist_progress" in session: session.persist_progress = false
 		var rig: Node3D = session.get_node("CameraRig")
 		rig.capture_mouse_on_start = false

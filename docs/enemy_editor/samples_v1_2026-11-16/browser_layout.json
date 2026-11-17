@@ -1,0 +1,172 @@
+[
+  {
+    "name": "desktop",
+    "title": "NPC 素材与动画 - GodotLevelEditor Wiki",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "contentWidth": 956,
+    "images": [
+      {
+        "src": "../../assets/logo.svg",
+        "complete": true,
+        "naturalWidth": 128
+      },
+      {
+        "src": "../../assets/logo.svg",
+        "complete": true,
+        "naturalWidth": 128
+      },
+      {
+        "src": "../../../enemy_editor/samples_v1_2026-11-16/humanoids.png",
+        "complete": true,
+        "naturalWidth": 1800
+      },
+      {
+        "src": "../../../enemy_editor/samples_v1_2026-11-16/creatures.png",
+        "complete": true,
+        "naturalWidth": 2000
+      }
+    ],
+    "mainText": "GodotLevelEditor Wiki\n首页\n开始使用\n快速开始\n编辑器功能地图\n关卡与轮盘操作\n工作台与偏好设置\nNPC 素材与动画\n动手制作\n按钮打开一扇门\n查阅手册\n机关与节点速查\n术语与快捷键\n常见问题\n开发与维护\n更新 Wiki\n预览与发布\n版本记录\n目录\n有哪些示例\n实际模型预览\n在 NPC 编辑器里预览\n不选动画时显示什么\n动画能否互换\n把所选模型放进关卡\n使用三维轮盘\n从文件系",
+    "headings": [
+      {
+        "text": "使用第一版示例 NPC¶",
+        "left": 266,
+        "right": 1174
+      },
+      {
+        "text": "有哪些示例¶",
+        "left": 266,
+        "right": 1174
+      },
+      {
+        "text": "在 NPC 编辑器里预览¶",
+        "left": 266,
+        "right": 1174
+      },
+      {
+        "text": "把所选模型放进关卡¶",
+        "left": 266,
+        "right": 1174
+      },
+      {
+        "text": "让示例沿路线移动¶",
+        "left": 266,
+        "right": 1174
+      },
+      {
+        "text": "完成检查与排查¶",
+        "left": 266,
+        "right": 1174
+      },
+      {
+        "text": "来源与许可¶",
+        "left": 266,
+        "right": 1174
+      }
+    ],
+    "tableWrappers": [
+      {
+        "width": 940,
+        "scrollWidth": 940
+      },
+      {
+        "width": 940,
+        "scrollWidth": 940
+      },
+      {
+        "width": 940,
+        "scrollWidth": 940
+      },
+      {
+        "width": 940,
+        "scrollWidth": 940
+      }
+    ]
+  },
+  {
+    "name": "mobile",
+    "title": "NPC 素材与动画 - GodotLevelEditor Wiki",
+    "width": 390,
+    "scrollWidth": 390,
+    "contentWidth": 390,
+    "images": [
+      {
+        "src": "../../assets/logo.svg",
+        "complete": true,
+        "naturalWidth": 128
+      },
+      {
+        "src": "../../assets/logo.svg",
+        "complete": true,
+        "naturalWidth": 128
+      },
+      {
+        "src": "../../../enemy_editor/samples_v1_2026-11-16/humanoids.png",
+        "complete": true,
+        "naturalWidth": 1800
+      },
+      {
+        "src": "../../../enemy_editor/samples_v1_2026-11-16/creatures.png",
+        "complete": true,
+        "naturalWidth": 2000
+      }
+    ],
+    "mainText": "GodotLevelEditor Wiki\n GodotLevelEditor\n首页\n开始使用\n开始使用\n快速开始\n编辑器功能地图\n关卡与轮盘操作\n工作台与偏好设置\nNPC 素材与动画\n目录\n有哪些示例\n实际模型预览\n在 NPC 编辑器里预览\n不选动画时显示什么\n动画能否互换\n把所选模型放进关卡\n使用三维轮盘\n从文件系统拖入\n让示例沿路线移动\n完成检查与排查\n来源与许可\n动手制作\n动手制作\n按钮打",
+    "headings": [
+      {
+        "text": "使用第一版示例 NPC¶",
+        "left": 16,
+        "right": 374
+      },
+      {
+        "text": "有哪些示例¶",
+        "left": 16,
+        "right": 374
+      },
+      {
+        "text": "在 NPC 编辑器里预览¶",
+        "left": 16,
+        "right": 374
+      },
+      {
+        "text": "把所选模型放进关卡¶",
+        "left": 16,
+        "right": 374
+      },
+      {
+        "text": "让示例沿路线移动¶",
+        "left": 16,
+        "right": 374
+      },
+      {
+        "text": "完成检查与排查¶",
+        "left": 16,
+        "right": 374
+      },
+      {
+        "text": "来源与许可¶",
+        "left": 16,
+        "right": 374
+      }
+    ],
+    "tableWrappers": [
+      {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      {
+        "width": 390,
+        "scrollWidth": 390
+      },
+      {
+        "width": 390,
+        "scrollWidth": 390
+      }
+    ]
+  }
+]

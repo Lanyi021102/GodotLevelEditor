@@ -1,10 +1,10 @@
 extends Node
-const WORLD := preload("res://addons/godot_level_editor/runtime/world.gd")
-const GRAPH := preload("res://addons/godot_level_editor/runtime/level_graph.gd")
-const LOGIC := preload("res://addons/godot_level_editor/runtime/level_logic_graph.gd")
-const TASK := preload("res://addons/godot_level_editor_narrative/runtime/task_definition.gd")
-const CATALOG := preload("res://addons/godot_level_editor_suite/runtime/event_catalog.gd")
-const PROFILE := preload("res://addons/godot_level_editor/runtime/entity_profile.gd")
+const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
+const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
+const LOGIC := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_logic_graph.gd")
+const TASK := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_definition.gd")
+const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
+const PROFILE := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd")
 var checks := 0
 var failures := 0
 var paths: Array[String] = []
@@ -44,8 +44,8 @@ func _run() -> void:
 	var world := WORLD.new(); world.name = "Sandbox"; world.level_id = "2"; world.world_id = "level_logic_test"; world.start_room_id = ""
 	world.topology = GRAPH.new(); world.topology.graph_id = "empty_topology"; world.topology.graph_kind = "topology"
 	world.events = GRAPH.new(); world.events.graph_id = "legacy_events"
-	var npc: Node3D = load("res://scenes/narrative/npc.tscn").instantiate(); npc.object_id = "guide"; npc.name = "Guide"; npc.position.x = -4; world.add_child(npc)
-	var task_npc: Node3D = load("res://scenes/narrative/npc.tscn").instantiate(); task_npc.object_id = "task_only"; task_npc.name = "TaskOnly"; world.add_child(task_npc)
+	var npc: Node3D = load("res://addons/godot_level_editor/scenes/narrative/npc.tscn").instantiate(); npc.object_id = "guide"; npc.name = "Guide"; npc.position.x = -4; world.add_child(npc)
+	var task_npc: Node3D = load("res://addons/godot_level_editor/scenes/narrative/npc.tscn").instantiate(); task_npc.object_id = "task_only"; task_npc.name = "TaskOnly"; world.add_child(task_npc)
 	var profile := PROFILE.new(); profile.lifetime = "task"; profile.task_id = first.task_id; task_npc.set_meta(PROFILE.META, profile)
 	var region := WORLD.REGION.new(); region.object_id = "courtyard"; region.extent = Vector3(2, 2, 2); world.add_child(region)
 	var graph := LOGIC.new(); graph.graph_id = "sandbox_logic"; graph.events_xlsx = workbook
@@ -136,16 +136,16 @@ func _run() -> void:
 	var invalid_world := progress.duplicate(true); invalid_world.level_logic.level_logic.graph_id = "foreign"
 	check(not world.restore_progress(invalid_world) and progress == world.capture_progress(), "world bridge rejects foreign permanent graph state without changing either graph")
 	world.queue_free(); await physics(3)
-	var standalone: Node3D = load("res://scenes/levels/4_TestLevel.tscn").instantiate()
+	var standalone: Node3D = load("res://content/scenes/levels/4_TestLevel.tscn").instantiate()
 	standalone.level_logic = LOGIC.new(); standalone.level_logic.graph_id = "standalone_logic"; standalone.level_logic.events_xlsx = workbook
 	standalone.level_logic.nodes.assign([{"id": "start", "kind": "start", "params": {}}, {"id": "always", "kind": "set_variable", "params": GRAPH.TASK_NODES.defaults("set_variable")}])
 	wire(standalone.level_logic, "start", "always")
-	var authored_hash := FileAccess.get_sha256("res://scenes/levels/4_TestLevel.tscn")
+	var authored_hash := FileAccess.get_sha256("res://content/scenes/levels/4_TestLevel.tscn")
 	get_tree().root.add_child(standalone); get_tree().current_scene = standalone
 	await physics(15)
 	check(standalone.has_node("PlaySession") and standalone.logic_director != null and standalone.logic_director.level_variables.get("flag") == true, "direct F6 play runs permanent logic alongside the standard player session")
 	check(get_tree().get_nodes_in_group("godot_level_editor_task_directors").size() == 1 and get_tree().get_nodes_in_group("godot_level_editor_player").size() == 1, "standalone level creates one task service and one player")
-	check(authored_hash == FileAccess.get_sha256("res://scenes/levels/4_TestLevel.tscn"), "runtime logic services never rewrite the authored level")
+	check(authored_hash == FileAccess.get_sha256("res://content/scenes/levels/4_TestLevel.tscn"), "runtime logic services never rewrite the authored level")
 	get_tree().current_scene = self; standalone.queue_free(); await physics(3)
 	for path in paths: DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	print("PERMANENT LEVEL LOGIC: %d checks, %d failures" % [checks, failures])
