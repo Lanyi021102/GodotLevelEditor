@@ -2,6 +2,7 @@
 extends RefCounted
 const Assembly := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/assembly.gd")
 const Definition := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd")
+const SavePolicy := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/save_policy.gd")
 static var native_guard: ResourceFormatSaver
 
 static func validate(root: Node) -> PackedStringArray:
@@ -19,7 +20,12 @@ static func validate(root: Node) -> PackedStringArray:
 		if object.get_meta("mechanism_kind", "") == "plate" and (object.plate_size.x <= 0 or object.plate_size.y <= 0 or object.release_delay < 0): errors.append("压力板尺寸或延时无效")
 	return errors
 
-static func save_pair(root: Node, path: String) -> Dictionary:
+static func save_pair(root: Node, path: String, allow_builtin := false) -> Dictionary:
+	path = SavePolicy.canonical(path)
+	# Only explicit developer generators may publish built-ins. The panel, native
+	# saver and callers creating personal assets all use the protected default.
+	if SavePolicy.is_plugin_path(path) and not allow_builtin:
+		return {"ok": false, "errors": [SavePolicy.BUILTIN_MESSAGE]}
 	var errors := validate(root)
 	if not errors.is_empty(): return {"ok": false, "errors": errors}
 	if not (path.begins_with("res://") or path.begins_with("user://")) or path.get_extension() != "tscn":

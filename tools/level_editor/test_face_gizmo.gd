@@ -27,7 +27,7 @@ func run(editor: EditorPlugin) -> void:
 	tree.create_timer(90, true).timeout.connect(func(): tree.quit(2))
 	await tree.create_timer(0.5, true).timeout
 	var suite := tree.get_first_node_in_group("godot_level_editor_editor_suite")
-	if suite != null: suite.window.hide()
+	if suite != null and is_instance_valid(suite.window): suite.window.hide()
 	EditorInterface.set_main_screen_editor("3D")
 	await frames(tree, 10)
 	var original_step: float = editor.edit_step

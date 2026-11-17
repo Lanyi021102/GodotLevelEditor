@@ -6,6 +6,7 @@ extends ResourceFormatSaver
 ## to Godot's next saver and overwrite the file (core/io/resource_saver.cpp).
 const ASSEMBLY := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/assembly.gd")
 const DEFINITION := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd")
+const POLICY := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/save_policy.gd")
 # Godot rebuilds global custom savers after filesystem scans. Shared state keeps
 # the newly registered saver connected to the plugin's live scene baselines.
 static var enabled := false
@@ -62,6 +63,13 @@ func end_pair(root: Node, path: String, success: bool) -> void:
 	var tracked: WeakRef = records.get(path, {}).get("root", weakref(root))
 	records[path] = {"hash": pair_hash(path), "root": tracked}
 	blocked.erase(path)
+	_clear_rejections(root)
+
+func _clear_rejections(root: Node) -> void:
+	for path in blocked.keys():
+		var target: WeakRef = blocked[path].root
+		if target != null and target.get_ref() == root:
+			blocked.erase(path); pending.erase(path)
 
 func _assembly_scene(resource: Resource) -> bool:
 	if not resource is PackedScene: return false
@@ -81,11 +89,16 @@ func _get_recognized_extensions(resource: Resource) -> PackedStringArray:
 
 func _live_root(path: String, draft: Node = null) -> Node:
 	for root in roots.call():
-		if root is ASSEMBLY and root.scene_file_path == path: return root
+		if root is ASSEMBLY and (root.scene_file_path == path or POLICY.is_plugin_path(path) and root.scene_file_path.to_lower() == path.to_lower()): return root
+	if records.has(path):
+		var tracked: Node = records[path].root.get_ref()
+		if is_instance_valid(tracked) and tracked in roots.call(): return tracked
 	var current: Node = current_root.call()
 	return current if current is ASSEMBLY and draft is ASSEMBLY and current.instance_id == draft.instance_id else null # Native Save As.
 
 func reject(path: String, reason: String, root: Node = null) -> void:
+	if not is_instance_valid(root) and blocked.has(path) and blocked[path].root != null:
+		root = blocked[path].root.get_ref()
 	blocked[path] = {"reason": reason, "root": weakref(root) if is_instance_valid(root) else null}
 	if is_instance_valid(root): pending[path] = {"root": weakref(root), "success": false}
 	var view: Control = panel.get_ref() if panel != null else null
@@ -98,10 +111,26 @@ func _restore_unsaved(path: String) -> void:
 	if not blocked.has(path): return
 	var current: Node = current_root.call()
 	var target: WeakRef = blocked[path].root
-	if current is ASSEMBLY and (current.scene_file_path == path or target != null and target.get_ref() == current): mark_unsaved.call()
+	if current is ASSEMBLY and (current.scene_file_path == path or target != null and target.get_ref() == current):
+		# A handled native Save As still changes the live root's file path after
+		# our rejection. Recover its tracked identity before restoring dirty state.
+		if current.scene_file_path == path:
+			for known in records:
+				if known != path and records[known].root.get_ref() == current:
+					current.scene_file_path = known
+					break
+		mark_unsaved.call()
 
 func _save(resource: Resource, path: String, flags: int) -> Error:
-	path = ProjectSettings.localize_path(path)
+	path = POLICY.canonical(path)
+	if POLICY.is_plugin_path(path):
+		var scene_path := path.trim_suffix(".graph.tres") + ".tscn" if path.ends_with(".graph.tres") else path
+		var draft: Node = resource.instantiate() if resource is PackedScene else null
+		var live := _live_root(scene_path, draft)
+		if draft != null: draft.free()
+		reject(scene_path, POLICY.BUILTIN_MESSAGE, live)
+		# A handled rejection must not fall through to Godot's text saver.
+		return OK
 	if resource.get_script() == DEFINITION:
 		var scene_path := path.trim_suffix(".graph.tres") + ".tscn"
 		if path.ends_with(".graph.tres") and (blocked.has(scene_path) or conflict(scene_path)):
@@ -136,6 +165,7 @@ func scene_saved(path: String) -> void:
 	if not outcome.success: _restore_unsaved.call_deferred(path); return
 	var root: Node = outcome.root.get_ref() if outcome.has("root") else null
 	if not is_instance_valid(root): return
+	_clear_rejections(root)
 	root.definition = ResourceLoader.load(path.get_basename() + ".graph.tres", "", ResourceLoader.CACHE_MODE_IGNORE)
 	records[path] = {"hash": pair_hash(path), "root": weakref(root)}
 	var view: Control = panel.get_ref() if panel != null else null

@@ -99,7 +99,9 @@ func run(suite: EditorPlugin) -> void:
 	check(panel.draft.hdri != null and panel.draft.hdri.resource_path.get_file().begins_with(first_path.get_file().get_basename()), "second import cannot replace active request")
 
 	# Use a real editor world; only transient previews are applied in the isolated copy.
-	EditorInterface.open_scene_from_path("res://content/scenes/levels/whitebox_world.tscn")
+	var preview_scene := "res://content/scenes/levels/whitebox_world.tscn"
+	if not FileAccess.file_exists(preview_scene): preview_scene = str(ProjectSettings.get_setting("application/run/main_scene"))
+	EditorInterface.open_scene_from_path(preview_scene)
 	await tree.create_timer(0.4).timeout
 	await open_clear(panel); panel.start_preview()
 	check(panel.preview_active, "preview is active before testing end-preview during import")

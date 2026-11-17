@@ -5,6 +5,7 @@ const Presentation := preload("res://addons/godot_level_editor/modules/godot_lev
 const Assembly := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/runtime/assembly.gd")
 const Factory := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/factory.gd")
 const Store := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/store.gd")
+const SavePolicy := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/save_policy.gd")
 const DoorNodes := preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/door_nodes.gd")
 var plugin: EditorPlugin
 var assembly: Node3D
@@ -53,7 +54,7 @@ func _ready() -> void:
 	library_actions.append(_button(bar, "打开", func(): _open_dialog.popup_centered_ratio(0.6)))
 	_button(bar, "重载", _request_reload)
 	_button(bar, "保存", save)
-	_button(bar, "另存为", func(): _new_file = false; _save_dialog.popup_centered_ratio(0.6))
+	_button(bar, "另存为", func(): _new_file = false; offer_personal_save())
 	_button(bar, "验证", _validate)
 	_button(bar, "撤销", func(): _history(false))
 	_button(bar, "重做", func(): _history(true))
@@ -86,11 +87,10 @@ func _ready() -> void:
 	graph.begin_node_move.connect(func():
 		if is_instance_valid(assembly): _moving_before = assembly.definition.duplicate(true))
 	graph.end_node_move.connect(_end_move)
-	graph.scroll_offset_changed.connect(func(_offset: Vector2): _view_changed())
-	graph.gui_input.connect(func(event: InputEvent):
-		if event is InputEventMouseButton and event.pressed: _view_changed.call_deferred())
+	graph.gui_input.connect(_view_input)
 	graph.popup_request.connect(_show_picker)
 	split.add_child(graph)
+	_wire_view_controls(graph)
 	var side := VBoxContainer.new()
 	side.custom_minimum_size.x = 330
 	split.add_child(side)
@@ -313,6 +313,23 @@ func _view_changed() -> void:
 	assembly.definition.view_offset = graph.scroll_offset
 	assembly.definition.view_zoom = graph.zoom
 	dirty = true
+
+func _view_input(event: InputEvent, scrollbar := false) -> void:
+	var gesture := event is InputEventPanGesture or event is InputEventMagnifyGesture
+	if event is InputEventMouseButton:
+		gesture = event.pressed and (event.button_index in [MOUSE_BUTTON_MIDDLE, MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN, MOUSE_BUTTON_WHEEL_LEFT, MOUSE_BUTTON_WHEEL_RIGHT] or scrollbar and event.button_index == MOUSE_BUTTON_LEFT)
+	elif event is InputEventMouseMotion:
+		gesture = event.button_mask & MOUSE_BUTTON_MASK_MIDDLE or (scrollbar or Input.is_key_pressed(KEY_SPACE)) and event.button_mask & MOUSE_BUTTON_MASK_LEFT
+	if gesture: _view_changed.call_deferred()
+
+func _wire_view_controls(parent: Node) -> void:
+	# Native zoom buttons and scrollbars also count as deliberate view editing.
+	# Layout, automatic fitting and scene-tab restoration emit scroll changes too;
+	# subscribing to those changes marked untouched builtin scenes dirty.
+	for child in parent.get_children(true):
+		if child is BaseButton: child.pressed.connect(func(): _view_changed.call_deferred())
+		if child is ScrollBar: child.gui_input.connect(func(event: InputEvent): _view_input(event, true))
+		_wire_view_controls(child)
 
 func _show_picker(position: Vector2) -> void:
 	if not is_instance_valid(assembly): status.text = "先打开或新建机关场景。"; return
@@ -623,12 +640,22 @@ func _validate() -> bool:
 
 func save() -> void:
 	if not is_instance_valid(assembly): return
-	if assembly.scene_file_path.is_empty():
+	if assembly.scene_file_path.is_empty() or SavePolicy.is_plugin_path(assembly.scene_file_path):
 		_new_file = false
-		_save_dialog.popup_centered_ratio(0.6)
+		offer_personal_save()
 	else: _save_to(assembly.scene_file_path)
 
+func offer_personal_save() -> void:
+	DirAccess.make_dir_recursive_absolute(SavePolicy.PERSONAL_DIRECTORY)
+	_save_dialog.current_path = SavePolicy.personal_path(assembly.scene_file_path if is_instance_valid(assembly) else "")
+	status.text = SavePolicy.BUILTIN_MESSAGE if is_instance_valid(assembly) and SavePolicy.is_plugin_path(assembly.scene_file_path) else "请选择个人机关保存位置。"
+	_save_dialog.popup_centered_ratio(0.6)
+
 func _save_to(path: String, sync_editor := true) -> void:
+	path = SavePolicy.canonical(path)
+	if SavePolicy.is_plugin_path(path):
+		status.text = "未保存：" + SavePolicy.BUILTIN_MESSAGE
+		return
 	if _new_file:
 		var root := Factory.blank(path.get_file().get_basename())
 		var result := Store.save_pair(root, path)
@@ -646,6 +673,7 @@ func _save_to(path: String, sync_editor := true) -> void:
 		status.text = "目标场景在另一个标签中有未保存修改，请先保存或选择其他文件。"
 		return
 	if not _validate(): return
+	var source_path := assembly.scene_file_path
 	var result := Store.save_pair(assembly, path)
 	if not result.ok: status.text = str(result.errors); return
 	_known_hash = _disk_hash(path)
@@ -654,6 +682,10 @@ func _save_to(path: String, sync_editor := true) -> void:
 		if sync_editor: EditorInterface.save_scene()
 	else:
 		_skip_native_save = true
+		# The draft is now safely stored in the personal pair. Restore the source
+		# tab from its untouched disk data, then open the copy as its own native tab.
+		# save_scene_as() alone changes the root path but can retain the old tab key.
+		if sync_editor and FileAccess.file_exists(source_path): EditorInterface.reload_scene_from_path(source_path)
 		if path in EditorInterface.get_open_scenes(): EditorInterface.reload_scene_from_path(path)
 		EditorInterface.open_scene_from_path(path)
 	EditorInterface.get_resource_filesystem().scan()

@@ -23,7 +23,7 @@ func run(editor: EditorPlugin) -> void:
 	tree.create_timer(90, true).timeout.connect(func(): tree.quit(2))
 	await tree.create_timer(0.5, true).timeout
 	var suite := tree.get_first_node_in_group("godot_level_editor_editor_suite")
-	if suite != null: suite.window.hide()
+	if suite != null and is_instance_valid(suite.window): suite.window.hide()
 	check(EditorInterface.get_base_control().find_children("关卡摆放", "", true, false).is_empty(), "retired placement dock is not registered in the native editor")
 	var old_controls := ["打开触发／操作／判断示例", "打开首版连续世界", "新建房间 .tscn", "实例化房间到世界", "添加所选物件", "复制所选（新对象 ID）", "保存场景并重载校验"]
 	check(EditorInterface.get_base_control().find_children("*", "Button", true, false).all(func(button: Button): return button.text not in old_controls), "legacy sidebar actions are removed instead of hidden")

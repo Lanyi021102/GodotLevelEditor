@@ -1,0 +1,9 @@
+{
+  "development": [],
+  "empty": [
+    "addons/godot_level_editor/modules/godot_level_editor/level_logic_panel.gd",
+    "addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd",
+    "addons/godot_level_editor/modules/godot_level_editor_suite/asset_workspace.gd",
+    "addons/godot_level_editor/modules/godot_level_editor_suite/level_card.gd"
+  ]
+}

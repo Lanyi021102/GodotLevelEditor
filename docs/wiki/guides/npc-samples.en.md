@@ -17,6 +17,8 @@ The small characters are fantasy Goblins, not child/teen human models. All six h
 
 ## Preview a model
 
+Built-in NPC definitions are read-only: **Save** guides you to a personal copy under `content/resources/enemies/`. Generated placeable scenes default to `content/scenes/npcs/`, with collision and instance dimensions matching the chosen height. Imported personal models and textures are stored under `content/assets/characters/npc_imports/`; these files survive addon replacement.
+
 1. Open **NPC → 我的NPC** and search by model name, such as Goblin, Casual, Superhero, Cow or Yeti.
 2. Select a card for details; double-click or choose **进入编辑** to edit.
 3. Open **模型与动画** (Model and animation). Drag to rotate and scroll to zoom. Bone display and hierarchy inspection are available.

@@ -46,7 +46,7 @@ def main():
         raise SystemExit(f"Refusing to overwrite an unmarked directory: {project}")
     project.mkdir(exist_ok=True)
     marker.write_text("Disposable QA-09 project; source is " + str(ROOT))
-    for name in ["addons", "addons/godot_level_editor/assets", "content/scenes", "addons/godot_level_editor/scripts", "content/resources", "content/tables", "tools"]:
+    for name in ["addons/godot_level_editor", "content", "tools"]:
         shutil.copytree(ROOT / name, project / name, dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns(".godot", "__pycache__", "node_modules"))
     for name in ["project.godot", "icon.svg"]:

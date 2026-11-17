@@ -4,9 +4,13 @@ Maps are ordinary Godot scenes. Open, organize, save and play them using the nat
 
 ## Open or create a level
 
-Open a `.tscn` from FileSystem. To create one, right-click the addon's `templates/empty_level.tscn`, choose **New Inherited Scene**, and save outside the addon, normally in `content/scenes/levels/`.
+In the separate window, choose **关卡 → 我的关卡** (Levels → My Levels) to browse the project's native `.tscn` maps. Search by name, ID or path. Click a card to see its path, sky and existing index metadata; double-click it or choose **进入编辑** to open the native scene and switch to Level Editing. **定位场景文件** selects the map in FileSystem.
 
-The separate **关卡** page edits only the current scene's persistent logic. The old custom map-card catalog is no longer the current map workflow.
+**新建关卡** (New Level) opens an unsaved native inherited scene from the addon's empty template. Use Godot's **Scene → Save As** to save in `content/scenes/levels/` or another project directory outside the addon. The first native save registers the stable ID used by tasks. Existing unregistered map files are also browsable; open and save them to register their IDs.
+
+**关卡 → 关卡编辑** (Level Editing) shows the current scene's persistent logic and actual bound sky name. Both secondary entries remain available on the Level page. Switching between them preserves unsaved graph edits and UndoRedo. If no valid level is open, the page provides guidance. Clicking Levels after a script update also repairs missing entries in an existing window.
+
+Layout, scene organization, Inspector editing, file saving and F6 remain native Godot operations. The browser reads real map files and their existing index metadata. Native saves, moves and deletions refresh the list; **刷新** also refreshes it manually. See the [level browser checks](../../godot_level_editor_suite/level_browser_2026-11-17/validation.md).
 
 ## Add objects with the wheel
 
@@ -47,6 +51,6 @@ If a whole-map copy reports a duplicate level ID, save it again to assign an ind
 
 Save with Godot and use F6. A first save registers the level ID used by tasks. Persistent logic is saved with the map; task graphs and dialogue workbooks have their own save actions.
 
-### Historical thumbnails {#level-thumbnail}
+### Level thumbnails {#level-thumbnail}
 
-Old map thumbnails remain in the project's `content/resources/level_previews/`. They are excluded from installation ZIPs, and the current native workflow does not depend on the removed map-card catalog.
+With graphical rendering available, each native save of a registered map updates its My Levels cover using a fixed oblique bird's-eye view. Maps in custom project directories outside the addon are supported. Missing previews use a placeholder. Images live in the project's `content/resources/level_previews/` and are excluded from installation ZIPs. Capturing a preview does not change the map layout or current editor view; headless checks do not generate images.

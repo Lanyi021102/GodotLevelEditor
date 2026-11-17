@@ -1,0 +1,23 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+GODOT_LEVEL_EDITOR_READY
+QA_USER_DATA=/Users/lanyi/Library/Application Support/Godot/app_userdata/MechanismStructureQA-branch-mechanism-structure-empty-_7od0wet
+[PASS] double_door: plugin update preserves loadable personal scene, graph and component
+[PASS] double_door: plugin update preserves authored curve
+[PASS] double_door: reopening after update does not mark an untouched asset dirty
+[PASS] single_door: plugin update preserves loadable personal scene, graph and component
+[PASS] single_door: plugin update preserves authored curve
+[PASS] single_door: reopening after update does not mark an untouched asset dirty
+[PASS] pressure_plate: plugin update preserves loadable personal scene, graph and component
+[PASS] pressure_plate: reopening after update does not mark an untouched asset dirty
+[PASS] button: plugin update preserves loadable personal scene, graph and component
+[PASS] button: reopening after update does not mark an untouched asset dirty
+[PASS] lift_platform: plugin update preserves loadable personal scene, graph and component
+[PASS] lift_platform: reopening after update does not mark an untouched asset dirty
+[PASS] personal inherited level remains valid after replacing the installed plugin
+[PASS] actual editor F6 runtime returns a completion report
+[PASS] actual F6 player interaction, occupancy, door curves and lift round trip pass
+MECHANISM STRUCTURE RESULT: 15 checks, 0 failures
+ERROR: Plugin is not attached to debugger.
+   at: is_active (editor/debugger/editor_debugger_plugin.cpp:102)

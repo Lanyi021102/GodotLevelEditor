@@ -1,0 +1,49 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[PASS] single_door paired asset loads
+[PASS] single_door exposes exactly the agreed three states
+[PASS] single_door has the requested outer size and leaf count
+[PASS] single_door separates fixed frame and real colliding hinged leaves
+[PASS] single_door actual frame mesh bounds measure the requested width and height
+[PASS] single_door graph initially displays close only
+[PASS] single_door interaction is routed through the visible animation connection
+[PASS] single_door animation activates moving instead of prematurely claiming open
+[PASS] single_door 25% time follows the ease curve rather than linear rotation
+[PASS] single_door visible and collision leaf use the same curve angle
+[PASS] single_door reaches exactly 90 degrees before reporting completion and open
+[PASS] single_door outer frame remains fixed while the leaf animates
+[PASS] single_door entered-state event does not repeat each frame
+[PASS] single_door snapshot restores curve progress silently
+[PASS] single_door reversing cancels the previous motion explicitly
+[PASS] single_door closing plays the same curve backward without a pose jump
+[PASS] single_door closes physically and reactivates close
+[PASS] single_door rejects locked, transition-state and unsupported requests cleanly
+[PASS] single_door rejects a structural chain that refers to different physical doors
+[PASS] single_door refuses a missing animation curve before writing either paired file
+[PASS] double_door paired asset loads
+[PASS] double_door exposes exactly the agreed three states
+[PASS] double_door has the requested outer size and leaf count
+[PASS] double_door separates fixed frame and real colliding hinged leaves
+[PASS] double_door actual frame mesh bounds measure the requested width and height
+[PASS] double_door graph initially displays close only
+[PASS] double_door interaction is routed through the visible animation connection
+[PASS] double_door animation activates moving instead of prematurely claiming open
+[PASS] double_door 25% time follows the ease curve rather than linear rotation
+[PASS] double_door visible and collision leaf use the same curve angle
+[PASS] double_door reaches exactly 90 degrees before reporting completion and open
+[PASS] double_door outer frame remains fixed while the leaf animates
+[PASS] double door leaves rotate in opposite directions
+[PASS] double_door entered-state event does not repeat each frame
+[PASS] double_door snapshot restores curve progress silently
+[PASS] double_door reversing cancels the previous motion explicitly
+[PASS] double_door closing plays the same curve backward without a pose jump
+[PASS] double_door closes physically and reactivates close
+[PASS] double_door rejects locked, transition-state and unsupported requests cleanly
+[PASS] double_door rejects a structural chain that refers to different physical doors
+[PASS] double_door refuses a missing animation curve before writing either paired file
+[PASS] closed double door blocks a real physics ray through its opening
+[PASS] opened double door clears the passage with physical collision following the rotation
+[PASS] task target lookup exposes the new door's actual three states
+[PASS] task request starts the same curve animation through the shared state interface
+[PASS] task state condition observes the real final open state
+ROTATING DOORS RUNTIME: 46 checks, 0 failures

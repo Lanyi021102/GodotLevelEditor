@@ -72,7 +72,7 @@ Only `addons/godot_level_editor/` enters the installation ZIP. GitHub and the lo
 
 In Godot's FileSystem, right-click `addons/godot_level_editor/templates/empty_level.tscn` and choose **New Inherited Scene**. Use **Scene → Save As** to save under `content/scenes/levels/` or another project folder outside the addon. Keep the built-in template as the source.
 
-Use the native scene tree, 3D viewport, save, duplicate and F6 commands. The toolbar's **呼出轮盘** opens quick-add. Whitebox, face/edge/point tools and step settings remain available. The separate window's **关卡** page edits the current scene's permanent logic. Native saving registers a stable level ID for task assignment.
+Use the native scene tree, 3D viewport, save, duplicate and F6 commands. The toolbar's **呼出轮盘** opens quick-add. Whitebox, face/edge/point tools and step settings remain available. In the separate window, use **关卡 → 我的关卡** (Levels → My Levels) to browse and open map files, and **关卡 → 关卡编辑** (Level Editing) for the current scene's permanent logic. Native saving registers a stable level ID for task assignment.
 
 The development main scene is `content/scenes/main.tscn`; maps are in `content/scenes/levels/`, Excel workbooks in `content/tables/`, and task graphs in `content/resources/task_graphs/`. Existing level, task, object and resource IDs were preserved during migration. All folders use English names; Chinese UI text, sheet names and existing filenames may remain.
 

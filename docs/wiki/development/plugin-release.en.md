@@ -5,8 +5,8 @@ The source addon folder is the distribution. Packaging does not relocate runtime
 ## Build locally
 
 ```sh
-python3 tools/release/build.py --version 0.1.0 --godot /path/to/Godot
-python3 tools/release/verify.py dist/GodotLevelEditor-0.1.0.zip --godot /path/to/Godot
+python3 tools/release/build.py --version 0.1.1 --godot /path/to/Godot
+python3 tools/release/verify.py dist/GodotLevelEditor-0.1.1.zip --godot /path/to/Godot
 ```
 
 Add `--visual` when a graphical environment is available. The verifier uses temporary projects: it checks activation, built-ins, native scene save/IDs, file-move callbacks, runtime/player movement, updates and a new project's default F5 setup. It compares project-file hashes after replacing the addon.
@@ -18,8 +18,8 @@ Outputs and logs are under ignored `dist/`. Do not commit generated ZIPs.
 Ordinary source pushes do not create a plugin Release. **Actions → Plugin package → Run workflow** makes a test artifact without publishing it. Pushing a `plugin-vX.Y.Z` tag builds/verifies and then creates a Release with installation ZIP and SHA-256.
 
 ```sh
-git tag plugin-v0.1.0
-git push origin plugin-v0.1.0
+git tag plugin-v0.1.1
+git push origin plugin-v0.1.1
 ```
 
 Commit and push complete source before tagging. Uncommitted files cannot enter a GitHub build. Failed checks do not publish installation attachments.

@@ -33,7 +33,8 @@ func run(panel: Control, plugin: EditorPlugin) -> void:
 	panel._refresh_preview(); panel.selected_id = "rotate"; panel._preview_interact(); panel._preview_running = false
 	panel._preview.step(); panel._preview.bindings.door.advance(2); panel._preview.step(); panel._display_trace()
 	check(panel._preview.bindings.door.get_state() == "open" and panel.assembly.bindings.door.get_state() == "close", "self interaction opens only the preview copy of the independent door")
-	var empty_path := "res://addons/godot_level_editor/scenes/mechanisms/cleanup_empty_%d.tscn" % OS.get_process_id()
+	DirAccess.make_dir_recursive_absolute("res://content/scenes/mechanisms")
+	var empty_path := "res://content/scenes/mechanisms/cleanup_empty_%d.tscn" % OS.get_process_id()
 	catalog._opening = true; catalog.create_asset(empty_path); catalog._opening = false
 	var empty: Node = panel.Store.load_pair(empty_path)
 	check(empty != null and empty.definition.nodes.is_empty() and empty.bindings.is_empty(), "New Mechanism creates an empty editable graph instead of a coupled preset")

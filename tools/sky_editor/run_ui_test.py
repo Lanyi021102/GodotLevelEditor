@@ -19,7 +19,7 @@ def main():
     marker = project / ".sky-ui-copy"
     if project.exists() and not marker.exists(): raise SystemExit("Unmarked test path")
     project.mkdir(parents=True, exist_ok=True); marker.write_text("Disposable sky UI test copy")
-    for name in ["addons", "addons/godot_level_editor/assets", "content/scenes", "addons/godot_level_editor/scripts", "content/resources", "content/tables", "tools"]:
+    for name in ["addons/godot_level_editor", "content", "tools"]:
         shutil.copytree(ROOT / name, project / name, dirs_exist_ok=True, ignore=shutil.ignore_patterns("node_modules", "__pycache__", ".godot"))
     for name in ["project.godot", "icon.svg"]: shutil.copy2(ROOT / name, project / name)
     config = project / "project.godot"

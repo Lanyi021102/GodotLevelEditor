@@ -40,7 +40,7 @@ func run(panel: Control, _plugin: EditorPlugin) -> void:
 	check(not panel.dirty, "保存包含模型动画的 NPC 并清除草稿标记")
 	panel._load(definition_path)
 	check(not panel.dirty and panel.definition.appearance.motions.has("idle"), "重新打开保留模型骨骼和已选动作")
-	var scene_path := "res://addons/godot_level_editor/scenes/npcs/npc_import_test.tscn"
+	var scene_path := "res://content/scenes/npcs/npc_import_test.tscn"
 	check(panel.create_npc_scene(scene_path), "生成可放进关卡的 NPC 素材")
 	check(not panel.create_npc_scene(scene_path), "生成素材拒绝覆盖已有场景")
 	var scene := ResourceLoader.load(scene_path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
@@ -58,7 +58,7 @@ func run(panel: Control, _plugin: EditorPlugin) -> void:
 		if file.get_extension() in ["gltf", "bin", "png"]: DirAccess.copy_absolute(ProjectSettings.globalize_path(source_dir.path_join(file)), external.path_join(file))
 	appearance.import_kind = "model"
 	await appearance.import_file(external.path_join("Superhero_Male_FullBody.gltf"))
-	check(panel.definition.appearance.model.resource_path.begins_with("res://addons/godot_level_editor/assets/characters/npc_imports/") and appearance.visual.skeleton != null, "从项目外导入 glTF 时复制模型、二进制和贴图依赖")
+	check(panel.definition.appearance.model.resource_path.begins_with("res://content/assets/characters/npc_imports/") and appearance.visual.skeleton != null, "从项目外导入 glTF 时复制模型、二进制和贴图依赖")
 	check(appearance.visual.model.find_children("*", "MeshInstance3D", true, false).size() >= 3 and appearance.visual.model.find_children("*", "ImporterMeshInstance3D", true, false).is_empty(), "导入场景包含可渲染网格，不残留编辑器中间网格")
 	check(panel.definition.appearance.motions.is_empty() and not appearance.visual.anim.is_playing(), "更换模型后清除旧动作绑定并保持静止")
 	if OS.get_cmdline_user_args().has("--capture"):

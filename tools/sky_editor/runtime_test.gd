@@ -11,6 +11,21 @@ func frames(count := 3) -> void:
 	for i in count: await get_tree().process_frame
 func _ready() -> void:
 	run.call_deferred()
+func make_world() -> Node3D:
+	var source := "res://content/scenes/levels/whitebox_world.tscn"
+	if FileAccess.file_exists(source): return load(source).instantiate()
+	var world: Node3D = load("res://addons/godot_level_editor/templates/empty_level.tscn").instantiate()
+	world.world_id = "sky_runtime_test"
+	world.level_id = "9001"
+	for key in ["topology", "events", "level_logic"]:
+		var graph: Resource = world.get(key).duplicate(true)
+		graph.graph_id = world.world_id + "_" + key
+		world.set(key, graph)
+	var lighting: Node3D = load("res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn").instantiate()
+	lighting.name = "Lighting"
+	world.add_child(lighting)
+	lighting.owner = world
+	return world
 func run() -> void:
 	for path in LIBRARY.paths(LIBRARY.DIRECTORY + "/builtin"):
 		var profile: Resource = load(path)
@@ -28,7 +43,7 @@ func run() -> void:
 	check(not profile.validate().is_empty(), "invalid fog interval rejected")
 	profile.fog_end = 120; profile.version = 9; check(not profile.validate().is_empty(), "unsupported resource version rejected")
 	profile.version = 1
-	var world: Node3D = load("res://content/scenes/levels/whitebox_world.tscn").instantiate()
+	var world := make_world()
 	world.sky_preset = null
 	add_child(world); await frames()
 	var original_env: Environment = world.get_world_3d().environment
@@ -67,7 +82,7 @@ func run() -> void:
 	check(world.get_world_3d().environment == original_env, "unbinding restores legacy lighting")
 	world.free(); await frames()
 	# Exercise a saved sky reference through the real standalone (F6) session path.
-	world = load("res://content/scenes/levels/whitebox_world.tscn").instantiate()
+	world = make_world()
 	world.sky_preset = load("res://addons/godot_level_editor/resources/sky_presets/builtin/overcast.tres")
 	packed = PackedScene.new(); packed.pack(world); ResourceSaver.save(packed, "user://sky_standalone_test.tscn"); world.free()
 	world = load("user://sky_standalone_test.tscn").instantiate()

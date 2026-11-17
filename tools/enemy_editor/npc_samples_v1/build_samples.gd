@@ -132,7 +132,7 @@ func build(row: Dictionary) -> Dictionary:
 	metadata.merge({"definition": definition_path, "scene": scene_path, "preview_path": "res://addons/godot_level_editor/resources/enemies/samples_v1/previews/" + str(row.id) + ".png", "bone_count": bones, "animation_count": motions.size(), "available_animations": motions.map(func(item: Dictionary): return item.clip), "bounds": {"x": bounds.size.x, "y": bounds.size.y, "z": bounds.size.z}}, true)
 	definition.set_meta("npc_sample_v1", metadata)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(definition_path.get_base_dir()))
-	var error := STORE.save_definition(definition, definition_path)
+	var error := STORE.save_definition(definition, definition_path, "", true)
 	if error != OK: push_error("Cannot save NPC " + str(row.id)); return {}
 	var saved := ResourceLoader.load(definition_path, "", ResourceLoader.CACHE_MODE_REPLACE) as EnemyDefinition
 	var actor := preload("res://addons/godot_level_editor/modules/enemy_editor/runtime/npc_actor.tscn").instantiate() as GuardAI

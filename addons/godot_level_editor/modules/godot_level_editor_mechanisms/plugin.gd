@@ -48,7 +48,9 @@ func _make_visible(value: bool) -> void:
 func _get_unsaved_status(for_scene: String) -> String:
 	if native_guard != null:
 		for path in native_guard.blocked:
-			if for_scene.is_empty() or path == for_scene: return "机关未保存：" + str(native_guard.blocked[path].reason)
+			var target: WeakRef = native_guard.blocked[path].root
+			var root: Node = target.get_ref() if target != null else null
+			if for_scene.is_empty() or path == for_scene or is_instance_valid(root) and root.scene_file_path == for_scene: return "机关未保存：" + str(native_guard.blocked[path].reason)
 	return "机关图有未保存修改。" if is_instance_valid(panel) and panel.dirty and (for_scene.is_empty() or is_instance_valid(panel.assembly) and panel.assembly.scene_file_path == for_scene) else ""
 func _exit_tree() -> void:
 	if native_guard != null:

@@ -13,6 +13,8 @@ Built-in scenes are under `addons/godot_level_editor/scenes/mechanisms/`. State/
 
 ## Save, conflicts and copy {#save-and-copy}
 
+Built-in addon assets are read-only. **Save** on an edited built-in opens **Save As** for a personal scene and matching graph under `content/scenes/mechanisms/`. Native saving also protects addon sources; a refusal keeps the draft unsaved until Save As finishes. Personal versions appear in My Mechanisms and the wheel and survive addon replacement.
+
 A mechanism scene and its graph are saved together. If the source changes externally, reload or resolve the displayed conflict instead of silently replacing it. Invalid graphs do not become a successfully saved runnable asset. Use Save as for a personal copy; copy/paste and undo retain valid internal references while allocating independent identities where needed.
 
 ## Custom actions and button reset {#custom-actions}

@@ -6,6 +6,8 @@
 
 在 **机关 → 我的机关** 打开素材；在编辑页 **另存为** 后制作自己的版本。
 
+插件内置素材为只读。修改内置机关后点击 **保存** 会引导另存为个人版本，默认在 `content/scenes/mechanisms/`；场景与同名图成对保存。Godot 原生保存也会保护插件源文件，看到拒绝提示时草稿仍未保存，需要完成另存为。个人版本会出现在“我的机关”和轮盘中，更新插件不会替换它。
+
 | 素材 | 内置状态 | 内置动作 ID | 源场景 |
 |---|---|---|---|
 | 按钮 | `idle`、`pressed` | `press`、`release` | `addons/godot_level_editor/scenes/mechanisms/button.tscn` |

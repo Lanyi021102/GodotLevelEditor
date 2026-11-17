@@ -30,4 +30,6 @@ HDRI's photographed sun/clouds do not move with this clock. The scene's directio
 
 The level root's native `sky_preset` property also holds this reference. A temporary preview does not change the stored binding.
 
+Inherited maps retain and display their template's sky unless overridden. Native Save and Save As refresh the preset's level references. My Levels details and Level Editing also show the actual sky name.
+
 HDRI is copied into the project's `content/assets/sky_hdri/`. While importing, preset switching/new/copy/restore/save and binding are blocked to protect the correct draft; unrelated values in the same draft remain editable. Ending preview and closing the window remain available. See [HDRI troubleshooting](../faq.md#hdri-import).

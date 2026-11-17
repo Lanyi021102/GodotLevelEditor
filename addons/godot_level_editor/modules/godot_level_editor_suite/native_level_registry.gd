@@ -3,22 +3,55 @@ extends RefCounted
 const LEVELS := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/level_catalog.gd")
 const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
 
+static func _id_at(catalog: Resource, path: String) -> String:
+	for row in catalog.levels:
+		if str(row.scene_path) == path: return str(row.level_id)
+	return ""
+
+static func _assign_identity(root: Node, id: String) -> void:
+	root.level_id = id
+	root.world_id = "level_" + id
+	for key in ["topology", "events", "level_logic"]:
+		var graph: Resource = root.get(key)
+		if graph != null:
+			graph = graph.duplicate(true)
+			graph.graph_id = root.world_id + "_" + key
+			root.set(key, graph)
+
 static func prepare(root: Node) -> void:
 	if root == null or root.get_script() != WORLD: return
 	var book := LEVELS.load_book(LEVELS.PATH, false)
 	if book.catalog == null: return
 	var existing: Dictionary = book.catalog.by_id(str(root.level_id))
 	var duplicate := not existing.is_empty() and str(existing.scene_path) != root.scene_file_path and FileAccess.file_exists(str(existing.scene_path))
-	if str(root.level_id).is_empty() or duplicate:
-		root.level_id = book.catalog.allocate_id()
-		root.world_id = "level_" + str(root.level_id)
-		for key in ["topology", "events", "level_logic"]:
-			var graph: Resource = root.get(key)
-			if graph != null:
-				graph = graph.duplicate(true)
-				graph.graph_id = root.world_id + "_" + key
-				root.set(key, graph)
+	var destination_id := _id_at(book.catalog, root.scene_file_path)
+	if str(root.level_id).is_empty() or duplicate or (not destination_id.is_empty() and str(root.level_id) != destination_id):
+		_assign_identity(root, destination_id if not destination_id.is_empty() else book.catalog.allocate_id())
 		EditorInterface.mark_scene_as_unsaved()
+
+static func saved_world(root: Node) -> void:
+	# Godot emits scene_saved before updating scene_file_path. POST_SAVE runs
+	# after that update, including for a non-current tab saved by Save All.
+	if root == null or root.get_script() != WORLD: return
+	var path := root.scene_file_path
+	if path.is_empty() or path.begins_with("res://addons/") or not FileAccess.file_exists(path): return
+	var book := LEVELS.load_book(LEVELS.PATH, false)
+	if book.catalog == null: return
+	var row: Dictionary = book.catalog.by_id(str(root.level_id))
+	var destination_id := _id_at(book.catalog, path)
+	if str(root.level_id).is_empty() or (not destination_id.is_empty() and str(root.level_id) != destination_id) or (not row.is_empty() and str(row.scene_path) != path and FileAccess.file_exists(str(row.scene_path))):
+		var previous := {"level_id": root.level_id, "world_id": root.world_id}
+		for key in ["topology", "events", "level_logic"]: previous[key] = root.get(key)
+		_assign_identity(root, destination_id if not destination_id.is_empty() else book.catalog.allocate_id())
+		var scene := ResourceLoader.load(path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
+		var error := scene.pack(root) if scene != null else ERR_CANT_OPEN
+		if error == OK: error = ResourceSaver.save(scene, path, ResourceSaver.FLAG_REPLACE_SUBRESOURCE_PATHS)
+		if error != OK:
+			for key in previous: root.set(key, previous[key])
+			push_error("关卡副本 ID 保存失败：" + error_string(error))
+			return
+		EditorInterface.get_resource_filesystem().update_file(path)
+	saved(path)
 
 static func saved(path: String) -> void:
 	if path.begins_with("res://addons/"): return
@@ -42,8 +75,7 @@ static func saved(path: String) -> void:
 	if book.catalog == null: return
 	var row: Dictionary = book.catalog.by_id(id)
 	if not row.is_empty() and str(row.scene_path) != path and FileAccess.file_exists(str(row.scene_path)):
-		push_warning("此关卡 ID 已由另一个场景使用。再次保存当前场景可分配独立 ID。")
-		prepare(EditorInterface.get_edited_scene_root())
+		push_warning("此关卡 ID 已由另一个场景使用，请在原生编辑器中打开并保存此场景。")
 		return
 	if row.is_empty():
 		row = {"level_id": id, "name": "level_" + id, "display_name": path.get_file().get_basename(), "scene_path": path, "notes": "", "preview_path": ""}

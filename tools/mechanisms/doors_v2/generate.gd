@@ -17,7 +17,7 @@ func _ready() -> void:
 		var path := "res://addons/godot_level_editor/scenes/mechanisms/" + str(kind) + ".tscn"
 		if FileAccess.file_exists(path) and "--regenerate-owned-door-assets" not in OS.get_cmdline_user_args(): print("保留已有素材：", path); continue
 		var root := fixture(kind)
-		var result := STORE.save_pair(root, path); root.free()
+		var result := STORE.save_pair(root, path, true); root.free()
 		if not result.ok: push_error(str(result.errors)); failed = true
 		else: print("已生成 ", path)
 	get_tree().quit(1 if failed else 0)

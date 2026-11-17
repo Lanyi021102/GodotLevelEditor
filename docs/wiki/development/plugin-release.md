@@ -5,8 +5,8 @@
 ## 本地构建
 
 ```bash
-python3 tools/release/build.py --version 0.1.0 --godot /path/to/godot
-python3 tools/release/verify.py dist/GodotLevelEditor-0.1.0.zip --godot /path/to/godot
+python3 tools/release/build.py --version 0.1.1 --godot /path/to/godot
+python3 tools/release/verify.py dist/GodotLevelEditor-0.1.1.zip --godot /path/to/godot
 ```
 
 有图形环境时可给验证命令加 `--visual`，生成实际编辑窗口截图。`dist/` 已忽略，不提交生成的 ZIP。
@@ -20,8 +20,8 @@ python3 tools/release/verify.py dist/GodotLevelEditor-0.1.0.zip --godot /path/to
 - 推送 `plugin-vX.Y.Z` 标签：构建和验证成功后自动创建 GitHub Release，上传安装 ZIP 与 SHA-256。
 
 ```bash
-git tag plugin-v0.1.0
-git push origin plugin-v0.1.0
+git tag plugin-v0.1.1
+git push origin plugin-v0.1.1
 ```
 
 先把要发布的源码提交并推送，再打标签。标签对应的源码必须完整；工作区中未提交的改动不会进入 GitHub 构建。失败时不会发布安装附件，日志留在该次 Actions。

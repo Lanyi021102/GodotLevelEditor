@@ -1,0 +1,247 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+GODOT_LEVEL_EDITOR_READY
+QA_USER_DATA=/Users/lanyi/Library/Application Support/Godot/app_userdata/MechanismStructureQA-branch-mechanism-structure-dev-l8b9e3nl
+[PASS] double_door: catalog enters the native builtin scene
+[PASS] double_door: correct frame dimensions and hinged leaf count
+[PASS] double_door: parameter supports native Undo
+[PASS] double_door: parameter supports native Redo
+[PASS] double_door: typed graph connection edits the actual definition
+[PASS] double_door: disconnect can be undone
+[PASS] double_door: copy/paste duplicates selected nodes and internal binding
+[PASS] double_door: paste can be undone
+[PASS] double_door: node curve editor changes the physical door curve
+[PASS] double_door: preview shows real curve angle without modifying source state
+[PASS] double_door: moving state is visible in its graph node
+[PASS] double_door: property node explicitly binds the current physical component
+[PASS] double_door: property-node selection remains on the chosen node
+[PASS] double_door: physical component copy gets a new ID and remaps its property binding
+[PASS] double_door: undo removes the copied physical component and bindings
+[PASS] double_door: edited graph and component validate
+2026-11-17 17:21:08.889 Godot[51752:3265358] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+[PASS] double_door: Save builtin offers a personal content path
+[PASS] double_door: Save builtin preserves shipped bytes and draft
+[PASS] double_door: Save As writes and activates a personal scene/graph pair
+SAVE_AS_STATE double_door open=["res://content/scenes/main.tscn", "res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn", "res://content/scenes/mechanisms/qa_double_door.tscn"] unsaved=[] panel_dirty=false
+[PASS] double_door: Save As opens a real personal tab and leaves both copies clean
+[PASS] double_door: returning to the builtin tab does not create a spurious dirty view
+[PASS] double_door: native Close Scene closes the saved personal asset
+[PASS] double_door: close/reopen retains nodes and component parameters
+[PASS] double_door: close/reopen retains values and typed connections
+[PASS] double_door: close/reopen retains the custom curve
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_double_door.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] double_door: subsequent Save updates the personal copy
+[PASS] double_door: personal edits never write the builtin
+[PASS] double_door: final close returns to a clean builtin source
+[PASS] single_door: catalog enters the native builtin scene
+[PASS] single_door: correct frame dimensions and hinged leaf count
+[PASS] single_door: parameter supports native Undo
+[PASS] single_door: parameter supports native Redo
+[PASS] single_door: typed graph connection edits the actual definition
+[PASS] single_door: disconnect can be undone
+[PASS] single_door: copy/paste duplicates selected nodes and internal binding
+[PASS] single_door: paste can be undone
+[PASS] single_door: node curve editor changes the physical door curve
+[PASS] single_door: preview shows real curve angle without modifying source state
+[PASS] single_door: moving state is visible in its graph node
+[PASS] single_door: property node explicitly binds the current physical component
+[PASS] single_door: property-node selection remains on the chosen node
+[PASS] single_door: physical component copy gets a new ID and remaps its property binding
+[PASS] single_door: undo removes the copied physical component and bindings
+[PASS] single_door: edited graph and component validate
+[PASS] single_door: Save builtin offers a personal content path
+[PASS] single_door: Save builtin preserves shipped bytes and draft
+[PASS] single_door: Save As writes and activates a personal scene/graph pair
+SAVE_AS_STATE single_door open=["res://content/scenes/main.tscn", "res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn", "res://content/scenes/mechanisms/qa_single_door.tscn"] unsaved=[] panel_dirty=false
+[PASS] single_door: Save As opens a real personal tab and leaves both copies clean
+[PASS] single_door: returning to the builtin tab does not create a spurious dirty view
+[PASS] single_door: native Close Scene closes the saved personal asset
+[PASS] single_door: close/reopen retains nodes and component parameters
+[PASS] single_door: close/reopen retains values and typed connections
+[PASS] single_door: close/reopen retains the custom curve
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_single_door.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] single_door: subsequent Save updates the personal copy
+[PASS] single_door: personal edits never write the builtin
+[PASS] single_door: final close returns to a clean builtin source
+[PASS] pressure_plate: catalog enters the native builtin scene
+[PASS] pressure_plate: parameter supports native Undo
+[PASS] pressure_plate: parameter supports native Redo
+[PASS] pressure_plate: typed graph connection edits the actual definition
+[PASS] pressure_plate: disconnect can be undone
+[PASS] pressure_plate: copy/paste duplicates selected nodes and internal binding
+[PASS] pressure_plate: paste can be undone
+[PASS] pressure_plate: property node explicitly binds the current physical component
+[PASS] pressure_plate: property-node selection remains on the chosen node
+[PASS] pressure_plate: physical component copy gets a new ID and remaps its property binding
+[PASS] pressure_plate: undo removes the copied physical component and bindings
+[PASS] pressure_plate: edited graph and component validate
+[PASS] pressure_plate: Save builtin offers a personal content path
+[PASS] pressure_plate: Save builtin preserves shipped bytes and draft
+[PASS] pressure_plate: Save As writes and activates a personal scene/graph pair
+SAVE_AS_STATE pressure_plate open=["res://content/scenes/main.tscn", "res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/pressure_plate.tscn", "res://content/scenes/mechanisms/qa_pressure_plate.tscn"] unsaved=[] panel_dirty=false
+[PASS] pressure_plate: Save As opens a real personal tab and leaves both copies clean
+[PASS] pressure_plate: returning to the builtin tab does not create a spurious dirty view
+[PASS] pressure_plate: native Close Scene closes the saved personal asset
+[PASS] pressure_plate: close/reopen retains nodes and component parameters
+[PASS] pressure_plate: close/reopen retains values and typed connections
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_pressure_plate.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] pressure_plate: subsequent Save updates the personal copy
+[PASS] pressure_plate: personal edits never write the builtin
+[PASS] pressure_plate: final close returns to a clean builtin source
+[PASS] button: catalog enters the native builtin scene
+[PASS] button: parameter supports native Undo
+[PASS] button: parameter supports native Redo
+[PASS] button: typed graph connection edits the actual definition
+[PASS] button: disconnect can be undone
+[PASS] button: copy/paste duplicates selected nodes and internal binding
+[PASS] button: paste can be undone
+[PASS] button: property node explicitly binds the current physical component
+[PASS] button: property-node selection remains on the chosen node
+[PASS] button: physical component copy gets a new ID and remaps its property binding
+[PASS] button: undo removes the copied physical component and bindings
+[PASS] button: edited graph and component validate
+[PASS] button: Save builtin offers a personal content path
+[PASS] button: Save builtin preserves shipped bytes and draft
+[PASS] button: Save As writes and activates a personal scene/graph pair
+SAVE_AS_STATE button open=["res://content/scenes/main.tscn", "res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/pressure_plate.tscn", "res://addons/godot_level_editor/scenes/mechanisms/button.tscn", "res://content/scenes/mechanisms/qa_button.tscn"] unsaved=[] panel_dirty=false
+[PASS] button: Save As opens a real personal tab and leaves both copies clean
+[PASS] button: returning to the builtin tab does not create a spurious dirty view
+[PASS] button: native Close Scene closes the saved personal asset
+[PASS] button: close/reopen retains nodes and component parameters
+[PASS] button: close/reopen retains values and typed connections
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_button.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] button: subsequent Save updates the personal copy
+[PASS] button: personal edits never write the builtin
+[PASS] button: final close returns to a clean builtin source
+[PASS] lift_platform: catalog enters the native builtin scene
+[PASS] lift_platform: parameter supports native Undo
+[PASS] lift_platform: parameter supports native Redo
+[PASS] lift_platform: typed graph connection edits the actual definition
+[PASS] lift_platform: disconnect can be undone
+[PASS] lift_platform: copy/paste duplicates selected nodes and internal binding
+[PASS] lift_platform: paste can be undone
+[PASS] lift_platform: property node explicitly binds the current physical component
+[PASS] lift_platform: property-node selection remains on the chosen node
+[PASS] lift_platform: physical component copy gets a new ID and remaps its property binding
+[PASS] lift_platform: undo removes the copied physical component and bindings
+[PASS] lift_platform: edited graph and component validate
+[PASS] lift_platform: Save builtin offers a personal content path
+[PASS] lift_platform: Save builtin preserves shipped bytes and draft
+[PASS] lift_platform: Save As writes and activates a personal scene/graph pair
+SAVE_AS_STATE lift_platform open=["res://content/scenes/main.tscn", "res://addons/godot_level_editor/scenes/mechanisms/double_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/single_door.tscn", "res://addons/godot_level_editor/scenes/mechanisms/pressure_plate.tscn", "res://addons/godot_level_editor/scenes/mechanisms/button.tscn", "res://addons/godot_level_editor/scenes/mechanisms/lift_platform.tscn", "res://content/scenes/mechanisms/qa_lift_platform.tscn"] unsaved=[] panel_dirty=false
+[PASS] lift_platform: Save As opens a real personal tab and leaves both copies clean
+[PASS] lift_platform: returning to the builtin tab does not create a spurious dirty view
+[PASS] lift_platform: native Close Scene closes the saved personal asset
+[PASS] lift_platform: close/reopen retains nodes and component parameters
+[PASS] lift_platform: close/reopen retains values and typed connections
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_lift_platform.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] lift_platform: subsequent Save updates the personal copy
+[PASS] lift_platform: personal edits never write the builtin
+[PASS] lift_platform: final close returns to a clean builtin source
+[PASS] native Save protects addon bytes and keeps the builtin draft unsaved
+[PASS] native graph resource save also protects addon bytes
+[PASS] Store rejects normalized paths that lead into addons
+[PASS] Store rejects mixed-case addon paths on case-insensitive filesystems
+WARNING: Case mismatch opening requested file '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/ADDONS/godot_level_editor/scenes/mechanisms/button.graph.tres', stored as '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/addons/godot_level_editor/scenes/mechanisms/button.graph.tres' in the filesystem. This file will not open when exported to other case-sensitive platforms.
+     at: open_internal (drivers/unix/file_access_unix.cpp:112)
+     GDScript backtrace (most recent call first):
+         [0] guards (res://tools/mechanisms/structure_qa/editor.gd:189)
+         [1] frames (res://tools/mechanisms/structure_qa/editor.gd:23)
+WARNING: Case mismatch opening requested file '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/ADDONS/godot_level_editor/scenes/mechanisms/button.graph.tres', stored as '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/addons/godot_level_editor/scenes/mechanisms/button.graph.tres' in the filesystem. This file will not open when exported to other case-sensitive platforms.
+     at: open_internal (drivers/unix/file_access_unix.cpp:112)
+     GDScript backtrace (most recent call first):
+         [0] guards (res://tools/mechanisms/structure_qa/editor.gd:189)
+         [1] frames (res://tools/mechanisms/structure_qa/editor.gd:23)
+WARNING: Case mismatch opening requested file '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/ADDONS/godot_level_editor/scenes/mechanisms/button.graph.tres', stored as '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/addons/godot_level_editor/scenes/mechanisms/button.graph.tres' in the filesystem. This file will not open when exported to other case-sensitive platforms.
+     at: open_internal (drivers/unix/file_access_unix.cpp:112)
+     GDScript backtrace (most recent call first):
+         [0] guards (res://tools/mechanisms/structure_qa/editor.gd:189)
+         [1] frames (res://tools/mechanisms/structure_qa/editor.gd:23)
+WARNING: Case mismatch opening requested file '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/ADDONS/godot_level_editor/scenes/mechanisms/button.graph.tres', stored as '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/addons/godot_level_editor/scenes/mechanisms/button.graph.tres' in the filesystem. This file will not open when exported to other case-sensitive platforms.
+     at: open_internal (drivers/unix/file_access_unix.cpp:112)
+     GDScript backtrace (most recent call first):
+         [0] guards (res://tools/mechanisms/structure_qa/editor.gd:189)
+         [1] frames (res://tools/mechanisms/structure_qa/editor.gd:23)
+WARNING: Case mismatch opening requested file '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/ADDONS/godot_level_editor/scenes/mechanisms/button.graph.tres', stored as '/private/var/folders/hz/7mtk8kcx74s8x1m0st_ggnx40000gn/T/branch-mechanism-structure-dev-l8b9e3nl/addons/godot_level_editor/scenes/mechanisms/button.graph.tres' in the filesystem. This file will not open when exported to other case-sensitive platforms.
+     at: open_internal (drivers/unix/file_access_unix.cpp:112)
+     GDScript backtrace (most recent call first):
+         [0] guards (res://tools/mechanisms/structure_qa/editor.gd:189)
+         [1] frames (res://tools/mechanisms/structure_qa/editor.gd:23)
+[PASS] native resource save rejects mixed-case addon paths
+ERROR: Failed to get size for: res://addons/godot_level_editor/scenes/mechanisms/qa_forbidden.tscn
+   at: _get_size (drivers/unix/file_access_unix.cpp:414)
+   GDScript backtrace (most recent call first):
+       [0] guards (res://tools/mechanisms/structure_qa/editor.gd:192)
+       [1] frames (res://tools/mechanisms/structure_qa/editor.gd:23)
+[PASS] native Save As cannot create author works inside addons
+[PASS] rejected native Save As can recover by saving the draft under content
+[PASS] successful personal recovery clears stale builtin rejection warnings
+[PASS] unconnected required data input is invalid before saving
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_guard_recovery.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] native save of invalid graph preserves the existing personal pair and draft
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_guard_recovery.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] fixing the invalid input permits a normal personal save
+WARNING: 关卡已保存，缩略图更新失败（res://content/scenes/mechanisms/qa_guard_recovery.tscn）：关卡场景无效：res://content/scenes/levels/mechanism_structure_qa.tscn
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _fail (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:186)
+         [1] request (res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd:25)
+         [2] _native_saved_finished (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:406)
+[PASS] native save conflict preserves externally modified personal files
+[PASS] conflicting draft can be saved separately without overwriting the original
+[PASS] native inherited blank level opens under content
+[PASS] double_door: native placement instances the personal standalone asset
+[PASS] single_door: native placement instances the personal standalone asset
+[PASS] pressure_plate: native placement instances the personal standalone asset
+[PASS] button: native placement instances the personal standalone asset
+[PASS] lift_platform: native placement instances the personal standalone asset
+[PASS] native Save retains inherited template linkage
+[PASS] native level Save assigns a stable level ID
+[PASS] native placement level is registered for task binding
+[PASS] native close/reopen keeps all five placed personal instances
+[PASS] actual editor F6 runtime returns a completion report
+[PASS] actual F6 player interaction, occupancy, door curves and lift round trip pass
+[PASS] plugin source preserved after complete flow: double_door.tscn
+[PASS] plugin source preserved after complete flow: single_door.tscn
+[PASS] plugin source preserved after complete flow: pressure_plate.tscn
+[PASS] plugin source preserved after complete flow: button.tscn
+[PASS] plugin source preserved after complete flow: lift_platform.tscn
+MECHANISM STRUCTURE RESULT: 155 checks, 0 failures
+ERROR: Plugin is not attached to debugger.
+   at: is_active (editor/debugger/editor_debugger_plugin.cpp:102)

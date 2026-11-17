@@ -2,15 +2,17 @@
 
 插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
 
-地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。“我的关卡”提供原生场景文件的浏览、搜索和打开入口；“关卡编辑”显示当前场景的常驻图。地图仍使用同一份原生场景文件保存。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
 
 主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
+
+任务／台本迁移回归使用 `tools/narrative/structure_qa/`，仅在有专用用户目录的隔离工程运行。覆盖原生继承地图首次另存及稳定 ID 登记、延迟创建页面、XLSX 新建保存重开、事件与任务归属、节点参数及撤销、场景引用接收、实际 F6 接取和两种对话模式；同时复查作者原有任务及 47 节点流程。headless 的连线回调检查与渲染窗口的原生鼠标拖线分开记录。步骤、证据与未覆盖项见 [结构迁移验证](structure_2026-11-17/validation.md)。
 
 # XLSX 与统一窗口覆盖说明 · 2026-11-12
 
 ## 人工连线流程样例 · 2026-11-17
 
-关卡 `scenes/levels/9_editor_flow_test.tscn` 登记为 level 9；事件 1004 的任务 1004001～1004003 分别引用 `resources/task_graphs/editor_flow_test/equipment.tres`、`mechanisms.tres`、`parallel.tres`，后者调用同目录 `child.tres`。常驻关卡图接取事件首项任务，三个任务沿用现有顺序推进合同；图与对白数据格式、稳定 ID 和运行 API 无变化。台本使用独立 `resources/narrative/editor_flow_test.xlsx`。
+关卡 `content/scenes/levels/9_editor_flow_test.tscn` 登记为 level 9；事件 1004 的任务 1004001～1004003 分别引用 `content/resources/task_graphs/editor_flow_test/equipment.tres`、`mechanisms.tres`、`parallel.tres`，后者调用同目录 `child.tres`。常驻关卡图接取事件首项任务，三个任务沿用现有顺序推进合同；图与对白数据格式、稳定 ID 和运行 API 无变化。台本使用独立 `content/tables/editor_flow_test.xlsx`。
 
 测试场景的 `SessionRecorder` 仅观察运行信号和最终状态，写入 `docs/qa/editor_flow_2026-11-17/manual-session.json` 与完成截图，不驱动交互或任务推进。其绿色“流程测试完成”提示需事件结束后 12 项检查全通过；再次试玩会覆盖同名记录。`tools/editor_flow_test/prepare.gd` 仅保留首次准备无连线素材的过程，现有图已存在时禁止重跑。当前操作见 [流程测试指南](../wiki/tutorials/editor-flow-test.md)，真实鼠标连线、回归结果及未覆盖项见 [验证记录](../qa/editor_flow_2026-11-17/validation.md)。
 

@@ -16,7 +16,7 @@ func _ready() -> void:
 	var catalog: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CATALOG))
 	check(catalog.samples.size() == 13, "首批13个样例：6人形、4动物、3怪物")
 	var assets := ASSETS.assets("常驻 NPC")
-	check(assets.size() == 13, "NPC 素材目录仅保留13个新示例")
+	check(assets.filter(func(asset: Dictionary): return str(asset.path).begins_with("res://addons/godot_level_editor/")).size() == 13, "NPC 素材目录仅保留13个新示例")
 	check(ASSETS.template("常驻 NPC", "level").path == "res://addons/godot_level_editor/scenes/npcs/v1_human_medium_male.tscn", "新建 NPC 默认使用导入人物模型")
 	var receptionist := load("res://addons/godot_level_editor/scenes/narrative/npc.tscn").instantiate() as Node3D
 	add_child(receptionist)

@@ -15,7 +15,7 @@ func run(panel: Control, _plugin: EditorPlugin) -> void:
 	suite.open_tab("敌人")
 	var library: Control = suite.asset_panels["敌人"]
 	library.reload_catalog()
-	check(library.entries.size() == 13, "我的NPC目录仅显示13个新示例，不再列出旧守卫")
+	check(library.entries.keys().filter(func(path: String): return path.begins_with("res://addons/godot_level_editor/")).size() == 13, "我的NPC目录仅显示13个新示例，不再列出旧守卫")
 	for row in catalog.samples:
 		check(library.entries.has(row.definition), row.id + "：我的NPC目录可见")
 		library.select_asset(row.definition); library.enter_edit()

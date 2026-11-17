@@ -1,8 +1,16 @@
 ## 插件目录与原生场景合同 · 2026-11-17
 
+原生保存的 ID／图副本分配在 `world` 的 `NOTIFICATION_EDITOR_POST_SAVE` 完成，套件延迟刷新登记和浏览并请求 `level_preview`。默认目录外的已登记地图同样生成鸟瞰封面；`level_card.data.native_preview=false` 使关卡浏览不再并发请求 Godot 通用场景预览，其他素材默认保持原行为。个人 NPC 卡片从当前 appearance 读取身高，不将复制保留的样例来源元数据当作当前动画数量或封面。专项和安装门禁见 [结构回归记录](../qa/structure_2026-11-17/validation.md)。
+
+二级导航修复及浏览入口：`native_level_panel._ready()` 和 `set_mode()` 共用幂等 `_ensure_navigation`，在套件传入的 `mode_bar` 创建“我的关卡”“关卡编辑”，沿用统一导航样式与选中状态。一级“关卡”默认显示浏览页；打开卡片或旧 `open_tab("关卡图")` 转入当前场景的常驻图。原有窗口空栏或单页布局可在再次点击时补齐；升级重用同一图控件并保护其 UndoRedo。套件继续按需初始化，跨分类互斥显示二级栏。操作见 [关卡指南](../wiki/guides/levels.md)，实测见 [关卡浏览验证](level_browser_2026-11-17/validation.md)；先前单入口阶段记录保留在 [二级导航验证](level_navigation_2026-11-17/validation.md)。
+
+`level_browser.gd` 只读扫描非插件项目目录中的原生关卡场景，以路径作为卡片选择键，并合并 `levels.xlsx` 已有元数据；继承关卡通过 SceneState 根脚本识别，不为列目录实例化地图、不登记 ID、不改工作簿。排除隐藏目录、工具、导出、`.gdignore` 与目录软链接；已登记但文件缺失的条目不显示。搜索、选择和无内容变化的卡片实例保留。保存及原生文件系统通知合并刷新；隐藏浏览页延后扫描。`open_requested(path)` 使用原生打开；`new_requested` 通过 `open_scene_from_path(TEMPLATE, true)` 创建未保存的继承场景，后续原生另存为。浏览和编辑信息都读取真实天空预设引用。
+
+关卡卡片设置 `native_preview=false`，优先项目中已保存的鸟瞰 PNG，缺图使用默认封面，避免同时排队 Godot 通用场景预览。原生保存后的 `level_preview.preview_updated` 通过 `native_level_panel.apply_level_preview` 局部更新对应卡片与详情；图片按内容更新缓存。
+
 插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
 
-地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。“我的关卡”提供原生场景文件的浏览、搜索和打开入口；“关卡编辑”显示当前场景的常驻图。地图仍使用同一份原生场景文件保存。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
 
 主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
 

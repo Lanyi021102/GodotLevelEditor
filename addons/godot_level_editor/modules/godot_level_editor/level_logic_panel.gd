@@ -25,7 +25,7 @@ func fit_graph() -> void:
 	canvas.scroll_offset = bounds.position * canvas.zoom - Vector2(40, 80)
 
 func bind_world(source: Node, create := true) -> void:
-	if source == world and graph != null: return
+	if source == world and graph != null and is_instance_valid(source) and graph == source.level_logic: return
 	world = source
 	graph = null
 	undo.clear_history(); dirty = false; selected_id = ""
@@ -82,6 +82,10 @@ func _apply(target: GodotLevelEditorLevelGraph, state: Dictionary) -> void:
 func save_graph() -> bool:
 	if _saving: return true
 	if graph == null or not is_instance_valid(world): return false
+	var root := EditorInterface.get_edited_scene_root()
+	if root == null or root.scene_file_path.is_empty() or root.scene_file_path.begins_with("res://addons/"):
+		status.text = "请先使用 Godot“场景 → 另存为”将关卡保存到插件目录外。"
+		return false
 	var errors := graph.validate()
 	errors.append_array(graph.validate_bindings(world))
 	if not errors.is_empty(): status.text = "未保存：" + "; ".join(errors); return false
@@ -90,7 +94,6 @@ func save_graph() -> bool:
 	if graph.resource_path.ends_with(".tres"): error = ResourceSaver.save(graph, graph.resource_path)
 	if error == OK:
 		_saving = true
-		var root := EditorInterface.get_edited_scene_root()
 		if DisplayServer.get_name() == "headless": EditorInterface.save_scene_as(root.scene_file_path, false)
 		else: error = EditorInterface.save_scene()
 		_saving = false

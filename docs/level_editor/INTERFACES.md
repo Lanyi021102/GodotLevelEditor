@@ -2,7 +2,9 @@
 
 插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
 
-地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。用户随后明确要求保留“我的关卡”作为原生场景文件的浏览入口；“关卡编辑”显示当前场景的常驻图。浏览与保存使用同一份 `.tscn` 文件，不创建另一套地图数据。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+
+原生另存为在第一次保存时完成独立关卡 ID、world ID 和三类图资源／图 ID 的分配，并登记任务索引。Godot 的 `scene_saved` 早于根 `scene_file_path` 更新，故 `world._notification(NOTIFICATION_EDITOR_POST_SAVE)` 调用 `native_level_registry.saved_world` 完成副本身份落盘；套件保存后刷新延迟到该步骤之后。原关卡文件和图不改写，继承关系保留。已经打开的 `level_logic_panel` 在同一 world 的图引用更换后重新绑定并清理旧图撤销历史。验证入口：`python3 tools/qa/run_structure_flow.py --consumer --output <目录>`，加 `--render` 检查真实渲染；测试仅在隔离副本执行。
 
 主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
 

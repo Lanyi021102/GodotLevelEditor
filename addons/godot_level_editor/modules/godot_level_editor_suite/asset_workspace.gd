@@ -239,8 +239,13 @@ func _scan(folder: String) -> void:
 				_add_entry(path, definition.display_name, "%d 个状态" % definition.states.size(), preview)
 				var sample: Dictionary = definition.get_meta("npc_sample_v1", {})
 				if not sample.is_empty():
-					entries[path].metadata = "%s · %.2f m · %d 动画" % [{"humanoid": "人形", "animal": "动物", "monster": "怪物"}.get(sample.category, "NPC"), sample.height, sample.animation_count]
-					entries[path].preview_path = sample.get("preview_path", "")
+					if path == str(sample.get("definition", "")):
+						entries[path].metadata = "%s · %.2f m · %d 动画" % [{"humanoid": "人形", "animal": "动物", "monster": "怪物"}.get(sample.category, "NPC"), sample.height, sample.animation_count]
+						entries[path].preview_path = sample.get("preview_path", "")
+					elif definition.appearance != null:
+						# Sample metadata records provenance, not the edited personal
+						# model's current height, animations or thumbnail.
+						entries[path].metadata = "%.2f m · %d 个状态" % [definition.appearance.height, definition.states.size()]
 					entries[path].search_terms = str(sample.get("source", ""))
 	for directory in DirAccess.get_directories_at(folder):
 		if not FileAccess.file_exists(folder.path_join(directory).path_join(".gdignore")): _scan(folder.path_join(directory))

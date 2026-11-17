@@ -87,6 +87,8 @@ func _ready() -> void:
 	import_dialog = FileDialog.new(); import_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE; import_dialog.access = FileDialog.ACCESS_FILESYSTEM; import_dialog.filters = PackedStringArray(["*.hdr, *.exr ; HDRI 全景"]); import_dialog.title = "导入 HDRI"; import_dialog.file_selected.connect(import_hdri); add_child(import_dialog)
 	reload_library(); open_preset(LIBRARY.DEFAULT)
 	suite.scene_changed.connect(scene_changed)
+	# Refresh after Godot updates scene_file_path and native POST_SAVE indexing.
+	suite.scene_saved.connect(_scene_saved, CONNECT_DEFERRED)
 	scene_changed(EditorInterface.get_edited_scene_root())
 
 func button(parent: Node, text: String, action: Callable) -> Button:
@@ -451,9 +453,17 @@ func scene_changed(root: Node) -> void:
 	if is_instance_valid(_scene_root) and root == _scene_root: return
 	stop_preview()
 	_scene_root = root
+	_level_catalog = null
 	var world := current_world()
 	if world != null: world.refresh_sky()
 	_refresh_state()
+	_update_references()
+
+func _scene_saved(_path: String) -> void:
+	# Native saving can register a new level or change its sky reference.
+	_level_catalog = null
+	_refresh_state()
+	_update_references()
 
 func import_hdri(path: String) -> void:
 	if _block_draft_action(): return
@@ -505,15 +515,24 @@ func _load_hdri_texture(path: String, request: int, owner_draft: Resource) -> Di
 	var filesystem := EditorInterface.get_resource_filesystem()
 	var tree := get_tree()
 	var deadline := Time.get_ticks_msec() + HDRI_IMPORT_TIMEOUT_MS
+	# Import flags can go idle before their filesystem notifications finish.
+	await tree.create_timer(0.2).timeout
+	if not _import_is_current(request, owner_draft): return {}
 	while filesystem.is_scanning() or filesystem.is_importing():
 		await tree.process_frame
 		if not _import_is_current(request, owner_draft): return {}
 		if Time.get_ticks_msec() >= deadline: return {"error": "素材扫描尚未完成，请稍后重试。"}
-	filesystem.scan()
+	# A cancelled request can still have an import notification queued. Defer
+	# the next scan and retry when idle so a new file cannot miss that scan.
+	filesystem.scan.call_deferred()
+	var next_scan := Time.get_ticks_msec() + 1000
 	while Time.get_ticks_msec() < deadline:
 		await tree.process_frame
 		if not _import_is_current(request, owner_draft): return {}
 		if _texture_import_complete(destination) and not filesystem.is_scanning() and not filesystem.is_importing(): break
+		if Time.get_ticks_msec() >= next_scan and not filesystem.is_scanning() and not filesystem.is_importing():
+			filesystem.scan.call_deferred()
+			next_scan = Time.get_ticks_msec() + 1000
 	if not _texture_import_complete(destination):
 		return {"error": "HDRI 导入未完成，请检查图像文件后重试。"}
 	# Let the filesystem finish its import notification before creating a preview material.

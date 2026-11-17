@@ -39,7 +39,7 @@ func _ready() -> void:
 		cover.texture = preview_texture(path)
 		_uses_file_preview = cover.texture != null
 		if cover.texture == null:
-			EditorInterface.get_resource_previewer().queue_resource_preview(str(data.scene_path), self, "_preview", null)
+			if data.get("native_preview", true): EditorInterface.get_resource_previewer().queue_resource_preview(str(data.scene_path), self, "_preview", null)
 			cover.texture = data.get("fallback_icon", placeholder_texture())
 			if data.has("fallback_icon"): cover.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		var title := Label.new(); title.name = "Title"; title.text = str(data.display_name); title.add_theme_font_size_override("font_size", 17); title.add_theme_color_override("font_color", STYLE.INK); title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS; title.tooltip_text = str(data.display_name); title.mouse_filter = Control.MOUSE_FILTER_IGNORE; add_child(title)

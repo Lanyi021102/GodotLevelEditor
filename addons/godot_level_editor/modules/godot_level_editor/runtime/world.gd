@@ -51,6 +51,10 @@ var _debug_signature := ""
 var _checkpoint_due := false
 var _restored_overlaps: Dictionary = {}
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_EDITOR_POST_SAVE and Engine.is_editor_hint():
+		load("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd").saved_world(self)
+
 func rooms() -> Array[Node]:
 	var result: Array[Node] = []
 	for node in GROUPS.contents(self):

@@ -163,12 +163,18 @@ func run(suite: EditorPlugin) -> void:
 		tree.quit(2); return
 	tree.create_timer(180, true).timeout.connect(func(): print("LIVE WIRING TIMEOUT"); tree.quit(2))
 	suite._make_visible(true)
+	if OS.get_cmdline_user_args().has("--manual-focus"):
+		suite.window.title = "连线检查（隔离工程）"
 	# Window.size is physical pixels; controls and mouse coordinates are logical.
 	var scale_factor := float(suite.window.get_meta("ui_display_scale", 1.0))
 	suite.window.size = Vector2i(Vector2(1400, 850) * scale_factor)
 	await tree.create_timer(0.6).timeout
 	suite.window.grab_focus()
 	await frames(12)
+	if OS.get_cmdline_user_args().has("--manual-focus"):
+		for attempt in 300:
+			if suite.window.has_focus(): break
+			await tree.create_timer(0.1).timeout
 	if not suite.window.has_focus():
 		print("LIVE MOUSE WIRING BLOCKED: unlock the desktop and bring this test editor to the foreground")
 		tree.quit(2); return
@@ -179,18 +185,18 @@ func run(suite: EditorPlugin) -> void:
 	var folder := "res://tools/narrative/.live_wire_%d" % OS.get_process_id()
 	DirAccess.make_dir_recursive_absolute(folder)
 	var level_path := folder + "/level.tscn"
-	var source := WORLD.new()
-	source.name = "MouseWiringLevel"; source.level_id = "2"; source.world_id = "mouse_wiring"; source.start_room_id = ""
-	source.topology = GRAPH.new(); source.topology.graph_kind = "topology"
-	source.events = GRAPH.new(); source.level_logic = LOGIC.new()
-	source.level_logic.graph_id = "mouse_wiring_logic"
-	check(LEVEL_FACTORY.save_scene(source, level_path) == OK, "isolated level fixture saved")
-	source.free()
-	var world := await open_scene(level_path)
+	var inherited := folder + "/inherited.tscn"
+	FileAccess.open(inherited, FileAccess.WRITE).store_string('[gd_scene load_steps=2 format=3]\n[ext_resource type="PackedScene" path="res://addons/godot_level_editor/templates/empty_level.tscn" id="1"]\n[node name="MouseWiringLevel" instance=ExtResource("1")]\n')
+	var world := await open_scene(inherited)
 	if world == null: check(false, "level fixture opens"); tree.quit(1); return
-	suite.level_panel.bind_scene(world); suite.open_tab("关卡图")
+	EditorInterface.save_scene_as(level_path, false)
+	await frames(12)
+	check(FileAccess.file_exists(level_path) and not str(world.level_id).is_empty(), "native Save As saves an isolated inherited map with a stable level ID")
+	suite.open_tab("关卡")
+	suite.level_panel.set_mode(1)
 	await frames(20)
 	var level: Control = suite.level_panel.logic_panel
+	check(level.world == world and level.graph == world.level_logic, "native level editor binds the current scene without a map-card workflow")
 	# Opening a scene activates the native editor. Focus the empty canvas before
 	# starting assertions, as a user does when returning to the tool window.
 	await click(level.canvas, Vector2(15, 140))
@@ -288,7 +294,7 @@ func run(suite: EditorPlugin) -> void:
 	await capture(suite.window, "机关鼠标连线")
 	# Saved source switching must rebind both scene and graph, without stale ownership.
 	await open_scene(level_path)
-	suite.open_tab("关卡图"); await frames(16)
+	suite.open_tab("关卡"); suite.level_panel.set_mode(1); await frames(16)
 	check(level.world == EditorInterface.get_edited_scene_root() and level.graph.edges.size() == 2, "switching back rebinds the saved level graph")
 	await open_scene(mechanism_path)
 	suite.open_tab("机关"); suite.asset_panels["机关"].set_mode(1); await frames(16)

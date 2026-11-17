@@ -1,0 +1,155 @@
+{
+  "all_passed": true,
+  "attempts": [
+    {
+      "button": "idle",
+      "can_interact": true,
+      "dialogue_active": false,
+      "input_enabled": true,
+      "player": "(-2.0, 0.033333, -2.3)",
+      "pressed_before": false,
+      "step": 61
+    },
+    {
+      "button": "idle",
+      "can_interact": true,
+      "dialogue_active": false,
+      "input_enabled": true,
+      "player": "(-2.0, 0.033333, -2.3)",
+      "pressed_before": false,
+      "step": 122
+    }
+  ],
+  "checkpoint_restores": 0,
+  "checks": {
+    "checkpoint_saved": true,
+    "child_actor_state": true,
+    "door_open": true,
+    "equipment": true,
+    "equipment_task_completed": true,
+    "event_completed": true,
+    "inventory": true,
+    "mechanism_task_completed": true,
+    "numeric_variable": true,
+    "parallel_task_completed": true,
+    "room_active": true,
+    "two_button_interactions": true
+  },
+  "driver": "automated F input and movement; no task/event completion API called",
+  "event_states": {
+    "1004": "completed"
+  },
+  "history": [
+    {
+      "kind": "session_ready",
+      "msec": 974,
+      "value": "9"
+    },
+    {
+      "kind": "task_started",
+      "msec": 1065,
+      "value": "1004001"
+    },
+    {
+      "kind": "task_completed",
+      "msec": 2189,
+      "value": "1004001"
+    },
+    {
+      "kind": "task_started",
+      "msec": 2190,
+      "value": "1004002"
+    },
+    {
+      "kind": "button",
+      "msec": 2374,
+      "value": "1"
+    },
+    {
+      "kind": "button",
+      "msec": 3576,
+      "value": "2"
+    },
+    {
+      "kind": "task_completed",
+      "msec": 4826,
+      "value": "1004002"
+    },
+    {
+      "kind": "task_started",
+      "msec": 4826,
+      "value": "1004003"
+    },
+    {
+      "kind": "checkpoint_saved",
+      "msec": 4848,
+      "value": ""
+    },
+    {
+      "kind": "task_completed",
+      "msec": 7393,
+      "value": "1004003"
+    }
+  ],
+  "mode": "automated",
+  "progress": {
+    "active": {},
+    "dialogues": {
+      "flow_accept": true,
+      "flow_equipped": true,
+      "flow_line_1": true,
+      "flow_line_2": true
+    },
+    "events": {
+      "1004": "completed"
+    },
+    "failure_text": "",
+    "level_logic": {
+      "graph_id": "level_9_logic",
+      "objective": "",
+      "runner": {
+        "cancelled": {},
+        "children": {},
+        "completed": false,
+        "counts": {
+          "accept": 1,
+          "interact": 1,
+          "intro": 1,
+          "read": 1
+        },
+        "flow": {},
+        "frame": 412,
+        "incoming": [],
+        "local": {},
+        "pending": [],
+        "persistent": {},
+        "reason": {
+          "accept": "已接受任务：检查背包与穿着",
+          "interact": "NPC 互动：$world/flow_tester",
+          "intro": "已显示对话",
+          "read": "台本完成：flow_accept"
+        },
+        "started": true,
+        "succeeded": true,
+        "waits": {}
+      },
+      "variables": {},
+      "world_id": "level_9"
+    },
+    "tasks": {
+      "1004001": "completed",
+      "1004002": "completed",
+      "1004003": "completed"
+    },
+    "variables": {
+      "flow_count": 2.0
+    },
+    "version": 1,
+    "workbook": "res://content/tables/events.xlsx"
+  },
+  "task_states": {
+    "1004001": "completed",
+    "1004002": "completed",
+    "1004003": "completed"
+  }
+}

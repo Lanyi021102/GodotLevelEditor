@@ -396,8 +396,14 @@ func _level_preview_updated(id: String, scene_path: String, path: String, textur
 	if not _closing and is_instance_valid(level_panel): level_panel.apply_level_preview(id, scene_path, path, texture)
 
 func _native_saved(path: String) -> void:
+	# The root's POST_SAVE hook finishes Save As identity assignment first.
+	_native_saved_finished.call_deferred(path)
+
+func _native_saved_finished(path: String) -> void:
 	preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd").saved(path)
+	if is_instance_valid(level_panel): level_panel._native_scene_changed(EditorInterface.get_edited_scene_root())
 	_native_refresh()
+	if is_instance_valid(level_preview): level_preview.request(path)
 
 func _native_moved(old: String, target: String) -> void:
 	preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd").moved(old, target)

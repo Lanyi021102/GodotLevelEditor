@@ -72,7 +72,7 @@ tools/                      开发检查、自动打包及 Wiki 工具
 
 在 Godot 文件系统中找到 `addons/godot_level_editor/templates/empty_level.tscn`，右键选择“新建继承场景”，使用 Godot“场景 → 另存为”保存到 `content/scenes/levels/`，或工程中其他自选目录。不要直接覆盖插件内置模板。
 
-使用原生场景树与 3D 视口编辑。工具栏“呼出轮盘”、白盒、点线面和步长继续可用。使用 Godot 原生保存、复制和 F6 试玩；独立窗口的“关卡”页只编辑当前场景的常驻逻辑，不再提供“我的关卡”卡片目录或地图删除入口。首次保存关卡时登记稳定 ID，供任务选择所属关卡。
+使用原生场景树与 3D 视口编辑。工具栏“呼出轮盘”、白盒、点线面和步长继续可用。使用 Godot 原生保存、复制和 F6 试玩；独立窗口通过“关卡 → 我的关卡”浏览和打开地图，通过“关卡 → 关卡编辑”编辑当前场景的常驻逻辑。首次保存关卡时登记稳定 ID，供任务选择所属关卡。
 
 默认作品入口是 `content/scenes/main.tscn`。地图在 `content/scenes/levels/`，配表在 `content/tables/`，任务图在 `content/resources/task_graphs/`。迁移保留已有关卡、任务、对象 ID 与资源 UID。
 

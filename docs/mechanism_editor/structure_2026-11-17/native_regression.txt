@@ -1,0 +1,380 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started 正在注册全局类…… (164 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | EnemyDefinition[39m[0m
+[   1% ] [90m[1mupdate_scripts_classes[22m | EnemyMachine[39m[0m
+[   1% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   2% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   3% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   3% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   4% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   4% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   5% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   7% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   7% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   8% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   9% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   9% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  10% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  10% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  11% ] [90m[1mupdate_scripts_classes[22m | GodotLevelEditorLevelGraph[39m[0m
+[  12% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  12% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  14% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  15% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  15% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  17% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  19% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  21% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  21% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  22% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  23% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  23% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  24% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  24% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  29% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  29% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  30% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  30% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  31% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  32% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  32% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  34% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  35% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  35% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  37% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  38% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  38% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  39% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | MechanismNativeSaveGuard[39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  43% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  43% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  44% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  44% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  45% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  47% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  47% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  48% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  49% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  49% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  51% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  52% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  52% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  54% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  56% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  56% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  59% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  62% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  65% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  67% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  67% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  68% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  69% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  69% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  74% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | CharacterModel[39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  78% ] [90m[1mupdate_scripts_classes[22m | KineticPlate[39m[0m
+[  78% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  79% ] [90m[1mupdate_scripts_classes[22m | GuardAI[39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | VisionCone[39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  82% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  84% ] [90m[1mupdate_scripts_classes[22m | Breaker[39m[0m
+[  84% ] [90m[1mupdate_scripts_classes[22m | PowerDoor[39m[0m
+[  85% ] [90m[1mupdate_scripts_classes[22m | PressurePlate[39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  89% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  89% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  91% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  92% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  92% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  94% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  96% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  96% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  97% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  98% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  98% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started 正在扫描动作…… (39 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | dialogue.svg[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | home.svg[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | level.svg[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | mechanism.svg[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | npc.svg[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | other.svg[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | sky.svg[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | task.svg[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | mark.svg[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | Superhero_Male_FullBody.gltf[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | T_Eye_Brown.png[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | T_Eye_Normal_png.png[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | T_Hair_1_BaseColor.png[39m[0m
+[  32% ] [90m[1m_update_scan_actions[22m | T_Hair_1_Normal_png.png[39m[0m
+[  35% ] [90m[1m_update_scan_actions[22m | T_Superhero_Male_Dark.png[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | T_Superhero_Male_Normal.png[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | T_Superhero_Male_Roughness.png[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | UAL1_Standard.glb[39m[0m
+[  45% ] [90m[1m_update_scan_actions[22m | UAL1_Standard_RM.glb[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | mechanism_thumbnail.svg[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | npc_thumbnail.svg[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | animal_cow.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | animal_horse.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | animal_pug.png[39m[0m
+[  60% ] [90m[1m_update_scan_actions[22m | animal_sheep.png[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | human_large_female.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | human_large_male.png[39m[0m
+[  67% ] [90m[1m_update_scan_actions[22m | human_medium_female.png[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | human_medium_male.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | human_small_female.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | human_small_male.png[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | monster_cactus.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | monster_cyclops.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | monster_yeti.png[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | button.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | double_door.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | lift_platform.png[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | pressure_plate.png[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | single_door.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+GODOT_LEVEL_EDITOR_READY
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+[PASS] create isolated paired fixture clipboard
+[PASS] bind real editor fixture clipboard
+[PASS] QA-05 clipboard preserves false captured before source edits
+[PASS] QA-05 clipboard survives deleting its source
+[PASS] QA-05 pasted component and event share one new stable binding
+[PASS] QA-05 component snapshot preserves exported configuration
+[PASS] QA-05 component snapshot preserves authored child nodes after deleting original object
+[PASS] QA-05 paste supports undo
+[PASS] QA-05 paste supports redo
+[PASS] QA-05 clipboard preserves internal edges and remaps both endpoints
+[PASS] create isolated paired fixture cross_scene_paste
+[PASS] bind real editor fixture cross_scene_paste
+[PASS] QA-05 captured nodes, components and edges paste into another scene
+[PASS] create isolated paired fixture scene_conflict
+[PASS] bind real editor fixture scene_conflict
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:96)
+       [1] fixture (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:33)
+       [2] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 actual native save preserves externally modified scene and graph bytes
+[PASS] QA-01 rejected native save retains dirty status and visible reason
+[PASS] QA-01 native editor still marks rejected scene unsaved after returning
+NATIVE_REJECT_RESULT=0 (saver handled rejection without writing)
+[PASS] QA-01 panel save also preserves conflict bytes
+[PASS] create isolated paired fixture graph_conflict
+[PASS] bind real editor fixture graph_conflict
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:109)
+       [1] fixture (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:33)
+       [2] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 native scene and external-resource save preserve conflicting graph bytes
+[PASS] create isolated paired fixture invalid
+[PASS] bind real editor fixture invalid
+[PASS] QA-01 invalid fixture contains the real unconnected delay input
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:115)
+       [1] fixture (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:33)
+       [2] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 actual native save writes neither file for invalid graph
+[PASS] QA-01 rejected invalid draft leaves the previous valid pair loadable
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:122)
+       [1] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 native Save All preserves invalid and conflicting scene/graph pairs across open tabs
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:127)
+       [1] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 corrected native save updates the paired external graph
+[PASS] QA-01 native save keeps one external authoring graph and clears dirty state
+[PASS] QA-01 switching tabs retains the original conflict baseline
+[PASS] QA-01 explicit reload accepts the disk version and clears the refusal
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:139)
+       [1] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 native save after reload preserves external metadata and new edits
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:145)
+       [1] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 native Save As creates a valid paired scene and graph
+[   0% ] [90m[1msave[22m | Started 正在保存场景 (4 steps)[39m[0m
+[   0% ] [90m[1msave[22m | 正在分析[39m[0m
+[  20% ] [90m[1msave[22m | 正在创建缩略图[39m[0m
+ERROR: Parameter "t" is null.
+   at: texture_2d_get (./servers/rendering/dummy/storage/texture_storage.h:110)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:151)
+       [1] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[  80% ] [90m[1msave[22m | 正在保存场景[39m[0m
+ERROR: Cannot open file 'res://tools/mechanisms/qa_2026_11_16/generated_51811/invalid_save_as.tscn'.
+   at: load (scene/resources/resource_format_text.cpp:1442)
+   GDScript backtrace (most recent call first):
+       [0] saved (res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd:25)
+       [1] _native_saved (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:399)
+       [2] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:151)
+       [3] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+ERROR: Failed loading resource: res://tools/mechanisms/qa_2026_11_16/generated_51811/invalid_save_as.tscn.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] saved (res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd:25)
+       [1] _native_saved (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:399)
+       [2] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:151)
+       [3] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+ERROR: Error loading resource: 'res://tools/mechanisms/qa_2026_11_16/generated_51811/invalid_save_as.tscn'.
+   at: load (core/core_bind.cpp:82)
+   GDScript backtrace (most recent call first):
+       [0] saved (res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd:25)
+       [1] _native_saved (res://addons/godot_level_editor/modules/godot_level_editor_suite/plugin.gd:399)
+       [2] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:151)
+       [3] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+ERROR: Failed to get size for: res://tools/mechanisms/qa_2026_11_16/generated_51811/invalid_save_as.tscn
+   at: _get_size (drivers/unix/file_access_unix.cpp:414)
+   GDScript backtrace (most recent call first):
+       [0] run (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:151)
+       [1] frames (res://tools/mechanisms/qa_2026_11_16/test_editor.gd:16)
+[92m[ DONE ][39m [1msave[22m
+[0m
+[PASS] QA-01 invalid native Save As creates neither file
+MECHANISM QA EDITOR: 35 checks, 0 failures

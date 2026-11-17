@@ -18,7 +18,8 @@ var _viewport: SubViewport
 func request(scene_path: String) -> void:
 	# A dummy renderer must never replace a good PNG with an empty image.
 	if _closed or DisplayServer.get_name() == "headless": return
-	if not scene_path.begins_with(LEVELS.DIRECTORY + "/"): return
+	scene_path = scene_path.simplify_path()
+	if not scene_path.begins_with("res://") or scene_path.begins_with("res://addons/"): return
 	var result := LEVELS.load_book(workbook_path)
 	if result.catalog == null:
 		_fail(scene_path, "; ".join(result.errors)); return

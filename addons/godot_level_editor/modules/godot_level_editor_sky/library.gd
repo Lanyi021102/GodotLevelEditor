@@ -15,11 +15,16 @@ static func paths(directory := DIRECTORY) -> PackedStringArray:
 	return result
 
 static func bound_preset(scene_path: String) -> Resource:
-	var scene := ResourceLoader.load(scene_path, "PackedScene") as PackedScene
+	var scene := ResourceLoader.load(scene_path, "PackedScene", ResourceLoader.CACHE_MODE_IGNORE) as PackedScene
 	if scene == null: return null
 	var state := scene.get_state()
-	for i in state.get_node_property_count(0):
-		if state.get_node_property_name(0, i) == &"sky_preset": return state.get_node_property_value(0, i)
+	# Native inherited scenes omit values that still come from their base.
+	# An explicit null override must take precedence over the template as well.
+	while state != null:
+		if state.get_node_count() > 0:
+			for i in state.get_node_property_count(0):
+				if state.get_node_property_name(0, i) == &"sky_preset": return state.get_node_property_value(0, i)
+		state = state.get_base_scene_state()
 	return null
 
 static func users(path: String) -> PackedStringArray:

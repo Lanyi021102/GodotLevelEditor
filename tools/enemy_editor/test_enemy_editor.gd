@@ -104,6 +104,9 @@ func _test_storage() -> void:
 	var uid := ResourceLoader.get_resource_uid(TEMP)
 	check(ResourceUID.get_id_path(uid) == TEMP, "原子保存后资源标识指向最终文件")
 	check(Store.save_definition(d, TEMP) == OK and ResourceLoader.get_resource_uid(TEMP) == uid, "重复保存保持已有资源标识")
+	var cached := ResourceLoader.load(TEMP) as EnemyDefinition
+	d.display_name = "缓存同步检查"
+	check(Store.save_definition(d, TEMP) == OK and cached.display_name == d.display_name, "保存同步已加载资源，防止原生场景保存写回旧定义")
 	var loaded := Store.load_definition(TEMP)
 	check(loaded != null and loaded.state_by_id("patrol").label == "巡逻重命名", "重载保持稳定 ID 和名称")
 	check(loaded.layout == d.layout and loaded.transitions == d.transitions and loaded.parameters == d.parameters, "重载保持节点排版、视图、连线与参数")

@@ -7,8 +7,9 @@ The separate window starts with **工作台** (Workspace); other pages initializ
 | What you want to make | Entry | Guide |
 |---|---|---|
 | Map geometry and layout | Native Godot scene tree, FileSystem, Inspector and 3D viewport | [Levels](guides/levels.md) |
+| Browse or create native maps | **关卡 → 我的关卡**; create an inherited scene, then use native Save As | [Levels](guides/levels.md) |
 | Whitebox shapes and placement | 3D toolbar **呼出轮盘**, face/edge/point tools | [Quick start](getting-started.md) |
-| Persistent level logic | **关卡** for the current scene | [Levels](guides/levels.md) |
+| Persistent level logic | **关卡 → 关卡编辑** for the current scene | [Levels](guides/levels.md) |
 | Reusable mechanisms | **机关 → 我的机关** | [Mechanisms](tutorials/button-door.md) |
 | Ordered objectives | **任务 → 事件与任务 / 任务图** | [Terms](reference/glossary.md) |
 | Conversations | **台本** | [Dialogue modes](guides/dialogues.md) |

@@ -64,7 +64,7 @@ func _ready() -> void:
 	_button(bar, "重载", func():
 		if not file_path.is_empty(): _guard_discard(func(): _load(file_path)))
 	_button(bar, "保存", save)
-	_button(bar, "另存为", func(): save_dialog.popup_centered_ratio(0.65))
+	_button(bar, "另存为", _choose_save_path)
 	_button(bar, "撤销", func(): history.undo())
 	_button(bar, "重做", func(): history.redo())
 	_button(bar, "验证", _validate)
@@ -292,13 +292,22 @@ func _load(path: String) -> void:
 
 func save() -> void:
 	get_viewport().gui_release_focus()
-	if file_path.is_empty():
-		save_dialog.popup_centered_ratio(0.65)
+	if file_path.is_empty() or Store.is_builtin(file_path):
+		_choose_save_path()
 	else:
 		_save_to(file_path)
 
+func _choose_save_path() -> void:
+	var filename := file_path.get_file() if not file_path.is_empty() else "my_npc.tres"
+	save_dialog.current_path = "res://content/resources/enemies/" + filename if file_path.is_empty() or Store.is_builtin(file_path) else file_path
+	if Store.is_builtin(file_path): status.text = "内置 NPC 为只读，请另存为个人资源。"
+	save_dialog.popup_centered_ratio(0.65)
+
 func _save_to(path: String) -> void:
 	get_viewport().gui_release_focus()
+	if Store.is_builtin(path):
+		status.text = "内置 NPC 为只读，请另存到 content/resources/enemies。"
+		return
 	_capture_view()
 	if scene_validator.is_valid():
 		var binding_errors: PackedStringArray = scene_validator.call()
@@ -332,13 +341,17 @@ func _choose_npc_scene() -> void:
 	if file_path.is_empty() or dirty:
 		status.text = "请先保存当前 NPC，再生成素材。"
 		return
-	npc_scene_dialog.current_path = "res://addons/godot_level_editor/scenes/npcs/" + file_path.get_file().get_basename() + ".tscn"
+	npc_scene_dialog.current_path = "res://content/scenes/npcs/" + file_path.get_file().get_basename() + ".tscn"
 	npc_scene_dialog.popup_centered_ratio(0.65)
 
 func create_npc_scene(path: String) -> bool:
 	if file_path.is_empty() or dirty: status.text = "请先保存当前 NPC。"; return false
 	if not path.begins_with("res://") or not path.ends_with(".tscn"): status.text = "请保存为项目内的 .tscn 场景。"; return false
+	path = path.simplify_path()
+	if Store.is_builtin(path): status.text = "请将个人 NPC 场景保存到 content/scenes/npcs，不能写入插件目录。"; return false
 	if FileAccess.file_exists(path): status.text = "同名场景已存在，请另选文件名。"; return false
+	var directory_error := DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(path.get_base_dir()))
+	if directory_error != OK: status.text = "无法创建 NPC 场景目录：" + error_string(directory_error); return false
 	var root := preload("res://addons/godot_level_editor/modules/enemy_editor/runtime/npc_actor.tscn").instantiate()
 	root.name = definition.display_name.validate_node_name()
 	root.enemy_definition = ResourceLoader.load(file_path, "", ResourceLoader.CACHE_MODE_REPLACE)
@@ -346,6 +359,21 @@ func create_npc_scene(path: String) -> bool:
 		var model_root := root.get_node("ModelRoot")
 		model_root.set_script(preload("res://addons/godot_level_editor/modules/enemy_editor/npc_visual.gd"))
 		model_root.npc_definition = root.enemy_definition
+		var height: float = definition.appearance.height
+		var sample: Dictionary = definition.get_meta("npc_sample_v1", {})
+		var radius := maxf(0.05, height * 0.18)
+		if float(sample.get("height", 0.0)) > 0.0:
+			radius = float(sample.get("radius", radius)) * height / float(sample.height)
+		radius = clampf(radius, 0.01, height * 0.5)
+		var shape := CapsuleShape3D.new(); shape.height = height; shape.radius = radius
+		root.get_node("Collision").shape = shape
+		root.get_node("Collision").position.y = height * 0.5
+		var profile := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd").new()
+		profile.resource_local_to_scene = true
+		profile.model_id = "default"; profile.body_height = height; profile.body_radius = radius
+		profile.behavior_definition = root.enemy_definition
+		root.set_meta(profile.META, profile)
+	root.set_meta("editor_display_name", definition.display_name)
 	var packed := PackedScene.new()
 	var result := packed.pack(root)
 	root.free()

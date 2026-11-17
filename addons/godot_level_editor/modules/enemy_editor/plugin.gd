@@ -46,6 +46,14 @@ func _enter_tree() -> void:
 		_test_suite = load("res://tools/enemy_editor/npc_samples_v1/test_editor.gd").new()
 		_test_suite.run.call_deferred(panel, self)
 
+	if OS.get_cmdline_user_args().has("--test-npc-structure"):
+		_test_suite = load("res://tools/enemy_editor/structure_qa/editor_workflow.gd").new()
+		_test_suite.run.call_deferred(panel, self)
+
+	if OS.get_cmdline_user_args().has("--test-npc-structure-reopen"):
+		_test_suite = load("res://tools/enemy_editor/structure_qa/reopen_workflow.gd").new()
+		_test_suite.run.call_deferred(panel, self)
+
 func _has_main_screen() -> bool:
 	return not _in_suite()
 

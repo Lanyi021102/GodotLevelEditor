@@ -92,7 +92,7 @@ func run(suite: EditorPlugin) -> void:
 		var popup: PopupMenu = menu.get_popup()
 		for i in popup.item_count:
 			if not popup.is_item_separator(i): commands.append(popup.get_item_text(i))
-	check(commands == ["打开任务图", "新建任务图", "另存任务图", "保存后重载", "复制", "粘贴", "删除", "整理节点", "使用当前世界", "使用台本页当前库", "打开对话试玩"], "all secondary commands remain available through the grouped menus")
+	check(commands == ["打开任务图", "新建任务图", "另存任务图", "保存后重载", "复制", "粘贴", "删除", "整理节点", "使用当前世界", "使用台本页当前库", "试玩当前关卡"], "all secondary commands remain available through the grouped menus")
 	panel.toolbar_menus["文件"].get_popup().id_pressed.emit(0)
 	check(panel.task_file.visible and not panel.file_saving, "File/Open executes the original file dialog action")
 	panel.task_file.hide()

@@ -1,0 +1,32 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+
+WARNING: res://content/scenes/levels/logic_playground.tscn:12 - ext_resource, invalid UID: uid://cfutyh01bewjk - using text path instead: res://tools/level_editor/demo_actor.gd
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] _initialize (res://tools/narrative/structure_qa/audit_migrated.gd:23)
+WARNING: res://content/scenes/levels/logic_playground.tscn:14 - ext_resource, invalid UID: uid://dy8xrxwhtu6k4 - using text path instead: res://tools/level_editor/demo_hud.gd
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] _initialize (res://tools/narrative/structure_qa/audit_migrated.gd:23)
+MIGRATED_NARRATIVE_AUDIT: 14 catalog tasks; 21 graph files; 9 native maps; 0 catalog errors
+res://content/resources/levels/dusk_mountain/stage_01.tres: 8 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_02.tres: 8 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_03.tres: 6 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_04.tres: 7 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_05.tres: 7 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_06.tres: 8 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_07.tres: 8 nodes, 0 validation messages
+res://content/resources/levels/dusk_mountain/stage_08.tres: 11 nodes, 0 validation messages
+res://content/resources/narrative/new.task.tres: 0 nodes, 0 validation messages
+res://content/resources/narrative/reception.task.tres: 8 nodes, 0 validation messages
+res://content/resources/narrative/examples/generic_access.task.tres: 8 nodes, 0 validation messages
+res://content/resources/task_graphs/1001001.tres: 8 nodes, 0 validation messages
+res://content/resources/task_graphs/1002001.tres: 2 nodes, 0 validation messages
+res://content/resources/task_graphs/1003001.tres: 3 nodes, 0 validation messages
+res://content/resources/task_graphs/1004001.tres: 2 nodes, 0 validation messages
+res://content/resources/task_graphs/1005001.tres: 5 nodes, 0 validation messages
+res://content/resources/task_graphs/qa_other.tres: 0 nodes, 0 validation messages
+res://content/resources/task_graphs/editor_flow_test/child.tres: 4 nodes, 0 validation messages
+res://content/resources/task_graphs/editor_flow_test/equipment.tres: 12 nodes, 0 validation messages
+res://content/resources/task_graphs/editor_flow_test/mechanisms.tres: 12 nodes, 0 validation messages
+res://content/resources/task_graphs/editor_flow_test/parallel.tres: 15 nodes, 0 validation messages

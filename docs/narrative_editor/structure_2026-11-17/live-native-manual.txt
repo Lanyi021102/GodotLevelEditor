@@ -1,0 +1,75 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+GODOT_LEVEL_EDITOR_READY
+[PASS] native Save As saves an isolated inherited map with a stable level ID
+[PASS] native level editor binds the current scene without a map-card workflow
+[PASS] mouse click opens level node search
+2026-11-17 17:35:15.193 Godot[53080:3287057] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+[PASS] double click creates start
+[PASS] mouse click opens level node search
+[PASS] double click creates constant
+[PASS] mouse click opens level node search
+[PASS] double click creates branch
+[PASS] both actual ports are visible before mouse drag
+[DRAG] n_4cf41a0aed170e3db3b45dd9:0 (210.1, 489.0) -> n_9570e7661b84c284ad575eb2:0 (383.65, 528.0)
+[PASS] level event connection is created by mouse drag
+[PASS] both actual ports are visible before mouse drag
+[DRAG] n_72b948177e4044bf5aae9fcd:0 (210.1, 599.5) -> n_9570e7661b84c284ad575eb2:1 (383.65, 507.85)
+[PASS] level boolean connection is created by mouse drag
+[PASS] both actual ports are visible before mouse drag
+[DRAG] n_72b948177e4044bf5aae9fcd:0 (210.1, 599.5) -> n_9570e7661b84c284ad575eb2:0 (383.65, 489.0)
+[PASS] level rejects boolean into event input without corrupting wires
+[PASS] level checkbox and Apply persist true through real UI events
+[PASS] level mouse-click Undo reverses parameters
+[PASS] level mouse-click Redo restores parameters
+[PASS] level GUI Save accepts the connected graph without a local task ID
+[PASS] level disk reload retains mouse-created wires and parameter
+[PASS] isolated single-button fixture saved
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates bool
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates not
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates interacted
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates perform_action
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates number
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates greater
+[PASS] mouse click opens mechanism node search
+[PASS] double click creates read_power
+[PASS] both actual ports are visible before mouse drag
+[DRAG] node_91da2ddc93788725:0 (181.85, 428.0) -> node_17b74182b0b1a28e:0 (371.65, 428.0)
+[PASS] mechanism boolean connection is created by mouse drag
+[PASS] both actual ports are visible before mouse drag
+[DRAG] node_7fddfe5ab80a87d5:0 (181.85, 428.0) -> node_a30160cbb63f96e2:0 (371.65, 428.0)
+[PASS] mechanism event connection is created by mouse drag
+[PASS] both actual ports are visible before mouse drag
+[DRAG] node_0c3843d38993de0b:0 (181.85, 428.0) -> node_6513dff414e1cf70:0 (371.65, 428.0)
+[PASS] mechanism numeric connection is created by mouse drag
+[PASS] both actual ports are visible before mouse drag
+[DRAG] object_fixture:0 (181.85, 428.0) -> node_3dd090f7b653d7cd:0 (371.65, 428.0)
+[PASS] mechanism object connection is created by mouse drag
+[PASS] mechanism Save explains the remaining required input instead of accepting an incomplete graph
+[PASS] both actual ports are visible before mouse drag
+[DRAG] node_0c3843d38993de0b:0 (181.85, 428.0) -> node_3dd090f7b653d7cd:0 (371.65, 623.0)
+[PASS] mechanism rejects numeric data into object input
+[PASS] component event/action defaults bind the actual fixture component
+[PASS] connected object fixture retains its actual component ID
+[PASS] mechanism GUI Undo reverses the last wire
+[PASS] mechanism GUI Redo restores the last wire
+[PASS] both actual ports are visible before mouse drag
+[DRAG] node_0c3843d38993de0b:0 (181.85, 428.0) -> node_6513dff414e1cf70:1 (371.65, 446.85)
+[PASS] mouse drag fills the remaining numeric input
+[PASS] mechanism checkbox changes the selected node using mouse input
+[PASS] mechanism GUI Save validates all four port types and object bindings
+[PASS] mechanism disk reload retains dragged wires, edited value and component reference
+[PASS] switching back rebinds the saved level graph
+[PASS] switching back rebinds the saved mechanism graph
+LIVE MOUSE WIRING: 56 checks, 0 failures
+ERROR: Plugin is not attached to debugger.
+   at: is_active (editor/debugger/editor_debugger_plugin.cpp:102)
+WARNING: 1 ObjectDB instance was leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

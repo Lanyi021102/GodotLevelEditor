@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-17 — Plugin structure workflow regression fixes
+
+My Levels browses real scene files while maps retain native saving and F6; Level Editing provides persistent logic. Fixes cover Save As identity/registration, indexed destination replacement, saved thumbnails, personal copies of built-in NPCs/mechanisms, NPC scene/import locations and generated collision dimensions, inherited sky references, save-time reference refresh and HDRI retry after cancellation. See the [scope and actual checks](../qa/structure_2026-11-17/validation.md).
+
+## 2026-11-17 — Restore Level secondary navigation
+
+The Level page restores **我的关卡** (My Levels) and **关卡编辑** (Level Editing). Browse real `.tscn` files, search, open, locate or create an inherited map from the template. Switching pages preserves unsaved graph edits and UndoRedo. Native saves, moves and deletions update the browser. See the [guide](guides/levels.md) and [browser checks](../godot_level_editor_suite/level_browser_2026-11-17/validation.md); the [earlier single-entry checks](../godot_level_editor_suite/level_navigation_2026-11-17/validation.md) remain as historical evidence.
+
 ## 2026-11-17 — Complete addon and native scenes
 
 The addon, built-ins and runtime components are grouped under `addons/godot_level_editor/`; author content is under `content/`. Project Excel data is in `content/tables/`. All project folders use English names.

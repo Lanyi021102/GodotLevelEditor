@@ -1,0 +1,54 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+OpenGL API 4.1 Metal - 91.7 - Compatibility - Using Device: Apple - Apple M4
+
+WARNING: Screen-space indirect lighting (SSIL) is only available when using the Forward+ renderer.
+     at: environment_set_ssil (servers/rendering/storage/environment_storage.cpp:775)
+     GDScript backtrace (most recent call first):
+         [0] _start (res://addons/godot_level_editor/plugin.gd:51)
+WARNING: Volumetric fog is only available when using the Forward+ renderer.
+     at: environment_set_volumetric_fog (servers/rendering/storage/environment_storage.cpp:458)
+     GDScript backtrace (most recent call first):
+         [0] _start (res://addons/godot_level_editor/plugin.gd:51)
+GODOT_LEVEL_EDITOR_READY
+[PASS] managed suite starts in the isolated project
+[PASS] normal startup keeps unvisited event and dialogue pages lazy
+[PASS] opening native level logic does not pre-create event tables
+[PASS] new inherited blank map opens natively
+[PASS] native Save As registers the new map ID for task selection
+[PASS] native map keeps the inherited template relation
+[PASS] native save works before the event page is visited
+[PASS] new dialogue is an unsaved author draft, separate from the project workbook
+[PASS] dialogue detail editor authors free and stationary lines
+2026-11-17 17:33:52.398 Godot[52909:3284182] error messaging the mach port for IMKCFRunLoopWakeUpReliable
+[PASS] first Save opens the XLSX destination picker
+[PASS] new dialogue saves under content/tables
+[PASS] saving a new dialogue leaves the existing project workbook intact
+[PASS] dialogue reopens with stable comment/line IDs and modes
+[PASS] new task form can select the newly saved native map
+[PASS] task form creates a task bound to exactly one native map
+[PASS] event/task undo and redo retain stable IDs and native level binding
+[PASS] saving the new event preserves every existing authored task
+[PASS] Edit lazily opens the correct task graph and binds its native map
+[PASS] new task graph is stored outside the plugin
+[PASS] task binds the saved dialogue page workbook
+[NATIVE_DRAG] start:0 (212.1, 374.0) -> n_bfed0fd1fd5515a4598e98e7:0 (268.65, 374.0)
+[NATIVE_DRAG_END] mouse=(268.0, 374.0) input=(268.65, 374.0)
+[NATIVE_CONNECTION_REQUEST] start:0 -> n_bfed0fd1fd5515a4598e98e7:0
+[NATIVE_DRAG] n_aeed712c64f5fa756c5dc1e8:0 (191.8671, 480.4762) -> complete:0 (539.1329, 363.1567)
+[NATIVE_DRAG_END] mouse=(539.0, 363.0) input=(539.1329, 363.1567)
+[NATIVE_CONNECTION_REQUEST] n_aeed712c64f5fa756c5dc1e8:0 -> complete:0
+[NATIVE_CONNECTIONS] [{ "id": "edge_6314422ae9967d5f1f69353a", "from": "start", "from_port": "then", "to": "n_bfed0fd1fd5515a4598e98e7", "to_port": "run" }, { "id": "edge_32d7999d3748d7d896c334e1", "from": "n_aeed712c64f5fa756c5dc1e8", "from_port": "then", "to": "complete", "to_port": "run" }]
+[PASS] palette, parameters and typed wiring preserve local task ownership
+[PASS] task wire undo/redo restores both persisted endpoints
+[PASS] task NPC reference accepts the native scene-tree drag payload
+[PASS] drop receiver persists the actual scene NPC ID
+[PASS] new task graph validates and saves through the editor
+[PASS] opening an unregistered graph clears the previous task owner
+[PASS] task graph reload restores registered ownership and saved data
+[PASS] native scene save persists acceptance logic, NPC and F6 observer
+ERROR: Condition "p_I->data != this" is true. Returning: false
+   at: erase (./core/templates/list.h:228)
+[PASS] F6 starts the actual native level through the editor
+[FAIL] F6 accepts the task with F, plays both dialogue modes and completes after the next F
+[PASS] stopping F6 leaves the editor and saved authoring data intact
+NARRATIVE_STRUCTURE: 31 checks, 1 failures

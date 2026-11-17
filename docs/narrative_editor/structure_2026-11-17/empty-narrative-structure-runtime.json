@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "ok": true,
+      "step": "standalone F6 installs a valid service for the saved native level ID"
+    },
+    {
+      "ok": true,
+      "step": "F6 supplies the normal controllable player"
+    },
+    {
+      "ok": true,
+      "step": "unaccepted task stays inactive while its permanent NPC can interact"
+    },
+    {
+      "ok": false,
+      "step": "F interaction accepts the new task through permanent level logic"
+    },
+    {
+      "ok": false,
+      "step": "saved free dialogue advances to the authored stationary line"
+    },
+    {
+      "ok": false,
+      "step": "second F finishes the dialogue and completes the actual task/event"
+    },
+    {
+      "ok": true,
+      "step": "dialogue completion restores normal player input"
+    }
+  ],
+  "failures": 3
+}

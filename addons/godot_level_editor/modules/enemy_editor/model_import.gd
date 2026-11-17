@@ -2,6 +2,7 @@
 extends RefCounted
 const FORMATS := ["glb", "gltf", "fbx", "tscn", "scn"]
 const TEXTURES := ["png", "jpg", "jpeg", "webp", "tga", "bmp", "dds", "ktx", "ktx2"]
+const IMPORT_DIRECTORY := "res://content/assets/characters/npc_imports"
 
 ## Prepare local art for Godot's importer. No existing project file is overwritten.
 static func prepare(path: String) -> Dictionary:
@@ -31,8 +32,7 @@ static func prepare(path: String) -> Dictionary:
 		for folder in DirAccess.get_directories_at(source.get_base_dir()):
 			if folder.to_lower() in ["textures", "texture"] or folder.to_lower().ends_with(".fbm"):
 				_collect_textures(source.get_base_dir().path_join(folder), files)
-	var name := source.get_file().get_basename().validate_filename().replace(" ", "_")
-	var folder := "res://addons/godot_level_editor/assets/characters/npc_imports/" + name + "_" + Crypto.new().generate_random_bytes(5).hex_encode()
+	var folder := _import_folder(source)
 	var source_folder := folder.path_join("source")
 	var directory_error := DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(source_folder))
 	if directory_error != OK: return {"error": "无法创建素材目录：" + error_string(directory_error)}
@@ -65,7 +65,7 @@ static func scene_snapshot(path: String, copied := false, original_path := "") -
 	root = _materialize(root)
 	root.name = path.get_file().get_basename().validate_node_name()
 	_own_children(root, root)
-	var folder := path.get_base_dir().get_base_dir() if copied else "res://addons/godot_level_editor/assets/characters/npc_imports/" + path.get_file().get_basename().validate_filename() + "_" + Crypto.new().generate_random_bytes(5).hex_encode()
+	var folder := path.get_base_dir().get_base_dir() if copied else _import_folder(path)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(folder))
 	var target := folder.path_join(path.get_file().get_basename() + ".scn")
 	var scene := PackedScene.new()
@@ -76,6 +76,14 @@ static func scene_snapshot(path: String, copied := false, original_path := "") -
 	if error == OK: error = ResourceSaver.save(scene, target, ResourceSaver.FLAG_BUNDLE_RESOURCES | ResourceSaver.FLAG_COMPRESS)
 	if error != OK: return {"error": "模型保存失败：" + error_string(error)}
 	return {"path": target}
+
+static func _import_folder(path: String) -> String:
+	# User filenames may be Chinese; generated directory names remain English.
+	var slug := ""
+	for character in path.get_file().get_basename().to_lower():
+		if character in "abcdefghijklmnopqrstuvwxyz0123456789_-": slug += character
+	if slug.is_empty(): slug = "npc_model"
+	return IMPORT_DIRECTORY.path_join(slug + "_" + Crypto.new().generate_random_bytes(5).hex_encode())
 
 static func _materialize(node: Node) -> Node:
 	# GLTFDocument generates intermediate ImporterMeshInstance3D nodes inside

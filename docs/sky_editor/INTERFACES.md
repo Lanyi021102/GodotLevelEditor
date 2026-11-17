@@ -1,8 +1,10 @@
 ## 插件目录与原生场景合同 · 2026-11-17
 
+结构回归修复：`library.bound_preset` 沿 SceneState 基类读取继承的天空属性，显式 null 优先；`scene_saved` 监听延迟到 POST_SAVE 登记完成后失效元数据缓存并更新引用。HDRI 取消后重新请求时延迟扫描，并仅在文件系统空闲时重试，保留请求身份和总超时。预设字段、格式与五分类界面不变。实际原生保存、重开和 F6 检查见 [结构回归记录](../qa/structure_2026-11-17/validation.md)。
+
 插件本体、示例素材和运行依赖统一到 `addons/godot_level_editor/`；各模块代码在其中的 `modules/`。作者地图、配表与个人资源迁入 `content/`，已有稳定 ID 与 UID 保留；路径迁移表见 `tools/release/layout-migration.json`。
 
-地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。独立窗口“关卡”只显示当前场景的常驻图，旧“我的关卡”卡片／删除流程不再是当前入口。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
+地图采用 Godot 原生文件系统、场景树、保存与 F6，保留轮盘、白盒、点线面和场景对象绑定。“我的关卡”提供原生场景文件的浏览、搜索和打开入口；“关卡编辑”显示当前场景的常驻图。地图仍使用同一份原生场景文件保存。原生保存通过 native_level_registry 登记任务所需 ID，地图路径允许插件目录以外的项目目录。
 
 主插件负责内部模块生命周期和缺省输入／配表初始化；运行服务使用 GLELightZones、GLENoiseBus、GLESaveSystem。用户主场景、已有输入和作者作品不由插件更新覆盖。下面的旧路径和目录入口仅记录当时合同；当前布局与实际验证见 [迁移记录](../cleanup/plugin_2026-11-17/validation.md) 和 [安装指南](../wiki/plugin-install.md)。
 
