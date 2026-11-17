@@ -6,4 +6,4 @@
 *.md text eol=lf
 *.yml text eol=lf
 # Preserve third-party source files, licensing evidence and their byte hashes.
-addons/godot_level_editor/assets/characters/** -text
+addons/godot_level_editor/assets/characters/** -text -whitespace
