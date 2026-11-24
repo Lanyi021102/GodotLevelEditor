@@ -23,7 +23,7 @@ func _ready() -> void:
 	_scale = EditorInterface.get_editor_scale()
 	add_theme_constant_override("separation", roundi(7 * _scale))
 	var config: Resource = entity.get_meta(PROFILE.META)
-	var title := Label.new(); title.text = {"npc": "NPC 属性", "mechanism": "机关属性", "room": "Room 属性"}.get(config.kind, "对象属性")
+	var title := Label.new(); title.text = {"npc": "NPC 属性", "mechanism": "机关属性", "room": "触发区域属性"}.get(config.kind, "对象属性")
 	title.add_theme_color_override("font_color", Color("2563eb")); add_child(title)
 	var id := Label.new(); id.text = _identity(); id.clip_text = true; id.tooltip_text = id.text; _row("实例 ID", id)
 	var name_field := LineEdit.new(); fields["display_name"] = name_field; _row("名称", name_field)
@@ -49,6 +49,13 @@ func _ready() -> void:
 		model_scene.tooltip_text = "选择模型场景以替换占位外形；自定义 ID 与场景一起保存在当前实例。"
 		model_scene.resource_changed.connect(func(value: Resource): _commit("model_scene", value))
 	if config.kind == "npc":
+		if entity.get("allow_conversation") is bool:
+			var talk := CheckBox.new()
+			talk.text = "允许交谈"
+			talk.tooltip_text = "勾选后可将这个 NPC 拖到关卡图或任务图的交谈节点。"
+			fields["allow_conversation"] = talk
+			_row("交互", talk)
+			talk.toggled.connect(func(value: bool): _commit_property("allow_conversation", value))
 		_row("阵营", _options("faction", ["友善", "敌对"], ["friendly", "hostile"]))
 		_row("默认动作", _options("default_action", ACTION_LABELS, ACTIONS))
 		var custom_action := LineEdit.new(); fields["custom_action"] = custom_action; custom_action_row = _row("动作 ID", custom_action)
@@ -111,7 +118,7 @@ func _spin(field: String, label: String, minimum: float, maximum: float, step: f
 func _populate_tasks(picker: OptionButton) -> void:
 	picker.add_item("选择任务"); picker.set_item_metadata(0, "")
 	var world: Node = EditorInterface.get_edited_scene_root()
-	var level_id := str(world.get("level_id")) if world.get("level_id") is String else ""
+	var level_id := str(world.get("level_id")) if world != null and world.get("level_id") is String else ""
 	var result := EVENTS.load_book()
 	if not result.errors.is_empty(): return
 	for task in result.catalog.tasks:
@@ -122,7 +129,7 @@ func _process(_delta: float) -> void:
 	if not is_instance_valid(entity): return
 	var config: Resource = entity.get_meta(PROFILE.META) if entity.has_meta(PROFILE.META) else null
 	if config == null: return
-	var snapshot: Array = [config, entity.get("display_name"), entity.name, entity.get("bounds_size"), entity.get("component_scene"), entity.get("keep_active_on_exit"), entity.get("volume_material")]
+	var snapshot: Array = [config, entity.get("display_name"), entity.name, entity.get("bounds_size"), entity.get("component_scene"), entity.get("keep_active_on_exit"), entity.get("volume_material"), entity.get("allow_conversation")]
 	if snapshot != _last: _sync()
 
 func _select(picker: OptionButton, value: String, fallback := 0) -> void:
@@ -133,7 +140,7 @@ func _select(picker: OptionButton, value: String, fallback := 0) -> void:
 func _sync() -> void:
 	_refreshing = true
 	var config: Resource = entity.get_meta(PROFILE.META)
-	_last = [config, entity.get("display_name"), entity.name, entity.get("bounds_size"), entity.get("component_scene"), entity.get("keep_active_on_exit"), entity.get("volume_material")]
+	_last = [config, entity.get("display_name"), entity.name, entity.get("bounds_size"), entity.get("component_scene"), entity.get("keep_active_on_exit"), entity.get("volume_material"), entity.get("allow_conversation")]
 	fields.display_name.text = str(entity.get("display_name")) if entity.get("display_name") is String else str(entity.name)
 	for key in ["lifetime", "model_id", "faction", "default_action"]:
 		if fields.has(key): _select(fields[key], str(config.get(key)), fields[key].item_count - 1)
@@ -154,6 +161,7 @@ func _sync() -> void:
 		fields.custom_action.text = config.default_action
 		fields.behavior_definition.edited_resource = config.behavior_definition
 		fields.body_height.set_value_no_signal(config.body_height); fields.body_radius.set_value_no_signal(config.body_radius)
+	if fields.has("allow_conversation"): fields.allow_conversation.set_pressed_no_signal(entity.allow_conversation)
 	if fields.has("bounds_0"):
 		for axis in 3: fields["bounds_" + str(axis)].set_value_no_signal(entity.bounds_size[axis])
 	if fields.has("volume_material"):

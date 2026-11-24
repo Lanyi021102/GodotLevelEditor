@@ -2,6 +2,7 @@
 extends VBoxContainer
 ## A read-only view of native scene files and their existing task index metadata.
 signal open_requested(path: String)
+signal logic_requested(path: String)
 signal new_requested
 signal refresh_requested
 const STYLE := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/editor_style.gd")
@@ -17,6 +18,7 @@ var grid: GridContainer
 var details: Label
 var cover: TextureRect
 var open_button: Button
+var logic_button: Button
 var locate_button: Button
 var empty: Label
 var _scroll: ScrollContainer
@@ -44,7 +46,8 @@ func _ready() -> void:
 	var info := VBoxContainer.new(); info.size_flags_horizontal = Control.SIZE_EXPAND_FILL; info.add_theme_constant_override("separation", 14); detail_scroll.add_child(info)
 	cover = TextureRect.new(); cover.custom_minimum_size = Vector2(250, 158); cover.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; cover.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED; info.add_child(cover)
 	details = Label.new(); details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; info.add_child(details)
-	open_button = Button.new(); open_button.text = "进入编辑"; open_button.theme_type_variation = "PrimaryButton"; open_button.pressed.connect(func(): _open(selected_path)); box.add_child(open_button)
+	open_button = Button.new(); open_button.text = "打开场景"; open_button.theme_type_variation = "PrimaryButton"; open_button.pressed.connect(func(): _open(selected_path)); box.add_child(open_button)
+	logic_button = Button.new(); logic_button.text = "编辑常驻逻辑"; logic_button.pressed.connect(func(): logic_requested.emit(selected_path)); box.add_child(logic_button)
 	locate_button = Button.new(); locate_button.text = "定位场景文件"; locate_button.pressed.connect(func():
 		if entries.has(selected_path): EditorInterface.select_file(selected_path)); box.add_child(locate_button)
 	_layout(); _detail()
@@ -92,8 +95,7 @@ func load_files(catalog: Resource, current_path := "") -> void:
 			data.level_id = path # Card selection keys are paths, including unregistered files.
 			var card := CARD.new(); card.data = data; card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			card.selected.connect(select_file); card.activated.connect(_open); grid.add_child(card); cards[path] = card
-		var add := CARD.new(); add.is_new = true; add.size_flags_horizontal = Control.SIZE_EXPAND_FILL; add.activated.connect(func(_key): new_requested.emit()); grid.add_child(add)
-	_filter(); _detail(); _layout()
+	_filter(); _layout()
 
 func select_file(path: String) -> void:
 	if not entries.has(path): return
@@ -109,6 +111,7 @@ func _detail() -> void:
 	for path in cards: cards[path].is_selected = path == selected_path
 	var row: Dictionary = entries.get(selected_path, {})
 	open_button.disabled = row.is_empty(); locate_button.disabled = row.is_empty()
+	logic_button.disabled = row.is_empty()
 	cover.texture = CARD.preview_texture(str(row.get("preview_path", "")))
 	if cover.texture == null: cover.texture = CARD.placeholder_texture()
 	if row.is_empty(): details.text = "选择一个关卡查看详情。\n\n地图保存为原生 .tscn 文件后会出现在这里。"; return
@@ -118,11 +121,16 @@ func _detail() -> void:
 
 func _filter() -> void:
 	var shown := 0
+	var first_visible := ""
 	for path in cards:
 		var row: Dictionary = entries[path]
 		var matches: bool = search.text.is_empty() or (str(row.display_name) + " " + str(row.level_id) + " " + str(path)).containsn(search.text)
 		cards[path].visible = matches
-		if matches: shown += 1
+		if matches:
+			if shown == 0: first_visible = path
+			shown += 1
+	if not cards.has(selected_path) or not cards[selected_path].visible: selected_path = first_visible
+	_detail()
 	count.text = "%d 个关卡" % entries.size() if search.text.is_empty() else "%d / %d 个关卡" % [shown, entries.size()]
 	empty.visible = shown == 0
 	empty.text = "还没有关卡，点击“新建关卡”从空白模板开始。" if entries.is_empty() else "没有匹配的关卡。"

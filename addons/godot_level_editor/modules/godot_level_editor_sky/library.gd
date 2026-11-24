@@ -35,10 +35,3 @@ static func users(path: String) -> PackedStringArray:
 		var preset := bound_preset(str(row.scene_path))
 		if preset != null and preset.resource_path == path: result.append(str(row.display_name))
 	return result
-
-static func thumbnail(preset: Resource) -> ImageTexture:
-	var image := Image.create(96, 48, false, Image.FORMAT_RGB8)
-	for y in 48:
-		var color: Color = preset.top_color.lerp(preset.horizon_color, float(y) / 47.0)
-		for x in 96: image.set_pixel(x, y, color)
-	return ImageTexture.create_from_image(image)

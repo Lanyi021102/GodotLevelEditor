@@ -126,8 +126,10 @@ func reset_state() -> void:
 func can_interact(actor: Node3D = null) -> bool:
 	if not interaction_enabled or locked or not is_visible_in_tree() or (one_shot and _used): return false
 	if actor == null: return Engine.is_editor_hint()
-	var anchor := global_transform * (travel_offset * progress) if component_type == "lift_platform" else global_position
-	return can_process() and actor.is_in_group("godot_level_editor_player") and actor.is_visible_in_tree() and actor.global_position.distance_to(anchor) <= interaction_radius
+	return can_process() and actor.is_in_group("godot_level_editor_player") and actor.is_visible_in_tree() and actor.global_position.distance_to(interaction_position()) <= interaction_radius
+
+func interaction_position() -> Vector3:
+	return global_transform * (travel_offset * progress) if component_type == "lift_platform" else global_position
 
 func interact(actor: Node3D = null) -> bool:
 	if not can_interact(actor): return false
@@ -304,8 +306,8 @@ func rebuild_design() -> void:
 	_sensor = Area3D.new(); _sensor.name = "Sensor"; _sensor.collision_layer = 0; _sensor.collision_mask = sensor_mask
 	_sensor.monitoring = not Engine.is_editor_hint(); _generated.add_child(_sensor)
 	_collision(Vector3(2.2, 1.6, 2.2) if component_type == "pressure_plate" else Vector3(3.5, 2.0, 3.5), Vector3(0, 0.8, 0), _sensor)
-	_label = Label3D.new(); _label.position.y = 3.1 if component_type in ["sliding_door", "hinged_door"] else 1.65 if component_type != "pressure_plate" else 0.6
-	_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED; _label.font_size = 38; _label.pixel_size = 0.004
+	_label = preload("res://addons/godot_level_editor/scripts/ui/interaction_label.gd").new(); _label.position.y = 3.1 if component_type in ["sliding_door", "hinged_door"] else 1.65 if component_type != "pressure_plate" else 0.6
+	_label.configure(self, display_name, "" if component_type == "pressure_plate" else "[F]")
 	_generated.add_child(_label); _signature = _design_signature(); _apply_pose()
 
 func _mesh(title: String, dimensions: Vector3, offset: Vector3, parent: Node3D, material: Material) -> void:
@@ -334,4 +336,5 @@ func _apply_pose() -> void:
 		_active_material.emission_enabled = is_powered(); _active_material.emission = color_active; _active_material.emission_energy_multiplier = 0.15
 	if is_instance_valid(_label):
 		if component_type == "lift_platform": _label.position = travel_offset * progress + Vector3(0, 1.65, 0)
-		_label.text = (display_name if not display_name.is_empty() else str(TITLES.get(component_type, "机关"))) + " · " + current_state + ("\n[F]" if interaction_enabled and component_type != "pressure_plate" and not locked else "")
+		_label.caption = (display_name if not display_name.is_empty() else str(TITLES.get(component_type, "机关"))) + " · " + current_state
+		if Engine.is_editor_hint(): _label.text = _label.caption

@@ -22,9 +22,14 @@ const STEP_METADATA := "godot_level_editor_edit"
 const STEP_PRESETS := [0.1, 0.5, 1.0]
 var spatial_tools: HBoxContainer
 var radial_tool: RefCounted
+var measurement: RefCounted
+var terrain_tool: RefCounted
+var performance_point_pick := Callable()
 var asset_drop_tool: RefCounted
 var entity_inspector: EditorInspectorPlugin
 var entity_gizmos: EditorNode3DGizmoPlugin
+var vehicle_gizmos: EditorNode3DGizmoPlugin
+var vehicle_inspector: EditorInspectorPlugin
 
 
 func _enter_tree() -> void:
@@ -58,12 +63,24 @@ func _enter_tree() -> void:
 	add_inspector_plugin(entity_inspector)
 	entity_gizmos = preload("res://addons/godot_level_editor/modules/godot_level_editor/entity_gizmo.gd").new()
 	add_node_3d_gizmo_plugin(entity_gizmos)
+	vehicle_inspector = preload("res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle_inspector.gd").new()
+	vehicle_inspector.editor = self
+	add_inspector_plugin(vehicle_inspector)
+	vehicle_gizmos = preload("res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle_gizmo.gd").new()
+	add_node_3d_gizmo_plugin(vehicle_gizmos)
 	main_screen_changed.connect(func(screen: String):
 		if screen != "3D":
+			if measurement != null: measurement.cancel()
 			if radial_tool != null: radial_tool.cancel()
+			if terrain_tool != null: terrain_tool.cancel()
 			if push_pull.enabled: push_pull.set_enabled(false))
 	for mode in ["face", "edge", "point"]: _push_button(spatial_tools, mode)
 	_build_step_controls()
+	measurement = preload("res://addons/godot_level_editor/modules/godot_level_editor/measure_tool.gd").new()
+	measurement.setup(self, spatial_tools)
+	terrain_tool = preload("terrain/editor_tool.gd").new()
+	terrain_tool.setup(self, spatial_tools)
+	measurement.update_selection(EditorInterface.get_selection().get_selected_nodes())
 	_configure_snap.call_deferred()
 	EditorInterface.get_selection().selection_changed.connect(_selection_changed)
 	scene_changed.connect(_scene_changed)
@@ -73,6 +90,8 @@ func _enter_tree() -> void:
 		_run_smoke.call_deferred()
 	if OS.get_cmdline_user_args().has("--quick-add-test"):
 		_run_quick_add_test.call_deferred()
+	if OS.get_cmdline_user_args().has("--terrain-test"):
+		_run_terrain_test.call_deferred()
 	if OS.get_cmdline_user_args().has("--face-gizmo-test"):
 		_run_face_gizmo_test.call_deferred()
 
@@ -83,7 +102,10 @@ func _push_button(parent: Node, mode := "face") -> void:
 	button.tooltip_text = "选中元素后在其中心拖动操作轴；Esc／点击空白恢复物体轴。"
 	button.toggled.connect(func(value: bool):
 		if value and radial_tool != null: radial_tool.cancel()
-		if value: push_pull.set_mode(mode)
+		if value:
+			if measurement != null: measurement.cancel()
+			if terrain_tool != null: terrain_tool.cancel()
+			push_pull.set_mode(mode)
 		elif push_pull.mode == mode: push_pull.set_enabled(false))
 	parent.add_child(button)
 	if not selection_buttons.has(mode): selection_buttons[mode] = []
@@ -141,15 +163,37 @@ func show_message(text: String, notify := true) -> void:
 	if notify: EditorInterface.get_editor_toaster().push_toast(text)
 
 func _forward_3d_gui_input(camera: Camera3D, event: InputEvent) -> int:
+	if performance_point_pick.is_valid() and _pick_performance_point(camera, event):
+		return EditorPlugin.AFTER_GUI_INPUT_STOP
 	if radial_tool != null and radial_tool.input(camera, event): return EditorPlugin.AFTER_GUI_INPUT_STOP
+	if terrain_tool != null and terrain_tool.input(camera, event): return EditorPlugin.AFTER_GUI_INPUT_STOP
+	if measurement != null and measurement.input(camera, event): return EditorPlugin.AFTER_GUI_INPUT_STOP
 	if push_pull.input(camera, event): return EditorPlugin.AFTER_GUI_INPUT_STOP
 	if push_pull.uses_native_gizmo(): return EditorPlugin.AFTER_GUI_INPUT_CUSTOM
 	return EditorPlugin.AFTER_GUI_INPUT_PASS
+func _pick_performance_point(camera: Camera3D, event: InputEvent) -> bool:
+	var finish := performance_point_pick
+	if event.is_action_pressed("ui_cancel"):
+		performance_point_pick = Callable()
+		finish.call_deferred(null)
+		return true
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		var hit: Dictionary = radial_tool.pick_surface(camera, event.position, EditorInterface.get_edited_scene_root()) if radial_tool != null else {}
+		if hit.is_empty():
+			show_message("请在可见的地面上选点，或按 Esc 取消。")
+		else:
+			performance_point_pick = Callable()
+			finish.call_deferred(hit.position)
+		return true
+	return false
+
 func _forward_3d_force_draw_over_viewport(control: Control) -> void:
 	if push_pull != null: push_pull.draw(control)
 	if radial_tool != null: radial_tool.draw(control)
+	if measurement != null: measurement.draw(control)
+	if terrain_tool != null: terrain_tool.draw(control)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if not _legacy_dock_checked:
 		_legacy_dock_checked = true
 		_retire_legacy_dock()
@@ -159,6 +203,8 @@ func _process(_delta: float) -> void:
 	if entity_gizmos == null:
 		entity_gizmos = preload("res://addons/godot_level_editor/modules/godot_level_editor/entity_gizmo.gd").new(); add_node_3d_gizmo_plugin(entity_gizmos)
 	if radial_tool != null: radial_tool.process()
+	if measurement != null: measurement.process()
+	if terrain_tool != null: terrain_tool.process(delta)
 	if asset_drop_tool == null and radial_tool != null:
 		asset_drop_tool = preload("res://addons/godot_level_editor/modules/godot_level_editor/asset_drop_tool.gd").new()
 		asset_drop_tool.plugin = self
@@ -174,7 +220,9 @@ func _retire_legacy_dock() -> void:
 		legacy.queue_free()
 
 func _build() -> bool:
+	if measurement != null: measurement.cancel()
 	if radial_tool != null: radial_tool.cancel()
+	if terrain_tool != null: terrain_tool.cancel()
 	if push_pull != null and push_pull.enabled: push_pull.set_enabled(false)
 	return true
 
@@ -198,7 +246,10 @@ func _save_external_data() -> void:
 	if is_instance_valid(panel) and panel.dirty: panel.save_graph()
 
 func _scene_changed(root: Node) -> void:
+	performance_point_pick = Callable()
+	if measurement != null: measurement.cancel()
 	if radial_tool != null: radial_tool.cancel()
+	if terrain_tool != null: terrain_tool.cancel()
 	_remember_scene(root)
 	_configure_snap.call_deferred()
 	if push_pull != null:
@@ -210,6 +261,7 @@ func _scene_changed(root: Node) -> void:
 
 func _selection_changed() -> void:
 	var nodes := EditorInterface.get_selection().get_selected_nodes()
+	if measurement != null: measurement.update_selection(nodes)
 	if push_pull != null and not push_pull.selecting and not push_pull.dragging and not push_pull.picked.is_empty() and not nodes.has(push_pull.picked.get("block")): push_pull.clear()
 	if nodes.size() == 1:
 		panel.focus_object(nodes[0])
@@ -270,9 +322,12 @@ func _undo_added_nodes(root: Node, nodes: Array, parents: Array[Node], new_group
 		if group.get_parent() == root and group.get_child_count() == 0: root.remove_child(group)
 
 func _exit_tree() -> void:
+	if vehicle_gizmos != null: remove_node_3d_gizmo_plugin(vehicle_gizmos)
+	if vehicle_inspector != null: remove_inspector_plugin(vehicle_inspector)
 	if entity_gizmos != null: remove_node_3d_gizmo_plugin(entity_gizmos)
 	if entity_inspector != null: remove_inspector_plugin(entity_inspector)
 	if radial_tool != null: radial_tool.dispose()
+	if terrain_tool != null: terrain_tool.dispose()
 	if asset_drop_tool != null: asset_drop_tool.dispose()
 	if push_pull != null and push_pull.dragging: push_pull.finish(true)
 	if push_pull != null: push_pull.clear()
@@ -291,6 +346,9 @@ func _run_smoke() -> void:
 
 func _run_quick_add_test() -> void:
 	await load("res://tools/level_editor/test_quick_add.gd").new().run(self)
+
+func _run_terrain_test() -> void:
+	await load("res://tools/level_editor/test_terrain.gd").new().run(self)
 
 func _run_face_gizmo_test() -> void:
 	await load("res://tools/level_editor/test_face_gizmo.gd").new().run(self)

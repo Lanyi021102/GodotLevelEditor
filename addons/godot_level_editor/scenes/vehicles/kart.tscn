@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/vehicles/kart.glb" id="2"]
+
+[node name="Kart" type="CharacterBody3D"]
+script = ExtResource("1")
+display_name = "卡丁车"
+model_scene = ExtResource("2")
+model_scale = 1.55
+model_yaw = 180.0
+model_offset = Vector3(0, 0, 0.15)
+body_size = Vector3(1.55, 0.54, 2.24)
+body_center = Vector3(0, 0.28, -0.02)
+boarding_point = Vector3(-1.15, 0, 0)
+seat_point = Vector3(0, 0.05, 0.30)
+camera_distance = 4.7

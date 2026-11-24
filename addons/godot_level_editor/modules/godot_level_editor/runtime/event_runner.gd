@@ -17,6 +17,7 @@ var action_handler: Callable
 var condition_handler: Callable
 var incoming: Array[Dictionary] = []
 var counts: Dictionary = {}
+var recent_steps: Array[Dictionary] = []
 var started := false
 const MAX_QUEUE := 256
 
@@ -29,6 +30,8 @@ func configure(graph: GodotLevelEditorLevelGraph, lookup: Callable, actions: Cal
 	condition_handler = conditions
 	incoming.clear()
 	counts.clear()
+	recent_steps.clear()
+	last_reason.clear()
 	started = false
 	persistent.clear()
 	local_state.clear()
@@ -193,6 +196,7 @@ func capture() -> Dictionary:
 	return {"local": local_state.duplicate(true), "pending": pending.duplicate(true), "frame": frame, "reason": last_reason.duplicate(true), "incoming": incoming.duplicate(true), "counts": counts.duplicate(), "started": started}
 
 func restore(data: Dictionary) -> void:
+	recent_steps.clear()
 	local_state = data.get("local", {}).duplicate(true)
 	pending.assign(data.get("pending", []).duplicate(true))
 	frame = int(data.get("frame", 0))
@@ -219,4 +223,6 @@ func queue_trigger(kind: String, context: Dictionary = {}) -> void:
 func _record(id: String, reason: String) -> void:
 	last_reason[id] = reason
 	counts[id] = int(counts.get(id, 0)) + 1
+	recent_steps.append({"id": id, "reason": reason})
+	if recent_steps.size() > 8: recent_steps.pop_front()
 	executed.emit(id, reason)

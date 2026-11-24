@@ -1,5 +1,7 @@
 # GodotLevelEditor：节点连线编辑工具共同规范
 
+2026-11-24 演出时间轴随原生关卡保存，在关卡编辑内取景、排走位并预览。关卡图与任务图通过“播放演出”调度。字段、接线和检查见 [演出时间轴接口](../performance_editor/INTERFACES.md)。
+
 2026-11-16 台本单句类型：对白内容前新增自由／站桩对话选择，独立于原台本分类。自由对话按阅读时长自动继续并保留玩家行走，站桩对话等待交互或点击，仅限制玩家输入；整个世界不因对话暂停。XLSX 增加可选 dialogue_mode，旧表默认 free。合同与验证见 [台本接口](../narrative_editor/INTERFACES.md)。
 
 2026-11-16 当前机关库收敛为双开门、单开门、压力板、按钮和升降台五种独立素材，新建为空白图，不再预置跨机关组合。关卡与任务仍可由作者显式绑定独立实例。见 [机关当前合同](../mechanism_editor/INTERFACES.md) 和 [清理验证](../mechanism_editor/independent_2026-11-16/validation.md)。

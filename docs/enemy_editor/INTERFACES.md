@@ -1,3 +1,9 @@
+## 实例交谈与交互提示 · 2026-11-19
+
+轮盘放下的行为 NPC 使用实例属性 `allow_conversation`，默认 false。开启后以已有 `enemy_instance_id` 作为任务 NPC 引用，常驻图使用世界或房间作用域和该 ID；剧情 NPC 继续使用原有 `object_id`。显示名或巡逻状态变化不改变绑定。有效的常驻或正在运行的任务交互节点决定运行时的 `interaction_allowed`。成功交谈发出原有 `interacted(id, actor)` 信号，站桩对白沿用玩家输入锁，NPC 的巡逻和世界继续运行。
+
+玩家每个物理帧在可交互目标中选择最近实例，F 使用该目标。升降台的距离从实际移动平台计算。被选目标的提示用原生 [interaction_hint.tscn](../../addons/godot_level_editor/scenes/ui/interaction_hint.tscn) 绘制，以 3D 对象为锚点，固定屏幕字号，一次只显示一条。附近未选物件收起重复名牌。见[交谈练习](../wiki/guides/npc-samples.md#first-conversation-task)及[专项验证](conversation_2026-11-19/validation.md)。
+
 ## 插件目录与原生场景合同 · 2026-11-17
 
 插件结构回归修复：内置定义默认只读，个人定义保存到 `content/resources/enemies/`，生成场景默认 `content/scenes/npcs/`，导入模型／依赖输出 `content/assets/characters/npc_imports/`。`definition_store.save_definition(..., allow_builtin=false)` 仅由开发生成器显式放开内置写入；原子保存后刷新规范资源缓存，避免原生场景保存用旧模型引用回写。生成场景的胶囊与 entity profile 按当前身高创建，后续原生碰撞编辑保留。个人目录卡片读取当前身高和模型，而不复用来源样例封面。完整边界及实测见 [结构回归记录](../qa/structure_2026-11-17/validation.md)。

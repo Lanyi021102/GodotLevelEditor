@@ -36,6 +36,8 @@ nav:
       - 快速开始: wiki/getting-started.md
       - 编辑器功能地图: wiki/features.md
       - 关卡与轮盘操作: wiki/guides/levels.md
+      - 玩家 3C 预设: wiki/guides/player.md
+      - 载具预设: wiki/guides/vehicles.md
       - 工作台与偏好设置: wiki/guides/workbench.md
       - NPC 素材与动画: wiki/guides/npc-samples.md
       - 自由对话与站桩对话: wiki/guides/dialogues.md
@@ -68,7 +70,7 @@ plugins:
           name: English
           build: true
           site_description: Whitebox level design in Godot for beginners with no coding experience.
-          copyright: GodotLevelEditor · Documentation updated 2026-11-17
+          copyright: GodotLevelEditor · Documentation updated 2026-11-24
           nav_translations:
             首页: Home
             开始使用: Getting started
@@ -76,6 +78,8 @@ plugins:
             快速开始: Quick start
             编辑器功能地图: Feature map
             关卡与轮盘操作: Levels and quick-add wheel
+            玩家 3C 预设: Player 3C presets
+            载具预设: Vehicle presets
             工作台与偏好设置: Workspace preferences
             NPC 素材与动画: NPC models and animation
             自由对话与站桩对话: Dialogue modes
@@ -144,4 +148,4 @@ validation:
 extra:
   generator: false
 
-copyright: GodotLevelEditor · 内容更新于 2026-11-17
+copyright: GodotLevelEditor · 内容更新于 2026-11-24

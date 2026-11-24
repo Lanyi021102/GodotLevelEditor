@@ -10,9 +10,9 @@ func table_file() -> String:
 	return dialogue_xlsx
 
 func load_dialogue() -> Dictionary:
-	return LIBRARY.read_xlsx(table_file())
+	return LIBRARY.read_xlsx(table_file(), false)
 
-const BASE_KINDS := ["event_received", "emit_event", "event_hold", "event_complete", "start", "room_enter", "npc_interact", "dialog_completed", "show_dialog", "task_start", "task_complete", "objective"]
+const BASE_KINDS := ["event_received", "emit_event", "event_hold", "event_complete", "start", "room_enter", "npc_interact", "dialog_completed", "show_dialog", "play_performance", "task_start", "task_complete", "objective"]
 const LOCAL_TASK_KINDS := ["task_start", "task_complete", "task_fail", "npc_interact", "dialog_completed"]
 const REUSED_KINDS := ["region_enter", "branch", "has_item", "player_state", "source", "object", "read_state", "all", "constant", "number", "greater", "latch", "checkpoint", "set_switch", "set_visibility", "enemy_patrol"]
 static func supported_kinds() -> Array:

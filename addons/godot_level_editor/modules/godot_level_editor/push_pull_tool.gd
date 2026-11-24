@@ -18,6 +18,8 @@ var before_frame := Transform3D.IDENTITY
 var source_faces := PackedVector3Array()
 var dragging := false
 var amount := 0.0
+var start_world_center := Vector3.ZERO
+var displacement := 0.0
 var world_normal := Vector3.ZERO
 var world_faces := PackedVector3Array()
 var camera: Camera3D
@@ -66,7 +68,7 @@ func editable_blocks() -> Array[Node3D]:
 		var node: Node = queue.pop_back()
 		for child in node.get_children():
 			if not child.get_meta("godot_level_editor_generated", false): queue.append(child)
-		if node.get_script() != BLOCK: continue
+		if node.get_script() != BLOCK or node.is_covered_by_terrain(): continue
 		if node != root and node.owner != root and not root.is_editable_instance(node.owner): continue
 		if node.is_visible_in_tree() and node.visual_scene == null: result.append(node)
 	return result
@@ -127,7 +129,7 @@ func pick(origin: Vector3, direction: Vector3) -> Dictionary:
 		var node: Node = queue.pop_back()
 		for child in node.get_children():
 			if not child.get_meta("godot_level_editor_generated", false): queue.append(child)
-		if node.get_script() != BLOCK: continue
+		if node.get_script() != BLOCK or node.is_covered_by_terrain(): continue
 		if node != root and node.owner != root and not root.is_editable_instance(node.owner): continue
 		var hit := EDIT.ray_pick(node, origin, direction)
 		if not hit.is_empty() and (result.is_empty() or hit.distance < result.distance): result = hit
@@ -198,6 +200,8 @@ func _start_drag() -> void:
 	face = selected_geometry(block, selection_id())
 	before = EDIT.capture(block)
 	before_frame = ELEMENTS.frame(face)
+	start_world_center = block.to_global(before_frame.origin)
+	displacement = 0.0
 	amount = 0.0
 	dragging = true
 
@@ -212,6 +216,8 @@ func preview_transform(target: Transform3D) -> bool:
 		return false
 	block.apply_face_state(state)
 	refresh()
+	if not face.is_empty():
+		displacement = start_world_center.distance_to(block.to_global(face.center))
 	return true
 
 ## Direct normal push retained for editor probes and scripted geometry tools.

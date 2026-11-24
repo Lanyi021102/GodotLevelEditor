@@ -45,12 +45,11 @@ func _ready() -> void:
 	var font := table.get_theme_font("font", "Tree")
 	var font_size := table.get_theme_font_size("font_size", "Tree")
 	for i in [0, 1, 5]:
-		var sample: String = ["事件 / 任务 ID", "task_1001001", "", "", "", "编辑"][i]
+		var sample: String = ["事件 / 任务 ID", "task_1001001", "", "", "", "编辑任务图"][i]
 		table.set_column_custom_minimum_width(i, int(font.get_string_size(sample, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x) + (72 if i == 0 else 36))
 	add_child(table)
 	table.item_selected.connect(_selected)
 	table.item_activated.connect(edit_selected)
-	table.button_clicked.connect(func(item: TreeItem, _column: int, _id: int, _mouse: int): selected_id = str(item.get_metadata(0)); selected_kind = "task"; edit_selected())
 	table.gui_input.connect(_context_input)
 	var hint := Label.new()
 	hint.text = "右键管理事件与任务 · 双击修改信息 · 编辑按钮打开任务图 · ID 固定，顺序独立"
@@ -85,14 +84,15 @@ func _button(parent: Node, title: String, callback: Callable) -> void:
 	button.text = title
 	button.pressed.connect(callback)
 	parent.add_child(button)
-func reload_book() -> void:
-	if dirty: status.text = "当前有未保存修改，请先保存或撤销。"; return
+func reload_book(discard_draft := false) -> void:
+	if dirty and not discard_draft: status.text = "当前有未保存修改，请先保存或撤销。"; return
 	var result := CATALOG.load_book(workbook_path)
 	if not result.errors.is_empty():
 		status.text = "; ".join(result.errors)
 		if catalog == null: catalog = CATALOG.new(); _refresh()
 		return
 	catalog = result.catalog
+	dirty = false
 	undo.clear_history()
 	_refresh()
 func _apply(state: Dictionary) -> void:
@@ -155,11 +155,14 @@ func _fill(item: TreeItem, data: Dictionary, kind: String) -> void:
 	item.set_tooltip_text(3, item.get_text(3))
 	item.set_text(4, str(data.notes))
 	item.set_custom_minimum_height(44)
+	item.set_cell_mode(5, TreeItem.CELL_MODE_CUSTOM)
+	item.set_custom_as_button(5, true)
 	if kind == "event":
 		for i in 6: item.set_custom_bg_color(i, Color(0.3, 0.5, 0.7, 0.12))
 		item.set_tooltip_text(0, "开始条件：" + str(data.start_type) + " " + str(data.start_key))
+		item.set_text(5, "添加任务")
 	else:
-		item.set_text(5, "编辑")
+		item.set_text(5, "编辑任务图")
 		item.set_tooltip_text(5, "编辑任务图（不存在则新建）")
 	var level_ids: Array[String] = []
 	var tasks: Array = [data] if kind == "task" else catalog.event_tasks(str(data.event_id))
@@ -172,11 +175,14 @@ func _fill(item: TreeItem, data: Dictionary, kind: String) -> void:
 func _context_input(event: InputEvent) -> void:
 	if not event is InputEventMouseButton or not event.pressed: return
 	if event.button_index == MOUSE_BUTTON_LEFT and table.get_column_at_position(event.position) == 5:
-		var task_item := table.get_item_at_position(event.position)
-		if task_item != null and task_item.get_metadata(1) == "task":
-			selected_id = str(task_item.get_metadata(0))
-			selected_kind = "task"
-			edit_selected()
+		var action_item := table.get_item_at_position(event.position)
+		if action_item != null and not event.double_click:
+			action_item.select(0)
+			selected_id = str(action_item.get_metadata(0))
+			selected_kind = str(action_item.get_metadata(1))
+			if selected_kind == "event": add_task()
+			else: edit_selected()
+			table.accept_event()
 		return
 	if event.button_index != MOUSE_BUTTON_RIGHT: return
 	var item := table.get_item_at_position(event.position)
@@ -358,10 +364,32 @@ func _collapse(collapsed: bool) -> void:
 	for item in table.get_root().get_children(): item.collapsed = collapsed
 func save() -> void:
 	var errors: PackedStringArray = catalog.save_book(workbook_path)
-	if not errors.is_empty(): status.text = "; ".join(errors); return
+	if not errors.is_empty():
+		status.text = "; ".join(errors)
+		if CATALOG.XLSX.CONFLICT in errors and not has_node("WorkbookConflict"):
+			var conflict := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/workbook_conflict.gd").new()
+			conflict.name = "WorkbookConflict"
+			conflict.offer(self, reload_book.bind(true), _save_draft_copy)
+		return
 	dirty = false
 	_refresh()
 	status.text = "已保存"
+
+func _save_draft_copy() -> void:
+	var file := EditorFileDialog.new()
+	file.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE
+	file.add_filter("*.xlsx", "事件与任务配表")
+	add_child(file)
+	file.current_path = workbook_path.get_basename() + "_copy.xlsx"
+	file.file_selected.connect(func(path: String):
+		if path == workbook_path: status.text = "请选择新的文件名。"; return
+		var original: Dictionary = catalog.workbook_origin.duplicate()
+		var errors: PackedStringArray = catalog.save_book(path)
+		catalog.workbook_origin = original
+		status.text = "已另存草稿：" + path if errors.is_empty() else "; ".join(errors))
+	file.visibility_changed.connect(func():
+		if not file.visible: file.queue_free())
+	file.popup_centered_ratio(0.7)
 func _exit_tree() -> void:
 	undo.clear_history()
 	undo.free()

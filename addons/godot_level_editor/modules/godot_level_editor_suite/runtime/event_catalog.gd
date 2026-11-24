@@ -78,7 +78,7 @@ func validate() -> PackedStringArray:
 		orders[str(event.get("order"))] = true
 	var task_names := {}
 	var task_orders := {}
-	var levels := LEVELS.load_book()
+	var levels := LEVELS.load_book(LEVELS.PATH, true, false)
 	if not tasks.is_empty(): errors.append_array(levels.errors)
 	for task in tasks:
 		var id := str(task.get("task_id", ""))
@@ -97,11 +97,13 @@ func validate() -> PackedStringArray:
 		var level_id := str(task.get("level_id", ""))
 		if level_id.is_empty() or (levels.catalog != null and levels.catalog.by_id(level_id).is_empty()): errors.append("任务必须绑定一个有效关卡：" + id)
 	return errors
+var workbook_origin: Dictionary = {}
+
 func save_book(path := PATH) -> PackedStringArray:
 	var errors := validate()
-	return XLSX.write_book(path, sheets()) if errors.is_empty() else errors
-static func load_book(path := PATH) -> Dictionary:
-	var book := XLSX.read_book(path)
+	return XLSX.save_tables(path, sheets(), workbook_origin) if errors.is_empty() else errors
+static func load_book(path := PATH, editable := true) -> Dictionary:
+	var book := XLSX.read_book(path, {"事件": EVENT_FIELDS, "任务": TASK_FIELDS, "配置": ["key", "value"]}, editable)
 	if not book.errors.is_empty(): return {"catalog": null, "errors": book.errors}
 	var script: Script = load("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
 	var catalog: Resource = script.new()
@@ -126,4 +128,5 @@ static func load_book(path := PATH) -> Dictionary:
 		catalog.next_task_ids[task.event_id] = maxi(int(catalog.next_task_ids.get(task.event_id, 1)), sequence + 1)
 	errors.append_array(catalog.validate())
 	catalog.events.sort_custom(func(a: Dictionary, b: Dictionary): return int(a.order) < int(b.order))
+	catalog.workbook_origin = book.origin
 	return {"catalog": catalog if errors.is_empty() else null, "errors": errors}

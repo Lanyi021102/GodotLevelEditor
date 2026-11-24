@@ -14,6 +14,7 @@ var mode_stack: TabContainer
 var editor_host: VBoxContainer
 var catalog_grid: GridContainer
 var search: LineEdit
+var source_filter: OptionButton
 var detail: VBoxContainer
 var detail_title: Label
 var detail_info: Label
@@ -46,6 +47,7 @@ func _ready() -> void:
 	_build_catalog()
 	editor_host = VBoxContainer.new(); mode_stack.add_child(editor_host)
 	heading = Label.new(); heading.add_theme_color_override("font_color", STYLE.NAVY); editor_host.add_child(heading)
+	heading.visible = kind != "机关"
 	status = Label.new(); status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; add_child(status)
 	create_dialog = EditorFileDialog.new(); create_dialog.title = "新建" + kind
 	create_dialog.file_mode = EditorFileDialog.FILE_MODE_SAVE_FILE; create_dialog.access = EditorFileDialog.ACCESS_RESOURCES
@@ -70,7 +72,12 @@ func _build_catalog() -> void:
 	var bar := HBoxContainer.new(); page.add_child(bar)
 	search = LineEdit.new(); search.placeholder_text = "搜索我的" + kind; search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	search.text_changed.connect(func(_text: String): _filter()); bar.add_child(search)
+	source_filter = OptionButton.new()
+	for source in ["全部素材", "我的素材", "内置素材"]: source_filter.add_item(source)
+	source_filter.item_selected.connect(func(_index: int): _filter())
+	bar.add_child(source_filter)
 	_button(bar, "刷新", reload_catalog)
+	_button(bar, "新建" + kind, func(): create_dialog.popup_centered_ratio(0.6)).theme_type_variation = "PrimaryButton"
 	var body := HBoxContainer.new(); body.size_flags_vertical = Control.SIZE_EXPAND_FILL; body.add_theme_constant_override("separation", 20); page.add_child(body)
 	var scroll := ScrollContainer.new(); scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL; scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER; body.add_child(scroll)
@@ -115,14 +122,12 @@ func _render_catalog() -> void:
 	cards.clear()
 	for child in catalog_grid.get_children(): catalog_grid.remove_child(child); child.queue_free()
 	for path in entries:
-		var card := CARD.new(); card.data = entries[path]; card.tooltip_text = path
+		var card := CARD.new(); card.data = entries[path].duplicate(); card.tooltip_text = path
+		card.data.notes = "内置素材" if str(path).begins_with("res://addons/") else "我的素材"
 		card.selected.connect(select_asset)
 		card.activated.connect(func(asset_path: String): select_asset(asset_path); enter_edit())
 		catalog_grid.add_child(card); cards[path] = card
-	var add := CARD.new(); add.is_new = true; add.new_title = "新建" + kind
-	add.activated.connect(func(_path: String): create_dialog.popup_centered_ratio(0.6)); catalog_grid.add_child(add)
-	if not entries.has(selected_path): selected_path = "" if entries.is_empty() else str(entries.keys()[0])
-	_filter(); _detail()
+	_filter()
 
 func _cache_path() -> String:
 	return "res://.godot/godot_level_editor_suite/" + ("mechanisms" if kind == "机关" else "npcs") + "_catalog.json"
@@ -258,12 +263,19 @@ func _add_entry(path: String, title: String, info: String, preview: String) -> v
 
 func _filter() -> void:
 	var count := 0
+	var first_visible := ""
 	for path in cards:
 		var row: Dictionary = entries[path]
-		cards[path].visible = search.text.is_empty() or (str(row.display_name) + " " + str(path) + " " + str(row.get("search_terms", ""))).containsn(search.text)
-		if cards[path].visible: count += 1
+		var origin := 2 if str(path).begins_with("res://addons/") else 1
+		var matches := (str(row.display_name) + " " + str(path) + " " + str(row.get("search_terms", ""))).containsn(search.text)
+		cards[path].visible = (search.text.is_empty() or matches) and source_filter.selected in [0, origin]
+		if cards[path].visible:
+			if count == 0: first_visible = path
+			count += 1
 	empty_label.visible = count == 0
-	empty_label.text = "暂无" + kind + "，点击下方卡片新建。" if entries.is_empty() else "没有匹配的" + kind
+	empty_label.text = "没有匹配的" + kind
+	if not cards.has(selected_path) or not cards[selected_path].visible: selected_path = first_visible
+	_detail()
 
 func select_asset(path: String) -> void:
 	if not entries.has(path): return
@@ -274,7 +286,8 @@ func _detail() -> void:
 	var row: Dictionary = entries.get(selected_path, {})
 	enter_button.disabled = row.is_empty()
 	detail_title.text = str(row.get("display_name", "选择一个" + kind))
-	detail_info.text = str(row.get("metadata", "")) + "\n\n" + selected_path
+	detail_info.text = str(row.get("metadata", ""))
+	detail_info.tooltip_text = selected_path
 	detail_cover.texture = row.get("fallback_icon")
 	var thumbnail := str(row.get("preview_path", ""))
 	var texture := CARD.preview_texture(thumbnail)
@@ -347,4 +360,6 @@ func create_asset(path: String) -> void:
 		var result := preload("res://addons/godot_level_editor/modules/enemy_editor/definition_store.gd").save_definition(definition, path)
 		if result != OK: status.text = "创建失败：" + error_string(result); return
 	EditorInterface.get_resource_filesystem().scan()
+	search.clear()
+	source_filter.select(0)
 	reload_catalog(); select_asset(path); enter_edit()

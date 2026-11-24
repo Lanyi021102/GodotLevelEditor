@@ -232,8 +232,12 @@ static func read_csv(path: String) -> Dictionary:
 
 const XLSX := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/xlsx.gd")
 @export_file("*.xlsx") var xlsx_path := "res://content/tables/dialogues.xlsx"
+var workbook_origin: Dictionary = {}
+const SHEET_FIELDS := {"对话组": ["group_id", "name", "order"], "Comments": ["comment_id", "group_id", "name", "order"], "对白": ["line_id", "comment_id", "order", "speaker", "dialogue_mode", "text", "type", "duration"], "角色": ["speaker", "color"], "配置": ["key", "value"]}
 func workbook_sheets() -> Dictionary:
-	var sheets := {"对话组": [["group_id", "name", "order"]], "Comments": [["comment_id", "group_id", "name", "order"]], "对白": [["line_id", "comment_id", "order", "speaker", "dialogue_mode", "text", "type", "duration"]], "角色": [["speaker", "color"]], "配置": [["key", "value"], ["version", str(VERSION)], ["next_line_id", str(next_line_id)]]}
+	var sheets := {}
+	for name in SHEET_FIELDS: sheets[name] = [SHEET_FIELDS[name].duplicate()]
+	sheets["配置"].append_array([["version", str(VERSION)], ["next_line_id", str(next_line_id)]])
 	for g in groups.size():
 		var group: Dictionary = groups[g]
 		sheets["对话组"].append([group.id, group.name, str(g)])
@@ -247,9 +251,9 @@ func workbook_sheets() -> Dictionary:
 	return sheets
 func write_xlsx(path: String) -> PackedStringArray:
 	var errors := validate()
-	return XLSX.write_book(path, workbook_sheets()) if errors.is_empty() else errors
-static func read_xlsx(path: String) -> Dictionary:
-	var book := XLSX.read_book(path)
+	return XLSX.save_tables(path, workbook_sheets(), workbook_origin) if errors.is_empty() else errors
+static func read_xlsx(path: String, editable := true) -> Dictionary:
+	var book := XLSX.read_book(path, SHEET_FIELDS, editable)
 	if not book.errors.is_empty(): return {"library": null, "errors": book.errors}
 	var parsed := {}
 	var errors := PackedStringArray()
@@ -261,6 +265,7 @@ static func read_xlsx(path: String) -> Dictionary:
 	if not errors.is_empty(): return {"library": null, "errors": errors}
 	var library: Resource = load("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/dialogue_library.gd").new()
 	library.xlsx_path = path
+	library.workbook_origin = book.origin
 	var metadata := {}
 	for row in parsed["配置"]: metadata[row.key] = row.value
 	if str(metadata.get("version", "")) != str(VERSION): errors.append("台本 XLSX 版本无效")

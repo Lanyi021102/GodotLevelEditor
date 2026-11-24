@@ -8,6 +8,8 @@ Godot 4.7.1 editor plugin with a quick-add wheel, whitebox and face/edge/point t
 
 [Download](https://github.com/Lanyi021102/GodotLevelEditor/releases/latest) · [English Wiki](https://lanyi021102.github.io/GodotLevelEditor/en/) · [中文 Wiki](https://lanyi021102.github.io/GodotLevelEditor/)
 
+**0.3.0** adds whitebox terrain, player 3C presets, vehicle presets and a performance timeline, alongside native viewport measurements, per-instance NPC conversations and Excel conflict handling. [Changelog](docs/wiki/changelog.en.md)
+
 ![Whitebox editing in Godot's native viewport](docs/wiki/assets/readme/01_whitebox_editor.png)
 
 ## Features
@@ -18,6 +20,12 @@ Build in the native scene tree and 3D viewport. Use the wheel to place whitebox 
 
 ![Quick-add wheel](docs/wiki/assets/readme/02_quick_add_wheel.png)
 
+Use **Quick Add → Terrain** to place peaks, draw rivers and drag out plateaus. Nearby peaks preview their connecting ridge, and the terrain controls save with the level. [Terrain guide](docs/wiki/guides/levels.md#terrain)
+
+### Vehicle presets
+
+Place a kart, motorcycle or hovercraft under **Quick Add → Vehicles** in the 3D viewport. Edit its model, seat and driving settings and save a reusable preset. [Vehicle guide](docs/wiki/guides/vehicles.md)
+
 ### Connect mechanisms and tasks
 
 Five independent mechanisms are included: double door, single door, pressure plate, button and lift. Edit mechanism states and actions with nodes; use task graphs for triggers, delays and completion.
@@ -25,6 +33,10 @@ Five independent mechanisms are included: double door, single door, pressure pla
 ![Mechanism graph and preview](docs/wiki/assets/readme/03_mechanism_graph.png)
 
 ![Task graph](docs/wiki/assets/readme/05_task_graph.png)
+
+### Performance timeline
+
+Capture shots and stage NPC movement and animation in Level Editing, then trigger the sequence from a level or task graph. See [Performance timeline](docs/wiki/guides/levels.en.md#performance).
 
 ### NPCs, dialogue and sky
 
@@ -37,6 +49,8 @@ Browse 13 sample NPCs and configure models, animations and state machines. Dialo
 ### Save and play
 
 A default player, third-person camera and HUD are included. In an empty project, enable the addon and press Play to control the character. Use F6 to playtest the current level and assess its scale and routes.
+
+Use **玩家** (Player) to edit character abilities, camera, inputs and animations, then apply the saved preset to a level. See [Player 3C presets](docs/wiki/guides/player.md).
 
 ![Actual whitebox playtest](docs/wiki/assets/readme/07_whitebox_play_landscape.png)
 
@@ -70,7 +84,7 @@ Only `addons/godot_level_editor/` enters the installation ZIP. GitHub and the lo
 
 ## Create a map
 
-In Godot's FileSystem, right-click `addons/godot_level_editor/templates/empty_level.tscn` and choose **New Inherited Scene**. Use **Scene → Save As** to save under `content/scenes/levels/` or another project folder outside the addon. Keep the built-in template as the source.
+Open **GodotLevelEditor → 工作台 → 新建关卡** (Workspace → New Level). Use Godot’s **Scene → Save As** under `content/scenes/levels/` or another project folder outside the addon. Resume the last map from Workspace. In My Levels, **打开场景** returns to the native 3D viewport and **编辑常驻逻辑** opens the map’s logic. Try the [button and door exercise](docs/wiki/tutorials/button-door.en.md#wire-button) in your own project.
 
 Use the native scene tree, 3D viewport, save, duplicate and F6 commands. The toolbar's **呼出轮盘** opens quick-add. Whitebox, face/edge/point tools and step settings remain available. In the separate window, use **关卡 → 我的关卡** (Levels → My Levels) to browse and open map files, and **关卡 → 关卡编辑** (Level Editing) for the current scene's permanent logic. Native saving registers a stable level ID for task assignment.
 

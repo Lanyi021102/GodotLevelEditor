@@ -5,6 +5,13 @@ signal room_entered(from_room: String, to_room: String, actor: Node3D)
 signal goal_completed(goal_id: String)
 signal objective_changed(text: String)
 signal progress_requested(progress: Dictionary)
+signal player_preset_changed
+signal performances_changed
+const PLAYER_PRESET := preload("res://addons/godot_level_editor/modules/godot_level_editor_player/preset.gd")
+@export var player_preset: PLAYER_PRESET:
+	set(value):
+		player_preset = value
+		player_preset_changed.emit()
 const GRAPH := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/level_graph.gd")
 const RUNNER := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/event_runner.gd")
 const ROOM := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/room.gd")
@@ -41,6 +48,11 @@ func preview_sky(preset: Resource) -> PackedStringArray:
 @export var topology: GodotLevelEditorLevelGraph
 @export var events: GodotLevelEditorLevelGraph
 @export var level_logic: GodotLevelEditorLevelGraph
+const PERFORMANCE_SEQUENCE := preload("res://addons/godot_level_editor/modules/godot_level_editor_performance/sequence.gd")
+@export_storage var performances: Array[PERFORMANCE_SEQUENCE] = []:
+	set(value):
+		performances = value
+		performances_changed.emit()
 var logic_director: Node
 var actions: RefCounted
 var runner: RefCounted
@@ -76,8 +88,13 @@ func _object_index() -> Dictionary:
 		_index_object("$world", child, result, ambiguous, errors)
 	return {"objects": result, "errors": errors}
 
+static func _scene_object_id(node: Node) -> Variant:
+	if node.get("allow_conversation") == true and node.get("enemy_instance_id") is String:
+		return node.get("enemy_instance_id")
+	return node.get("object_id")
+
 func _index_object(scope: String, object: Node, result: Dictionary, ambiguous: Dictionary, errors: PackedStringArray) -> void:
-	var id: Variant = object.get("object_id")
+	var id: Variant = _scene_object_id(object)
 	if not id is String or id.is_empty(): return
 	var reference: String = scope + "/" + id
 	if not id.is_valid_identifier():
@@ -287,7 +304,7 @@ func validate() -> PackedStringArray:
 	var room_ids := {}
 	var refs := {}
 	for child in GROUPS.contents(self):
-		var id: Variant = child.get("object_id")
+		var id: Variant = _scene_object_id(child)
 		if id is String and not id.is_empty():
 			refs["$world/" + id] = child
 			if child.get_script() == preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd"): errors.append_array(child.validate())
@@ -301,7 +318,7 @@ func validate() -> PackedStringArray:
 		if not room.scale.is_equal_approx(Vector3.ONE) or absf(room.rotation.x) > 0.001 or absf(room.rotation.z) > 0.001:
 			errors.append(str(room.room_id) + "：房间只支持平移与水平旋转")
 		for obj in GROUPS.contents(room):
-			var local_id: Variant = obj.get("object_id")
+			var local_id: Variant = _scene_object_id(obj)
 			if not local_id is String:
 				continue
 			var id: String = room.room_id + "/" + local_id

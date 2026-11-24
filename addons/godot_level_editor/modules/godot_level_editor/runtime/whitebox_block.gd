@@ -31,11 +31,25 @@ const METRIC_GRID := preload("res://addons/godot_level_editor/scripts/tools/metr
 var _queued := false
 var _snapping_scale := false
 var _mesh_cache: ArrayMesh
+var _terrain_cover := {}
 
 func _enter_tree() -> void:
 	set_notify_local_transform(true)
 	if object_id.is_empty(): object_id = "block_" + Crypto.new().generate_random_bytes(10).hex_encode()
 func _ready() -> void: _rebuild()
+
+func set_terrain_coverage(source: int, covered: bool) -> void:
+	if covered:
+		_terrain_cover[source] = true
+	else:
+		_terrain_cover.erase(source)
+	if is_inside_tree() and not _queued:
+		_queued = true
+		_rebuild.call_deferred()
+		if Engine.is_editor_hint(): update_gizmos()
+
+func is_covered_by_terrain() -> bool:
+	return not _terrain_cover.is_empty()
 func _changed() -> void:
 	_mesh_cache = null
 	if is_inside_tree() and not _queued:
@@ -67,6 +81,7 @@ func _rebuild() -> void:
 	if not is_inside_tree(): return
 	for child in get_children():
 		if child.get_meta("godot_level_editor_generated", false): child.free()
+	if is_covered_by_terrain(): return
 	var shape_mesh := geometry()
 	if visual_scene != null:
 		var visual := visual_scene.instantiate()

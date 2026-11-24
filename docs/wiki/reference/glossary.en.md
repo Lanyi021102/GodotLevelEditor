@@ -5,8 +5,8 @@
 | Term | Meaning |
 |---|---|
 | Level | A complete `.tscn` map with layout, regions, mechanisms and NPCs |
-| Room | A box trigger, not a separate architectural room scene |
-| Whitebox | Editable prototype geometry for layout and scale |
+| Trigger area (触发区域 / Room) | A box that detects players entering or leaving |
+| Whitebox shapes (白盒体块) | Editable prototype geometry for layout and scale |
 | Asset | Reusable scene/definition; source changes can affect many instances |
 | Instance | One placed copy with its own transform and identity |
 | Assembly | A mechanism scene and its paired graph definition |
@@ -23,6 +23,9 @@
 | Action | Key or entry |
 |---|---|
 | Play main scene / current scene | F5 / F6 |
+| Read width, height and depth | Select a whitebox block and look at the lower-left corner of the viewport |
+| Measure distance and height difference | Click **测距**, then click two surfaces. Esc exits |
+| Complete a river | Enter or **完成河流** in the terrain editor. Esc cancels a draft |
 | Open or close wheel | 3D toolbar, backtick or mouse side-button tap |
 | Place / place repeatedly | Left click on ground during placement |
 | Rotate ±15° | R / Shift+R |

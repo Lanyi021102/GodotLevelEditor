@@ -17,6 +17,8 @@
 [ext_resource type="Script" uid="uid://dgig88tw68isw" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd" id="15_3115f"]
 [ext_resource type="Script" uid="uid://cdd4rbo8rpk60" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/region.gd" id="15_ss06l"]
 [ext_resource type="Script" uid="uid://b7qjdgwd45pxm" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_binding.gd" id="16_l1cck"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/vehicles/hover_speeder.tscn" id="19_8708w"]
+[ext_resource type="Script" uid="uid://ddh2sfj1u2vot" path="res://addons/godot_level_editor/modules/godot_level_editor/terrain/terrain.gd" id="20_b4ula"]
 [ext_resource type="Script" uid="uid://bns0bjy5anltf" path="res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/graph/definition.gd" id="mechanism_definition_cleanup"]
 
 [sub_resource type="Resource" id="Resource_kp4r5"]
@@ -222,14 +224,14 @@ albedo_color = Color(0.6745098, 0.38431373, 0.32941177, 1)
 radius = 0.32
 height = 1.75
 
-[sub_resource type="Resource" id="Resource_oqt0s"]
+[sub_resource type="Resource" id="Resource_b4ula"]
 resource_local_to_scene = true
 script = ExtResource("15_3115f")
 default_action = "walk"
 behavior_definition = ExtResource("14_d6f6u")
 body_height = 1.55
 
-[sub_resource type="Resource" id="Resource_3jaw7"]
+[sub_resource type="Resource" id="Resource_8qoay"]
 resource_local_to_scene = true
 script = ExtResource("15_3115f")
 behavior_definition = ExtResource("14_d6f6u")
@@ -1255,7 +1257,7 @@ mesh = SubResource("CapsuleMesh_u5b15")
 [node name="奶牛" parent="NPCs" unique_id=214552605 instance=ExtResource("13_uxb8w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2, 0, -8.400001)
 enemy_instance_id = "object_0ae90d4345f28a656ff45e83"
-metadata/godot_level_editor_entity = SubResource("Resource_oqt0s")
+metadata/godot_level_editor_entity = SubResource("Resource_b4ula")
 metadata/_edit_group_ = true
 
 [node name="EntityProperties" type="Node3D" parent="NPCs/奶牛" unique_id=235097246]
@@ -1265,7 +1267,7 @@ script = ExtResource("16_l1cck")
 [node name="奶牛2" parent="NPCs" unique_id=728936605 instance=ExtResource("13_uxb8w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4, 0, -6.6)
 enemy_instance_id = "object_91dcfd0900739113453319a2"
-metadata/godot_level_editor_entity = SubResource("Resource_3jaw7")
+metadata/godot_level_editor_entity = SubResource("Resource_8qoay")
 metadata/_edit_group_ = true
 
 [node name="EntityProperties" type="Node3D" parent="NPCs/奶牛2" unique_id=68496497]
@@ -1340,3 +1342,90 @@ billboard = 1
 modulate = Color(1, 0.94509804, 0.79607844, 1)
 text = "正门 · 钥匙解锁"
 outline_size = 8
+
+[node name="Vehicles" type="Node3D" parent="." unique_id=226701860]
+metadata/godot_level_editor_content_group = "vehicle"
+
+[node name="HoverSpeeder" parent="Vehicles" unique_id=1956309855 instance=ExtResource("19_8708w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.1, 2.3)
+
+[node name="Terrain" type="Node3D" parent="." unique_id=130021760]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)
+script = ExtResource("20_b4ula")
+layout = {
+"features": [{
+"center": Vector2(-112.1, -52.100002),
+"height": 12.0,
+&"id": 1,
+"kind": "peak",
+"profile": 0,
+"radius": 25.0
+}, {
+"center": Vector2(-68.8, -2.2000003),
+"height": 18.930170260369778,
+&"id": 2,
+"kind": "peak",
+"profile": 0,
+"radius": 25.0
+}, {
+"center": Vector2(-136.7, -3.9),
+"height": 33.99473372101784,
+&"id": 3,
+"kind": "peak",
+"profile": 1,
+"radius": 25.0
+}, {
+"center": Vector2(-111.5, -0.90000004),
+"height": 40.0,
+&"id": 4,
+"kind": "peak",
+"profile": 1,
+"radius": 25.0
+}, {
+"center": Vector2(-99.6, -37.2),
+"height": 30.826812982559204,
+&"id": 5,
+"kind": "peak",
+"profile": 1,
+"radius": 25.0
+}, {
+"center": Vector2(-114.700005, -22.2),
+"height": 20.0,
+&"id": 6,
+"kind": "peak",
+"profile": 0,
+"radius": 25.0
+}, {
+"center": Vector2(-129.90001, -23.699999),
+"height": 20.0,
+&"id": 7,
+"kind": "peak",
+"profile": 0,
+"radius": 60.0
+}, {
+"center": Vector2(-109.5, -49.5),
+"height": 20.0,
+&"id": 8,
+"kind": "peak",
+"profile": 0,
+"radius": 60.0
+}, {
+"center": Vector2(-90.00001, 19),
+"height": 20.0,
+&"id": 9,
+"kind": "peak",
+"profile": 0,
+"radius": 60.0
+}],
+"next_id": 10,
+"ridges": {
+"2:4": {
+"height": 11.33262397646904
+},
+"2:9": {
+"height": 15.001710904017092
+}
+},
+"version": 1
+}
+metadata/_edit_group_ = true

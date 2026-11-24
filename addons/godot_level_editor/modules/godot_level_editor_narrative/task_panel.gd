@@ -1,6 +1,16 @@
 @tool
 extends "res://addons/godot_level_editor/modules/godot_level_editor/graph_panel.gd"
 var bound_task_id := ""
+const EVENT_CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
+var event_editor: Control
+var _owner_id := ""
+var _owner_path := ""
+var _owner_title := ""
+var _task_title := ""
+var run_steps: MenuButton
+var _previous_steps: Array = []
+var _previous_graph := ""
+var _previous_world := ""
 var task_file: EditorFileDialog
 var file_saving := false
 var task_library_label: Label
@@ -44,10 +54,21 @@ func _ready() -> void:
 	_toolbar_menu(menus, "绑定", [
 		["使用当前世界", use_current_world], ["使用台本页当前库", _bind_library]])
 	_toolbar_menu(menus, "试玩", [
-		["试玩当前关卡", func(): EditorInterface.play_current_scene()]])
+		["试玩当前关卡", _play_owner]])
 	task_library_label = Label.new()
-	task_library_label.hide()
-	toolbar.add_child(task_library_label)
+	task_library_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	add_child(task_library_label)
+	move_child(task_library_label, 1)
+	run_steps = MenuButton.new()
+	run_steps.flat = false
+	run_steps.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	run_steps.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	run_steps.hide()
+	run_steps.get_popup().id_pressed.connect(_focus_step)
+	add_child(run_steps)
+	move_child(run_steps, 2)
+	visibility_changed.connect(func():
+		if is_visible_in_tree(): _library_label(true))
 	task_file = EditorFileDialog.new()
 	task_file.add_filter("*.tres", "任务图")
 	task_file.file_selected.connect(_task_selected)
@@ -80,6 +101,7 @@ func use_current_world() -> void:
 			for child in root.find_children("*", "Node3D", true, false):
 				if child.get_script() == WORLD: world = child; break
 	status.text = ""
+	_library_label(true)
 	_rebuild()
 
 func _choose_task(saving: bool) -> void:
@@ -140,6 +162,8 @@ func _task_selected(path: String) -> void:
 			dirty = false
 			status.text = "已保存任务图：" + path
 			EditorInterface.get_resource_filesystem().scan()
+			bound_task_id = _catalog_task_id(path)
+			_library_label(true)
 	else:
 		if graph != null and graph.resource_path == path: return
 		if dirty:
@@ -167,9 +191,108 @@ func _bind_library() -> void:
 	dirty = true
 	_library_label()
 
-func _library_label() -> void:
-	if graph != null:
-		task_library_label.text = "配表：" + graph.table_file().get_file()
+func _library_label(refresh := false) -> void:
+	if task_library_label == null or graph == null: return
+	if refresh or _owner_id != bound_task_id:
+		_owner_id = bound_task_id
+		_owner_path = ""
+		_owner_title = ""
+		_task_title = ""
+		if not bound_task_id.is_empty():
+			var catalog: Resource = event_editor.catalog if is_instance_valid(event_editor) else null
+			if catalog == null: catalog = EVENT_CATALOG.load_book().catalog
+			if catalog != null:
+				var task: Dictionary = catalog.task_by_id(bound_task_id)
+				_task_title = str(task.get("display_name", ""))
+				var levels := EVENT_CATALOG.LEVELS.load_book(EVENT_CATALOG.LEVELS.PATH, false)
+				if levels.catalog != null:
+					var level: Dictionary = levels.catalog.by_id(str(task.get("level_id", "")))
+					_owner_path = str(level.get("scene_path", ""))
+					_owner_title = str(level.get("display_name", ""))
+	var state := "有修改" if dirty else ("未保存" if graph.resource_path.is_empty() else "已保存")
+	var table := str(graph.table_file()).get_file()
+	task_library_label.text = "所属关卡　%s　　任务　%s　　台本　%s　　%s" % [
+		_owner_title if not _owner_title.is_empty() else "未绑定",
+		_task_title if not _task_title.is_empty() else ("未登记" if bound_task_id.is_empty() else bound_task_id),
+		table if not table.is_empty() else "未绑定", state]
+	if toolbar_menus.has("试玩"):
+		var menu: PopupMenu = toolbar_menus["试玩"].get_popup()
+		menu.set_item_text(0, "试玩所属关卡　" + _owner_title if not _owner_path.is_empty() else "试玩当前关卡")
+
+func _play_owner() -> void:
+	if is_instance_valid(event_editor) and event_editor.dirty:
+		event_editor.save()
+		if event_editor.dirty:
+			status.text = event_editor.status.text
+			return
+	_library_label(true)
+	var root := EditorInterface.get_edited_scene_root()
+	if not bound_task_id.is_empty() and (_owner_path.is_empty() or not FileAccess.file_exists(_owner_path)):
+		status.text = "请在“事件与任务”中选择有效的所属关卡。"
+		return
+	if _owner_path.is_empty() and (root == null or not is_instance_valid(world)):
+		status.text = "请先打开要试玩的关卡。"
+		return
+	if not _owner_path.is_empty() and (root == null or root.scene_file_path != _owner_path):
+		EditorInterface.open_scene_from_path(_owner_path)
+		for attempt in 60:
+			root = EditorInterface.get_edited_scene_root()
+			if root != null and root.scene_file_path == _owner_path: break
+			await get_tree().process_frame
+		if root == null or root.scene_file_path != _owner_path:
+			status.text = "未能打开所属关卡。"
+			return
+	use_current_world()
+	if dirty and not save_graph(): return
+	EditorInterface.play_current_scene()
+
+func _update_runtime() -> void:
+	super._update_runtime()
+	if run_steps == null or graph == null: return
+	var packet: Dictionary = _packets.get(_active_key, {})
+	if not packet.is_empty():
+		_previous_steps = packet.get("trace", []).duplicate()
+		_previous_graph = graph.graph_id
+		_previous_world = str(packet.get("world_id", ""))
+	var matching: bool = _previous_graph == graph.graph_id and (not is_instance_valid(world) or world.world_id == _previous_world)
+	var history: Array = _previous_steps if matching else []
+	var waiting: Array = packet.get("waiting", [])
+	run_steps.visible = not waiting.is_empty() or not history.is_empty()
+	if not run_steps.visible: return
+	var menu := run_steps.get_popup()
+	if menu.visible: return
+	menu.clear()
+	for entry in waiting:
+		_append_step(menu, str(entry.id), _step_text(entry))
+	if not waiting.is_empty() and not history.is_empty(): menu.add_separator()
+	for index in range(history.size() - 1, -1, -1):
+		var entry: Dictionary = history[index]
+		_append_step(menu, str(entry.id), _step_text(entry))
+	run_steps.text = ("上次试玩　" if packet.is_empty() else "试玩记录　") + (menu.get_item_text(0) if menu.item_count > 0 else "") + "　▾"
+	run_steps.tooltip_text = "展开查看最近的执行和等待条件，选择一项定位节点。"
+
+func _step_text(entry: Dictionary) -> String:
+	var n := graph.node_by_id(str(entry.id))
+	var name_text := GRAPH.display_label(n) if not n.is_empty() else str(entry.id)
+	var target := str(entry.get("target", ""))
+	var reason := str(entry.get("reason", ""))
+	if not target.is_empty(): reason = _friendly("object", target) + "　" + reason
+	return name_text + ("　" + reason if not reason.is_empty() else "")
+
+func _append_step(menu: PopupMenu, id: String, caption: String) -> void:
+	menu.add_item(caption)
+	var index := menu.item_count - 1
+	menu.set_item_metadata(index, id)
+	menu.set_item_disabled(index, graph.node_by_id(id).is_empty())
+
+func _focus_step(menu_id: int) -> void:
+	var menu := run_steps.get_popup()
+	var id := str(menu.get_item_metadata(menu.get_item_index(menu_id)))
+	var node := canvas.get_node_or_null(NodePath(id)) as GraphNode
+	if node == null: return
+	canvas.set_selected(node)
+	_select_graph_node(node)
+	canvas.scroll_offset = node.position_offset * canvas.zoom - canvas.size * 0.35
 
 func _can_offer_node(kind: String) -> bool:
 	return TASK.supported_kinds().has(kind)
@@ -179,14 +302,18 @@ func save_graph() -> bool:
 	_sync_bound_task()
 	if graph != null and is_instance_valid(world):
 		var expected_level := ""
-		var book := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd").load_book()
-		if book.catalog != null and not bound_task_id.is_empty(): expected_level = str(book.catalog.task_by_id(bound_task_id).get("level_id", ""))
+		if not bound_task_id.is_empty():
+			var catalog: Resource = event_editor.catalog if is_instance_valid(event_editor) else EVENT_CATALOG.load_book().catalog
+			if catalog != null: expected_level = str(catalog.task_by_id(bound_task_id).get("level_id", ""))
 		var binding_errors := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_bindings.gd").validate(world, graph, bound_task_id, expected_level)
-		for node in graph.nodes: binding_errors.append_array(preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/task_nodes.gd").validate_bindings(world, node))
+		if expected_level.is_empty() or str(world.level_id) == expected_level:
+			for node in graph.nodes: binding_errors.append_array(preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/task_nodes.gd").validate_bindings(world, node))
 		if not binding_errors.is_empty(): status.text = "未保存：" + "；".join(binding_errors); return false
 	if graph != null and graph.dialogue_library != null and not graph.dialogue_library.resource_path.is_empty():
 		graph.dialogue_library = ResourceLoader.load(graph.dialogue_library.resource_path, "", ResourceLoader.CACHE_MODE_IGNORE)
-	return super.save_graph()
+	var saved := super.save_graph()
+	_library_label()
+	return saved
 
 func _catalog_task_id(path: String, source: Resource = null) -> String:
 	if path.is_empty(): return ""
@@ -214,25 +341,14 @@ func _sync_bound_task() -> void:
 func _rebuild() -> void:
 	_sync_bound_task()
 	super._rebuild()
-
-func fit_graph() -> void:
-	if graph == null or graph.nodes.is_empty(): return
-	await get_tree().process_frame
-	var bounds := Rect2()
-	var first := true
-	for card in canvas.get_children():
-		if not card is GraphNode: continue
-		var rect := Rect2(card.position_offset, card.size)
-		bounds = rect if first else bounds.merge(rect)
-		first = false
-	if first: return
-	canvas.zoom = clampf(minf((canvas.size.x - 80) / bounds.size.x, (canvas.size.y - 120) / bounds.size.y), canvas.zoom_min, 1.0)
-	canvas.scroll_offset = bounds.position * canvas.zoom - Vector2(40, 80)
+	_library_label()
 
 func default_task_id() -> String:
-	return bound_task_id if not bound_task_id.is_empty() else "meet_receptionist"
+	return bound_task_id
 
 func _show_parameters() -> void:
+	if parameters == null: return
+	parameters.get_parent().visible = graph != null and not graph.node_by_id(selected_id).is_empty()
 	if graph != null:
 		var selected: Dictionary = graph.node_by_id(selected_id)
 		if not selected.is_empty() and preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/task_nodes.gd").DEFINITIONS.has(selected.kind):

@@ -1,6 +1,10 @@
 # Sky and environment
 
+The preset list renders the same stairs, walls and distant blocks under each sky. Compare the direction of shadows, brightness and fog before applying a preset.
+
 Open **天空** (Sky). Pick a preset on the left and edit the relevant category on the right. Preview and level binding are separate actions.
+
+![Whitebox previews under different sky presets](../../qa/authoring_2026-11-19/sky-library.png)
 
 ## Parameter groups
 

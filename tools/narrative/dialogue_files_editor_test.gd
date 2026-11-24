@@ -239,6 +239,30 @@ func _run() -> void:
 	var mode_book := LIBRARY.read_xlsx(modes_path)
 	check(mode_book.library != null and mode_book.library.groups[0].comments[0].lines[1].dialogue_mode == LIBRARY.MODE_STATIONARY, "dialogue mode survives Save Dialogues and XLSX reload")
 	await capture("dialogue_modes")
+	var extras: Dictionary = XLSX.read_book(modes_path).sheets
+	extras["作者备注"] = [["说明"], ["保留这一页"]]
+	var rows: Array = extras["对白"]
+	rows[0].append("作者批注")
+	rows[1].append("第一句的行备注")
+	var standalone := []
+	standalone.resize(rows[0].size()); standalone.fill(""); standalone[-1] = "独立的作者记录"
+	rows.append(standalone)
+	XLSX.write_book(modes_path, extras)
+	panel.set_dialogue_mode(0, LIBRARY.MODE_STATIONARY)
+	var original_hash := FileAccess.get_sha256(modes_path)
+	panel.save()
+	await frames()
+	var conflict := panel.get_node_or_null("WorkbookConflict") as ConfirmationDialog
+	check(panel.dirty and FileAccess.get_sha256(modes_path) == original_hash and conflict != null and conflict.visible, "external save keeps both the author's file and the open draft")
+	if conflict != null:
+		conflict.custom_action.emit(&"reload")
+		await frames()
+	check(not panel.dirty and panel.library.xlsx_path == modes_path, "explicit reload safely adopts the disk workbook")
+	panel.set_dialogue_mode(0, LIBRARY.MODE_STATIONARY)
+	var copy_path := DATA + "/with_notes.xlsx"
+	check(panel.export_to(copy_path), "Save As with author-owned notes succeeds")
+	var again: Dictionary = XLSX.read_book(copy_path).sheets
+	check(again.has("作者备注") and again["作者备注"][1][0] == "保留这一页" and again["对白"][1][-1] == "第一句的行备注" and again["对白"][-1][-1] == "独立的作者记录", "copy preserves extra sheets, columns and note-only rows")
 	panel.file.hide()
 	panel.dirty = false
 	host.queue_free()

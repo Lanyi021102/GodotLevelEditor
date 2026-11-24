@@ -5,6 +5,7 @@ extends Resource
 const VERSION := 1
 const TASK_NODES := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_nodes.gd")
 const PORTS := {
+	"play_performance": {"in": {"run": "event"}, "out": {"completed": "event", "failed": "event"}},
 	"task_accept": {"in": {"run": "event"}, "out": {"then": "event", "failed": "event"}},
 	"event_hold": {"in": {"run": "event"}, "out": {"then": "event", "failed": "event"}},
 	"event_complete": {"in": {"run": "event"}, "out": {"then": "event", "failed": "event"}},
@@ -39,8 +40,8 @@ const PORTS := {
 	"objective": {"in": {"run": "event"}, "out": {}},
 	"checkpoint": {"in": {"run": "event"}, "out": {}},
 }
-const LABELS := {"event_hold": "等待显式结束事件", "event_complete": "结束当前事件", "npc_interact": "玩家与 NPC 互动时", "dialog_completed": "对话完成时", "show_dialog": "ShowDialog", "task_start": "开始任务", "task_complete": "完成任务", "region_enter": "玩家进入触发区域时", "start": "游戏开始时", "room_enter": "玩家进入 Room 时", "event_received": "收到事件时", "emit_event": "发送事件", "set_switch": "打开／关闭开关", "enemy_patrol": "敌人开始巡逻", "kill_player": "击杀玩家", "set_visibility": "显示／隐藏物件", "player_state": "检测玩家当前状态", "has_item": "检查背包物件", "branch": "如果条件成立", "port": "房间接驳点", "source": "检测机关是否开启", "constant": "是／否", "number": "数值", "greater": "比较两个数值", "object": "引用场景物件", "read_state": "检测引用物件状态", "all": "同时满足两个条件", "goal": "完成房间目标", "latch": "记住已发生的事件", "unlock": "允许房间之间通行", "objective": "更新玩家目标", "checkpoint": "请求保存进度"}
-const CATEGORIES := {"event_hold": "操作", "event_complete": "操作", "npc_interact": "触发", "dialog_completed": "触发", "show_dialog": "操作", "task_start": "操作", "task_complete": "操作", "region_enter": "触发", "start": "触发", "room_enter": "触发", "event_received": "触发", "goal": "触发", "emit_event": "操作", "set_switch": "操作", "enemy_patrol": "操作", "kill_player": "操作", "set_visibility": "操作", "latch": "操作", "unlock": "操作", "objective": "操作", "checkpoint": "操作", "player_state": "判断", "has_item": "判断", "branch": "判断", "source": "判断", "read_state": "判断", "all": "判断", "greater": "判断"}
+const LABELS := {"play_performance": "播放演出", "event_hold": "等待显式结束事件", "event_complete": "结束当前事件", "npc_interact": "玩家与 NPC 互动时", "dialog_completed": "对话完成时", "show_dialog": "ShowDialog", "task_start": "开始任务", "task_complete": "完成任务", "region_enter": "玩家进入触发区域时", "start": "游戏开始时", "room_enter": "玩家进入 Room 时", "event_received": "收到事件时", "emit_event": "发送事件", "set_switch": "打开／关闭开关", "enemy_patrol": "敌人开始巡逻", "kill_player": "击杀玩家", "set_visibility": "显示／隐藏物件", "player_state": "检测玩家当前状态", "has_item": "检查背包物件", "branch": "如果条件成立", "port": "房间接驳点", "source": "检测机关是否开启", "constant": "是／否", "number": "数值", "greater": "比较两个数值", "object": "引用场景物件", "read_state": "检测引用物件状态", "all": "同时满足两个条件", "goal": "完成房间目标", "latch": "记住已发生的事件", "unlock": "允许房间之间通行", "objective": "更新玩家目标", "checkpoint": "请求保存进度"}
+const CATEGORIES := {"play_performance": "操作", "event_hold": "操作", "event_complete": "操作", "npc_interact": "触发", "dialog_completed": "触发", "show_dialog": "操作", "task_start": "操作", "task_complete": "操作", "region_enter": "触发", "start": "触发", "room_enter": "触发", "event_received": "触发", "goal": "触发", "emit_event": "操作", "set_switch": "操作", "enemy_patrol": "操作", "kill_player": "操作", "set_visibility": "操作", "latch": "操作", "unlock": "操作", "objective": "操作", "checkpoint": "操作", "player_state": "判断", "has_item": "判断", "branch": "判断", "source": "判断", "read_state": "判断", "all": "判断", "greater": "判断"}
 const PORT_LABELS := {"cancel": "取消", "cancelled": "已取消", "timeout": "超时", "reset": "重置", "remaining": "剩余秒数", "reached": "达到次数", "open": "开启", "close": "关闭", "closed": "未通过", "c": "分支 C", "d": "分支 D", "space": "空间接口", "value": "结果", "condition": "条件", "completed": "完成时", "set": "记录事件", "enabled": "允许通行", "run": "执行", "then": "继续", "failed": "失败", "yes": "成立", "no": "不成立", "a": "条件 A", "b": "条件 B", "target": "目标物件"}
 const TYPE_LABELS := {"space": "空间", "bool": "是／否", "event": "事件", "number": "数值", "object": "物件"}
 const OLD_LABELS := ["对话完成时 Trigger", "ShowDialog 播放 comment", "ShowDialog 显示对话组", "玩家是否解锁道具", "空间接驳点", "读取机关布尔状态", "布尔常量", "数值常量", "数值大于", "场景对象引用", "读取引用对象状态", "布尔 AND", "区域目标完成事件", "事件 → 持续布尔", "解锁空间连接", "更新目标"]
@@ -113,11 +114,12 @@ func validate() -> PackedStringArray:
 			errors.append(id + "：参数格式无效")
 			continue
 		var p: Dictionary = n.get("params", {})
-		for required in {"npc_interact": ["npc"] if is_level_logic() else ["npc", "task"], "dialog_completed": ["dialog_id"] if is_level_logic() else ["dialog_id", "task"], "show_dialog": ["dialog_id"], "task_start": ["task"], "task_complete": ["task"], "task_accept": ["task"]}.get(kind, []):
+		for required in {"npc_interact": ["npc"] if is_level_logic() else ["npc", "task"], "dialog_completed": ["dialog_id"] if is_level_logic() else ["dialog_id", "task"], "show_dialog": ["dialog_id"], "play_performance": ["performance"], "task_start": ["task"], "task_complete": ["task"], "task_accept": ["task"]}.get(kind, []):
 			if required == "npc" and is_level_logic():
 				if str(p.get(required, "")).is_empty(): errors.append(id + "：请选择关卡常驻 NPC")
 				continue
 			if not str(p.get(required, "")).is_valid_identifier() and not (required in ["dialog_id", "task"] and str(p.get(required, "")).is_valid_int()): errors.append(id + "：缺少有效标识 " + required)
+		if kind == "play_performance" and not has_method("load_dialogue"): errors.append(id + "：播放演出用于常驻关卡图或任务图")
 		if TASK_NODES.DEFINITIONS.has(kind):
 			if not has_method("load_dialogue"): errors.append(id + "：此节点仅用于任务图")
 			errors.append_array(TASK_NODES.validate_node(n))

@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/godot_level_editor/assets/vehicles/motorcycle.glb" id="2"]
+
+[node name="Motorcycle" type="CharacterBody3D"]
+script = ExtResource("1")
+display_name = "摩托车"
+drive_mode = 1
+top_speed = 11.0
+reverse_speed = 2.0
+acceleration = 7.0
+turn_rate = 115.0
+model_scene = ExtResource("2")
+model_yaw = 180.0
+body_size = Vector3(1.12, 0.75, 2.32)
+body_center = Vector3(0, 0.385, -0.03)
+boarding_point = Vector3(-0.96, 0, 0.26)
+seat_point = Vector3(0, 0.32, 0.35)
+exit_left = Vector3(-0.96, 0, 0.25)
+exit_right = Vector3(0.96, 0, 0.25)
+camera_distance = 4.2

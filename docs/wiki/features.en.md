@@ -4,11 +4,17 @@ The separate window starts with **工作台** (Workspace); other pages initializ
 
 ## Find the right editor
 
+Start or resume a map in Workspace. Use **添加任务** on an event row and **编辑任务图** on a task row. The task graph identifies its level, task and dialogue workbook. Use its Play menu for the owning level and the execution record to locate recently executed or waiting nodes. Mechanism and NPC libraries offer creation and personal/built-in filters beside search.
+
 | What you want to make | Entry | Guide |
 |---|---|---|
 | Map geometry and layout | Native Godot scene tree, FileSystem, Inspector and 3D viewport | [Levels](guides/levels.md) |
+| Peaks, ridges, riverbeds and plateaus | **呼出轮盘 → 地形** (Quick Add → Terrain) in the native 3D viewport | [Draw terrain](guides/levels.md#terrain) |
 | Browse or create native maps | **关卡 → 我的关卡**; create an inherited scene, then use native Save As | [Levels](guides/levels.md) |
+| Drivable vehicles and reusable presets | **呼出轮盘 → 载具** (Quick Add → Vehicles), then edit with the Inspector | [Vehicle presets](guides/vehicles.md) |
+| Player abilities, camera, controls and animations | **玩家**; create or copy a preset and apply it to a level | [Player 3C presets](guides/player.md) |
 | Whitebox shapes and placement | 3D toolbar **呼出轮盘**, face/edge/point tools | [Quick start](getting-started.md) |
+| Camera cuts and NPC staging | **关卡 → 关卡编辑 → 演出时间轴** | [Performance timeline](guides/levels.md#performance) |
 | Persistent level logic | **关卡 → 关卡编辑** for the current scene | [Levels](guides/levels.md) |
 | Reusable mechanisms | **机关 → 我的机关** | [Mechanisms](tutorials/button-door.md) |
 | Ordered objectives | **任务 → 事件与任务 / 任务图** | [Terms](reference/glossary.md) |

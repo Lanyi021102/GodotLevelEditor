@@ -133,7 +133,7 @@ func _selection_changed() -> void:
 			var definition: Resource = node.get("enemy_definition")
 			if definition != null and not definition.resource_path.is_empty(): panel.request_open(definition.resource_path)
 			elif definition == null: panel.request_open(panel.TEMPLATE_PATH)
-			panel.set_scene_guard_label("场景守卫：%s · %s" % [node.name, node.get("enemy_instance_id")])
+			panel.set_scene_guard_label("场景 NPC：%s · %s" % [node.name, node.get("enemy_instance_id")])
 			return
 
 func _guard_matches_definition(guard: Node) -> bool:
@@ -150,7 +150,7 @@ func _focus_guard() -> void:
 				scene_guard = guard
 				break
 	if not is_instance_valid(scene_guard):
-		panel.status.text = "当前场景没有关联守卫；请在场景树选择守卫并绑定定义。"
+		panel.status.text = "当前场景没有关联 NPC；请在场景树选择 NPC 并绑定定义。"
 		return
 	var selection := EditorInterface.get_selection()
 	selection.clear()
@@ -161,10 +161,10 @@ func _focus_guard() -> void:
 
 func _bind_guard() -> void:
 	if not is_instance_valid(scene_guard):
-		panel.status.text = "请先在场景树选择一个守卫。"
+		panel.status.text = "请先在场景树选择一个 NPC。"
 		return
 	if panel.file_path.is_empty() or panel.dirty:
-		panel.status.text = "请先保存当前定义，再绑定到所选守卫。"
+		panel.status.text = "请先保存当前定义，再绑定到所选 NPC。"
 		return
 	var source := ResourceLoader.load(panel.file_path, "", ResourceLoader.CACHE_MODE_REPLACE)
 	var undo := get_undo_redo()
@@ -176,7 +176,7 @@ func _bind_guard() -> void:
 
 func _create_route() -> void:
 	if not is_instance_valid(scene_guard):
-		panel.status.text = "请先选择一个场景守卫。"
+		panel.status.text = "请先选择一个场景 NPC。"
 		return
 	var old_path: NodePath = scene_guard.get("patrol_route")
 	if not old_path.is_empty() and scene_guard.get_node_or_null(old_path) != null:

@@ -146,18 +146,18 @@ edges = Array[Dictionary]([{
 "to_port": "run"
 }])
 positions = {
-"all": Vector2(940, 430),
-"branch": Vector2(1380, 430),
-"complete": Vector2(1380, 780),
-"dialog": Vector2(500, 780),
-"equip": Vector2(1380, 80),
-"goal": Vector2(60, 780),
-"has_equipped": Vector2(500, 430),
-"has_item": Vector2(60, 430),
-"item": Vector2(940, 80),
-"objective": Vector2(500, 80),
-"read": Vector2(940, 780),
+"all": Vector2(440, 320),
+"branch": Vector2(1580, 80),
+"complete": Vector2(440, 840),
+"dialog": Vector2(2260, 80),
+"equip": Vector2(1200, 80),
+"goal": Vector2(1920, 80),
+"has_equipped": Vector2(60, 580),
+"has_item": Vector2(60, 320),
+"item": Vector2(820, 80),
+"objective": Vector2(440, 80),
+"read": Vector2(60, 840),
 "start": Vector2(60, 80)
 }
-view_scroll = Vector2(15.494637, -6.0071487)
-view_zoom = 0.9249106
+view_scroll = Vector2(-5.9869385, -76.99664)
+view_zoom = 0.43147752

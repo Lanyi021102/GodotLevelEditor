@@ -6,7 +6,10 @@ const GROUPS := preload("res://addons/godot_level_editor/modules/godot_level_edi
 const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
 const SPAWN := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd")
 const PROFILE := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd")
+const VEHICLE := preload("res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle.gd")
+const VEHICLE_INSPECTOR := preload("res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle_inspector.gd")
 const CARD := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/level_card.gd")
+const LEVEL_REGISTRY := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd")
 var checks := 0
 var failures := 0
 
@@ -87,7 +90,7 @@ func run(editor: EditorPlugin) -> void:
 	# Test cancellation above, then isolate the remaining input assertions.
 	window.focus_exited.disconnect(tool.cancel)
 	tool.open_wheel(camera, Vector2(2, 2))
-	check(tool.menu.visible and tool.menu.categories.size() == 6, "wheel opens over the native viewport with six fixed categories")
+	check(tool.menu.visible and tool.menu.categories.has(CATALOG.VEHICLE) and tool.menu.categories.has("地形"), "native wheel exposes vehicle placement and terrain editing")
 	check(tool.menu.wheel_center.x >= tool.menu.radius and tool.menu.wheel_center.y >= tool.menu.radius, "wheel clamps away from the viewport edges")
 	tool.menu.hover_at(tool.menu.wheel_center + Vector2.RIGHT * tool.menu.radius * 0.8)
 	tool.menu.select_category(1)
@@ -121,8 +124,8 @@ func run(editor: EditorPlugin) -> void:
 	check(root.get_child_count() == before_count and history.get_version() == before_version, "browsing and cancelling the wheel creates no objects or undo actions")
 	tool.open_wheel(camera)
 	var hover_window := EditorInterface.get_base_control().get_window()
-	for sector in 6:
-		var position: Vector2 = tool.menu.get_global_transform_with_canvas() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + sector * TAU / 6) * tool.menu.radius * 0.76)
+	for sector in tool.menu.categories.size():
+		var position: Vector2 = tool.menu.get_global_transform_with_canvas() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + sector * TAU / tool.menu.categories.size()) * tool.menu.radius * 0.76)
 		var hover := InputEventMouseMotion.new(); hover.position = position; hover.global_position = position
 		hover_window.push_input(hover, true)
 		check(tool.menu.category == sector, "real mouse hover selects sector " + str(sector) + " independently of the last used tool")
@@ -136,8 +139,8 @@ func run(editor: EditorPlugin) -> void:
 	# Hover every sector through real window input, including non-whitebox previews.
 	# After each injected motion, hold input steady while checking its animation.
 	# This avoids unrelated physical pointer motion from concurrent editor tests.
-	for index in 6:
-		var hover_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + index * TAU / 6) * tool.menu.radius * 0.76)
+	for index in tool.menu.categories.size():
+		var hover_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + index * TAU / tool.menu.categories.size()) * tool.menu.radius * 0.76)
 		var hover_motion := InputEventMouseMotion.new(); hover_motion.position = hover_point; hover_motion.global_position = hover_point
 		window.push_input(hover_motion, true)
 		tool.menu.interaction_enabled = false
@@ -175,8 +178,8 @@ func run(editor: EditorPlugin) -> void:
 	check(tool.menu.is_open() and tool.active_asset.is_empty(), "releasing the side button keeps the wheel open without selecting")
 	# Reproduce motion routed to the native overlay instead of the wheel GUI.
 	tool.menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	for index in 6:
-		var hover_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + index * TAU / 6) * tool.menu.radius * 0.76)
+	for index in tool.menu.categories.size():
+		var hover_point: Vector2 = tool.menu.get_global_transform() * (tool.menu.wheel_center + Vector2.from_angle(-PI * 0.5 + index * TAU / tool.menu.categories.size()) * tool.menu.radius * 0.76)
 		var hover_motion := InputEventMouseMotion.new(); hover_motion.position = hover_point; hover_motion.global_position = hover_point
 		window.push_input(hover_motion, true)
 		tool.menu.interaction_enabled = false
@@ -350,6 +353,7 @@ func run(editor: EditorPlugin) -> void:
 	var disk_npc: Node = disk_root.get_node(root.get_path_to(npc))
 	check(disk_npc.get_meta(PROFILE.META).faction == "hostile" and disk_npc.get_meta(PROFILE.META).default_action == "walk" and disk_npc.has_node("EntityProperties"), "Inspector model and behavior attributes survive native save and reload")
 	disk_root.free()
+	await _test_vehicle_editor(tool, camera, root, history)
 	tool.open_wheel(camera); tool.begin_asset(box)
 	editor._build()
 	check(not is_instance_valid(tool.ghost) and not tool.menu.visible, "starting F5/F6 disposes the wheel and ghost before game launch")
@@ -447,7 +451,8 @@ func run(editor: EditorPlugin) -> void:
 	await frames(tree, 10)
 	check(not is_instance_valid(tool.ghost) and not tool.menu.visible, "changing scenes cleans up all wheel and preview state")
 	check(source_hashes.keys().all(func(asset_path: String): return FileAccess.get_sha256(asset_path) == source_hashes[asset_path]), "all existing source Room, mechanism, NPC and palette files remain byte-identical")
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	if DirAccess.remove_absolute(ProjectSettings.globalize_path(path)) == OK:
+		LEVEL_REGISTRY.removed(path)
 	window.focus_exited.connect(tool.cancel)
 	tool.shortcut = original_shortcut
 	print("QUICK ADD: ", checks, " checks, ", failures, " failures")
@@ -465,3 +470,51 @@ func _frame_selection(view: SubViewport, window: Window) -> void:
 			candidate.grab_focus(); break
 	var key := InputEventKey.new(); key.keycode = KEY_F; key.pressed = true
 	window.push_input(key, true); key.pressed = false; window.push_input(key, true)
+
+
+func _test_vehicle_editor(tool: RefCounted, camera: Camera3D, root: Node, history: UndoRedo) -> void:
+	var tree := root.get_tree()
+	var library := CATALOG.assets(CATALOG.VEHICLE)
+	check(library.size() >= 3, "vehicle catalog exposes kart, motorcycle and hovercraft")
+	tool.open_wheel(camera)
+	tool.menu.select_category(tool.menu.categories.find(CATALOG.VEHICLE))
+	tool.menu.confirm_selection()
+	check(tool.menu.page == "assets" and not tool.menu.current_asset().is_empty(), "vehicle wheel opens its preset page directly")
+	var sample: Dictionary = library.filter(func(asset: Dictionary): return asset.title == "摩托车")[0]
+	tool.begin_asset(sample)
+	tool.update_preview(camera, Vector2(tool.camera.get_viewport().size) * 0.5)
+	var vehicle: VEHICLE = tool.place()
+	tool.cancel()
+	check(vehicle != null and vehicle.get_parent() == GROUPS.find_group(root, "vehicle") and vehicle.owner == root, "placed bike uses the vehicle group and native scene ownership")
+	if vehicle == null: return
+	var original := vehicle.global_transform
+	history.undo()
+	history.redo()
+	check(vehicle.is_inside_tree() and vehicle.global_transform.is_equal_approx(original), "vehicle undo and redo preserve native placement")
+	EditorInterface.edit_node(vehicle)
+	await frames(tree, 10)
+	check(EditorInterface.get_inspector().find_child("SaveVehiclePreset", true, false) != null, "native Inspector shows Save as Vehicle Preset")
+	if OS.get_cmdline_user_args().has("--capture-vehicles") and DisplayServer.get_name() != "headless":
+		for item in GROUPS.contents(root):
+			if item is Node3D and item != vehicle and item.name != "Floor": item.hide()
+		vehicle.transform = Transform3D.IDENTITY
+		var window := EditorInterface.get_base_control().get_window()
+		_frame_selection(camera.get_viewport(), window)
+		await tree.create_timer(0.5, true).timeout
+		RenderingServer.force_draw(false)
+		var directory := "res://docs/wiki/assets/vehicles"
+		DirAccess.make_dir_recursive_absolute(directory)
+		EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png(directory + "/vehicle-inspector.png")
+	var directory := VEHICLE_INSPECTOR.PRESET_DIRECTORY
+	DirAccess.make_dir_recursive_absolute(directory)
+	var path := directory.path_join("vehicle_probe_%d.tscn" % OS.get_process_id())
+	vehicle.display_name = "测试摩托车"
+	vehicle.top_speed = 18.0
+	vehicle.seat_point.y += 0.18
+	var status := VEHICLE_INSPECTOR.save_preset(vehicle, path)
+	var info := CATALOG.find_asset(path)
+	var persisted := load(path) as PackedScene if status == OK else null
+	var replica := persisted.instantiate() as VEHICLE if persisted != null else null
+	check(replica != null and info.get("title") == "测试摩托车" and replica.transform == Transform3D.IDENTITY and replica.model_scene == vehicle.model_scene and replica.seat_point == vehicle.seat_point and replica.top_speed == 18.0, "saved vehicle preset keeps model, seat and speed and is listed without carrying scene placement")
+	if replica != null: replica.free()
+	if FileAccess.file_exists(path): DirAccess.remove_absolute(path)

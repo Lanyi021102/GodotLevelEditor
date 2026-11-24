@@ -10,6 +10,7 @@ extends CharacterBody3D
 ##
 ## 位置、朝向、警觉值、状态和计时器可保存及复位；不接入时间线。
 
+signal interacted(npc_id: String, actor: Node3D)
 signal spotted(target: Node3D, position: Vector3)
 
 enum State { PATROL, SUSPICIOUS, ALERT, SEARCH }
@@ -30,6 +31,10 @@ const CLIP_RUN := "Running_A"
 @export var enemy_instance_id := ""
 ## 可选：子 Marker3D 为巡逻点；与 patrol_points 二选一，路点节点优先。
 @export_node_path("Node3D") var patrol_route: NodePath
+
+@export_group("交谈")
+## 允许关卡图与任务图绑定本实例的交谈事件。
+@export var allow_conversation := false
 
 @export_group("巡逻")
 ## 巡逻路点（世界坐标，按顺序循环）
@@ -56,6 +61,8 @@ const CLIP_RUN := "Running_A"
 @export var gravity := 24.0
 @export var accel := 18.0
 
+var interaction_allowed := false
+var prompt: Label3D
 var _machine := EnemyMachine.new()
 var state: int:
 	get: return STATE_IDS.find(_machine.state_id)
@@ -82,6 +89,13 @@ var _anim_state := ""
 
 func _ready() -> void:
 	_configure_enemy()
+	if allow_conversation:
+		add_to_group("godot_level_editor_interactable")
+		prompt = preload("res://addons/godot_level_editor/scripts/ui/interaction_label.gd").new()
+		prompt.configure(self, str(name), "[F 对话]")
+		var profile: Resource = get_meta("godot_level_editor_entity", null) if has_meta("godot_level_editor_entity") else null
+		prompt.position.y = (float(profile.body_height) if profile != null else 1.75) + 0.32
+		add_child(prompt)
 	if _machine.definition != null and _machine.definition.appearance != null:
 		var previous := get_node("ModelRoot")
 		remove_child(previous)
@@ -107,6 +121,15 @@ func _ready() -> void:
 	if not patrol_points.is_empty():
 		last_known = patrol_points[0]
 		has_last_known = true
+
+
+func can_interact(actor: Node3D) -> bool:
+	return allow_conversation and interaction_allowed and GLEDialogueNPC.actor_in_reach(self, actor, 2.6)
+
+func interact(actor: Node3D) -> bool:
+	if not can_interact(actor): return false
+	interacted.emit(enemy_instance_id, actor)
+	return true
 
 
 func _physics_process(delta: float) -> void:
@@ -236,6 +259,10 @@ func _move(delta: float) -> void:
 	if _model != null:
 		_model.rotation.y = atan2(look_dir.x, look_dir.z)
 
+
+func finish_performance_pose(direction: Vector3) -> void:
+	look_dir = Vector3(direction.x, 0.0, direction.z).normalized()
+	_anim_state = ""
 
 func _animate() -> void:
 	var planar := Vector2(velocity.x, velocity.z).length()

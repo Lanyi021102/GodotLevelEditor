@@ -7,11 +7,17 @@ var suite: EditorPlugin
 var scale_picker: OptionButton
 var animation_toggle: CheckBox
 var scale_status: Label
+var resume_button: Button
 var _building := false
 
 func _ready() -> void:
-	var title := Label.new(); title.text = "GodotLevelEditor"; title.add_theme_font_size_override("font_size", 28); add_child(title)
-	var caption := Label.new(); caption.text = "工作台  /  偏好设置与帮助"; caption.add_theme_color_override("font_color", STYLE.MUTED); add_child(caption)
+	var title := Label.new(); title.text = "工作台"; title.add_theme_font_size_override("font_size", 28); add_child(title)
+	var actions := HFlowContainer.new()
+	add_child(actions)
+	var create := _button(actions, "新建关卡", suite.create_level)
+	create.theme_type_variation = "PrimaryButton"
+	resume_button = _button(actions, "继续上次关卡", suite.resume_level)
+	_button(actions, "我的关卡", func(): suite.open_tab("关卡"); suite.level_panel.set_mode(0))
 	var gap := Control.new(); gap.custom_minimum_size.y = 12; add_child(gap)
 	var scroll := ScrollContainer.new(); scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED; scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL; add_child(scroll)
 	var columns := HBoxContainer.new(); columns.add_theme_constant_override("separation", 20); columns.size_flags_vertical = Control.SIZE_EXPAND_FILL; columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL; scroll.add_child(columns)
@@ -35,10 +41,11 @@ func _ready() -> void:
 	_button(preferences, "恢复默认偏好", restore_defaults)
 	var help := _card(columns, "文档与快捷入口")
 	_button(help, "打开在线 Wiki", func(): OS.shell_open(WIKI))
-	_button(help, "打开本地 Wiki", _open_local_wiki)
+	if FileAccess.file_exists("res://site/index.html"):
+		_button(help, "打开本地 Wiki", func(): OS.shell_open(ProjectSettings.globalize_path("res://site/index.html")))
 	_button(help, "打开项目文件夹", func(): OS.shell_open(ProjectSettings.globalize_path("res://")))
 	var heading := _label(help, "开始制作"); heading.add_theme_color_override("font_color", STYLE.MUTED)
-	for section in ["关卡", "任务图", "机关"]:
+	for section in ["任务图", "机关"]:
 		_button(help, "打开" + section, func(): suite.open_tab(section))
 	var version := _label(help, "Godot " + str(Engine.get_version_info().string))
 	version.add_theme_color_override("font_color", STYLE.MUTED)
@@ -56,13 +63,17 @@ func _card(parent: Node, title: String) -> VBoxContainer:
 func _label(parent: Node, text: String) -> Label:
 	var label := Label.new(); label.text = text; parent.add_child(label); return label
 
-func _button(parent: Node, text: String, callback: Callable) -> void:
+func _button(parent: Node, text: String, callback: Callable) -> Button:
 	var button := Button.new(); button.text = text; button.alignment = HORIZONTAL_ALIGNMENT_LEFT; button.custom_minimum_size.y = 42; button.pressed.connect(callback); parent.add_child(button)
+	return button
 
 func _refresh() -> void:
 	if not is_instance_valid(scale_picker): return
 	_building = true
 	var settings := EditorInterface.get_editor_settings()
+	var recent: String = suite.recent_level()
+	resume_button.disabled = recent.is_empty()
+	resume_button.tooltip_text = recent if not recent.is_empty() else "打开或保存自己的关卡后，可从这里继续。"
 	var factor := float(settings.get_project_metadata("godot_level_editor_suite", "ui_scale", 0.0))
 	for i in scale_picker.item_count:
 		if is_equal_approx(float(scale_picker.get_item_metadata(i)), factor): scale_picker.select(i)
@@ -92,6 +103,3 @@ func restore_defaults() -> void:
 	suite.display_adapter.set_user_scale(0.0)
 	_animations_changed(true)
 	_refresh()
-
-func _open_local_wiki() -> void:
-	OS.shell_open("https://lanyi021102.github.io/GodotLevelEditor/")

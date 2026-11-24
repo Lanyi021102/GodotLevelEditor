@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://t4nj3ytoa33i" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd" id="4_block"]
 [ext_resource type="PackedScene" path="res://addons/godot_level_editor/scenes/lighting/sunlit_miniature_v2.tscn" id="5_lighting"]
 [ext_resource type="Script" uid="uid://c4qnfrq8rh8d8" path="res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd" id="6_spawn"]
+[ext_resource type="PackedScene" uid="uid://dcbowrnro566k" path="res://content/scenes/levels/图书馆阅览区.glb" id="8_t2jlh"]
 
 [sub_resource type="Resource" id="Topology"]
 script = ExtResource("2_graph")
@@ -17,7 +18,7 @@ graph_kind = "topology"
 script = ExtResource("2_graph")
 graph_id = "whitebox_events_v1"
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_8ljdn"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_07cma"]
 resource_local_to_scene = true
 dof_blur_far_distance = 33.5
 dof_blur_far_transition = 9.0
@@ -49,9 +50,12 @@ size = Vector3(20, 3.6000001, 20)
 [node name="Lighting" parent="." unique_id=1574759540 instance=ExtResource("5_lighting")]
 process_mode = 3
 process_priority = 10
-runtime_camera_attributes = SubResource("CameraAttributesPractical_8ljdn")
+runtime_camera_attributes = SubResource("CameraAttributesPractical_07cma")
 
 [node name="PlayerSpawn" type="Marker3D" parent="." unique_id=1161547224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.08, 4)
 script = ExtResource("6_spawn")
 object_id = "player_spawn"
+
+[node name="图书馆局部 · 阅览区" parent="." unique_id=1559275606 instance=ExtResource("8_t2jlh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.2, 2)

@@ -12,6 +12,7 @@ var depth := 0
 var task_id := ""
 
 func configure(graph: GodotLevelEditorLevelGraph, lookup: Callable, actions: Callable = Callable(), conditions: Callable = Callable()) -> bool:
+	cancel_performances()
 	flow.clear(); waits.clear(); children.clear(); cancelled.clear()
 	completed = false
 	succeeded = true
@@ -94,9 +95,50 @@ func cancel_scope(scope: String) -> void:
 	cancelled[scope] = true
 	for id in waits.keys():
 		var group := str(waits[id].context.get("_scope", ""))
-		if _scope_cancelled(group): waits.erase(id)
+		if _scope_cancelled(group):
+			_cancel_performance(waits[id])
+			waits.erase(id)
 	for id in children.keys():
-		if _scope_cancelled(str(children[id].context.get("_scope", ""))): children.erase(id)
+		if _scope_cancelled(str(children[id].context.get("_scope", ""))):
+			children[id].runner.cancel_performances()
+			children.erase(id)
+
+func _cancel_performance(wait: Dictionary) -> void:
+	var cancel: Callable = wait.get("ticket", {}).get("cancel", Callable())
+	if cancel.is_valid(): cancel.call()
+
+func cancel_performances() -> void:
+	for wait in waits.values(): _cancel_performance(wait)
+	for child in children.values(): child.runner.cancel_performances()
+
+## Read-only snapshot for the editor. Waits and joins retain their actual input targets.
+func debug_waiting() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for id in waits:
+		var n := definition.node_by_id(id)
+		var p: Dictionary = n.params
+		match str(n.kind):
+			"play_performance": result.append({"id": id, "reason": "等待演出完成"})
+			"wait_mechanism_state": result.append({"id": id, "target": p.mechanism, "reason": "到达状态 " + str(p.state)})
+			"wait_event": result.append({"id": id, "reason": "事件 " + str(p.key)})
+			"wait_until":
+				for edge in definition.edges:
+					if edge.to == id and edge.to_port == "condition": result.append(_waiting_input(edge))
+			_: result.append({"id": id, "reason": "剩余 %.1f 秒" % float(waits[id].remaining)})
+	for id in flow:
+		var n := definition.node_by_id(id)
+		if n.get("kind") != "wait_all" or flow[id].get("done", false): continue
+		for edge in definition.edges:
+			if edge.to == id and edge.to_port != "reset" and not flow[id].seen.has(edge.to_port):
+				result.append(_waiting_input(edge))
+	for id in children: result.append({"id": id, "reason": "等待子图返回"})
+	return result
+
+func _waiting_input(edge: Dictionary) -> Dictionary:
+	var source := definition.node_by_id(str(edge.from))
+	var p: Dictionary = source.get("params", {})
+	return {"id": edge.from, "target": str(p.get("room", p.get("mechanism", p.get("object", "")))),
+		"reason": "尚未满足「%s」的输入" % definition.display_label(definition.node_by_id(str(edge.to)))}
 
 func _advance_waits(delta: float) -> void:
 	if completed: return
@@ -105,6 +147,9 @@ func _advance_waits(delta: float) -> void:
 		var n := definition.node_by_id(id)
 		var output := ""
 		match str(n.kind):
+			"play_performance":
+				var status := str(w.get("ticket", {}).get("status", "failed"))
+				if status != "playing": output = "completed" if status == "completed" else "failed"
 			"wait_mechanism_state":
 				var component := MECHANISMS.ACCESS.resolve_with(resolver, str(n.params.mechanism))
 				if component == null or str(n.params.state) not in component.state_names(): output = "failed"
@@ -144,6 +189,12 @@ func _custom_event(n: Dictionary, event: Dictionary) -> String:
 		_emit_event(n.id, "then" if result.get("ok", false) else "failed", context)
 		return str(result.get("reason", ""))
 	match str(n.kind):
+		"play_performance":
+			if waits.has(n.id): return "演出正在播放"
+			var result: Dictionary = action_handler.call(n, context) if action_handler.is_valid() else {}
+			if result.get("ok", false): waits[n.id] = {"ticket": result.ticket, "context": context}
+			else: _emit_event(n.id, "failed", context)
+			return str(result.get("reason", "无法播放演出"))
 		"wait_mechanism_state":
 			if port == "cancel":
 				if waits.has(n.id): waits.erase(n.id); _emit_event(n.id, "cancelled", context)
@@ -219,7 +270,9 @@ func _custom_event(n: Dictionary, event: Dictionary) -> String:
 		"cancel_branch": cancel_scope(p.scope); _emit_event(n.id, "then", context)
 		"run_subgraph":
 			if port == "cancel":
-				if children.has(n.id): children.erase(n.id); _emit_event(n.id, "cancelled", context)
+				if children.has(n.id):
+					children[n.id].runner.cancel_performances()
+					children.erase(n.id); _emit_event(n.id, "cancelled", context)
 			elif children.has(n.id): return "子图正在执行"
 			elif depth >= 8: _emit_event(n.id, "failed", context); return "子图深度超过 8"
 			else:
@@ -235,6 +288,7 @@ func _custom_event(n: Dictionary, event: Dictionary) -> String:
 				return "结束子图仅用于子图实例"
 			completed = true
 			succeeded = p.success
+			cancel_performances()
 			waits.clear(); children.clear(); pending.clear(); incoming.clear()
 		"checkpoint_save":
 			# Capture after queuing continuation; restore resumes after this node.
@@ -246,6 +300,7 @@ func _custom_event(n: Dictionary, event: Dictionary) -> String:
 		"change_item", "equip_item", "set_actor_state", "objective_start", "objective_complete", "objective_fail", "task_fail", "checkpoint_restore":
 			var result: Dictionary = action_handler.call(n, context) if action_handler.is_valid() else {"ok": false, "reason": "未接入任务动作"}
 			if n.kind == "checkpoint_restore" and result.get("ok", false):
+				cancel_performances()
 				completed = true; pending.clear(); waits.clear(); children.clear()
 			else: _emit_event(n.id, "then" if result.get("ok", false) else "failed", context)
 			return str(result.get("reason", ""))
@@ -256,7 +311,11 @@ func capture() -> Dictionary:
 	var data := super.capture()
 	data["persistent"] = persistent.duplicate(true)
 	data["flow"] = flow.duplicate(true)
-	data["waits"] = waits.duplicate(true)
+	data["waits"] = {}
+	for id in waits:
+		var wait: Dictionary = waits[id].duplicate(true)
+		wait.erase("ticket")
+		data.waits[id] = wait
 	data["cancelled"] = cancelled.duplicate(true)
 	data["completed"] = completed
 	data["succeeded"] = succeeded
@@ -265,6 +324,7 @@ func capture() -> Dictionary:
 	return data
 
 func restore(data: Dictionary) -> void:
+	cancel_performances()
 	flow = data.get("flow", {}).duplicate(true)
 	waits = data.get("waits", {}).duplicate(true)
 	cancelled = data.get("cancelled", {}).duplicate(true)

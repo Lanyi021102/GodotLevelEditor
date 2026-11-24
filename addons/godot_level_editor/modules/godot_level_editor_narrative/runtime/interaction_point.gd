@@ -10,16 +10,10 @@ var prompt: Label3D
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	add_to_group("godot_level_editor_interactable")
-	prompt = Label3D.new()
+	prompt = preload("res://addons/godot_level_editor/scripts/ui/interaction_label.gd").new()
+	prompt.configure(self, display_name, "[F]")
 	prompt.position.y = 1.4
-	prompt.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	prompt.font_size = 32
 	add_child(prompt)
-
-func _process(_delta: float) -> void:
-	if Engine.is_editor_hint(): return
-	var actor := get_tree().get_first_node_in_group("godot_level_editor_player") as Node3D
-	prompt.text = display_name + (" [F]" if can_interact(actor) else "")
 
 func can_interact(actor: Node3D) -> bool:
 	return enabled and is_visible_in_tree() and actor != null and actor.is_in_group("godot_level_editor_player") and global_position.distance_to(actor.global_position) <= interaction_radius

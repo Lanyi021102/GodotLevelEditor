@@ -11,6 +11,7 @@ var level_panel: Control
 var level_preview: Node
 var asset_panels: Dictionary = {}
 var sky_panel: Control
+var player_panel: Control
 var sky_export: EditorExportPlugin
 var reference_drag: Node
 var display_adapter: Node
@@ -34,6 +35,7 @@ func _enter_tree() -> void:
 	level_preview = preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/level_preview.gd").new()
 	add_child(level_preview)
 	scene_saved.connect(_native_saved)
+	scene_changed.connect(_remember_level)
 	var dock := EditorInterface.get_file_system_dock()
 	dock.files_moved.connect(_native_moved)
 	dock.folder_moved.connect(_native_moved)
@@ -59,6 +61,7 @@ func _get_plugin_icon() -> Texture2D:
 		return ImageTexture.create_from_image(image)
 	return BRAND_ICON
 func _get_unsaved_status(_for_scene: String) -> String:
+	if is_instance_valid(player_panel) and player_panel.dirty: return "玩家预设有未保存修改。"
 	return "关卡图有未保存修改。" if level_panel != null and is_instance_valid(level_panel.logic_panel) and level_panel.logic_panel.dirty else "天空预设有未保存修改。" if is_instance_valid(sky_panel) and sky_panel.dirty else ""
 func _apply_changes() -> void:
 	preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd").prepare(EditorInterface.get_edited_scene_root())
@@ -67,6 +70,7 @@ func _save_external_data() -> void:
 	if level_panel != null and is_instance_valid(level_panel.logic_panel) and level_panel.logic_panel.dirty: level_panel.logic_panel.save_external()
 	if is_instance_valid(sky_panel):
 		sky_panel.save_external()
+	if is_instance_valid(player_panel): player_panel.save_external()
 func _make_visible(visible: bool) -> void:
 	if visible and not _starting_play and not EditorInterface.is_playing_scene():
 		EditorInterface.set_main_screen_editor("3D")
@@ -120,12 +124,12 @@ func _build_workspace() -> void:
 	outer.add_child(header)
 	_header_content = VBoxContainer.new(); _header_content.add_theme_constant_override("separation", 10); header.add_child(_header_content)
 	var navigation := HBoxContainer.new(); navigation.add_theme_constant_override("separation", 6); _header_content.add_child(navigation)
-	for title in ["工作台", "关卡", "任务", "机关", "台本", "敌人", "天空", "其他"]:
+	for title in ["工作台", "关卡", "玩家", "任务", "机关", "台本", "敌人", "天空", "其他"]:
 		var button := Button.new()
 		button.text = "NPC" if title == "敌人" else title
 		button.tooltip_text = button.text + "编辑器"
 		STYLE.navigation(button)
-		var icon_file: String = {"工作台": "home", "关卡": "level", "任务": "task", "机关": "mechanism", "台本": "dialogue", "敌人": "npc", "天空": "sky", "其他": "other"}[title]
+		var icon_file: String = {"工作台": "home", "关卡": "level", "玩家": "player", "任务": "task", "机关": "mechanism", "台本": "dialogue", "敌人": "npc", "天空": "sky", "其他": "other"}[title]
 		var icon_image := Image.new()
 		icon_image.load_svg_from_string(FileAccess.get_file_as_string("res://addons/godot_level_editor/assets/branding/navigation/" + icon_file + ".svg"), 2.0)
 		button.icon = ImageTexture.create_from_image(icon_image)
@@ -164,7 +168,7 @@ func _build_workspace() -> void:
 	home_panel.name = "工作台"; home_panel.suite = self; tabs.add_child(home_panel)
 	task_graph = modules.narrative.task_panel
 	_prepared_pages["工作台"] = true
-	for title in ["事件与任务", "任务图", "关卡", "机关", "台本", "敌人", "天空", "其他"]:
+	for title in ["事件与任务", "任务图", "关卡", "玩家", "机关", "台本", "敌人", "天空", "其他"]:
 		var host := VBoxContainer.new(); host.name = title; tabs.add_child(host)
 		_page_hosts[title] = host
 	var other: Control = _page_hosts["其他"]
@@ -207,17 +211,24 @@ func _ensure_page(title: String) -> void:
 	_prepared_pages[title] = true
 	var host: Control = _page_hosts[title]
 	match title:
+		"玩家":
+			player_panel = preload("res://addons/godot_level_editor/modules/godot_level_editor_player/panel.gd").new()
+			player_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+			player_panel.suite = self
+			host.add_child(player_panel)
 		"事件与任务":
 			event_panel = preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/event_panel.gd").new()
 			event_panel.name = title; host.add_child(event_panel)
 			event_panel.edit_task_requested.connect(edit_task)
+			task_graph.event_editor = event_panel
 		"任务图": _adopt(task_graph, title, host)
 		"关卡":
 			level_panel = preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_panel.gd").new()
 			level_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 			level_panel.mode_bar = HBoxContainer.new(); _header_content.add_child(level_panel.mode_bar)
-			level_panel.name = title; level_panel.module = modules.level
+			level_panel.name = title; level_panel.module = modules.level; level_panel.suite = self
 			host.add_child(level_panel)
+			level_panel.native_focus_requested.connect(focus_native_3d)
 			level_panel.levels_changed.connect(func():
 				if is_instance_valid(event_panel): event_panel._refresh())
 			modules.narrative.debugger.state_received.connect(level_panel.logic_panel.receive_runtime)
@@ -263,6 +274,44 @@ func show_window() -> void:
 	if opening: STYLE.reveal(tabs)
 	window.grab_focus()
 	_tab_changed(tabs.current_tab)
+
+func _remember_level(root: Node) -> void:
+	if root == null or root.get_script() != preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd"): return
+	var path := root.scene_file_path
+	if path.is_empty() or path.begins_with("res://addons/") or not FileAccess.file_exists(path): return
+	var uid := ResourceLoader.get_resource_uid(path)
+	var key := ResourceUID.id_to_text(uid) if uid != ResourceUID.INVALID_ID else path
+	var settings := EditorInterface.get_editor_settings()
+	if settings.get_project_metadata("godot_level_editor_suite", "recent_level", "") != key:
+		settings.set_project_metadata("godot_level_editor_suite", "recent_level", key)
+
+func recent_level() -> String:
+	var key := str(EditorInterface.get_editor_settings().get_project_metadata("godot_level_editor_suite", "recent_level", ""))
+	if key.begins_with("uid://"):
+		var uid := ResourceUID.text_to_id(key)
+		if not ResourceUID.has_id(uid): return ""
+		key = ResourceUID.get_id_path(uid)
+	return key if not key.is_empty() and FileAccess.file_exists(key) else ""
+
+func resume_level() -> void:
+	var path := recent_level()
+	if path.is_empty():
+		home_panel._refresh()
+		return
+	open_native_level(path)
+
+func create_level() -> void:
+	open_native_level(preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_panel.gd").TEMPLATE, true)
+
+func open_native_level(path: String, inherited := false) -> void:
+	EditorInterface.open_scene_from_path(path, inherited)
+	focus_native_3d()
+
+func focus_native_3d() -> void:
+	EditorInterface.set_main_screen_editor("3D")
+	_hide_window()
+	EditorInterface.get_base_control().get_window().grab_focus()
+
 func open_tab(name_text: String) -> void:
 	# Keep old callers compatible with the single-scene level workflow.
 	var level_graph := name_text == "关卡图"
@@ -303,6 +352,7 @@ func save_all() -> void:
 	if is_instance_valid(sky_panel):
 		sky_panel.stop_preview()
 		if sky_panel.dirty: sky_panel.save_external()
+	if is_instance_valid(player_panel) and not player_panel.save_external(): return
 	EditorInterface.save_all_scenes()
 	modules.narrative._save_external_data()
 	if is_instance_valid(event_panel) and event_panel.dirty: event_panel.save()
@@ -401,7 +451,9 @@ func _native_saved(path: String) -> void:
 
 func _native_saved_finished(path: String) -> void:
 	preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd").saved(path)
+	_remember_level(EditorInterface.get_edited_scene_root())
 	if is_instance_valid(level_panel): level_panel._native_scene_changed(EditorInterface.get_edited_scene_root())
+	if is_instance_valid(player_panel): player_panel._scene_changed(EditorInterface.get_edited_scene_root())
 	_native_refresh()
 	if is_instance_valid(level_preview): level_preview.request(path)
 

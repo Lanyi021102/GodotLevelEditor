@@ -45,14 +45,15 @@ func _ready() -> void:
 	mode.add_item("目标事件图 · 布尔 / 事件")
 	bar.add_child(mode)
 	mode.item_selected.connect(func(_i: int): _switch_graph())
-	_button(bar, "搜索添加", _show_picker)
+	_button(bar, "添加节点", _show_picker)
+	_button(bar, "保存", save_graph)
+	_button(bar, "撤销", func(): undo.undo())
+	_button(bar, "重做", func(): undo.redo())
+	_button(bar, "适合画布", fit_graph)
 	_button(bar, "整理节点", arrange_all)
 	_button(bar, "复制", copy_selected)
 	_button(bar, "粘贴", paste_selected)
 	_button(bar, "删除", delete_selected)
-	_button(bar, "撤销", func(): undo.undo())
-	_button(bar, "重做", func(): undo.redo())
-	_button(bar, "校验并保存", save_graph)
 	_button(bar, "保存后重载", save_reload)
 	legend = HFlowContainer.new()
 	legend.name = "NodeCategoryLegend"
@@ -89,6 +90,9 @@ func _ready() -> void:
 	canvas.connection_request.connect(connect_ports)
 	canvas.disconnection_request.connect(disconnect_ports)
 	canvas.node_selected.connect(_select_graph_node)
+	canvas.node_deselected.connect(func(node: Node):
+		if not _building and selected_id == str(node.name):
+			_sync_canvas_selection.call_deferred())
 	canvas.delete_nodes_request.connect(func(_ids: Array[StringName]): delete_selected())
 	canvas.copy_nodes_request.connect(copy_selected)
 	canvas.paste_nodes_request.connect(paste_selected)
@@ -210,9 +214,12 @@ func _rebuild() -> void:
 			node.set_slot(i, left != "", _port_type(inp.get(left, "")), _port_color(inp.get(left, "")), right != "", _port_type(out.get(right, "")), _port_color(out.get(right, "")))
 		var binding := Label.new()
 		binding.text = _friendly("object", str(n.get("params", {}).get("object", n.get("params", {}).get("room", n.get("params", {}).get("key", "")))))
-		if n.kind in ["npc_interact", "dialog_completed", "show_dialog", "task_start", "task_complete", "task_accept"]:
+		if n.kind in ["npc_interact", "dialog_completed", "show_dialog", "task_start", "task_complete", "task_accept", "play_performance"]:
 			var p: Dictionary = n.get("params", {})
 			binding.text = str(p.get("npc", p.get("dialog_id", p.get("task", ""))))
+			if n.kind == "play_performance":
+				var names := preload("res://addons/godot_level_editor/modules/godot_level_editor_performance/sequence.gd").choices(world)
+				binding.text = str(names.get(p.get("performance", ""), "请选择演出"))
 			binding.custom_minimum_size.x = 210
 			binding.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		binding.add_theme_color_override("font_color", PRESENTATION.SHARED.MUTED)
@@ -376,9 +383,10 @@ func _add_choice() -> void:
 	var params := {}
 	match kind:
 		"start": params = {}
-		"npc_interact": params = {"npc": "receptionist", "task": default_task_id()}
-		"dialog_completed": params = {"dialog_id": "reception_intro", "task": default_task_id()}
-		"show_dialog": params = {"dialog_id": "reception_intro"}
+		"npc_interact": params = {"npc": "", "task": default_task_id()}
+		"dialog_completed": params = {"dialog_id": "", "task": default_task_id()}
+		"show_dialog": params = {"dialog_id": ""}
+		"play_performance": params = {"performance": ""}
 		"task_start", "task_complete": params = {"task": default_task_id()}
 		"region_enter": params = {"object": "", "once": false}
 		"room_enter": params = {"room": "", "once": false}
@@ -420,22 +428,34 @@ func _add_choice() -> void:
 func _node_parameters(_kind: String, params: Dictionary) -> Dictionary:
 	return params
 
+func _sync_canvas_selection() -> void:
+	if not is_instance_valid(canvas): return
+	var current := canvas.get_node_or_null(NodePath(selected_id)) if not selected_id.is_empty() else null
+	if current is GraphNode and current.selected: return
+	selected_id = ""
+	for card in canvas.get_children():
+		if card is GraphNode and card.selected:
+			selected_id = str(card.name)
+			break
+	_show_parameters()
+
 func _select_graph_node(node: Node) -> void:
 	if _building or graph == null: return
 	selected_id = str(node.name)
 	_show_parameters()
 	var n := graph.node_by_id(selected_id)
-	if is_instance_valid(world) and not n.is_empty() and (n.get("params", {}).has("object") or n.get("params", {}).has("room")):
-		var object: Node = world.object_by_id(str(n.params.get("object", "")))
-		if n.params.has("room"):
-			for room in world.rooms():
-				if room.room_id == n.params.room: object = room
+	if not is_instance_valid(world) or n.is_empty(): return
+	for key in SCENE_REFERENCE.keys(n):
+		var ref := str(n.params.get(key, ""))
+		if ref.is_empty(): continue
+		var object: Node = SCENE_REFERENCE.choices(world, graph, n, key).get(ref)
 		if object != null:
 			_syncing = true
 			EditorInterface.get_selection().clear()
 			EditorInterface.get_selection().add_node(object)
 			EditorInterface.edit_node(object)
 			_syncing = false
+			break
 
 func focus_object(object: Node) -> void:
 	if _syncing or graph == null or not is_instance_valid(world): return
@@ -466,6 +486,14 @@ func _show_parameters() -> void:
 	var p: Dictionary = n.get("params", {})
 	for field_key in ["task", "npc", "dialog_id"]:
 		if p.has(field_key) and not _reference_field(field_key, str(p[field_key])): _text_field(field_key, {"task": "任务 ID", "npc": "NPC 对象 ID", "dialog_id": "Comment／对白 ID"}[field_key], str(p[field_key]))
+	if p.has("performance"):
+		var names := {"": "请选择演出"}
+		names.merge(preload("res://addons/godot_level_editor/modules/godot_level_editor_performance/sequence.gd").choices(world))
+		var current := str(p.performance)
+		if not current.is_empty() and not names.has(current): names[current] = "未找到演出"
+		_option_field("performance", "演出", names.keys(), current)
+		for index in _fields.performance.item_count:
+			_fields.performance.set_item_text(index, names[_fields.performance.get_item_metadata(index)])
 	if p.has("object"):
 		var available := [""] + SCENE_REFERENCE.choices(world, graph, n, "object").keys()
 		_option_field("object", "三维场景对象", available, str(p.object))
@@ -533,6 +561,20 @@ func _show_parameters() -> void:
 	_button(parameters, "应用参数", _apply_parameters)
 
 func _reference_field(key: String, value: String) -> bool:
+	if key == "dialog_id" and graph.has_method("load_dialogue"):
+		var result: Dictionary = graph.call("load_dialogue")
+		var names := {"": "请选择对白"}
+		if result.get("library") != null:
+			for group in result.library.groups:
+				for comment in group.comments:
+					names[comment.id] = str(group.name) + " › " + str(comment.name)
+					if graph.node_by_id(selected_id).kind == "dialog_completed":
+						for line in comment.lines: names[line.id] = str(comment.name) + " › " + str(line.text).left(32)
+		if not value.is_empty() and not names.has(value): names[value] = "未找到　" + value
+		_option_field(key, "对白段落或单句" if graph.node_by_id(selected_id).kind == "dialog_completed" else "对白段落", names.keys(), value)
+		for i in _fields[key].item_count:
+			_fields[key].set_item_text(i, names[_fields[key].get_item_metadata(i)])
+		return true
 	if key == "npc":
 		_option_field(key, "NPC 对象", [""] + SCENE_REFERENCE.choices(world, graph, graph.node_by_id(selected_id), key).keys(), value)
 		return true
@@ -807,4 +849,18 @@ func arrange_all() -> void:
 	_commit("整理节点排版", before, after)
 
 func default_task_id() -> String:
-	return "meet_receptionist"
+	return ""
+
+func fit_graph() -> void:
+	if graph == null or graph.nodes.is_empty(): return
+	await get_tree().process_frame
+	var bounds := Rect2()
+	var first := true
+	for card in canvas.get_children():
+		if not card is GraphNode: continue
+		var rect := Rect2(card.position_offset, card.size)
+		bounds = rect if first else bounds.merge(rect)
+		first = false
+	if first: return
+	canvas.zoom = clampf(minf((canvas.size.x - 80) / bounds.size.x, (canvas.size.y - 120) / bounds.size.y), canvas.zoom_min, 1.0)
+	canvas.scroll_offset = bounds.position * canvas.zoom - Vector2(40, 80)

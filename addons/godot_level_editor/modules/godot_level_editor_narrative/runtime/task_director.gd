@@ -48,8 +48,8 @@ func _ready() -> void:
 	for room in world.rooms():
 		room.player_entered.connect(func(id: String, _actor: Node3D): runner.queue_trigger("room_enter", {"room": id}))
 	for child in _npc_nodes(world):
-		if child.get_script() == preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/npc.gd"):
-			_npcs[child.object_id] = child
+		if GLEDialogueNPC.supports(child):
+			_npcs[GLEDialogueNPC.speaker_id(child)] = child
 			child.interacted.connect(_npc_interacted)
 	dialogue.opened.connect(_hide_conversation_ui)
 	dialogue.closed.connect(_restore_conversation_ui)
@@ -65,9 +65,10 @@ func validate_bindings(world: Node) -> PackedStringArray:
 	for room in world.rooms(): rooms[room.room_id] = true
 	var npcs := {}
 	for child in _npc_nodes(world):
-		if child.get_script() == preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/npc.gd"):
-			if npcs.has(child.object_id): errors.append("NPC ID 重复：" + child.object_id)
-			npcs[child.object_id] = true
+		if GLEDialogueNPC.supports(child):
+			var id := GLEDialogueNPC.speaker_id(child)
+			if npcs.has(id): errors.append("NPC ID 重复：" + id)
+			npcs[id] = true
 	for n in definition.nodes:
 		if n.kind == "room_enter" and not rooms.has(n.params.get("room")): errors.append("房间不存在：" + str(n.params.get("room")))
 		if n.kind == "npc_interact" and not npcs.has(n.params.get("npc")): errors.append("NPC 不存在：" + str(n.params.get("npc")))
@@ -147,7 +148,7 @@ func restore_progress(data: Dictionary) -> bool:
 func _send_debug() -> void:
 	if not EngineDebugger.is_active() or runner == null: return
 	var world := get_node_or_null(world_path)
-	EngineDebugger.send_message("godot_level_editor_narrative:state", [{"instance": str(get_path()), "world_id": world.world_id, "graph_id": definition.graph_id, "topology_id": "", "event_revision": runner.definition.semantic_hash(), "values": runner.values.duplicate(), "persistent": tasks.duplicate(), "local": runner.local_state.duplicate(), "reasons": runner.last_reason.duplicate(), "counts": runner.counts.duplicate()}])
+	EngineDebugger.send_message("godot_level_editor_narrative:state", [{"instance": str(get_path()), "world_id": world.world_id, "graph_id": definition.graph_id, "topology_id": "", "event_revision": runner.definition.semantic_hash(), "values": runner.values.duplicate(), "persistent": tasks.duplicate(), "local": runner.local_state.duplicate(), "reasons": runner.last_reason.duplicate(), "counts": runner.counts.duplicate(), "trace": runner.recent_steps}])
 
 func _exit_tree() -> void:
 	if EngineDebugger.is_active(): EngineDebugger.send_message("godot_level_editor_narrative:remove", [str(get_path())])

@@ -18,7 +18,10 @@ var runtime_choice: OptionButton
 var runtime_packets := {}
 var selected_runtime := ""
 var selected_id := ""
-var dirty := false
+var dirty := false:
+	set(value):
+		dirty = value
+		_update_heading()
 var _moving_before: Resource
 var _clipboard: Dictionary = {}
 var _syncing := false
@@ -49,18 +52,18 @@ func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var bar := HFlowContainer.new()
+	path_label = _label(self, "")
 	add_child(bar)
+	_button(bar, "添加节点", func(): _show_picker(Vector2(60, 100)))
+	_button(bar, "保存", save)
+	_button(bar, "撤销", func(): _history(false))
+	_button(bar, "重做", func(): _history(true))
+	_button(bar, "适合画布", func(): _fit_graph())
 	library_actions.append(_button(bar, "新建机关", func(): _new_file = true; _save_dialog.popup_centered_ratio(0.6)))
 	library_actions.append(_button(bar, "打开", func(): _open_dialog.popup_centered_ratio(0.6)))
 	_button(bar, "重载", _request_reload)
-	_button(bar, "保存", save)
 	_button(bar, "另存为", func(): _new_file = false; offer_personal_save())
 	_button(bar, "验证", _validate)
-	_button(bar, "撤销", func(): _history(false))
-	_button(bar, "重做", func(): _history(true))
-	_button(bar, "+ 节点", func(): _show_picker(Vector2(60, 100)))
-	_button(bar, "适应图", func(): _fit_graph())
-	path_label = _label(self, "")
 	var legend := HBoxContainer.new()
 	legend.add_theme_constant_override("separation", 16)
 	add_child(legend)
@@ -190,6 +193,15 @@ func bind_scene(root: Node) -> void:
 	_render()
 	_refresh_preview()
 
+func _update_heading() -> void:
+	if not is_instance_valid(path_label): return
+	if not is_instance_valid(assembly) or assembly.definition == null:
+		path_label.text = ""
+		path_label.tooltip_text = ""
+		return
+	path_label.text = "%s   %s" % [assembly.definition.display_name, "有未保存修改" if dirty or assembly.scene_file_path.is_empty() else "已保存"]
+	path_label.tooltip_text = assembly.scene_file_path
+
 func _render() -> void:
 	if graph == null: return
 	_syncing = true
@@ -204,7 +216,7 @@ func _render() -> void:
 		_syncing = false
 		return
 	var definition: Resource = assembly.definition
-	path_label.text = ("● " if dirty else "") + definition.display_name + "  |  " + assembly.scene_file_path
+	_update_heading()
 	for entry in definition.nodes:
 		if not Schema.KINDS.has(str(entry.get("kind", ""))): continue
 		var node := GraphNode.new()

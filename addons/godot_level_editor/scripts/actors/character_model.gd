@@ -26,6 +26,7 @@ extends Node3D
 
 var anim: AnimationPlayer
 var model: Node3D
+var model_override: PackedScene
 
 var _native_overrides: Dictionary = {}
 var _material: StandardMaterial3D
@@ -39,11 +40,18 @@ func _ready() -> void:
 
 
 func setup() -> void:
-	if model_scene == "" or not ResourceLoader.exists(model_scene):
+	var packed := model_override
+	if packed == null and not model_scene.is_empty() and ResourceLoader.exists(model_scene):
+		packed = load(model_scene) as PackedScene
+	if packed == null:
 		push_error("角色模型不存在：%s" % model_scene)
 		return
-	var packed: PackedScene = load(model_scene)
-	model = packed.instantiate()
+	var instance := packed.instantiate()
+	if not instance is Node3D:
+		instance.free()
+		push_error("角色模型需要 Node3D 场景根。")
+		return
+	model = instance
 	add_child(model)
 	_remember_overrides(model)
 	if white_model:

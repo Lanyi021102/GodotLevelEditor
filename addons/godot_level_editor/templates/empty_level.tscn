@@ -35,6 +35,7 @@ metadata/godot_level_editor_content_group = "whitebox"
 position = Vector3(0, -1.8, 0)
 object_id = "floor"
 size = Vector3(20, 3.6, 20)
+metadata/godot_level_editor_default_floor = true
 
 [node name="PlayerSpawn" parent="." instance=ExtResource("spawn")]
 position = Vector3(0, 0.1, 3)

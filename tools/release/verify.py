@@ -27,6 +27,7 @@ def verify(archive_path: Path, godot: str, output: Path, visual: bool = False) -
         for source in manifest["source_paths"]:
             name = source.removeprefix("addons/godot_level_editor/")
             if name.startswith(forbidden): raise RuntimeError("Map/private development content: " + name)
+            if name.startswith("templates/") and name != "templates/empty_level.tscn": raise RuntimeError("Author asset in template directory: " + name)
             if name.startswith("scenes/level_editor/rooms/") and name != "scenes/level_editor/rooms/trigger_room.tscn": raise RuntimeError("Complete room in package: " + name)
         with tempfile.TemporaryDirectory(prefix="godle-install-") as temporary:
             project = Path(temporary)

@@ -39,8 +39,6 @@ func run(editor: EditorPlugin) -> void:
 		check(is_equal_approx(editor.edit_step, editor.STEP_PRESETS[index]) and is_equal_approx(EditorInterface.get_node_3d_translate_snap(), editor.STEP_PRESETS[index]), "step preset %s updates native translation snapping" % editor.STEP_PRESETS[index])
 	editor.step_input.text = "0.25"; editor.step_input.text_submitted.emit("0.25")
 	check(is_equal_approx(editor.edit_step, 0.25) and is_equal_approx(EditorInterface.get_node_3d_translate_snap(), 0.25), "custom typed step updates the actual native snapping value")
-	editor.step_input.text = "0"; editor.step_input.text_submitted.emit("0")
-	check(is_equal_approx(editor.edit_step, 0.25) and editor.step_input.text == "0.25", "invalid zero input restores the last valid step")
 	editor._set_edit_step(0.1)
 	var path := "res://tools/level_editor/face_gizmo_probe_%d.tscn" % OS.get_process_id()
 	var source := Node3D.new(); source.name = "FaceGizmoProbe"
@@ -74,6 +72,7 @@ func run(editor: EditorPlugin) -> void:
 	var history := manager.get_history_undo_redo(manager.get_object_history_id(root))
 	var before := EDIT.capture(block)
 	var version := history.get_version()
+	await measure_checks(editor, block, camera, history)
 	tool.set_enabled(true)
 	var press := InputEventMouseButton.new(); press.button_index = MOUSE_BUTTON_LEFT; press.pressed = true
 	press.position = camera.unproject_position(Vector3(0, 2, 0))
@@ -103,6 +102,8 @@ func run(editor: EditorPlugin) -> void:
 	target.origin = pivot.origin + Vector3(0.4, 0.3, 0)
 	editor.gizmos._set_subgizmo_transform(gizmo, id, target)
 	var live_pivot: Transform3D = editor.gizmos._get_subgizmo_transform(gizmo, id)
+	check(is_equal_approx(tool.displacement, 0.5), "face displacement shows the actual world distance after repeated native gizmo updates")
+	check(editor.measurement.dimensions().is_equal_approx(block.geometry().get_aabb().size), "live dimensions follow the edited geometry")
 	check(block.to_global(live_pivot.origin).distance_to(Vector3(0.4, 2.3, 0)) < 0.0001, "repeated previews do not accumulate displacement from recentering")
 	editor.gizmos._commit_subgizmos(gizmo, PackedInt32Array([id]), restores, false)
 	var translated := EDIT.capture(block)
@@ -165,6 +166,33 @@ func run(editor: EditorPlugin) -> void:
 	if tool.picked.is_empty():
 		print("NATIVE PICK DEBUG screen=", face_screen, " view=", view.size, " camera=", view_camera.global_transform, " mode=", tool.mode, " enabled=", tool.enabled)
 		tree.quit(1); return
+	# Click two positions on the upper face through the actual editor window.
+	editor.measurement.button.button_pressed = true
+	for pos in [Vector3(-1, 2, 0.4), Vector3(1, 2, 0.4)]:
+		var screen := view_camera.unproject_position(pos)
+		var window_pos: Vector2 = view.get_parent().get_global_transform() * screen
+		motion.position = window_pos
+		motion.global_position = window_pos
+		window.push_input(motion, true)
+		press.position = window_pos
+		press.global_position = window_pos
+		window.push_input(press, true)
+		release.position = window_pos
+		release.global_position = window_pos
+		window.push_input(release, true)
+		await frames(tree)
+	var measured: PackedVector3Array = editor.measurement.points
+	check(measured.size() == 2 and absf(measured[0].distance_to(measured[1]) - 2.0) < 0.002, "native measurement clicks identify two world surface points two metres apart")
+	if OS.get_cmdline_user_args().has("--capture-measurement"):
+		await frames(tree, 10)
+		RenderingServer.force_draw()
+		var image := EditorInterface.get_base_control().get_viewport().get_texture().get_image()
+		var viewport_rect := Rect2i(view.get_parent().get_global_rect())
+		image.get_region(viewport_rect).save_png("res://docs/level_editor/measurement_2026-11-19/measure.png")
+	editor.selection_buttons.face[0].button_pressed = true
+	check(not editor.measurement.button.button_pressed and editor.measurement.points.is_empty(), "selecting a whitebox edit mode exits measurement and clears its endpoints")
+	tool.select_face(view_camera, face_screen)
+	await frames(tree)
 	# Hit a real native arrow, then move the mouse and release through the window.
 	var frame: Transform3D = editor.gizmos._get_subgizmo_transform(gizmo, tool.picked.triangle)
 	var world_pivot := block.to_global(frame.origin)
@@ -232,12 +260,48 @@ func run(editor: EditorPlugin) -> void:
 			EditorInterface.get_base_control().get_viewport().get_texture().get_image().save_png("res://docs/level_editor/selection_tools_2026-11-16/selected_%s.png" % mode)
 	tool.set_mode("face")
 	tool.set_enabled(false); camera.free()
+	editor._set_edit_step(0.25)
+	editor.step_input.text = "0"; editor.step_input.text_submitted.emit("0")
+	check(is_equal_approx(editor.edit_step, 0.25) and editor.step_input.text == "0.25", "invalid zero input restores the last valid step")
 	editor._set_edit_step(original_step)
 	EditorInterface.close_scene()
 	await frames(tree)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	print("FACE GIZMO: ", checks, " checks, ", failures, " failures")
 	tree.quit(0 if failures == 0 else 1)
+
+func measure_checks(editor: EditorPlugin, block: Node3D, camera: Camera3D, history: UndoRedo) -> void:
+	var tree := editor.get_tree()
+	var selection := EditorInterface.get_selection()
+	selection.clear()
+	selection.add_node(block)
+	await frames(tree)
+	var measure: RefCounted = editor.measurement
+	var original := block.transform
+	block.scale = Vector3(1.5, 0.5, 2)
+	block.rotate_y(PI / 2.0)
+	check(measure.dimensions().is_equal_approx(Vector3(6, 1, 8)), "dimensions include actual scale and stay in block axes when rotated")
+	block.transform = original
+	var original_version := history.get_version()
+	measure.button.button_pressed = true
+	var event := InputEventMouseButton.new()
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = true
+	for pos in [Vector3(-0.5, 2, 0), Vector3(1.5, 2, 0), Vector3(0, 2, 1)]:
+		event.position = camera.unproject_position(pos)
+		check(editor._forward_3d_gui_input(camera, event) == EditorPlugin.AFTER_GUI_INPUT_STOP and measure.points[-1].distance_to(pos) < 0.002, "measurement picks the clicked visible surface without grid rounding")
+	check(measure.points.size() == 1, "the next click after a completed measurement starts a new pair")
+	event.alt_pressed = true
+	check(editor._forward_3d_gui_input(camera, event) == EditorPlugin.AFTER_GUI_INPUT_PASS, "measurement leaves Alt viewport navigation available")
+	event.alt_pressed = false
+	event.position = camera.unproject_position(Vector3(30, 0, 0))
+	editor._forward_3d_gui_input(camera, event)
+	check(measure.points.size() == 1 and measure.hover == null, "an empty-space click does not invent an endpoint on the editor ground plane")
+	var escape := InputEventKey.new()
+	escape.keycode = KEY_ESCAPE
+	escape.pressed = true
+	var stopped: bool = editor._forward_3d_gui_input(camera, escape) == EditorPlugin.AFTER_GUI_INPUT_STOP
+	check(stopped and not measure.button.button_pressed and measure.points.is_empty() and selection.get_selected_nodes() == [block] and history.get_version() == original_version, "Escape dismisses measurement without changing scene selection or history")
 
 func component_checks(editor: EditorPlugin, block: Node3D, camera: Camera3D, history: UndoRedo, original: Dictionary) -> void:
 	var tool: RefCounted = editor.push_pull

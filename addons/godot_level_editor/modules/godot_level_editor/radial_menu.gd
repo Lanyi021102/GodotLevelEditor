@@ -4,13 +4,13 @@ const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_ed
 const THUMBNAIL := preload("res://addons/godot_level_editor/modules/godot_level_editor/radial_thumbnail.gd")
 const STYLE := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/editor_style.gd")
 const CARD := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/level_card.gd")
-const UI_REVISION := 6
+const UI_REVISION := 9
 const PAGE_SIZE := 8
 const INNER_RATIO := 0.48
-const LABELS := ["玩家\n出生点", "Layout\n白盒", "Room", "机关", "NPC", "最近\n使用"]
-const ICONS := ["Marker3D", "CSGBox3D", "Area3D", "Tools", "CharacterBody3D", "History"]
+const LABELS := ["玩家\n出生点", "白盒\n体块", "触发\n区域", "机关", "NPC", "载具", "最近\n使用", "地形"]
+const ICONS := ["Marker3D", "CSGBox3D", "Area3D", "Tools", "CharacterBody3D", "VehicleBody3D", "History", "MeshInstance3D"]
 var tool: RefCounted
-var categories: Array = CATALOG.CATEGORIES + [CATALOG.RECENT]
+var categories: Array = CATALOG.CATEGORIES + [CATALOG.RECENT, "地形"]
 var category := 1
 var hovered := -1
 var page := "main"
@@ -89,10 +89,10 @@ func _layout() -> void:
 func select_category(index: int) -> void:
 	page = "main"; category = posmod(index, categories.size()); hovered = -1; page_index = 0
 	entries = CATALOG.recent_assets(tool.recent) if categories[category] == CATALOG.RECENT else CATALOG.assets(categories[category])
-	_reset_weights(6, category); _refresh_page()
+	_reset_weights(categories.size(), category); _refresh_page()
 
 func sector_count() -> int:
-	return (2 if CATALOG.entity_kind(categories[category]) == "room" else 3) if page == "scope" else PAGE_SIZE if page == "assets" else 6
+	return (2 if CATALOG.entity_kind(categories[category]) == "room" else 3) if page == "scope" else PAGE_SIZE if page == "assets" else categories.size()
 
 func page_count() -> int:
 	return maxi(1, ceili(float(entries.size()) / PAGE_SIZE))
@@ -136,6 +136,9 @@ func open_submenu() -> void:
 
 func confirm_selection(from_mouse := false) -> void:
 	if closing: return
+	if page == "main" and categories[category] == "地形":
+		tool.open_terrain(from_mouse)
+		return
 	if page == "main" and category != 0: open_submenu(); return
 	if page == "scope" and hovered == 2: show_catalog(); return
 	var asset := current_asset()
@@ -232,7 +235,7 @@ func _draw() -> void:
 			var icon := EditorInterface.get_base_control().get_theme_icon(icon_name, "EditorIcons")
 			draw_texture_rect(icon, Rect2(point + Vector2(-11, -30) * content_scale, Vector2(22, 22) * content_scale), false)
 			text = LABELS[i]
-			if page == "scope": text = "已有素材" if i == 2 else ("关卡常驻\n" if i == 0 else "任务\n") + {"npc": "NPC", "mechanism": "机关", "room": "Room"}[CATALOG.entity_kind(categories[category])]
+			if page == "scope": text = "已有素材" if i == 2 else ("关卡常驻\n" if i == 0 else "任务\n") + {"npc": "NPC", "mechanism": "机关", "room": "触发区域"}[CATALOG.entity_kind(categories[category])]
 		var lines := text.split("\n")
 		for line in lines.size():
 			var width := minf(font.get_string_size(lines[line], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x, radius * 0.47)

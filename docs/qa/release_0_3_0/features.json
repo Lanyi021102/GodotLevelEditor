@@ -1,0 +1,83 @@
+[
+  {
+    "name": "import-final",
+    "exit": 0,
+    "passes": 0,
+    "failures": 0,
+    "errors": [],
+    "summary": []
+  },
+  {
+    "name": "player-runtime",
+    "exit": 0,
+    "passes": 27,
+    "failures": 0,
+    "errors": [],
+    "summary": [
+      "PLAYER 3C: 27 checks, 0 failures"
+    ]
+  },
+  {
+    "name": "vehicle-runtime",
+    "exit": 0,
+    "passes": 13,
+    "failures": 0,
+    "errors": [],
+    "summary": [
+      "VEHICLE CHECKS: 13, FAILURES: 0"
+    ]
+  },
+  {
+    "name": "player-editor",
+    "exit": 0,
+    "passes": 13,
+    "failures": 0,
+    "errors": [
+      "ERROR: Parameter \"t\" is null.",
+      "ERROR: Plugin is not attached to debugger."
+    ],
+    "summary": [
+      "PLAYER EDITOR: 13 checks, 0 failures"
+    ]
+  },
+  {
+    "name": "terrain-editor",
+    "exit": 0,
+    "passes": 25,
+    "failures": 0,
+    "errors": [],
+    "summary": [
+      "TERRAIN EDITOR 25/25"
+    ]
+  },
+  {
+    "name": "terrain-play",
+    "exit": 0,
+    "passes": 2,
+    "failures": 0,
+    "errors": [],
+    "summary": []
+  },
+  {
+    "name": "performance-editor",
+    "exit": 0,
+    "passes": 31,
+    "failures": 0,
+    "errors": [
+      "ERROR: Plugin is not attached to debugger."
+    ],
+    "summary": [
+      "PERFORMANCE EDITOR: 31/31"
+    ]
+  },
+  {
+    "name": "performance-play",
+    "exit": 0,
+    "passes": 18,
+    "failures": 0,
+    "errors": [],
+    "summary": [
+      "PERFORMANCE PLAY: 18/18"
+    ]
+  }
+]

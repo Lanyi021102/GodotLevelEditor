@@ -24,14 +24,16 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--consumer", action="store_true")
     parser.add_argument("--render", action="store_true")
+    parser.add_argument("--authoring", action="store_true", help="Check workbench, catalogs, row actions and sky previews")
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     project = Path(tempfile.mkdtemp(prefix="godot-structure-qa-"))
     before = hashes()
     shutil.copytree(ROOT / "addons", project / "addons")
-    (project / TEST.parent).mkdir(parents=True)
-    shutil.copy2(ROOT / TEST, project / TEST)
+    test = TEST.with_name("authoring_test.gd") if args.authoring else TEST
+    (project / test.parent).mkdir(parents=True)
+    shutil.copy2(ROOT / test, project / test)
     if args.consumer:
         settings = '''config_version=5
 [application]
@@ -53,7 +55,7 @@ renderer/rendering_method="gl_compatibility"
     source = plugin.read_text()
     if source.count(hook) != 1:
         raise RuntimeError("Private startup hook changed")
-    plugin.write_text(source.replace(hook, 'await load("res://' + str(TEST) + '").new().run(self)'))
+    plugin.write_text(source.replace(hook, 'await load("res://' + str(test) + '").new().run(self)'))
     result = dict(project=str(project), consumer=args.consumer, render=args.render)
     (output / "result.json").write_text(json.dumps(result, indent=2))
     try:
@@ -69,11 +71,12 @@ renderer/rendering_method="gl_compatibility"
         # Godot 4.7.1 emits this debugger teardown error even on an untouched
         # editor baseline. Keep it in raw logs and distinguish it explicitly.
         errors = [line for line in log.splitlines() if line.startswith("ERROR:") and line != "ERROR: Plugin is not attached to debugger."]
-        result.update(exit=tested.returncode, passes=log.count("[PASS]"), failures=log.count("[FAIL]"), script_errors=log.count("SCRIPT ERROR:"), engine_errors=errors, finished="STRUCTURE FLOW:" in log)
+        marker = "AUTHORING FLOW:" if args.authoring else "STRUCTURE FLOW:"
+        result.update(exit=tested.returncode, passes=log.count("[PASS]"), failures=log.count("[FAIL]"), script_errors=log.count("SCRIPT ERROR:"), engine_errors=errors, finished=marker in log)
     finally:
         result["source_content_unchanged"] = hashes() == before
         (output / "result.json").write_text(json.dumps(result, indent=2) + "\n")
-    uid = TEST.with_suffix(".gd.uid")
+    uid = test.with_suffix(".gd.uid")
     if (project / uid).exists() and not (ROOT / uid).exists():
         shutil.copy2(project / uid, ROOT / uid)
     print(json.dumps(result, indent=2))

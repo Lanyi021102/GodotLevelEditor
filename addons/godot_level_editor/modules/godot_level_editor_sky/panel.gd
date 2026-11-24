@@ -13,6 +13,7 @@ var dirty := false
 var undo := UndoRedo.new()
 var fields: Dictionary = {}
 var items: ItemList
+var _thumbnails: SubViewport
 var search: LineEdit
 var references: Label
 var status: Label
@@ -57,6 +58,10 @@ func _ready() -> void:
 	var title := Label.new(); title.text = "天空预设"; title.add_theme_font_size_override("font_size", 20); library.add_child(title)
 	search = LineEdit.new(); search.placeholder_text = "搜索预设"; search.text_changed.connect(func(_value: String): reload_library()); library.add_child(search)
 	items = ItemList.new(); items.size_flags_vertical = Control.SIZE_EXPAND_FILL; items.fixed_icon_size = Vector2i(72, 40); items.item_selected.connect(func(index: int): open_preset(str(items.get_item_metadata(index)))); library.add_child(items)
+	if DisplayServer.get_name() != "headless":
+		_thumbnails = preload("res://addons/godot_level_editor/modules/godot_level_editor_sky/thumbnail_renderer.gd").new()
+		items.add_child(_thumbnails)
+		_thumbnails.thumbnail_ready.connect(_show_thumbnail)
 	var library_actions := HBoxContainer.new(); library.add_child(library_actions)
 	_draft_actions.append(button(library_actions, "新建", new_preset)); _draft_actions.append(button(library_actions, "复制", duplicate_preset))
 	references = Label.new(); references.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART; references.add_theme_color_override("font_color", Color("526177")); references.add_theme_font_size_override("font_size", 14); library.add_child(references)
@@ -100,10 +105,17 @@ func reload_library() -> void:
 		var preset: Resource = load(path)
 		if preset == null or preset.get_script() != PRESET: continue
 		if not search.text.is_empty() and not str(preset.display_name).to_lower().contains(search.text.to_lower()): continue
-		var index := items.add_item(preset.display_name, LIBRARY.thumbnail(preset))
+		var icon: Texture2D = _thumbnails.request(preset) if _thumbnails != null else null
+		var index := items.add_item(preset.display_name, icon)
 		items.set_item_metadata(index, path); items.set_item_tooltip(index, preset.summary())
 		if path == selected_path: items.select(index)
 	_update_import_controls()
+
+func _show_thumbnail(path: String, texture: Texture2D) -> void:
+	for i in items.item_count:
+		if items.get_item_metadata(i) == path:
+			items.set_item_icon(i, texture)
+			return
 
 func open_preset(path: String) -> void:
 	if _block_draft_action():

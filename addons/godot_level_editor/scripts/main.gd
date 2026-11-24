@@ -1,27 +1,47 @@
 extends "res://addons/godot_level_editor/scripts/core/game_session.gd"
 ## 工具链连续世界入口。美术与关卡布局由场景资源提供。
+const SPAWN_MARKER := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd")
 @export var persist_progress := true
 @export_node_path("Node3D") var world_path := NodePath("World")
 @onready var world: Node3D = get_node(world_path)
 var _world_states: Dictionary = {}
 var _current_room := ""
 
+func _enter_tree() -> void:
+	var active_world := get_node_or_null(world_path)
+	if active_world == null: return
+	# F6 adds the session to a live level. Initialize the player before its
+	# collision body can register an overlap at the scene's default origin.
+	if active_world.is_inside_tree():
+		var marker := _player_spawn_marker(active_world)
+		if marker != null:
+			$Player.transform = global_transform.affine_inverse() * marker.global_transform
+	if not ("player_preset" in active_world) or active_world.player_preset == null: return
+	var preset: Resource = active_world.player_preset
+	get_node("Player").configure_3c(preset)
+	get_node("CameraRig").configure_3c(preset.settings())
+
 func _ready() -> void:
 	super._ready()
+	var marker := _player_spawn_marker(world)
+	if marker != null:
+		player.global_transform = marker.global_transform
+		player.spawn_transform = marker.global_transform
+		camera_rig.snap_to_target()
 	get_window().title = "GodotLevelEditor · 白盒编辑器"
 	world.objective_changed.connect(hud.set_objective)
 	world.goal_completed.connect(_on_goal_completed)
 	world.progress_requested.connect(_on_progress_requested)
 	_initialize_world.call_deferred()
 
+func _player_spawn_marker(level: Node) -> Marker3D:
+	for marker in level.find_children("*", "Marker3D", true, false):
+		if marker.get_script() == SPAWN_MARKER and marker.role == "player":
+			return marker
+	return null
+
 func _initialize_world() -> void:
 	await get_tree().physics_frame
-	for marker in world.find_children("*", "Marker3D", true, false):
-		if marker.get_script() == preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/spawn_marker.gd") and marker.role == "player":
-			player.global_transform = marker.global_transform
-			player.spawn_transform = marker.global_transform
-			camera_rig.snap_to_target()
-			break
 	_register_component("world", world)
 	for id in world.runtime_components():
 		_register_component(id, world.runtime_components()[id])

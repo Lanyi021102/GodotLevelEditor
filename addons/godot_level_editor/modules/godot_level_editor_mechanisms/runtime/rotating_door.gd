@@ -65,7 +65,12 @@ func validate_component() -> PackedStringArray:
 	return errors
 
 func _ready() -> void:
-	if not Engine.is_editor_hint(): add_to_group("godot_level_editor_interactable")
+	if not Engine.is_editor_hint():
+		add_to_group("godot_level_editor_interactable")
+		var prompt := preload("res://addons/godot_level_editor/scripts/ui/interaction_label.gd").new()
+		prompt.configure(self, display_name if not display_name.is_empty() else "单开门" if door_type == 0 else "双开门", "[F]", true)
+		prompt.position.y = 2.5
+		add_child(prompt)
 	rebuild_design(); reset_state()
 
 func _design_signature() -> String:

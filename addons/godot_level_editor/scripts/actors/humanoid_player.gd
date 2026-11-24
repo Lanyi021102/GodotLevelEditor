@@ -8,6 +8,9 @@ func _ready() -> void:
 	super._ready()
 
 func _physics_process(delta: float) -> void:
+	if player_preset != null or is_instance_valid(_vehicle):
+		super._physics_process(delta)
+		return
 	var yaw_before := _model_root.rotation.y
 	super._physics_process(delta)
 	var flat := Vector2(velocity.x, velocity.z)

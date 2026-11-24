@@ -99,7 +99,7 @@ static func moved(old: String, target: String) -> void:
 				row[key] = target.trim_suffix("/") + value.substr(old.trim_suffix("/").length())
 				changed = true
 	if changed:
-		var errors: PackedStringArray = LEVELS.XLSX.write_book(LEVELS.PATH, book.catalog.sheets())
+		var errors: PackedStringArray = book.catalog.save_book(LEVELS.PATH, false)
 		if not errors.is_empty(): push_error("关卡路径更新失败：" + "; ".join(errors))
 	# XLSX string fields aren't Godot resource dependencies. Follow task graph
 	# file moves explicitly, while retaining tasks and every stable ID.
@@ -124,5 +124,5 @@ static func removed(path: String) -> void:
 		if not _matches(str(row.scene_path), path): retained.append(row)
 	if retained.size() == book.catalog.levels.size(): return
 	book.catalog.levels.assign(retained)
-	var errors: PackedStringArray = LEVELS.XLSX.write_book(LEVELS.PATH, book.catalog.sheets())
+	var errors: PackedStringArray = book.catalog.save_book(LEVELS.PATH, false)
 	if not errors.is_empty(): push_error("关卡索引更新失败：" + "; ".join(errors))

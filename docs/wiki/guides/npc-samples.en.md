@@ -43,9 +43,21 @@ Task NPCs need a task from the same level and appear only while it is active.
 
 ## Give an NPC a route
 
-Save a personal definition and scene first. Select the NPC root, bind the definition if necessary, set a state's behavior to waypoint patrol and use a positive movement speed. Create patrol points and move their `Marker3D` nodes in the native 3D viewport. Save both definition and map, then restart F6.
+Save a personal definition and scene first. Select the NPC root, use **绑定到所选 NPC** to bind the definition if necessary, set a state's behavior to waypoint patrol and use a positive movement speed. Create patrol points and move their `Marker3D` nodes in the native 3D viewport. Save both definition and map, then restart F6.
 
 Movement along a route and animation playback are configured separately. Having a Walk clip does not create a route, and a route does not create a missing gait. Attack, pursuit and dialogue also require their own logic.
+
+## Talk to a resident, then reach an exit {#first-conversation-task}
+
+Start with a blank level saved in your project. This exercise uses a bundled resident, a trigger area and the project's default workbooks.
+
+1. Place a persistent NPC from the 3D wheel. Select its instance in the scene tree, name it “居民” (Resident), and enable **NPC 属性 → 交互 → 允许交谈**. Place a persistent trigger area called “出口” (Exit) a few metres away. Put its box where the player can walk into it and save the scene. A resident with an existing patrol route can use the same instance.
+2. In **台本**, use the default `content/tables/dialogues.xlsx`. Click **+** beside **对话组**. The new group includes a dialogue segment and its first line. Double-click the line, set the speaker to “居民”, enter a short request to walk to the exit, choose **站桩对话** and save the dialogue. Right-click the segment in the segment list and choose **复制 ID**. Keep this segment ID for the level graph.
+3. In **任务 → 事件与任务** choose **新建事件** and retain the default manual start condition. Click **添加任务** on the event row. Name its first task “走到出口” and select your saved level. Save the table. Open this task's graph and connect the **继续** output of **玩家进入 Room 时** (`room_enter`) to the **执行** input of **完成任务**. Drag the Exit from the scene tree to the trigger area's field and save the graph. Reuse the completion node if it already exists.
+4. In **关卡 → 关卡编辑**, connect **玩家与 NPC 互动时 → ShowDialog**. Drag the resident onto the NPC field and enter the segment ID in ShowDialog. Connect **对话完成时 → 接受任务**, use the same segment ID on the first node and choose “走到出口” on the second. Apply text parameters with **应用参数**, then save the graph and scene.
+5. Press **F6**. Approach the resident, press F at **居民 [F 对话]** and press F again to finish reading. The task appears in the upper-left tracker. Walk into the exit box to complete it. When several residents are nearby, the hint identifies the one who will receive F. Use a persistent resident to offer the initial task. A task-owned NPC becomes available after its task has started.
+
+![Only the current target shows a conversation hint beside another resident and an interaction point](../../enemy_editor/conversation_2026-11-19/nearby.png)
 
 ## Troubleshooting
 

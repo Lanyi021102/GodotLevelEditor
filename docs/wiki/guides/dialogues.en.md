@@ -24,3 +24,10 @@ Project dialogue normally lives at `content/tables/dialogues.xlsx`. The `对白`
 Edits support undo/redo. Open/save failures preserve the current library and drafts. If the mouse was already released before dialogue, finishing it does not force mouse capture.
 
 See the original [dialogue interface](../../narrative_editor/INTERFACES.md) for schema details.
+
+
+### Excel notes and external changes
+
+Keep extra worksheets and author-owned columns alongside the dialogue data. Saving updates existing records by stable ID. The order column controls dialogue playback order, so changing a line's place in a conversation preserves its worksheet row and any attached notes. Plugin fields take literal values, while extra sheets and columns can retain formulas, styles and comments.
+
+When Excel has saved the same file since it was opened, **保存对白** reports **配表已在外部修改**. Choose **另存草稿** to save the current draft to a new workbook and continue editing that copy. Choose **放弃草稿并重读** to load the disk version, or **保留草稿** to continue editing in memory. On the events and tasks page, saving a draft copy during a conflict keeps the project's original event workbook as the game's source.

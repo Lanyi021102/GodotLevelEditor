@@ -79,7 +79,7 @@ func _ready() -> void:
 	var scene_bar := HFlowContainer.new()
 	add_child(scene_bar)
 	behavior_controls.append(scene_bar)
-	_button(scene_bar, "绑定到所选守卫", func(): bind_guard_requested.emit())
+	_button(scene_bar, "绑定到所选 NPC", func(): bind_guard_requested.emit())
 	_button(scene_bar, "定位三维守卫", func(): focus_guard_requested.emit())
 	_button(scene_bar, "创建巡逻路点", func(): create_route_requested.emit())
 	scene_label = _label(scene_bar, "")

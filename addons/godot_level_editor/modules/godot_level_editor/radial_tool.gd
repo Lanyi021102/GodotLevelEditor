@@ -99,6 +99,8 @@ func open_wheel(view_camera: Camera3D = null, point := Vector2(-1, -1)) -> void:
 				var view := EditorInterface.get_editor_viewport_3d(i)
 				if view != null and view.get_parent().is_visible_in_tree(): view_camera = view.get_camera_3d(); break
 	if view_camera == null: return
+	if plugin.measurement != null: plugin.measurement.cancel()
+	if "terrain_tool" in plugin and plugin.terrain_tool != null: plugin.terrain_tool.cancel()
 	cancel()
 	camera = view_camera; scene_root = root; target_parent = root
 	if plugin.push_pull.enabled:
@@ -116,7 +118,15 @@ func open_wheel(view_camera: Camera3D = null, point := Vector2(-1, -1)) -> void:
 	last_mouse = point
 	menu.open_at(point)
 
+func open_terrain(from_mouse := false) -> void:
+	if plugin.terrain_tool == null:
+		return
+	plugin.terrain_tool.open(camera)
+	_selection_click = from_mouse
+
 func begin_asset(asset: Dictionary, consume_selection_click := false) -> bool:
+	if plugin.measurement != null: plugin.measurement.cancel()
+	if "terrain_tool" in plugin and plugin.terrain_tool != null: plugin.terrain_tool.cancel()
 	_clear_ghost()
 	if is_instance_valid(menu): menu.close_menu(true)
 	if usable_root() == null or asset.is_empty(): return false
@@ -151,7 +161,7 @@ func begin_asset(asset: Dictionary, consume_selection_click := false) -> bool:
 	scene_root = usable_root()
 	target_parent = scene_root
 	if scene_root.get_script() == FACTORY.ROOM and asset.category == "常驻 Room":
-		plugin.show_message("请在关卡中添加 Room。"); _clear_ghost(); return false
+		plugin.show_message("请在关卡中添加触发区域。"); _clear_ghost(); return false
 	_triangle_cache.clear()
 	update_preview(camera, last_mouse)
 	plugin.update_overlays()
@@ -189,7 +199,7 @@ func configure_entity(node: Node3D, asset: Dictionary) -> void:
 		config.model_id = "box" if kind == "mechanism" and asset.get("template", false) else "default"
 	if asset.get("template", false):
 		node.name = {"npc": "NPC", "mechanism": "Mechanism", "room": "Room"}[kind]
-		if node.get("display_name") is String: node.display_name = {"npc": "NPC", "room": "Room"}.get(kind, "机关")
+		if node.get("display_name") is String: node.display_name = {"npc": "NPC", "room": "触发区域"}.get(kind, "机关")
 		if kind == "room": node.uses_topology = false; node.bounds_size = Vector3.ONE
 		if node.get("placeholder_contract") is String: node.placeholder_contract = ""
 	node.set_meta(PROFILE.META, config)
@@ -197,36 +207,47 @@ func configure_entity(node: Node3D, asset: Dictionary) -> void:
 	if node.get_node_or_null(NodePath(str(PROFILE.BINDING))) == null:
 		var binding := BINDING.new(); binding.name = PROFILE.BINDING; node.add_child(binding)
 
-func pick_surface(view_camera: Camera3D, point: Vector2) -> Dictionary:
+func pick_surface(view_camera: Camera3D, point: Vector2, root: Node = null, allow_ground_plane := true) -> Dictionary:
 	var origin := view_camera.project_ray_origin(point)
 	var direction := view_camera.project_ray_normal(point)
 	var result := {}
-	var queue: Array[Node] = [scene_root]
+	var queue: Array[Node] = [root if root != null else scene_root]
 	while not queue.is_empty():
 		var node: Node = queue.pop_back()
 		if node is Node3D and not node.is_visible_in_tree(): continue
 		if node.get_meta("godot_level_editor_room_preview", false): continue
+		if node.get_script() == FACTORY.BLOCK and node.is_covered_by_terrain(): continue
 		var mesh: Mesh
 		var transform := Transform3D.IDENTITY
-		if node.get_script() == FACTORY.BLOCK:
+		var block_geometry: bool = node.get_script() == FACTORY.BLOCK and (allow_ground_plane or node.visual_scene == null)
+		if block_geometry:
 			mesh = node.geometry(); transform = node.global_transform
 		elif node is MeshInstance3D:
 			mesh = node.mesh; transform = node.global_transform
 		for child in node.get_children():
-			if node.get_script() != FACTORY.BLOCK or not child.get_meta("godot_level_editor_generated", false): queue.append(child)
+			if not block_geometry or not child.get_meta("godot_level_editor_generated", false): queue.append(child)
 		if mesh == null or is_zero_approx(transform.basis.determinant()): continue
-		var key := mesh.get_instance_id()
-		if not _triangle_cache.has(key): _triangle_cache[key] = mesh.generate_triangle_mesh()
-		var triangles: TriangleMesh = _triangle_cache[key]
-		if triangles == null: continue
 		var inverse := transform.affine_inverse()
-		var hit := triangles.intersect_ray(inverse * origin, inverse.basis * direction)
+		var local_origin := inverse * origin
+		var local_ray := inverse.basis * direction
+		if mesh.get_aabb().intersects_ray(local_origin, local_ray) == null: continue
+		var triangles: TriangleMesh
+		if allow_ground_plane:
+			# Placement keeps one surface cache for the lifetime of its ghost.
+			var key := mesh.get_instance_id()
+			if not _triangle_cache.has(key): _triangle_cache[key] = mesh.generate_triangle_mesh()
+			triangles = _triangle_cache[key]
+		else:
+			# A measurement can stay open across Inspector edits to the same Mesh.
+			triangles = mesh.generate_triangle_mesh()
+		if triangles == null: continue
+		var hit := triangles.intersect_ray(local_origin, local_ray)
 		if hit.is_empty(): continue
 		var at: Vector3 = transform * hit.position
 		var distance := origin.distance_to(at)
 		if distance > 10000 or (not result.is_empty() and distance >= result.distance): continue
 		result = {"position": at, "normal": (transform.basis.inverse().transposed() * hit.normal).normalized(), "distance": distance}
-	if result.is_empty():
+	if result.is_empty() and allow_ground_plane:
 		var at: Variant = Plane(Vector3.UP, 0).intersects_ray(origin, direction)
 		if at is Vector3 and origin.distance_to(at) < 10000: result = {"position": at, "normal": Vector3.UP, "distance": origin.distance_to(at)}
 	return result

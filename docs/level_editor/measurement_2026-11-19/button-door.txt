@@ -1,0 +1,23 @@
+[PASS] native new inherited level gets its own saved level ID
+[PASS] wheel starts placement for Switch
+[PASS] instance placed in native mechanism group
+[PASS] wheel starts placement for DoorA
+[PASS] instance placed in native mechanism group
+[PASS] wheel starts placement for DoorB
+[PASS] instance placed in native mechanism group
+[PASS] two tutorial nodes created through node picker
+[PASS] saved action selection and then-to-run port wiring
+[PASS] native graph and scene save for stage 1
+BINDING 1 button=$world/object_3bac592c8599559614aa8c98::button door=$world/object_7c5f98260137567535a0c74a::door action=open
+[PASS] graph references the chosen unique placed instance
+[PASS] F6 observer produced stage 1
+F6 RESULT 1 { "a": "open", "b": "close", "closed_at_start": true, "interactions": 1.0, "player_interacted": true, "pressed": true, "sampled": "pressed", "valid": true }
+[PASS] F key opens only the chosen target at stage 1
+[PASS] native graph and scene save for stage 2
+BINDING 2 button=$world/object_3bac592c8599559614aa8c98::button door=$world/object_ffed6c290a8261af818bd4c3::door action=open
+[PASS] graph references the chosen unique placed instance
+[PASS] F6 observer produced stage 2
+F6 RESULT 2 { "a": "close", "b": "open", "closed_at_start": true, "interactions": 1.0, "player_interacted": true, "pressed": true, "sampled": "pressed", "valid": true }
+[PASS] F key opens only the chosen target at stage 2
+BUTTON DOOR FAILURES: 0
+ERROR: Plugin is not attached to debugger.

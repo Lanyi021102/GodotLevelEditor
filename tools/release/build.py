@@ -2,6 +2,7 @@
 """Package the actual addon directory. The content directory is never read."""
 from __future__ import annotations
 import argparse
+import configparser
 import hashlib
 import json
 import os
@@ -15,6 +16,7 @@ SOURCE = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 ROOT = "res://addons/godot_level_editor"
 USER = "res://content"
+BUILTIN_TEMPLATES = {"empty_level.tscn"}
 
 
 def run(command: list[str], log: Path, marker: str | None = None) -> None:
@@ -48,6 +50,9 @@ def build(version: str, godot: str, output: Path) -> Path:
     with zipfile.ZipFile(archive_path, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for file in files:
             relative = str(file.relative_to(addon))
+            # Personal assets may be present beside the built-in template.
+            if relative.startswith("templates/") and relative.removeprefix("templates/") not in BUILTIN_TEMPLATES:
+                continue
             if any(not part.isascii() for part in Path(relative).parts[:-1]):
                 raise RuntimeError("Plugin directories must use English names: " + relative)
             if relative == "manifest.json": continue
@@ -65,7 +70,9 @@ def build(version: str, godot: str, output: Path) -> Path:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--version", default="0.1.1")
+    config = configparser.ConfigParser()
+    config.read(SOURCE / "addons/godot_level_editor/plugin.cfg")
+    parser.add_argument("--version", default=config["plugin"]["version"].strip('"'))
     parser.add_argument("--godot", default=os.environ.get("GODOT_BIN", "godot"))
     parser.add_argument("--output", type=Path, default=SOURCE / "dist")
     args = parser.parse_args()

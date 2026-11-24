@@ -12,6 +12,7 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 	gizmo.clear()
 	var node := gizmo.get_node_3d()
 	var room: bool = node.get_script() == ROOM
+	if not room and node.is_covered_by_terrain(): return
 	if not room and face_tool != null and face_tool.enabled:
 		gizmo.add_collision_triangles(node.geometry().generate_triangle_mesh())
 		return
@@ -31,7 +32,8 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 		gizmo.add_collision_triangles(node.geometry().generate_triangle_mesh())
 
 func _subgizmos_intersect_ray(gizmo: EditorNode3DGizmo, camera: Camera3D, screen_pos: Vector2) -> int:
-	if face_tool == null or gizmo.get_node_3d().get_script() != BLOCK: return -1
+	var node := gizmo.get_node_3d()
+	if face_tool == null or node.get_script() != BLOCK or node.is_covered_by_terrain(): return -1
 	return face_tool.intersect_face(gizmo, camera, screen_pos)
 
 func _get_subgizmo_transform(gizmo: EditorNode3DGizmo, id: int) -> Transform3D:

@@ -1,0 +1,21 @@
+Godot Engine v4.7.1.stable.official.a13da4feb - https://godotengine.org
+Metal 4.0 - Forward+ - Using Device #0: Apple - Apple M4 (Apple9)
+
+[PASS] private stationary dialogue worksheet is ready
+[PASS] temporary graph and workbook saved
+[PASS] permanent graph loads in the playable level
+[PASS] sample NPC walks its authored route
+[PASS] only enabled NPC offers a stable permanent binding
+[PASS] task dropdown selects only enabled NPC instances
+[PASS] dragging the model resolves to its authored NPC instance
+[PASS] second instance retains no conversation
+[PASS] second eligible resident has no competing hint
+[PASS] neighboring interaction point and player agree on one F hint
+[PASS] approaching camera keeps the selected hint at the same screen size
+[PASS] physics input F on the walking NPC opens the linked dialogue
+[PASS] conversation hides the NPC name and F hint
+[PASS] dialogue completion accepts the selected task
+[PASS] after dialogue the nearer interaction point gets the only prompt
+[PASS] walking into the trigger completes the accepted task
+[PASS] leaving all candidates clears the hint
+NPC CONVERSATION: 17 checks, 0 failures

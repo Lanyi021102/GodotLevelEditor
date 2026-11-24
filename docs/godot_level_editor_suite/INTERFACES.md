@@ -1,3 +1,21 @@
+## 0.3.0 安装与更新启动 · 2026-11-24
+
+主插件在资源扫描完成后动态加载关卡登记器，避免替换插件并重新生成导入侧文件时提前读取角色贴图。发行检查使用空工程安装和启用状态下替换插件两条路径，继续保留宿主主场景、输入、服务及作品。`templates/` 仅发布 `empty_level.tscn`，开发时放入的个人模型不进入安装包。验证见 [0.3.0 发布检查](../qa/release_0_3_0/validation.md)。
+
+## 关卡编辑演出入口 · 2026-11-24
+
+“关卡编辑”提供“演出时间轴”开关，面板按需创建。返回常驻逻辑图会刷新演出选择，原生 3D 视口提供取景和选点。 见 [演出接口](../performance_editor/INTERFACES.md)。
+
+## 玩家预设库 · 2026-11-24
+
+一级 **玩家** 页面按需创建 `godot_level_editor_player/panel.gd`。角色、镜头、控制和动作共用同一预设资源。**应用到当前关卡** 与 **关卡 → 关卡编辑 → 玩家预设** 共用原生场景撤销接口。模型和动画预览各在独立 SubViewport 中执行。资源与运行接口见 [玩家 3C 接口](../3cplayground/INTERFACES.md)，操作见 [玩家预设指南](../wiki/guides/player.md)。
+
+## 工作台与原生场景入口 · 2026-11-19
+
+工作台直接创建原生继承地图。最近编辑的已保存地图记录在当前工程的 EditorSettings metadata，优先使用 ResourceUID 以跟随原生文件移动。工作台保持按需加载；继续关卡、浏览器“打开场景”和双击卡片聚焦原生 3D，“编辑常驻逻辑”在独立窗口保留焦点。地图索引由原生保存登记。
+
+关卡、机关与 NPC 的目录筛选同步当前可见选择及详情。机关和 NPC 的来源按项目路径区分，搜索栏旁可创建个人素材。事件表的“添加任务”定位到当前事件行，再沿用原有关卡选择与创建表单。操作与验证见[工作台指南](../wiki/guides/workbench.md)和[本轮验证](../qa/authoring_2026-11-19/validation.md)。
+
 ## 插件目录与原生场景合同 · 2026-11-17
 
 原生保存的 ID／图副本分配在 `world` 的 `NOTIFICATION_EDITOR_POST_SAVE` 完成，套件延迟刷新登记和浏览并请求 `level_preview`。默认目录外的已登记地图同样生成鸟瞰封面；`level_card.data.native_preview=false` 使关卡浏览不再并发请求 Godot 通用场景预览，其他素材默认保持原行为。个人 NPC 卡片从当前 appearance 读取身高，不将复制保留的样例来源元数据当作当前动画数量或封面。专项和安装门禁见 [结构回归记录](../qa/structure_2026-11-17/validation.md)。
@@ -242,7 +260,7 @@ event_director 增加 accept_task(task_id)->{ok,reason}，仅接取当前关卡�
 
 ## 新增关卡物件自动分类 · 2026-11-16
 
-新增 NPC、Room、机关、白盒统一放到根下对应的空 Node3D 管理容器，由关卡插件负责原生撤销和稳定 ID。新建关卡的初始白盒地面也进入 `Whitebox`；已有用户关卡不自动整理。目录及列表继续引用实际实例，不新增配表字段。world／Room 的对象读取兼容透明容器，内部预制件仍保留自己的作用域。详细合同与检查见 [关卡接口](../level_editor/INTERFACES.md#新增物件自动分类--2026-11-16) 和 [自动分类验证](../level_editor/content_groups_2026-11-16/validation.md)。
+新增 NPC、Room、机关、白盒统一放到根下对应的空 Node3D 管理容器，由关卡插件负责原生撤销和稳定 ID。新建关卡的初始白盒地面也进入 `Whitebox`；已有用户关卡不自动整理。目录及列表继续引用实际实例，不新增配表字段。world／Room 的对象读取兼容透明容器，内部预制件仍保留自己的作用域。详细合同与检查见 [关卡接口](../level_editor/INTERFACES.md#content-groups) 和 [自动分类验证](../level_editor/content_groups_2026-11-16/validation.md)。
 
 同日父节点统一英文命名：NPC → `NPCs`、Room → `Rooms`、机关 → `Mechanisms`、关卡白盒 → `Whitebox`。现有带分类 metadata 的容器继续按职责识别；已保存的旧中文容器名称及其子路径同步改名，稳定 ID、变换和业务节点名称保持。
 

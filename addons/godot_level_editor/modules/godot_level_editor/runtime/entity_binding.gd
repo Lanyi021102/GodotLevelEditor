@@ -140,7 +140,6 @@ func _build_visual(config: Resource) -> void:
 		material.albedo_color = Color("d98b70") if config.faction == "hostile" else Color("729daa")
 		mesh.material_override = material; visual.add_child(mesh)
 	if entity.get("prompt") is Label3D:
-		entity.prompt.font_size = 24; entity.prompt.pixel_size = 0.006
 		entity.prompt.position.y = config.body_height + 0.3
 
 func _passive_model(node: Node) -> void:

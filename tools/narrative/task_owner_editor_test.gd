@@ -46,6 +46,16 @@ func run(suite: EditorPlugin) -> void:
 	check(task.nodes.all(func(n: Dictionary): return n.params.get("task") == "1001001"), "opening a bound task repairs missing and foreign local task IDs")
 	check(task.nodes.map(func(n: Dictionary): return n.id) == node_ids, "automatic binding preserves stable node IDs")
 	check(panel.dirty and task.validate().is_empty(), "repaired graph is valid and remains unsaved until the user saves")
+	check(not panel.parameters.get_parent().visible, "unselected task graph uses the full canvas width")
+	check(panel.task_library_label.visible and panel.task_library_label.text.contains("台本") and not panel._owner_path.is_empty(), "bound task shows its owning level and workbook")
+	var packet := {"graph_id": task.graph_id, "topology_id": "", "world_id": "qa", "values": {}, "persistent": {}, "local": {},
+		"reasons": {}, "counts": {}, "trace": [{"id": "npc_interact", "reason": "已互动"}], "waiting": [{"id": "dialog_completed", "reason": "等待对白结束"}]}
+	panel.receive_runtime("19:qa", packet)
+	check(panel.run_steps.visible and panel.run_steps.text.contains("等待对白结束"), "live menu shows actual wait before history")
+	panel._focus_step(0)
+	check(panel.selected_id == "dialog_completed" and panel.parameters.get_parent().visible, "clicking the waiting reason selects its node and opens the inspector")
+	panel.remove_runtime("19:qa")
+	check(panel.run_steps.visible and panel.run_steps.text.contains("上次试玩"), "finished session leaves a clearly marked last execution")
 	panel.selected_id = "n_12c9b56108581caa390b7a04"
 	panel._show_parameters()
 	check(panel._fields.task.text == "1001001" and not panel._fields.task.editable, "inspector shows the correct read-only task ID")

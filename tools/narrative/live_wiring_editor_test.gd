@@ -84,7 +84,7 @@ func type_text(field: LineEdit, value: String) -> void:
 	await frames()
 
 func add_node(panel: Control, kind: String, position: Vector2, mechanism := false) -> String:
-	var add_button := button(panel, "+ 节点" if mechanism else "搜索添加")
+	var add_button := button(panel, "添加节点")
 	if add_button == null: check(false, "visible add-node button exists"); return ""
 	await click(add_button)
 	var dialog: Window = panel._picker if mechanism else panel.picker
@@ -220,7 +220,7 @@ func run(suite: EditorPlugin) -> void:
 	check(not level.graph.node_by_id(constant).params.value, "level mouse-click Undo reverses parameters")
 	await click(button(level, "重做"))
 	check(level.graph.node_by_id(constant).params.value, "level mouse-click Redo restores parameters")
-	await click(button(level, "校验并保存"))
+	await click(button(level, "保存"))
 	check(not level.dirty and level.status.text == "已保存关卡图", "level GUI Save accepts the connected graph without a local task ID")
 	var saved: Node = ResourceLoader.load(level_path, "", ResourceLoader.CACHE_MODE_IGNORE).instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
 	check(saved.level_logic.edges.size() == 2 and saved.level_logic.node_by_id(constant).params.value, "level disk reload retains mouse-created wires and parameter")

@@ -9,20 +9,6 @@ func _ready() -> void:
 	mode.hide()
 	get_child(0).get_child(0).hide()
 	canvas.zoom_min = 0.25
-	_button(get_child(0), "适合画布", fit_graph)
-
-func fit_graph() -> void:
-	if graph == null or graph.nodes.is_empty(): return
-	await get_tree().process_frame
-	var bounds := Rect2()
-	var first := true
-	for card in canvas.get_children():
-		if not card is GraphNode: continue
-		var rect := Rect2(card.position_offset, card.size)
-		bounds = rect if first else bounds.merge(rect); first = false
-	if first: return
-	canvas.zoom = clampf(minf((canvas.size.x - 80) / bounds.size.x, (canvas.size.y - 120) / bounds.size.y), canvas.zoom_min, 1.0)
-	canvas.scroll_offset = bounds.position * canvas.zoom - Vector2(40, 80)
 
 func bind_world(source: Node, create := true) -> void:
 	if source == world and graph != null and is_instance_valid(source) and graph == source.level_logic: return
@@ -58,14 +44,14 @@ func _reference_field(key: String, value: String) -> bool:
 		_option_field("npc", "关卡常驻 NPC", [""] + npcs.keys(), value)
 		for i in _fields.npc.item_count:
 			var id := str(_fields.npc.get_item_metadata(i))
-			if npcs.has(id): _fields.npc.set_item_text(i, str(npcs[id].display_name) + "  (" + id + ")")
+			if npcs.has(id): _fields.npc.set_item_text(i, GLEDialogueNPC.speaker_name(npcs[id]) + "  (" + id + ")")
 		return true
 	if key == "task":
 		var label := Label.new(); label.text = "备注 · 接受任务"; parameters.add_child(label)
 		var field := TASK_PICKER.new(); field.workbook = graph.events_xlsx; field.level_id = world.level_id if is_instance_valid(world) else ""
 		parameters.add_child(field); field.select_id(value); _fields.task = field
 		return true
-	return false
+	return super._reference_field(key, value)
 
 func _show_parameters() -> void:
 	if graph != null:

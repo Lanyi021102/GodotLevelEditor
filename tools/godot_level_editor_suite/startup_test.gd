@@ -45,7 +45,7 @@ func run(suite: EditorPlugin) -> void:
 	suite.show_window()
 	print("STARTUP_TEST_OPEN_MS ", (Time.get_ticks_usec() - start) / 1000.0)
 	await frames(tree)
-	check(suite._built and suite.window.visible and suite.tabs.get_tab_count() == 9, "first explicit open creates the window with all navigation targets")
+	check(suite._built and suite.window.visible and suite.tabs.get_tab_count() == 10, "first explicit open creates the window with all navigation targets")
 	check(suite._prepared_pages.keys() == ["工作台"] and suite.asset_panels.is_empty() and suite.level_panel == null, "first open builds only the workbench")
 	EditorInterface.open_scene_from_path("res://content/scenes/levels/whitebox_world.tscn")
 	await frames(tree, 20)

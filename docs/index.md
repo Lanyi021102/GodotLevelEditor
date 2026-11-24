@@ -12,7 +12,7 @@ hide:
 
 <p class="wiki-lead">面向零代码基础的关卡设计新人：在 Godot 原生视口搭建空间，用节点连接逻辑，使用内置角色直接试玩。</p>
 
-<div class="wiki-meta"><span>插件 0.1.0</span><span>Godot 4.7.1</span><span>中文 / English</span><span>2026-11-17</span></div>
+<div class="wiki-meta"><span>开发版指南</span><span>Godot 4.7.1</span><span>中文 / English</span><span>2026-11-19</span></div>
 
 <div class="wiki-actions" markdown="1">
 

@@ -84,7 +84,7 @@ func _create_start_scene() -> bool:
 	if result != OK or ResourceSaver.save(scene, path) != OK:
 		push_error("GodotLevelEditor 无法保存起始场景。")
 		return false
-	preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/native_level_registry.gd").saved(path)
+	load(ROOT + "/modules/godot_level_editor_suite/native_level_registry.gd").saved(path)
 	ProjectSettings.set_setting("application/run/main_scene", path)
 	print("RELEASE_DEFAULT_READY: ", path)
 	return true

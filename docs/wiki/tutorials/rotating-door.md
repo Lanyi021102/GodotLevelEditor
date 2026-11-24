@@ -10,7 +10,7 @@
 
 制作自己的版本时先 **另存为**，再调整节点或参数。源素材分别是 `addons/godot_level_editor/scenes/mechanisms/single_door.tscn`、`addons/godot_level_editor/scenes/mechanisms/double_door.tscn`，图定义使用同名 `.graph.tres`。
 
-也可以在已有机关的 **+ 节点** 中选择这两种门：会一次创建门实体和已连好的七节点图，并放在已有节点的右侧。整套添加可以一次撤销。
+也可以在已有机关的 **添加节点** 中选择这两种门：会一次创建门实体和已连好的七节点图，并放在已有节点的右侧。整套添加可以一次撤销。
 
 ## 按连线读图
 

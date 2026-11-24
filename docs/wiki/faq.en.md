@@ -26,14 +26,14 @@ In a project without a main scene, activation creates a start scene for F5. An e
 
 ## A task does not start or advance
 
-Check that the event was accepted/started, the task is the event's current task, and the current level matches its level ID. Persistent level logic can run before task acceptance; task-owned objects cannot. Save the map before binding a new task, and inspect validation errors for missing NPC/Room/mechanism references.
+Check that the event was accepted/started, the task is the event's current task, and the current level matches its level ID. Persistent level logic can run before task acceptance; task-owned objects cannot. Save the map before binding a new task, and inspect validation errors for missing NPC, trigger area and mechanism references.
 
 <span id="task-owner"></span>
 <span id="missing-npc"></span>
 
 ## Task objects are invisible
 
-Check their owning task and level. Inactive, completed and failed task objects are disabled by design. A Room becoming active because the player entered it is a separate state from the task becoming active.
+Check their owning task and level. Inactive, completed and failed task objects are disabled by design. A trigger area becoming active because the player entered it is a separate state from the task becoming active.
 
 ## A request succeeded but the door is still moving
 

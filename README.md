@@ -8,6 +8,8 @@ Godot 4.7.1 编辑器插件。包含关卡轮盘、白盒与点线面辅助、�
 
 [下载插件](https://github.com/Lanyi021102/GodotLevelEditor/releases/latest) · [中文 Wiki](https://lanyi021102.github.io/GodotLevelEditor/) · [English Wiki](https://lanyi021102.github.io/GodotLevelEditor/en/)
 
+**0.3.0** 新增白盒地形、玩家 3C 预设、载具预设与演出时间轴，并包含原生视口测距、NPC 实例交谈和 Excel 配表冲突处理。[版本记录](docs/wiki/changelog.md)
+
 ![在 Godot 原生视口制作白盒关卡](docs/wiki/assets/readme/01_whitebox_editor.png)
 
 ## 功能一览
@@ -18,6 +20,12 @@ Godot 4.7.1 编辑器插件。包含关卡轮盘、白盒与点线面辅助、�
 
 ![快速添加轮盘](docs/wiki/assets/readme/02_quick_add_wheel.png)
 
+用 **呼出轮盘 → 地形** 点山峰、画河流或拖出高原。相邻山峰自动预览山脊，地形控制点随关卡保存。[地形操作指南](docs/wiki/guides/levels.md#terrain)
+
+### 载具预设
+
+在三维视口用 **呼出轮盘 → 载具** 放置卡丁车、摩托车和悬停飞行器，在检查器换模型、设座位和驾驶参数，再保存为可复用预设。[载具操作指南](docs/wiki/guides/vehicles.md)
+
 ### 机关与任务连线
 
 内置双开门、单开门、压力板、按钮、升降台。通过节点编辑机关状态与动作，用任务图组织触发、等待和完成流程。
@@ -25,6 +33,10 @@ Godot 4.7.1 编辑器插件。包含关卡轮盘、白盒与点线面辅助、�
 ![机关图与实时预览](docs/wiki/assets/readme/03_mechanism_graph.png)
 
 ![任务节点图](docs/wiki/assets/readme/05_task_graph.png)
+
+### 演出时间轴
+
+在关卡编辑内取景、安排 NPC 走位和动作，并从关卡图或任务图触发。见 [演出时间轴](docs/wiki/guides/levels.md#performance)。
 
 ### NPC、台本与天空
 
@@ -37,6 +49,8 @@ Godot 4.7.1 编辑器插件。包含关卡轮盘、白盒与点线面辅助、�
 ### 保存后直接试玩
 
 插件包含默认玩家、第三人称镜头与 HUD。空工程启用后，按播放即可操控角色；自己的关卡用 F6 试玩，查看空间尺度和动线。
+
+在 **玩家** 编辑角色能力、镜头、输入和动作，保存预设并应用到当前关卡。见 [玩家 3C 预设](docs/wiki/guides/player.md)。
 
 ![白盒关卡实机画面](docs/wiki/assets/readme/07_whitebox_play_landscape.png)
 
@@ -70,7 +84,7 @@ tools/                      开发检查、自动打包及 Wiki 工具
 
 ## 新建与编辑地图
 
-在 Godot 文件系统中找到 `addons/godot_level_editor/templates/empty_level.tscn`，右键选择“新建继承场景”，使用 Godot“场景 → 另存为”保存到 `content/scenes/levels/`，或工程中其他自选目录。不要直接覆盖插件内置模板。
+打开 **GodotLevelEditor → 工作台 → 新建关卡**，在原生 3D 视口用 **场景 → 另存为** 保存到 `content/scenes/levels/` 或自己的项目目录。工作台可以继续上次关卡。“我的关卡”里的 **打开场景** 返回 3D 视口，**编辑常驻逻辑** 打开该图。用自己的空工程即可完成[按钮开门练习](docs/wiki/tutorials/button-door.md#wire-button)。
 
 使用原生场景树与 3D 视口编辑。工具栏“呼出轮盘”、白盒、点线面和步长继续可用。使用 Godot 原生保存、复制和 F6 试玩；独立窗口通过“关卡 → 我的关卡”浏览和打开地图，通过“关卡 → 关卡编辑”编辑当前场景的常驻逻辑。首次保存关卡时登记稳定 ID，供任务选择所属关卡。
 

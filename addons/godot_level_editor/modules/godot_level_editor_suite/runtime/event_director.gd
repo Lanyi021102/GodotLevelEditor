@@ -14,6 +14,7 @@ signal objective_changed(text: String)
 const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/event_catalog.gd")
 const LEVELS := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/runtime/level_catalog.gd")
 const WORLD := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/world.gd")
+const PERFORMANCE := preload("res://addons/godot_level_editor/modules/godot_level_editor_performance/player.gd")
 const RUNNER := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/task_runner.gd")
 @export_file("*.xlsx") var workbook := CATALOG.PATH
 @export var world_path: NodePath
@@ -48,7 +49,7 @@ func _ready() -> void:
 	add_to_group("godot_level_editor_task_directors")
 	process_physics_priority = 520
 	world = get_node_or_null(world_path)
-	var result := CATALOG.load_book(workbook)
+	var result := CATALOG.load_book(workbook, false)
 	if world == null or not result.errors.is_empty():
 		push_error("事件执行器无法载入：" + "; ".join(result.errors))
 		return
@@ -81,7 +82,7 @@ func _connect_world() -> void:
 		_mechanism_bridge = preload("res://addons/godot_level_editor/modules/godot_level_editor_mechanisms/task_bridge.gd").new()
 		add_child(_mechanism_bridge)
 	_mechanism_bridge.bind_world(world, _broadcast)
-	var levels := LEVELS.load_book()
+	var levels := LEVELS.load_book(LEVELS.PATH, true, false)
 	var row: Dictionary = levels.catalog.for_world(world) if levels.catalog != null else {}
 	current_level_id = str(row.get("level_id", ""))
 	_task_actions.world = world
@@ -108,12 +109,12 @@ func _connect_world() -> void:
 		_link(room, "player_exited", _room_exited)
 	var candidates := world.find_children("*", "Node3D", true, false) if level_runner != null else world.get_parent().find_children("*", "Node3D", true, false) if world.get_parent() != null else world.find_children("*", "Node3D", true, false)
 	for node in candidates:
-		if node.get_script() != preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/npc.gd"): continue
+		if not GLEDialogueNPC.supports(node): continue
 		var ancestor: Node = node.get_parent()
 		while ancestor != null and ancestor.get_script() != WORLD: ancestor = ancestor.get_parent()
 		if ancestor != null and ancestor != world: continue
 		var reference := _npc_reference(node)
-		_npcs[reference if level_runner != null and not reference.is_empty() else node.object_id] = node
+		_npcs[reference if level_runner != null and not reference.is_empty() else GLEDialogueNPC.speaker_id(node)] = node
 		_link(node, "interacted", _npc_interacted.bind(node))
 	_refresh_npcs()
 
@@ -148,6 +149,7 @@ func accept_task(task_id: String) -> Dictionary:
 func perform_level(node: Dictionary, _context: Dictionary) -> Dictionary:
 	if level_runner == null: return {"ok": false, "reason": "关卡图未就绪"}
 	if node.kind == "task_accept": return accept_task(str(node.params.task))
+	if node.kind == "play_performance": return PERFORMANCE.play(world, str(node.params.performance))
 	if node.kind == "show_dialog":
 		var result: Dictionary = world.level_logic.load_dialogue()
 		if not result.errors.is_empty() or dialogue.is_active(): return {"ok": false, "reason": "台本无效或已有对话正在播放"}
@@ -185,6 +187,7 @@ func _npc_interacted(id: String, _actor: Node3D, source: Node = null) -> void:
 	_broadcast("npc_interact", {"npc": id, "npc_ref": _npc_reference(source) if source != null else ""})
 func bind_world(new_world: Node) -> bool:
 	if not valid or new_world == null or new_world.get_script() != WORLD or dialogue.is_active(): return false
+	PERFORMANCE.cancel_in(world)
 	for state in active.values():
 		if state.runner != null: state.saved_runner = state.runner.capture()
 		state.runner = null; state.graph = null
@@ -247,6 +250,7 @@ func _start_task(event_id: String) -> void:
 	state.objective = ""
 	task_states[task.task_id] = "active"
 	task_started.emit(task.task_id)
+	if state.runner != null: state.runner.cancel_performances()
 	state.runner = null
 	state.graph = null
 	state.saved_runner = {}
@@ -298,6 +302,7 @@ func _action(node: Dictionary, context: Dictionary, event_id: String) -> Diction
 	var task: Dictionary = tasks[mini(int(state.index), tasks.size() - 1)] if not tasks.is_empty() else {}
 	var ok := false
 	match str(node.kind):
+		"play_performance": return PERFORMANCE.play(world, str(node.params.performance), str(task.get("task_id", "")))
 		"task_start": ok = not task.is_empty() and str(node.params.get("task")) == str(task.task_id) and task_states.get(task.task_id) == "active"
 		"task_complete":
 			ok = not task.is_empty() and str(node.params.get("task")) == str(task.task_id) and task_states.get(task.task_id) == "active" and not state.has("failure")
@@ -306,7 +311,7 @@ func _action(node: Dictionary, context: Dictionary, event_id: String) -> Diction
 				state.advance = true
 				task_completed.emit(task.task_id)
 		"show_dialog":
-			var result: Dictionary = preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/dialogue_library.gd").read_xlsx(context._dialogue_xlsx) if context.has("_dialogue_xlsx") else state.graph.load_dialogue()
+			var result: Dictionary = preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/dialogue_library.gd").read_xlsx(context._dialogue_xlsx, false) if context.has("_dialogue_xlsx") else state.graph.load_dialogue()
 			if result.errors.is_empty() and not dialogue.is_active():
 				dialogue.library = result.library
 				ok = dialogue.show_dialog(str(node.params.get("dialog_id", "")))
@@ -342,6 +347,10 @@ func _physics_process(delta: float) -> void:
 		if not active.has(id): continue
 		var state: Dictionary = active[id]
 		if state.runner != null and _task_here(id): state.runner.tick(delta)
+		if EngineDebugger.is_active() and state.runner != null and (state.advance or state.has("failure") or not active.has(id)):
+			var instance := str(get_path()) + "/event_" + str(id)
+			_send_runner_debug(instance, state.runner)
+			_debug_instances[instance] = true
 		if _restore_requested:
 			_restore_requested = false
 			retry_from_checkpoint()
@@ -355,6 +364,7 @@ func _physics_process(delta: float) -> void:
 			_failure_mouse_captured = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 			var main: Node = get_tree().get_first_node_in_group("main")
 			if main != null and main.get("camera_rig") != null: main.camera_rig.release_mouse()
+			if state.runner != null: state.runner.cancel_performances()
 			active.erase(id)
 			task_failed.emit(task_id, _failure_text)
 			_hud()
@@ -374,17 +384,23 @@ func _send_debug() -> void:
 	if level_runner != null:
 		var instance := str(get_path()) + "/level_logic"
 		current[instance] = true
-		EngineDebugger.send_message("godot_level_editor_narrative:state", [{"instance": instance, "world_id": world.world_id, "graph_id": level_runner.definition.graph_id, "topology_id": "", "event_revision": level_runner.definition.semantic_hash(), "values": level_runner.values.duplicate(), "persistent": level_runner.persistent.duplicate(), "local": level_runner.local_state.duplicate(), "reasons": level_runner.last_reason.duplicate(), "counts": level_runner.counts.duplicate(), "queued": level_runner.pending.size() + level_runner.waits.size()}])
+		_send_runner_debug(instance, level_runner)
 	for id in active:
 		var state: Dictionary = active[id]
 		if state.runner == null or not _task_here(id): continue
 		var instance := str(get_path()) + "/event_" + str(id)
 		current[instance] = true
 		var runner: RefCounted = state.runner
-		EngineDebugger.send_message("godot_level_editor_narrative:state", [{"instance": instance, "world_id": world.world_id, "graph_id": runner.definition.graph_id, "topology_id": "", "event_revision": runner.definition.semantic_hash(), "values": runner.values.duplicate(), "persistent": runner.persistent.duplicate(), "local": runner.local_state.duplicate(), "reasons": runner.last_reason.duplicate(), "counts": runner.counts.duplicate(), "queued": runner.pending.size() + runner.waits.size()}])
+		_send_runner_debug(instance, runner)
 	for instance in _debug_instances:
 		if not current.has(instance): EngineDebugger.send_message("godot_level_editor_narrative:remove", [instance])
 	_debug_instances = current
+func _send_runner_debug(instance: String, runner: RefCounted) -> void:
+	EngineDebugger.send_message("godot_level_editor_narrative:state", [{"instance": instance, "world_id": world.world_id,
+		"graph_id": runner.definition.graph_id, "topology_id": "", "event_revision": runner.definition.semantic_hash(),
+		"values": runner.values, "persistent": runner.persistent, "local": runner.local_state, "reasons": runner.last_reason,
+		"counts": runner.counts, "queued": runner.pending.size() + runner.waits.size(), "trace": runner.recent_steps, "waiting": runner.debug_waiting()}])
+
 func _broadcast(kind: String, context: Dictionary) -> void:
 	if _suppress_triggers > 0: return
 	if level_runner != null:
@@ -404,6 +420,7 @@ func _broadcast(kind: String, context: Dictionary) -> void:
 func _finish_event(id: String) -> void:
 	if event_states.get(id) != "active": return
 	event_states[id] = "completed"
+	if active[id].runner != null: active[id].runner.cancel_performances()
 	active.erase(id)
 	event_completed.emit(id)
 	_hud()
@@ -417,7 +434,7 @@ func _refresh_npcs() -> void:
 			var state: Dictionary = active[event_id]
 			if state.runner == null or not _task_here(event_id): continue
 			for node in state.runner.active_nodes():
-				if node.kind == "npc_interact" and node.params.get("npc") == _npcs[id].object_id and task_states.get(node.params.get("task")) == "active": allowed = true
+				if node.kind == "npc_interact" and node.params.get("npc") == GLEDialogueNPC.speaker_id(_npcs[id]) and task_states.get(node.params.get("task")) == "active": allowed = true
 		_npcs[id].interaction_allowed = allowed and not dialogue.is_active()
 func _animate_task_completion(task_id: String) -> void:
 	var task: Dictionary = catalog.task_by_id(task_id)
@@ -488,6 +505,7 @@ func restore_progress(data: Dictionary) -> bool:
 	task_binding_notice = ""
 	variables = data.get("variables", {}).duplicate(true)
 	_failure_text = str(data.get("failure_text", ""))
+	PERFORMANCE.cancel_in(world)
 	active.clear()
 	event_states = data.events.duplicate()
 	task_states = data.tasks.duplicate()

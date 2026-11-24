@@ -20,6 +20,7 @@ sources = [
     'addons/godot_level_editor/modules/godot_level_editor_narrative/dialogue_panel.gd',
     'addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/dialogue_library.gd',
     'addons/godot_level_editor/modules/godot_level_editor_suite/runtime/xlsx.gd',
+    'addons/godot_level_editor/modules/godot_level_editor_suite/workbook_conflict.gd',
     'addons/godot_level_editor/modules/godot_level_editor_suite/editor_style.gd',
     'addons/godot_level_editor/modules/godot_level_editor_suite/ui_motion.gd',
     'addons/godot_level_editor/modules/godot_level_editor_suite/identity_colors.gd',

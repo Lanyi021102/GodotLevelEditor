@@ -10,6 +10,12 @@ func check(value: bool, label: String) -> void:
 func frames(tree: SceneTree, count := 5) -> void:
 	for i in count: await tree.process_frame
 func run(suite: EditorPlugin) -> void:
+	if OS.get_cmdline_user_args().has("--performance-editor-test"):
+		await load("res://tools/performance/editor_test.gd").new().run(suite)
+		return
+	if OS.get_cmdline_user_args().has("--player-editor-test"):
+		await load("res://tools/godot_level_editor_suite/player_editor_test.gd").new().run(suite)
+		return
 	if OS.get_cmdline_user_args().has("--task-switch"):
 		await load("res://tools/narrative/task_switch_editor_test.gd").new().run(suite)
 		return
@@ -30,7 +36,7 @@ func run(suite: EditorPlugin) -> void:
 	await frames(tree, 10)
 	check(EditorInterface.get_editor_viewport_3d(0).get_parent().is_visible_in_tree(), "opening the tool window keeps the native Godot 3D editor available")
 	check(suite.window.force_native and not suite.window.transient, "workspace is a nonmodal native system window")
-	check(suite.tabs.get_tab_count() == 9 and is_instance_valid(suite.sky_panel) and is_instance_valid(suite.home_panel), "workspace retains all editors and adds preferences in the workbench")
+	check(suite.tabs.get_tab_count() == 10 and is_instance_valid(suite.sky_panel) and is_instance_valid(suite.home_panel) and is_instance_valid(suite.player_panel), "workspace retains all editors and includes the player preset library")
 	check(suite.modules.size() == 4, "existing editor backends are retained behind the unified workspace")
 	var canvases: Array[Node] = suite.tabs.find_children("*", "GraphEdit", true, false)
 	var grids_visible: bool = canvases.size() == 4
@@ -141,12 +147,12 @@ func run(suite: EditorPlugin) -> void:
 			clean_titles = clean_titles and not (str(card.title).begins_with("触发 ·") or str(card.title).begins_with("动作 ·"))
 			no_empty_status = no_empty_status and not card.get_node("Runtime").visible
 	check(clean_titles and not suite.task_graph.legend.visible, "node classification uses color without category prefixes or a persistent legend")
-	check(no_empty_status and not suite.task_graph.task_library_label.visible, "edit mode hides empty runtime messages and routine workbook labels")
+	check(no_empty_status and suite.task_graph.task_library_label.visible and suite.task_graph.task_library_label.text.contains("所属关卡"), "editing shows task ownership without empty runtime messages")
 	suite.task_graph.search.text = "结束当前事件"
 	suite.task_graph._filter_choices()
 	check(suite.task_graph.choices.item_count == 1, "task graph offers explicit event completion node")
 	check(ProjectSettings.get_setting("application/config/name") == "GodotLevelEditor" and suite.window.title == "GodotLevelEditor", "project and native window use the new product name")
-	check(not suite.tabs.tabs_visible and suite.navigation_buttons.size() == 8 and suite.navigation_buttons.has("天空") and suite.navigation_buttons.has("工作台"), "custom primary navigation includes the new sky editor")
+	check(not suite.tabs.tabs_visible and suite.navigation_buttons.size() == 9 and suite.navigation_buttons.has("玩家") and suite.navigation_buttons.has("天空") and suite.navigation_buttons.has("工作台"), "custom primary navigation includes player presets and existing editors")
 	check(EditorInterface.get_base_control().find_children("关卡摆放", "", true, false).is_empty() and suite.modules.level.spatial_tools.is_inside_tree(), "legacy placement dock is removed while the native 3D tools remain")
 	check(not FileAccess.file_exists("res://addons/godot_level_editor/modules/godot_level_editor_suite/level_workspace.gd"), "external viewport implementation is removed")
 	suite.navigation_buttons["关卡"].pressed.emit()

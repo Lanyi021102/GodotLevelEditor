@@ -22,7 +22,9 @@ static func choices(world: Node, graph: Resource, node: Dictionary, key: String)
 		if graph.is_level_logic(): return LOGIC.permanent_npcs(world)
 		# The legacy task service discovers narrative NPCs inside prefabs as well.
 		for object in world.find_children("*", "Node3D", true, false):
-			if object.get_script() == NPC: result[object.object_id] = object
+			if NPC.supports(object):
+				var id := NPC.speaker_id(object)
+				if not id.is_empty(): result[id] = object
 	elif key == "mechanism":
 		# Descriptions also include uninstantiated component_scene previews.
 		for entry in ACCESS.descriptions(world): result[entry.reference] = world.object_by_id(str(entry.reference).split(ACCESS.SEPARATOR)[0])

@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.3.0 (2026-11-24)
+
+This release brings together the earlier authoring and playtesting preview with whitebox terrain, player 3C presets, vehicle presets and the performance timeline. It includes native viewport measurement, per-instance NPC conversations, task execution feedback, sky thumbnails and Excel workbook conflict handling. The installation ZIP contains the addon, built-in assets and the empty template; authored maps, personal models and workbooks remain in the development project. Install `GodotLevelEditor-0.3.0.zip` with Godot 4.7.1 and preserve your `content/` folder when updating.
+
+## Performance timeline (2026-11-24)
+
+Capture shots from the native 3D viewport, stage NPC movement and animation, and scrub through the result. Persistent level graphs and task graphs can trigger performances. See [Performance timeline](guides/levels.md#performance).
+
+## Whitebox terrain (2026-11-24)
+
+Place peaks, draw rivers and drag out plateaus in the native viewport. Nearby peaks can form a ridge with an editable saddle. Terrain controls save with the level. See [Draw terrain](guides/levels.md#terrain).
+
+## Vehicle presets (2026-11-24)
+
+Quick Add offers a kart, motorcycle and hovercraft. Use the Inspector to edit the model, driving, animations and camera, then save a reusable preset. See [Vehicle presets](guides/vehicles.md).
+
+## Player 3C presets (2026-11-24)
+
+The **玩家** page edits ability switches, camera, keyboard and gamepad input, and animation clips. Save or duplicate a preset, select it in **关卡 → 关卡编辑**, and press F6. See [Player 3C presets](guides/player.md).
+
+## 0.2.0-preview — Authoring and playtesting (2026-11-19)
+
+Start or resume a map from Workspace, measure whitebox geometry in 3D, filter built-in or personal assets, and add a task directly from an event row. A placed behavior NPC can take part in dialogue. Task graphs show their level, task, workbook and recent execution or waits. Workbook saves preserve author columns and extra sheets and detect external changes. Sky previews light the same whitebox scene.
+
+Try the [button and door](tutorials/button-door.md#wire-button) and [conversation and task](guides/npc-samples.md#first-conversation-task) exercises in a new project.
+
 ## 2026-11-17 — Plugin structure workflow regression fixes
 
 My Levels browses real scene files while maps retain native saving and F6; Level Editing provides persistent logic. Fixes cover Save As identity/registration, indexed destination replacement, saved thumbnails, personal copies of built-in NPCs/mechanisms, NPC scene/import locations and generated collision dimensions, inherited sky references, save-time reference refresh and HDRI retry after cancellation. See the [scope and actual checks](../qa/structure_2026-11-17/validation.md).

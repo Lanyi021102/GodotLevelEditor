@@ -2,6 +2,8 @@
 
 GodotLevelEditor is for new level designers with no coding experience. Build spaces in Godot's native 3D viewport, connect logic with nodes, and play the result with the included third-person character.
 
+This guide covers the 0.2.0-preview source build. See the [changelog](wiki/changelog.md) for the authoring and playtest updates.
+
 [Download the plugin](https://github.com/Lanyi021102/GodotLevelEditor/releases/latest) · [Install and update](wiki/plugin-install.md) · [Quick start](wiki/getting-started.md)
 
 ![Whitebox level in the native Godot viewport](wiki/assets/readme/01_whitebox_editor.png)

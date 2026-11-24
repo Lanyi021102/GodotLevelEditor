@@ -6,7 +6,7 @@ const CATALOG := preload("res://addons/godot_level_editor/modules/godot_level_ed
 const NPC := preload("res://addons/godot_level_editor/modules/godot_level_editor_narrative/runtime/npc.gd")
 const PROFILE := preload("res://addons/godot_level_editor/modules/godot_level_editor/runtime/entity_profile.gd")
 const KINDS := [
-	"start", "room_enter", "room_exit", "room_active", "region_enter", "region_exit", "object_interacted", "state_changed", "npc_interact", "dialog_completed", "event_received", "emit_event", "show_dialog", "task_accept",
+	"start", "room_enter", "room_exit", "room_active", "region_enter", "region_exit", "object_interacted", "state_changed", "npc_interact", "dialog_completed", "event_received", "emit_event", "show_dialog", "play_performance", "task_accept",
 	"branch", "has_item", "has_equipped", "player_state", "actor_state", "source", "object", "read_state", "all", "any", "not", "constant", "number", "greater", "compare", "latch",
 	"get_variable", "get_number", "set_variable", "change_item", "equip_item", "set_actor_state", "set_switch", "set_visibility", "enemy_patrol", "kill_player",
 	"delay", "timer", "wait_until", "wait_event", "parallel", "wait_all", "wait_any", "counter", "gate", "cancel_branch", "objective", "checkpoint",
@@ -21,7 +21,7 @@ static func permanent_npcs(world: Node) -> Dictionary:
 	if not is_instance_valid(world): return result
 	for reference in world.objects():
 		var node: Node = world.object_by_id(reference)
-		if node.get_script() != NPC: continue
+		if not NPC.supports(node): continue
 		var ancestor := node
 		var permanent := true
 		while ancestor != null and ancestor != world:
@@ -41,6 +41,7 @@ func validate_bindings(world: Node) -> PackedStringArray:
 		if n.kind == "npc_interact" and not npcs.has(n.params.get("npc", "")): errors.append(str(n.id) + "：NPC 必须是当前关卡已放置的常驻 NPC")
 		if n.params.has("object") and not objects.has(n.params.object): errors.append(str(n.id) + "：关卡对象引用失效")
 		if n.params.has("room") and not world.rooms().any(func(room: Node): return room.room_id == n.params.get("room", "")): errors.append(str(n.id) + "：关卡 Room 引用失效")
+		if n.kind == "play_performance": errors.append_array(preload("res://addons/godot_level_editor/modules/godot_level_editor_performance/sequence.gd").validate_graph_binding(world, n))
 		if n.kind == "task_accept" and not str(world.level_id).is_empty():
 			var result := CATALOG.load_book(events_xlsx)
 			var task: Dictionary = result.catalog.task_by_id(str(n.params.get("task", ""))) if result.catalog != null else {}

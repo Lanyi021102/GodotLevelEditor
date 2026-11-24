@@ -41,7 +41,7 @@ func run(suite: EditorPlugin, check: Callable, capture_dir: String) -> void:
 	editor.discard_dialog.confirmed.emit(); editor.discard_dialog.hide()
 	check.call(editor.file_path == second_npc and npc.editing_path == second_npc and npc.mode_stack.current_tab == 1 and not editor.dirty, "confirming a switch enters the requested NPC after a successful load")
 	npc.search.text = "no matching npc 473"; npc._filter()
-	check.call(npc.empty_label.visible and not npc.cards[npc_path].visible, "catalog search handles no matches while preserving the New NPC card")
+	check.call(npc.empty_label.visible and npc.selected_path.is_empty() and npc.enter_button.disabled, "catalog search clears the selection and edit action with zero matches")
 	npc.search.text = ""; npc._filter()
 	suite.navigation_buttons["机关"].pressed.emit()
 	var root_before := EditorInterface.get_edited_scene_root()

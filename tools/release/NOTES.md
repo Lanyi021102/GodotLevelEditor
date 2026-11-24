@@ -1,24 +1,27 @@
-0.1.1 修复完整插件结构调整后的编辑与保存流程：
+GodotLevelEditor 0.3.0
 
-- 恢复“我的关卡”浏览真实地图文件，保留 Godot 原生保存、场景树、3D 视口与 F6。
-- 修复关卡首次另存为的独立 ID、任务登记、覆盖已登记目标时的索引一致性和保存后的鸟瞰缩略图。
-- 内置机关与 NPC 引导另存个人副本；个人 NPC 场景、模型和贴图保存在插件目录外，生成的碰撞匹配角色身高。
-- 修复机关浏览／保存后的草稿状态，以及继承天空读取、保存后引用刷新和 HDRI 取消后重试。
+面向零代码基础的关卡设计新人，使用 Godot 原生场景树和 3D 视口制作、保存与试玩白盒关卡。
 
-下载 **GodotLevelEditor-0.1.1.zip** 安装插件。下方的 Source code 是开发工程快照，包含开发者地图，并非插件安装包。
+本版更新：
 
-需要 Godot 4.7.1 标准版。将 ZIP 内 `addons/godot_level_editor` 放入自己的 Godot 工程，等待导入后，在项目设置的插件页启用 **GodotLevelEditor**。
+- 白盒地形：通过轮盘绘制山峰、山脊、河道与高原，控制点和碰撞随关卡保存。
+- 玩家 3C 预设：配置角色能力、镜头、输入与动作，将预设应用到当前关卡。
+- 载具预设：放置和配置卡丁车、摩托车与悬停飞行器。
+- 演出时间轴：取景、安排 NPC 走位与动作，并从关卡图或任务图触发。
+- 制作与试玩改进：视口测距、NPC 实例交谈、任务执行反馈、天空缩略图及 Excel 配表冲突处理。
 
-包含关卡、机关、NPC、台本、任务、天空编辑器，五种机关和13个 NPC 素材，以及角色、第三人称镜头、HUD 和光照。没有预装地图；新建地图及配表存放在 `content/`。
+下载 **GodotLevelEditor-0.3.0.zip** 安装插件。需要 Godot 4.7.1 标准版。将 ZIP 中的 `addons/godot_level_editor` 放入自己的工程，等待导入，在“项目设置 → 插件”只启用 **GodotLevelEditor**。空工程会建立可直接 F5 试玩的起始场景。
 
-更新时关闭 Godot，替换插件目录并保留作品目录。内置素材修改前请先另存到作品目录。SHA-256 校验文件与安装说明随包提供。
+更新时关闭 Godot 并替换插件目录，保留自己的 `content/` 目录。安装 ZIP 不包含作者地图、个人模型、任务／对白配表及开发测试。下方的 **Source code** 是开发工程快照，包含作者内容，与插件安装包不同。SHA-256 校验文件随安装包提供。
 
-本版验证包含隔离开发工程和插件空工程中的编辑、保存重开及真实 F6 流程，以及安装、更新和默认 F5 试玩。详细范围与已知引擎日志见源码内 `docs/qa/structure_2026-11-17/validation.md`。本版没有重做 Windows／移动导出验收。
+插件代码使用 MIT；第三方素材保留各自许可，见包内 `THIRD_PARTY.md`。详细检查和范围见源码 `docs/qa/release_0_3_0/validation.md`。
 
-验收限制：新任务夹具的渲染 F6 合成输入未完成稳定验收，未计为通过；对应 headless 完整链及原有 47 节点 F6 已通过。物理鼠标验收与事件注入检查分开记录。
+---
 
-Version 0.1.1 restores native map browsing and fixes Save As identities, personal asset persistence, mechanism draft state and inherited sky/HDRI workflows. Install the named addon ZIP, preserve your `content/` folder when updating, and use Godot 4.7.1. The automatic Source code archives are development snapshots, not addon installation packages.
+Version 0.3.0 adds whitebox terrain, player 3C presets, vehicle presets and a performance timeline. It also includes viewport measurement, per-instance NPC conversations, task execution feedback, sky thumbnails and Excel workbook conflict handling.
 
-源码使用 MIT 许可；第三方角色和动画保留各自的 CC0 许可。
+Install **GodotLevelEditor-0.3.0.zip** in Godot 4.7.1 Standard. Copy `addons/godot_level_editor` into your project and enable only **GodotLevelEditor**. Empty projects receive a playable start scene. Preserve `content/` when replacing the addon to update.
 
-[在线操作指南](https://lanyi021102.github.io/GodotLevelEditor/)
+The named ZIP excludes authored maps, personal models, workbooks and developer tests. GitHub's automatic **Source code** archives contain the development project. Code is MIT; third-party asset terms are preserved in `THIRD_PARTY.md`. See the release verification record for checks and scope.
+
+[中文 Wiki](https://lanyi021102.github.io/GodotLevelEditor/) · [English Wiki](https://lanyi021102.github.io/GodotLevelEditor/en/)

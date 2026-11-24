@@ -2,8 +2,8 @@
 extends RefCounted
 ## Plain organizational nodes are transparent to object/Room scopes.
 const META := &"godot_level_editor_content_group"
-const NAMES := {"whitebox": "Whitebox", "room": "Rooms", "mechanism": "Mechanisms", "npc": "NPCs"}
-const CATEGORIES := {"Layout 白盒": "whitebox", "常驻 Room": "room", "常驻机关": "mechanism", "常驻 NPC": "npc"}
+const NAMES := {"whitebox": "Whitebox", "room": "Rooms", "mechanism": "Mechanisms", "npc": "NPCs", "vehicle": "Vehicles"}
+const CATEGORIES := {"Layout 白盒": "whitebox", "常驻 Room": "room", "常驻机关": "mechanism", "常驻 NPC": "npc", "载具": "vehicle"}
 
 static func is_group(node: Node) -> bool:
 	return node != null and node.get_class() == "Node3D" and node.get_script() == null and NAMES.has(str(node.get_meta(META, "")))
@@ -22,6 +22,7 @@ static func kind(node: Node) -> String:
 	var script: Script = node.get_script()
 	var path := script.resource_path if script != null else ""
 	match path:
+		"res://addons/godot_level_editor/modules/godot_level_editor_vehicle/vehicle.gd": return "vehicle"
 		"res://addons/godot_level_editor/modules/godot_level_editor/runtime/whitebox_block.gd": return "whitebox"
 		"res://addons/godot_level_editor/modules/godot_level_editor/runtime/room.gd": return "room"
 		"res://addons/godot_level_editor/modules/godot_level_editor/runtime/placement.gd": return "npc" if node.get("component_kind") == "guard" else "mechanism"

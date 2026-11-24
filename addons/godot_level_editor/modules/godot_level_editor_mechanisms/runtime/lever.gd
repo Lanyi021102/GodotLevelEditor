@@ -30,7 +30,12 @@ func _init() -> void:
 	set_meta("mechanism_kind", "lever")
 
 func _ready() -> void:
-	if not Engine.is_editor_hint(): add_to_group("godot_level_editor_interactable")
+	if not Engine.is_editor_hint():
+		add_to_group("godot_level_editor_interactable")
+		var prompt := preload("res://addons/godot_level_editor/scripts/ui/interaction_label.gd").new()
+		prompt.configure(self, display_name, "[F]", true)
+		prompt.position.y = 1.25
+		add_child(prompt)
 	reset_state()
 	rebuild_design()
 

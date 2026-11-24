@@ -317,6 +317,7 @@ func open_library(source: Resource) -> void:
 		status.text = "无法打开台本：请选择有效的对白 XLSX 或旧版台本资源。"
 		return
 	var candidate: Resource = source.duplicate(true)
+	candidate.workbook_origin = source.workbook_origin.duplicate()
 	candidate.set_meta("source_path", source.xlsx_path if source.resource_path.is_empty() else source.resource_path)
 	if candidate.schema_version not in [1, LIBRARY.VERSION]:
 		status.text = "不支持的台本版本。"
@@ -729,13 +730,25 @@ func export_dialogues() -> void: _choose("export")
 
 func export_to(path: String) -> bool:
 	var errors: PackedStringArray = library.write_xlsx(path)
-	if not errors.is_empty(): status.text = "; ".join(errors); return false
+	if not errors.is_empty():
+		status.text = "; ".join(errors)
+		if LIBRARY.XLSX.CONFLICT in errors and not has_node("WorkbookConflict"):
+			var conflict := preload("res://addons/godot_level_editor/modules/godot_level_editor_suite/workbook_conflict.gd").new()
+			conflict.name = "WorkbookConflict"
+			conflict.offer(self, _reload_conflict, func(): _choose("copy"))
+		return false
 	library.xlsx_path = path
 	library.set_meta("source_path", path)
 	dirty = false
 	export_dirty = false
 	status.text = "已保存全部对白：" + path.get_file()
 	return true
+
+func _reload_conflict() -> void:
+	var result := LIBRARY.read_xlsx(library.xlsx_path)
+	if not result.errors.is_empty(): status.text = "; ".join(result.errors); return
+	dirty = false
+	open_library(result.library)
 
 func _open() -> void:
 	if dirty: status.text = "请先保存当前对白。"; return
@@ -759,10 +772,11 @@ func _choose(mode: String) -> void:
 		file.add_filter("*.xlsx", "对白 XLSX")
 		var source_path := str(library.get_meta("source_path", ""))
 		file.current_path = (library.xlsx_path if not library.xlsx_path.is_empty() else source_path.get_basename() + ".xlsx" if not source_path.is_empty() else "res://content/tables/new_dialogues.xlsx") if mode == "export" else "res://content/tables/new_dialogues.xlsx"
+	if mode == "copy": file.current_path = library.xlsx_path.get_basename() + "_copy.xlsx"
 	file.popup_centered_ratio(0.7)
 
 func _file_selected(path: String) -> void:
-	if _mode in ["export", "save"]:
+	if _mode in ["export", "save", "copy"]:
 		export_to(path)
 		return
 	if dirty:

@@ -43,11 +43,13 @@ func sheets() -> Dictionary:
 		for key in FIELDS: row.append(str(level.get(key, "")))
 		rows.append(row)
 	return {"关卡": rows, "配置": [["key", "value"], ["version", "1"], ["next_level_id", str(next_id)]]}
-func save_book(path := PATH) -> PackedStringArray:
-	var errors := validate()
-	return XLSX.write_book(path, sheets()) if errors.is_empty() else errors
-static func load_book(path := PATH, check_paths := true) -> Dictionary:
-	var book := XLSX.read_book(path)
+var workbook_origin: Dictionary = {}
+
+func save_book(path := PATH, check_paths := true) -> PackedStringArray:
+	var errors := validate(check_paths)
+	return XLSX.save_tables(path, sheets(), workbook_origin) if errors.is_empty() else errors
+static func load_book(path := PATH, check_paths := true, editable := true) -> Dictionary:
+	var book := XLSX.read_book(path, {"关卡": FIELDS, "配置": ["key", "value"]}, editable)
 	if not book.errors.is_empty(): return {"catalog": null, "errors": book.errors}
 	var rows := XLSX.records(book.sheets, "关卡", ["level_id", "name", "display_name", "scene_path"])
 	var meta := XLSX.records(book.sheets, "配置", ["key", "value"])
@@ -64,4 +66,5 @@ static func load_book(path := PATH, check_paths := true) -> Dictionary:
 	if version != "1": errors.append("关卡配表版本无效")
 	for row in catalog.levels: catalog.next_id = maxi(catalog.next_id, int(row.level_id) + 1)
 	errors.append_array(catalog.validate(check_paths))
+	catalog.workbook_origin = book.origin
 	return {"catalog": catalog if errors.is_empty() else null, "errors": errors}

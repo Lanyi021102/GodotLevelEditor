@@ -1,9 +1,10 @@
 extends RefCounted
 ## Session checkpoint, scoped to the current world. Uses existing component save/reset contracts.
+const PERFORMANCE := preload("res://addons/godot_level_editor/modules/godot_level_editor_performance/player.gd")
 var saved: Dictionary = {}
 
 func capture(director: Node) -> bool:
-	if director.dialogue.is_active(): return false
+	if director.dialogue.is_active() or PERFORMANCE.is_playing_in(director.world): return false
 	for state in director.active.values():
 		if state.has("failure"): return false
 	var nodes: Array[Node] = [director.world]
@@ -29,6 +30,7 @@ func restore(director: Node) -> bool:
 	if saved.is_empty() or director.dialogue.is_active() or saved.world != director.world.get_instance_id() or saved.level != director.current_level_id: return false
 	for path in saved.nodes:
 		if director.get_node_or_null(NodePath(path)) == null: return false
+	PERFORMANCE.cancel_in(director.world)
 	for path in saved.nodes:
 		var node: Node = director.get_node(NodePath(path))
 		var state: Dictionary = saved.nodes[path]
